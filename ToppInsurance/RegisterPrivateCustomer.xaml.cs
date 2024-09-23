@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace TopInsuranceWPF
 {
     /// <summary>
-    /// Interaction logic for RegisterBCustomer.xaml
+    /// Interaction logic for RegisterPrivateCustomer.xaml
     /// </summary>
-    public partial class RegisterBCustomer : Window
+    public partial class RegisterPrivateCustomer : Window
     {
-        public RegisterBCustomer()
+        public RegisterPrivateCustomer()
         {
             InitializeComponent();
         }
