@@ -65,7 +65,7 @@
                 <!-- Log in button -->
                 <Button Content="Logga in" Width="150" Height="40" 
                         HorizontalAlignment="Center" VerticalAlignment="Center"
-                        Background="ForestGreen" Foreground="White" FontWeight="Bold"
+                        Background="#223A2A" Foreground="White" FontWeight="Bold"
                         Margin="0,20,0,0"/>
             </StackPanel>
         </Border>
