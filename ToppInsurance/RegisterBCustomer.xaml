@@ -1,0 +1,248 @@
+﻿<Window x:Class="TopInsuranceWPF.RegisterBCustomer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TopInsuranceWPF"
+        mc:Ignorable="d"
+        xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        Title="RegisterBCustomer" Height="650" Width="1000">
+    <Grid>
+        <DockPanel>
+            <!-- Menu Bar -->
+            <Menu DockPanel.Dock="Top" Background="#223A2A" Foreground="White" Height="30" FontWeight="Bold">
+                <MenuItem Header="Hem"/>
+                <MenuItem Header="Kunder">
+                    <MenuItem Header="Registrera Ny Kund"/>
+                    <MenuItem Header="Hantera Kunder"/>
+                </MenuItem>
+                <MenuItem Header="Försäkringar">
+                    <MenuItem Header="Registrera Försäkring"/>
+                    <MenuItem Header="Hantera Försäkringar"/>
+                </MenuItem>
+                <MenuItem Header="Statistik"/>
+                <MenuItem Header="Hjälp"/>
+            </Menu>
+
+
+            <!-- Left Sidebar Menu -->
+            <StackPanel DockPanel.Dock="Left" Width="220" Background="White" Margin="0,30,0,0" VerticalAlignment="Top">
+
+                <!-- Buttons with Icons -->
+                <Button Height="45" Margin="10,10" Background="#223A2A" Foreground="White" BorderBrush="Transparent">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <material:PackIconMaterial Kind="AccountPlus" Width="20" Height="20" Margin="0,0,10,0" Foreground="White"/>
+                            <TextBlock Text="Registrera privatkund" VerticalAlignment="Center" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button.Content>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#223A2A"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" Padding="10" CornerRadius="5">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#365C4F"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button Height="45" Margin="10,10" Background="#223A2A" Foreground="White" BorderBrush="Transparent">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <material:PackIconMaterial Kind="Briefcase" Width="20" Height="20" Margin="0,0,10,0" Foreground="White"/>
+                            <TextBlock Text="Registrera företagskund" VerticalAlignment="Center" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button.Content>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#223A2A"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" Padding="10" CornerRadius="5">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#365C4F"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button Height="45" Margin="10,10" Background="#223A2A" Foreground="White" BorderBrush="Transparent">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <material:PackIconMaterial Kind="ClipboardPlus" Width="20" Height="20" Margin="0,0,10,0" Foreground="White"/>
+                            <TextBlock Text="Registrera försäkring" VerticalAlignment="Center" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button.Content>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#223A2A"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" Padding="10" CornerRadius="5">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#365C4F"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button Height="45" Margin="10,10" Background="#223A2A" Foreground="White" BorderBrush="Transparent">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <material:PackIconMaterial Kind="ChartBar" Width="20" Height="20" Margin="0,0,10,0" Foreground="White"/>
+                            <TextBlock Text="Statistik" VerticalAlignment="Center" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <Button Height="45" Margin="10,10" Background="#223A2A" Foreground="White" BorderBrush="Transparent">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <material:PackIconMaterial Kind="HelpCircle" Width="20" Height="20" Margin="0,0,10,0" Foreground="White"/>
+                            <TextBlock Text="Hjälp" VerticalAlignment="Center" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <Button Height="45" Margin="10,10" Background="#223A2A" Foreground="White" BorderBrush="Transparent">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <material:PackIconMaterial Kind="Logout" Width="20" Height="20" Margin="0,0,10,0" Foreground="White"/>
+                            <TextBlock Text="Logga ut" VerticalAlignment="Center" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+            </StackPanel>
+
+
+
+            <!-- Main Content Area -->
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Header Section -->
+                <StackPanel Grid.Row="0" Orientation="Vertical" Background="#EDEDED" Margin="0,0,0,10">
+                    <TextBlock Text="Registrera ny företagskund" FontSize="22" FontWeight="Bold" Foreground="#2F4F4F"/>
+                    <TextBlock Text="Fyll i informationen nedan för att registrera en ny företagskund." FontSize="14" Foreground="#555555"/>
+                </StackPanel>
+
+                <!-- Form Section -->
+                <Grid Grid.Row="1" Margin="20" Background="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Name Field -->
+                    <TextBlock Text="Namn:" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+
+                    <!-- Phone Number -->
+                    <TextBlock Text="Telefonnummer:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtPhoneNumber" Grid.Row="1" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+
+                    <!-- Email -->
+                    <TextBlock Text="E-postadress:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+
+                    <!-- Address -->
+                    <TextBlock Text="Adress:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtAddress" Grid.Row="3" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+
+                    <!-- Zipcode -->
+                    <TextBlock Text="Postnummer:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtZipcode" Grid.Row="4" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+
+                    <!-- City -->
+                    <TextBlock Text="Stad:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtCity" Grid.Row="5" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+
+                    <!-- Företagsnamn -->
+                    <TextBlock Text="Företagsnamn:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtCompanyName" Grid.Row="6" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+
+                    <!-- Organisationsnummer -->
+                    <TextBlock Text="Organisationsnummer:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtOrgNumber" Grid.Row="7" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+
+                    <!-- Landskod -->
+                    <TextBlock Text="Landskod:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtCountryCode" Grid.Row="8" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+
+                </Grid>
+
+                <!-- DataGrid Section -->
+                <StackPanel Grid.Row="2" Margin="5">
+                    <Label Content="Kundregister" FontWeight="Bold" FontSize="14"/>
+                    <DataGrid x:Name="dataGridCustomers" AutoGenerateColumns="True" CanUserAddRows="False" Height="70"/>
+                </StackPanel>
+
+                <!-- Buttons Section -->
+                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                    <Button Content="Spara" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                    <Button Content="Ångra" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                    <Button Content="Registrera Försäkring" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
+                    <Button Content="Avsluta" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+
+    </Grid>
+</Window>
