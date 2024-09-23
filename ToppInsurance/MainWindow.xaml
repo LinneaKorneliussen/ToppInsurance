@@ -1,12 +1,73 @@
-﻿<Window x:Class="ToppInsurance.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ToppInsurance"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+﻿<mah:MetroWindow x:Class="ToppInsurance.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 mc:Ignorable="d"
+                 Title="Toppförsäkringar AB" Height="550" Width="800"
+                 WindowStartupLocation="CenterScreen"
+                 Background="White" AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResize">
 
+    <Grid Background="#80000000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <!-- Margins -->
+        <Border Grid.Row="0" Background="White" />
+        <Image Grid.Row="1" Source="/TopInsuranceWPF;component/Assets/grantopp.jpg" 
+               Width="Auto" Height="Auto" Stretch="Fill" Opacity="0.5"/>
+        <Border Grid.Row="2" Background="White" />
+
+        <!-- Log in window -->
+        <Border Grid.Row="1" Background="White" 
+                VerticalAlignment="Center" HorizontalAlignment="Center" 
+                Width="400" Height="300" Padding="10" Margin="0,0,0,20">
+
+            <StackPanel>
+                <!-- Customer branding -->
+                <Image Source="/TopInsuranceWPF;component/Assets/TFlogotyp.png" 
+                       Width="300" Height="100" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,10,0,2"/>
+
+                <!-- Username -->
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,10">
+                    <iconPacks:PackIconMaterial Kind="Account" Width="30" Height="30" 
+                                                    VerticalAlignment="Center" 
+                                                    HorizontalAlignment="Left"/>
+                    <TextBox Width="300" Height="35" Margin="10,0,0,0" 
+                             mah:TextBoxHelper.Watermark="Användarnamn"/>
+                </StackPanel>
+
+                <!-- Password -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                    <iconPacks:PackIconMaterial Kind="Lock" Width="30" Height="30" 
+                                                    VerticalAlignment="Center" 
+                                                    HorizontalAlignment="Left"/>
+                    <PasswordBox Width="300" Height="35" Margin="10,0,0,0" 
+                                 mah:TextBoxHelper.Watermark="Lösenord"/>
+                </StackPanel>
+
+                <!--Show password checkbox -->
+                <!--
+                <CheckBox Content="Visa lösenord" 
+                          VerticalAlignment="Center" 
+                          HorizontalAlignment="Left" 
+                          Margin="40,0,0,0"
+                          Checked="ShowPassword_Checked"
+                          Unchecked="ShowPassword_Unchecked"/>-->
+
+                <!-- Log in button -->
+                <Button Content="Logga in" Width="150" Height="40" 
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Background="ForestGreen" Foreground="White" FontWeight="Bold"
+                        Margin="0,20,0,0"/>
+            </StackPanel>
+        </Border>
     </Grid>
-</Window>
+</mah:MetroWindow>
