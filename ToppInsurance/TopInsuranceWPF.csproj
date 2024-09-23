@@ -9,8 +9,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\grantopp.jpg" />
+    <None Remove="Assets\TFlogotyp.PNG" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="2.4.10" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="5.0.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ToppInsuranceBL\TopInsuranceBL.csproj" />
     <ProjectReference Include="..\ToppInsuranceEntities\TopInsuranceEntities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\grantopp.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\TFlogotyp.PNG">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
