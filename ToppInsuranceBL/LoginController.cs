@@ -12,6 +12,7 @@ namespace ToppInsuranceBL
             logInRepository = new LogInRepository();
         }
 
+        // Log in method 
         public Employee AuthorizeUser(int agencyNumber, string password)
         {
             return logInRepository.AuthorizeUser(agencyNumber, password);
