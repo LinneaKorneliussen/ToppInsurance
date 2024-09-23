@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Assets\grantopp.jpg" />
+    <None Remove="Assets\logo.jpg" />
     <None Remove="Assets\TFlogotyp.PNG" />
   </ItemGroup>
 
@@ -26,6 +27,9 @@
 
   <ItemGroup>
     <Resource Include="Assets\grantopp.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\logo.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\TFlogotyp.PNG">
