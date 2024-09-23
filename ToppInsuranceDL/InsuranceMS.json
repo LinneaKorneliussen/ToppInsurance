@@ -1,0 +1,7 @@
+{
+  "ConnectionStrings": {
+    //"PatientMS": "Server=(localdb)\\mssqllocaldb;Database=PatientMS;Trusted_Connection=True;", // Connection string for connecting to local database.
+    "InsuranceMS": "Server=sqlutb2-db.hb.se,56077;Database=suht2404;User Id=suht2404;Password=CVH049;TrustServerCertificate=True;" //Connection string configured to connect to an external SQL Server database. 
+  }
+
+}
