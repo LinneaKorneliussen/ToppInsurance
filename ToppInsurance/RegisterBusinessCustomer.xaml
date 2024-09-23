@@ -1,4 +1,4 @@
-﻿<Window x:Class="TopInsuranceWPF.RegisterBCustomer"
+﻿<Window x:Class="TopInsuranceWPF.RegisterBusinessCustomer"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TopInsuranceWPF"
         mc:Ignorable="d"
         xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        Title="RegisterBCustomer" Height="650" Width="1000">
+        Title="RegisterBusinessCustomer" Height="650" Width="1000">
     <Grid>
         <DockPanel>
             <!-- Menu Bar -->
@@ -236,10 +236,9 @@
 
                 <!-- Buttons Section -->
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                    <Button Content="Spara" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
                     <Button Content="Ångra" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
-                    <Button Content="Registrera Försäkring" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
                     <Button Content="Avsluta" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                    <Button Content="Registrera kund" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
                 </StackPanel>
             </Grid>
         </DockPanel>
