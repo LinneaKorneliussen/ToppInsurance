@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToppInsuranceDL\TopInsuranceDL.csproj" />
+    <ProjectReference Include="..\ToppInsuranceEntities\TopInsuranceEntities.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -8,4 +8,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToppInsuranceBL\TopInsuranceBL.csproj" />
+    <ProjectReference Include="..\ToppInsuranceEntities\TopInsuranceEntities.csproj" />
+  </ItemGroup>
+
 </Project>

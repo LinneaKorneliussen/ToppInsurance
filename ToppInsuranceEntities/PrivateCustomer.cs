@@ -8,11 +8,11 @@ namespace ToppInsuranceEntities
 {
     public class PrivateCustomer : Person
     {
-        public int SSN { get; set; }
+        public string SSN { get; set; }
         public int WorkPhonenumber { get; set; }
 
-        public PrivateCustomer(int ssn, int workPhonenumber, string name, int phoneNumber, string emailAddress, int zipCode, string city)
-            : base(name, phoneNumber, emailAddress, zipCode, city) 
+        public PrivateCustomer(string ssn, int workPhonenumber, string name, int phoneNumber, string emailAddress, string address, int zipCode, string city)
+            : base(name, phoneNumber, address, emailAddress, zipCode, city) 
         {
             SSN = ssn;
             WorkPhonenumber = workPhonenumber;
