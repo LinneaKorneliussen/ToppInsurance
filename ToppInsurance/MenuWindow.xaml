@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TopInsuranceWPF"
         xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="MenuWindow" Height="450" Width="800">
+        Title="MenuWindow" Height="650" Width="1000">
     
     <Grid>
             <DockPanel>
@@ -27,7 +27,7 @@
                 </Menu>
 
                 <!-- Left Sidebar Menu -->
-                <StackPanel DockPanel.Dock="Left" Width="220" Background="White" Margin="0,30,0,0" VerticalAlignment="Top">
+                <StackPanel DockPanel.Dock="Left" Width="220" Background="White" Margin="0,120,0,0" VerticalAlignment="Top">
 
                     <!-- Buttons with Icons -->
                     <Button Height="45" Margin="10,10" Background="#223A2A" Foreground="White" BorderBrush="Transparent">
@@ -132,13 +132,22 @@
                     <Button Height="45" Margin="10,10" Background="#223A2A" Foreground="White" BorderBrush="Transparent">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
-                                <material:PackIconMaterial Kind="HelpCircle" Width="20" Height="20" Margin="0,0,10,0" Foreground="White"/>
+                                <material:PackIconMaterial Kind="HelpCircle" Width="20" Height="20" Margin="0,10,10,0" Foreground="White"/>
                                 <TextBlock Text="Hjälp" VerticalAlignment="Center" FontWeight="Bold"/>
                             </StackPanel>
                         </Button.Content>
                     </Button>
 
-                </StackPanel>
+                <Button Height="45" Margin="10,10" Background="#223A2A" Foreground="White" BorderBrush="Transparent">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <material:PackIconMaterial Kind="Logout" Width="20" Height="20" Margin="0,0,10,0" Foreground="White"/>
+                            <TextBlock Text="Logga ut" VerticalAlignment="Center" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+            </StackPanel>
 
                 <!-- Main Content Area -->
                 <Grid Background="White" Margin="0,30,0,0">
