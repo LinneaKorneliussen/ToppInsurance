@@ -10,7 +10,7 @@ namespace TopInsuranceDL
         public DbSet<Employee> Employees { get; set; }
         public InsuranceContext()
         {
-            ResetSeed();
+           // ResetSeed();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -21,46 +21,46 @@ namespace TopInsuranceDL
                 .Build()
                 .GetConnectionString("InsuranceMS"));
             base.OnConfiguring(optionsBuilder);    
-
-            
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Employee>().HasIndex(e => e.EmployeeId).IsUnique();
-            modelBuilder.Entity<Employee>().ToTable("Employee");
-            //modelBuilder.Entity<Nurse>().ToTable("Nurses");
-            //modelBuilder.Entity<Doctor>().HasMany(d => d.appointments).WithOne(a => a.Doctor).HasForeignKey(a => a.DoctorId);
+            modelBuilder.Entity<Employee>().ToTable("Employees");
         }
 
         public void ResetSeed()
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
+            //Database.EnsureDeleted();
+            //Database.EnsureCreated();
 
-            Employees.Add(new Employee(
-                "Linnea Korneliussen",      
-                0722136462,                 
-                "Linnea@hotmail.com",       
-                "Västanvindsgatan 6",       
-                41717,                      
-                "Göteborg",                 
-                EmployeeRole.SalesPerson,   
-                "Hej123"                   
-            ));
+            //var employee1 = new Employee(
+            //    "Linnea Korneliussen",
+            //    0722136462,
+            //    "Linnea@hotmail.com",
+            //    "Västanvindsgatan 6",
+            //    41717,
+            //    "Göteborg",
+            //    EmployeeRole.SalesPerson,
+            //    "Hej123"
+            //);
 
-            Employees.Add(new Employee(
-                "Lisa Nilsson",
-                098765387,
-                "LisaNilsson@gmail.com",
-                "Stengatan 5",
-                93874,
-                "Oslo",
-                EmployeeRole.SalesPerson,
-                "1234"));
+            //Employees.Add(employee1);
 
-            SaveChanges();
+            //var employee2 = new Employee(
+            //    "Lisa Nilsson",
+            //    098765387,
+            //    "LisaNilsson@gmail.com",
+            //    "Stengatan 5",
+            //    93874,
+            //    "Oslo",
+            //    EmployeeRole.SalesPerson,
+            //    "1234"
+            //);
+
+            //Employees.Add(employee2);
+
+
+            //SaveChanges();
         }
     }
 }
