@@ -1,7 +1,11 @@
-﻿namespace ToppInsuranceEntities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ToppInsuranceEntities
 {
-    public class Person
+    public abstract class Person
     {
+        [Key]
+        public int PersonId { get; init; }
         public string Name { get; set; }
         public int Phonenumber { get; set; }
         public string Emailadress { get; set; }
@@ -19,5 +23,6 @@
             City = city;
         }
 
+        public Person() { }
     }
 }
