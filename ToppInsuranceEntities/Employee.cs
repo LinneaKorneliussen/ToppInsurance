@@ -1,33 +1,30 @@
 ﻿using System;
 using System.Text;
 using System.Security.Cryptography;
-using System.ComponentModel.DataAnnotations;
-using ToppInsuranceEntities;
-using System.ComponentModel.DataAnnotations.Schema;
+
+
 
 namespace TopInsuranceEntities
 {
-    [Table("Employees")]
     public class Employee : Person
     {
         public EmployeeRole EmployeeRole { get; set; }
         public string PasswordHash { get; private set; }
-        //public string Username { get; private set; }  // Ny egenskap för användarnamn
 
         public Employee(string name, int phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
             : base(name, phoneNumber, emailAddress, address, zipCode, city)
         {
             EmployeeRole = employeeRole;
             PasswordHash = HashFunction(password);
-            //Username = GenerateUsername();  // Generera användarnamn vid skapande
+            
         }
 
         public Employee() { }
 
-        private string GenerateUsername()
+        public string GenerateUsername()
         {
-            // Skapa användarnamn med prefix "1234" följt av EmployeeId
-            return $"1234{PersonId}";
+            string username = $"{PersonId}{Name}";
+            return username;
         }
 
         public string GetHashedPassword(string password)

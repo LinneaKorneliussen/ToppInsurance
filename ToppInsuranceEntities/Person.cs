@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ToppInsuranceEntities
+namespace TopInsuranceEntities
 {
     public abstract class Person
     {

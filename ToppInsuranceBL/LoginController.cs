@@ -1,7 +1,8 @@
-﻿using ToppInsuranceDL;
-using TopInsuranceEntities;
+﻿using TopInsuranceEntities;
+using TopInsuranceDL;
 
-namespace ToppInsuranceBL
+
+namespace TopInsuranceBL
 {
     public class LoginController
     {
@@ -13,7 +14,7 @@ namespace ToppInsuranceBL
         }
 
         // Log in method 
-        public Employee AuthorizeUser(int agencyNumber, string password)
+        public Person AuthorizeUser(string agencyNumber, string password)
         {
             return logInRepository.AuthorizeUser(agencyNumber, password);
         }

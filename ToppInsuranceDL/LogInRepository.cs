@@ -1,7 +1,7 @@
-﻿using TopInsuranceDL;
-using TopInsuranceEntities;
+﻿using TopInsuranceEntities;
 
-namespace ToppInsuranceDL
+
+namespace TopInsuranceDL
 {
     public class LogInRepository
     {
@@ -9,22 +9,26 @@ namespace ToppInsuranceDL
 
         public Employee LoggedIn { get; private set; }
 
-        public Employee AuthorizeUser(int employeeId, string password)
+        public Person AuthorizeUser(string username, string password)
         {
+      
             unitOfWork = UnitOfWork.GetInstance();
 
-            // Hämta den verifierade anställde baserat på användarnamn
-            Employee verifiedEmployee = unitOfWork.Employees.FirstOrDefault(a => a.PersonId == employeeId);
+            Employee verifiedEmployee = unitOfWork.EmployeeRepository.FirstOrDefault(a => a.GenerateUsername() == username);
 
-            if (verifiedEmployee != null && verifiedEmployee.GetHashedPassword(password) == verifiedEmployee.PasswordHash)
+            if (verifiedEmployee != null)
             {
-                LoggedIn = verifiedEmployee;
-                return verifiedEmployee;
+                if (verifiedEmployee.GetHashedPassword(password) == verifiedEmployee.PasswordHash)
+                {
+                    LoggedIn = verifiedEmployee;
+                    return verifiedEmployee; 
+                }
             }
 
             LoggedIn = null;
             return null;
         }
+
     }
 
 }
