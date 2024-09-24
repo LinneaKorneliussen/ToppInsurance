@@ -54,14 +54,14 @@ namespace TopInsuranceWPF.ViewModels
             {
                 switch (employee.EmployeeRole) // Använd den typade instansen
                 {
-                    case EmployeeRole.SalesPerson:
+                    case EmployeeRole.Säljare:
                         // Hantera inloggning för SalesPerson
                         MessageBox.Show("Inloggad som SalesPerson!");
                         MenuWindow menu = new MenuWindow();
                         menu.ShowDialog();
                         break;
 
-                    case EmployeeRole.SalesAssistant:
+                    case EmployeeRole.Försäljningsassistent:
                         // Hantera inloggning för SalesAssistant
                         MessageBox.Show("Inloggad som SalesAssistant!");
                         // Navigera till SalesAssistant-vyn eller logik
@@ -73,13 +73,13 @@ namespace TopInsuranceWPF.ViewModels
                         // Navigera till VD-vyn eller logik
                         break;
 
-                    case EmployeeRole.EconomicAssistant:
+                    case EmployeeRole.Ekonomiassistent:
                         // Hantera inloggning för EconomicAssistant
                         MessageBox.Show("Inloggad som EconomicAssistant!");
                         // Navigera till EconomicAssistant-vyn eller logik
                         break;
 
-                    case EmployeeRole.SalesManager:
+                    case EmployeeRole.Försäljningschef:
                         // Hantera inloggning för SalesManager
                         MessageBox.Show("Inloggad som SalesManager!");
                         // Navigera till SalesManager-vyn eller logik
