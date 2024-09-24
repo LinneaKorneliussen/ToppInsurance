@@ -8,9 +8,9 @@ namespace TopInsuranceEntities
 {
     public enum AdditionalInsurance
     {
-        None,
-        Casualty,
-        SickLeave
+        Ingen,
+        InvaliditetVidOlycksfall,
+        ErsättningVidLångvarigSjukskrivning
         
     }
 }

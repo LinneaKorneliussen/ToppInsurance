@@ -8,10 +8,10 @@ namespace TopInsuranceEntities
 {
     public enum InsuranceType
     {
-        LifeInsurance, 
-        SicknessAndAccidentInsurace,
-        BusinessInsurance,
-        VehicleInsurance,
-        RealEstateInsurance
+        Livförsäkring,
+        SjukOchOlycksfallsförsäkring,
+        Företagsförsäkring,
+        Fordonsförsäkring,
+        FastighetsOchInventarieförsäkring
     }
 }

@@ -8,8 +8,8 @@ namespace TopInsuranceEntities
 {
     public enum Status
     {
-        Request,
-        Active,
-        Closed
+        Förfrågan,
+        Aktiv,
+        Avslutad
     }
 }
