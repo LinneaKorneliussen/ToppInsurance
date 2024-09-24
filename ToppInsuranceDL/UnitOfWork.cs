@@ -7,7 +7,8 @@ namespace TopInsuranceDL
         private static UnitOfWork instance;
         private InsuranceContext context;
 
-        public Repository<Employee> Employees { get; private set; }
+        public Repository<Person> PersonRepository { get; private set; }
+        public Repository<Employee> EmployeeRepository { get; private set; }
         // public Repository<LifeInsurance> LifeInsuranceRepository { get; private set; }  
 
         public static UnitOfWork GetInstance()
@@ -16,7 +17,8 @@ namespace TopInsuranceDL
             {
                 instance = new UnitOfWork();
                 instance.context = new InsuranceContext();
-                instance.Employees = new Repository<Employee>(instance.context);
+                instance.PersonRepository = new Repository<Person>(instance.context);
+                instance.EmployeeRepository = new Repository<Employee>(instance.context);
                 //instance.LifeInsuranceRepository = new Repository<LifeInsurance>(instance.context);
             }
             return instance;
