@@ -1,8 +1,8 @@
 ﻿using System.Windows.Input;
 using System.Windows;
 using TopInsuranceWPF.Commands;
-using ToppInsuranceBL;
 using TopInsuranceEntities;
+using TopInsuranceBL;
 
 namespace TopInsuranceWPF.ViewModels
 {
@@ -17,14 +17,14 @@ namespace TopInsuranceWPF.ViewModels
         }
 
         #region Login properties 
-        private int _employeeId;
-        public int EmployeeId
+        private string _username;
+        public string Username
         {
-            get { return _employeeId; }
+            get { return _username; }
             set
             {
-                _employeeId = value;
-                OnPropertyChanged(nameof(EmployeeId));
+                _username = value;
+                OnPropertyChanged(nameof(Username));
             }
         }
 
@@ -47,17 +47,18 @@ namespace TopInsuranceWPF.ViewModels
         #region Login Methods 
         private void Login()
         {
-            Employee user = loginController.AuthorizeUser(EmployeeId, Password);
 
-            if (user != null)
+            Person user = loginController.AuthorizeUser(Username, Password);
+
+            if (user != null && user is Employee employee) // Typa om här
             {
-                switch (user.EmployeeRole)
+                switch (employee.EmployeeRole) // Använd den typade instansen
                 {
                     case EmployeeRole.SalesPerson:
                         // Hantera inloggning för SalesPerson
                         MessageBox.Show("Inloggad som SalesPerson!");
                         MenuWindow menu = new MenuWindow();
-                        menu.Show();
+                        menu.ShowDialog();
                         break;
 
                     case EmployeeRole.SalesAssistant:
@@ -93,6 +94,7 @@ namespace TopInsuranceWPF.ViewModels
             {
                 MessageBox.Show("Misslyckades med inloggning. Försök igen!");
             }
+
         }
 
         #endregion
@@ -105,8 +107,8 @@ namespace TopInsuranceWPF.ViewModels
 
             switch (columnName)
             {
-                case "EmployeeId": 
-                    if (EmployeeId < 0)
+                case "Username": 
+                    if (string.IsNullOrWhiteSpace(Username))
                     {
                         errorMessage = "Agency number must be a positive integer.";
                     }
