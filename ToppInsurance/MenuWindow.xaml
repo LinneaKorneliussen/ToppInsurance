@@ -79,6 +79,13 @@
 
                                 <Button Style="{StaticResource menuButton}">
                                     <StackPanel Orientation="Horizontal" >
+                                        <material:PackIconMaterial Kind="AccountEdit" Style="{StaticResource menuButtonIcon}"/>
+                                        <TextBlock Text="Ändra kunduppgifter" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Style="{StaticResource menuButton}">
+                                    <StackPanel Orientation="Horizontal" >
                                         <material:PackIconMaterial Kind="ChartBar"  Style="{StaticResource menuButtonIcon}"/>
                                         <TextBlock Text="Statistik" />
                                     </StackPanel>
