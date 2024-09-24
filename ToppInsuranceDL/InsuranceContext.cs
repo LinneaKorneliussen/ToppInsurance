@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.IO;
 using TopInsuranceEntities;
+using System.IO;
 
 namespace TopInsuranceDL
 {
@@ -20,36 +20,47 @@ namespace TopInsuranceDL
                 .AddJsonFile("InsuranceMS.json", true, true)
                 .Build()
                 .GetConnectionString("InsuranceMS"));
-            base.OnConfiguring(optionsBuilder);
+            base.OnConfiguring(optionsBuilder);    
+
+            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Patient>().HasIndex(p => p.PersonalNumber).IsUnique();
-            //modelBuilder.Entity<Doctor>().ToTable("Doctors");
+            //modelBuilder.Entity<Employee>().HasIndex(e => e.EmployeeId).IsUnique();
+            modelBuilder.Entity<Employee>().ToTable("Employee");
             //modelBuilder.Entity<Nurse>().ToTable("Nurses");
             //modelBuilder.Entity<Doctor>().HasMany(d => d.appointments).WithOne(a => a.Doctor).HasForeignKey(a => a.DoctorId);
         }
 
         public void ResetSeed()
         {
-            ////Database.EnsureDeleted();
-            //Database.EnsureCreated();
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
 
-            //Employee p = new Employee(
-            //    agencyNuber: 123,
-            //    employeeRole: EmployeeRole.SalesPerson,
-            //    password: "Hej123",
-            //    name: "Linnea Korneliussen",
-            //    phoneNumber: 0722136462,
-            //    emailAddress: "Linnea@hotmail.com",
-            //    address: "Västanvindsgatan 6",
-            //    zipCode: 41717,
-            //    city: "Göteborg");
+            Employees.Add(new Employee(
+                "Linnea Korneliussen",      
+                0722136462,                 
+                "Linnea@hotmail.com",       
+                "Västanvindsgatan 6",       
+                41717,                      
+                "Göteborg",                 
+                EmployeeRole.SalesPerson,   
+                "Hej123"                   
+            ));
 
-            //Employees.Add(p);
+            Employees.Add(new Employee(
+                "Lisa Nilsson",
+                098765387,
+                "LisaNilsson@gmail.com",
+                "Stengatan 5",
+                93874,
+                "Oslo",
+                EmployeeRole.SalesPerson,
+                "1234"));
 
-            //SaveChanges();
+            SaveChanges();
         }
     }
 }
