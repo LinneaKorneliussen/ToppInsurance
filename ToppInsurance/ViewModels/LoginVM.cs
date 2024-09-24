@@ -13,17 +13,18 @@ namespace TopInsuranceWPF.ViewModels
         public LoginVM()
         {
             loginController = new LoginController();
+            LoginCommand = new RelayCommand(Login);
         }
 
         #region Login properties 
-        private int _agencyNumber;
-        public int AgencyNumber
+        private int _employeeId;
+        public int EmployeeId
         {
-            get { return _agencyNumber; }
+            get { return _employeeId; }
             set
             {
-                _agencyNumber = value;
-                OnPropertyChanged(nameof(AgencyNumber));
+                _employeeId = value;
+                OnPropertyChanged(nameof(EmployeeId));
             }
         }
 
@@ -46,7 +47,7 @@ namespace TopInsuranceWPF.ViewModels
         #region Login Methods 
         private void Login()
         {
-            Employee user = loginController.AuthorizeUser(AgencyNumber, Password);
+            Employee user = loginController.AuthorizeUser(EmployeeId, Password);
 
             if (user != null)
             {
@@ -55,7 +56,8 @@ namespace TopInsuranceWPF.ViewModels
                     case EmployeeRole.SalesPerson:
                         // Hantera inloggning för SalesPerson
                         MessageBox.Show("Inloggad som SalesPerson!");
-                        // Navigera till SalesPerson-vyn eller logik
+                        MenuWindow menu = new MenuWindow();
+                        menu.Show();
                         break;
 
                     case EmployeeRole.SalesAssistant:
@@ -103,8 +105,8 @@ namespace TopInsuranceWPF.ViewModels
 
             switch (columnName)
             {
-                case "AgencyNumber": 
-                    if (AgencyNumber <= 0) 
+                case "EmployeeId": 
+                    if (EmployeeId < 0)
                     {
                         errorMessage = "Agency number must be a positive integer.";
                     }

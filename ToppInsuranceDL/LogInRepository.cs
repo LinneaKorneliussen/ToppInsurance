@@ -7,21 +7,24 @@ namespace ToppInsuranceDL
     {
         private UnitOfWork unitOfWork;
 
-        public LogInRepository()
+        public Employee LoggedIn { get; private set; }
+
+        public Employee AuthorizeUser(int employeeId, string password)
         {
             unitOfWork = UnitOfWork.GetInstance();
-        }
 
-        public Employee AuthorizeUser(int agencyNumber, string password)
-        {
-            Employee verifiedEmployee = unitOfWork.Employees.FirstOrDefault(a => a.AgencyNumber == agencyNumber);
+            // Hämta den verifierade anställde baserat på användarnamn
+            Employee verifiedEmployee = unitOfWork.Employees.FirstOrDefault(a => a.PersonId == employeeId);
 
             if (verifiedEmployee != null && verifiedEmployee.GetHashedPassword(password) == verifiedEmployee.PasswordHash)
             {
+                LoggedIn = verifiedEmployee;
                 return verifiedEmployee;
             }
+
+            LoggedIn = null;
             return null;
         }
-
     }
+
 }
