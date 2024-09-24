@@ -8,10 +8,10 @@ namespace TopInsuranceEntities
 {
     public enum EmployeeRole
     {
-        SalesPerson, 
-        SalesAssistant, 
+        Säljare, 
+        Försäljningsassistent, 
         VD, 
-        EconomicAssistant, 
-        SalesManager 
+        Ekonomiassistent, 
+        Försäljningschef 
     }
 }

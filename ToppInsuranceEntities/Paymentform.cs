@@ -8,9 +8,9 @@ namespace TopInsuranceEntities
 {
     public enum Paymentform
     {
-        Year,
-        HalfYear,
-        QuarterYear,
-        Month
+        År,
+        Halvår,
+        Kvartal,
+        Månad
     }
 }
