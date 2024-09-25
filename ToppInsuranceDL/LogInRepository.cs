@@ -9,12 +9,12 @@ namespace TopInsuranceDL
 
         public Employee LoggedIn { get; private set; }
 
-        public Person AuthorizeUser(string username, string password)
+        public Employee AuthorizeUser(string agencynumber, string password)
         {
       
             unitOfWork = UnitOfWork.GetInstance();
 
-            Employee verifiedEmployee = unitOfWork.EmployeeRepository.FirstOrDefault(a => a.GenerateUsername() == username);
+            Employee verifiedEmployee = unitOfWork.EmployeeRepository.FirstOrDefault(a => a.AgencyNumber == agencynumber);
 
             if (verifiedEmployee != null)
             {

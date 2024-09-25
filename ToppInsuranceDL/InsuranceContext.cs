@@ -10,7 +10,7 @@ namespace TopInsuranceDL
         public DbSet<Employee> Employees { get; set; }
         public InsuranceContext()
         {
-           // ResetSeed();
+           //ResetSeed();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -40,7 +40,7 @@ namespace TopInsuranceDL
             //    "Västanvindsgatan 6",
             //    41717,
             //    "Göteborg",
-            //    EmployeeRole.SalesPerson,
+            //    EmployeeRole.Säljare,
             //    "Hej123"
             //);
 
@@ -53,14 +53,14 @@ namespace TopInsuranceDL
             //    "Stengatan 5",
             //    93874,
             //    "Oslo",
-            //    EmployeeRole.SalesPerson,
+            //    EmployeeRole.Säljare,
             //    "1234"
             //);
 
             //Employees.Add(employee2);
 
 
-            //SaveChanges();
+            SaveChanges();
         }
     }
 }

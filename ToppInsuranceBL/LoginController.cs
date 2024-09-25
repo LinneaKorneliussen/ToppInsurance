@@ -14,7 +14,7 @@ namespace TopInsuranceBL
         }
 
         // Log in method 
-        public Person AuthorizeUser(string agencyNumber, string password)
+        public Employee AuthorizeUser(string agencyNumber, string password)
         {
             return logInRepository.AuthorizeUser(agencyNumber, password);
         }
