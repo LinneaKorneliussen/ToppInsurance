@@ -17,9 +17,9 @@ namespace TopInsuranceBL
         }
 
         #region Register new patient Method
-        public void CreateNewPrivateCustomer(string ssn, int workPhonenumber, string name, int phoneNumber, string emailAddress, string address, int zipCode, string city)
+        public void CreateNewPrivateCustomer(string name, string phoneNumber, string emailAddress, string address, int zipCode, string city, string ssn, string workPhonenumber)
         {
-            privateRepository.CreateNewPrivateCustomer(ssn, workPhonenumber, name, phoneNumber, emailAddress, address, zipCode, city);
+            privateRepository.CreateNewPrivateCustomer(name, phoneNumber, emailAddress, address, zipCode, city, ssn, workPhonenumber);
         }
         #endregion
     }

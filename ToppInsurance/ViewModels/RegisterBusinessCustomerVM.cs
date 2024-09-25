@@ -4,6 +4,7 @@ using System.Windows;
 using TopInsuranceWPF.Commands;
 using TopInsuranceBL;
 using TopInsuranceEntities;
+using ControlzEx.Standard;
 
 
 namespace TopInsuranceWPF.ViewModels
@@ -15,6 +16,7 @@ namespace TopInsuranceWPF.ViewModels
         public RegisterBusinessCustomerVM()
         {
             businessController = new BusinessController();
+            AddBusinessCustomerCommand = new RelayCommand(AddBusinessCustomer);
         }
 
         #region Properties Add privatecustomer
@@ -169,11 +171,11 @@ namespace TopInsuranceWPF.ViewModels
             }
 
 
-            if (!IsValidPhoneNumber(NewPhoneNumber))
-            {
-                MessageBox.Show("Invalid phonenumber format.\nPlease make sure the phonenumber follows the format (xxx-xxxxxxx)");
-                return;
-            }
+            //if (!IsValidPhoneNumber(NewPhoneNumber))
+            //{
+            //    MessageBox.Show("Invalid phonenumber format.\nPlease make sure the phonenumber follows the format (xxx-xxxxxxx)");
+            //    return;
+            //}
 
             //if (!businessController.IsOrganizationalnumberUnique(NewOrganizationalnumber))
             //{
@@ -185,9 +187,8 @@ namespace TopInsuranceWPF.ViewModels
             int orgNumber = int.Parse(NewOrganizationalnumber);
             int zipcode = int.Parse(NewZipcode);
             int countrycode = int.Parse(NewCountryCode);
-            int phonenumber = int.Parse(NewPhoneNumber);
 
-            businessController.CreateNewBusinessCustomer(NewCompanyName, orgNumber, countrycode, NewName, phonenumber, NewEmailadress, NewAddress, zipcode, NewCity);
+            businessController.CreateNewBusinessCustomer(NewName, NewPhoneNumber, NewEmailadress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
 
             MessageBox.Show($"Patient registered successfully, See details below:\n Name: {NewName}\n SSN: {NewName}\n Address: {NewAddress}\n Phone: {NewPhoneNumber}\n Email: {NewEmailadress}");
 
@@ -245,28 +246,24 @@ namespace TopInsuranceWPF.ViewModels
                     if (string.IsNullOrEmpty(NewCity))
                     {
                         errorMessage = "Field is required.";
-
                     }
                     break;
                 case "NewCompanyName":
                     if (string.IsNullOrEmpty(NewCompanyName))
                     {
                         errorMessage = "Field is required.";
-
                     }
                     break;
-                case "NewOrganizationalNumber":
+                case "NewOrganizationalnumber": // Ändrat här för att matcha fältet korrekt
                     if (string.IsNullOrEmpty(NewOrganizationalnumber))
                     {
                         errorMessage = "Field is required.";
-
                     }
                     break;
                 case "NewCountryCode":
                     if (string.IsNullOrEmpty(NewCountryCode))
                     {
                         errorMessage = "Field is required.";
-
                     }
                     break;
                 default:
@@ -276,6 +273,7 @@ namespace TopInsuranceWPF.ViewModels
 
             return errorMessage;
         }
+
 
         public override string this[string columnName]
         {

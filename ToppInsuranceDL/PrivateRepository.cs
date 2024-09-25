@@ -16,11 +16,11 @@ namespace TopInsuranceDL
         }
 
         #region Register new private customer Method
-        public void CreateNewPrivateCustomer(string ssn, int workPhonenumber, string name, int phoneNumber, 
-            string emailAddress, string address, int zipCode, string city)
+        public void CreateNewPrivateCustomer(string name, string phoneNumber, 
+            string emailAddress, string address, int zipCode, string city, string ssn, string workPhonenumber)
         {
-            PrivateCustomer privateCustomer = new PrivateCustomer(ssn, workPhonenumber, name, phoneNumber, emailAddress, address, zipCode, city);
-            //unitOfWork.PrivateRepository.Add(privateCustomer);
+            PrivateCustomer privateCustomer = new PrivateCustomer(name, phoneNumber, emailAddress, address, zipCode, city, ssn, workPhonenumber);
+            unitOfWork.PCRepository.Add(privateCustomer);
             unitOfWork.Save();
         }
         #endregion
