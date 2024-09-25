@@ -60,7 +60,7 @@ namespace TopInsuranceDL
             //Employees.Add(employee2);
 
 
-            SaveChanges();
+            //SaveChanges();
         }
     }
 }

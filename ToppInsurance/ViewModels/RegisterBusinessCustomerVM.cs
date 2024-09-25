@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using TopInsuranceWPF.Commands;
-using ToppInsuranceBL;
 using TopInsuranceBL;
 using TopInsuranceEntities;
 
