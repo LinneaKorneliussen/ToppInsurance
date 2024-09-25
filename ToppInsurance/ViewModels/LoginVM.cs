@@ -38,6 +38,19 @@ namespace TopInsuranceWPF.ViewModels
                 OnPropertyChanged(nameof(Password));
             }
         }
+
+        private bool _isPasswordVisible;
+        public bool IsPasswordVisible
+        {
+            get => _isPasswordVisible;
+            set
+            {
+                _isPasswordVisible = value;
+                OnPropertyChanged(nameof(IsPasswordVisible));
+            }
+        }
+
+
         #endregion
 
         #region Login Commands
