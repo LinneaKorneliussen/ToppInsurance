@@ -13,12 +13,12 @@ namespace TopInsuranceBL
             logInRepository = new LogInRepository();
         }
 
-        // Log in method 
+        #region Authorize User Controller
         public Employee AuthorizeUser(string agencyNumber, string password)
         {
             return logInRepository.AuthorizeUser(agencyNumber, password);
         }
-
+        #endregion
 
     }
 }

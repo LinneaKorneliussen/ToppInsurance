@@ -10,24 +10,34 @@ namespace TopInsuranceEntities
     {
         public EmployeeRole EmployeeRole { get; set; }
         public string PasswordHash { get; private set; }
-
         public string AgencyNumber { get; private set; }
 
-        public Employee(string name, int phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
+        private static List<string> generatedAgencyNumbers = new List<string>();
+
+        public Employee(string name, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
             : base(name, phoneNumber, emailAddress, address, zipCode, city)
         {
             EmployeeRole = employeeRole;
             PasswordHash = HashFunction(password);
-            AgencyNumber = GenerateAgencynumber();
+            AgencyNumber = GenerateUniqueAgencyNumber();
             
         }
 
         public Employee() { }
 
-        private string GenerateAgencynumber()
+        private string GenerateUniqueAgencyNumber()
         {
             Random random = new Random();
-            return random.Next(1000, 9999).ToString(); 
+            string newNumber;
+
+            do
+            {
+                newNumber = random.Next(1000, 9999).ToString(); 
+            }
+            while (generatedAgencyNumbers.Contains(newNumber));
+
+            generatedAgencyNumbers.Add(newNumber);
+            return newNumber;
         }
 
 

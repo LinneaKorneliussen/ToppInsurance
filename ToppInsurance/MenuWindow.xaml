@@ -68,7 +68,7 @@
                                     </StackPanel>
                                 </Button>
 
-                                <Button Style="{StaticResource menuButton}">
+                                <Button Style="{StaticResource menuButton}" Command="{Binding BusinessAddCommand}">
                                     <StackPanel Orientation="Horizontal" >
                                         <material:PackIconMaterial Kind="Briefcase"  Style="{StaticResource menuButtonIcon}"/>
                                         <TextBlock Text="Registrera företagskund" />

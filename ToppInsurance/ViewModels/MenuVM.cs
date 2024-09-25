@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Net.NetworkInformation;
 using System.Windows;
 using System.Numerics;
+using ControlzEx.Standard;
 
 
 namespace TopInsuranceWPF.ViewModels
@@ -22,7 +23,8 @@ namespace TopInsuranceWPF.ViewModels
         public MenuVM(Employee user)
         {
             userName = user.Name;
-            userRole = user.EmployeeRole.ToString(); // Sätt användarens roll
+            userRole = user.EmployeeRole.ToString();
+            BusinessAddCommand = new RelayCommand(AddBusinessCustomerBTN);
         }
         public MenuVM() { }
         #endregion
@@ -58,6 +60,17 @@ namespace TopInsuranceWPF.ViewModels
             get { return $"{UserName} - {UserRole}"; } // Returnerar både namn och roll
         }
         #endregion
+
+
+        #region MenuVM Commands
+        public ICommand BusinessAddCommand { get; }
+        #endregion
+
+        private void AddBusinessCustomerBTN()
+        {
+            RegisterBusinessCustomer registerBusinessCustomer = new RegisterBusinessCustomer();
+            registerBusinessCustomer.ShowDialog();
+        }
 
 
         // Implementera den abstrakta indexeraren från ObservableObject

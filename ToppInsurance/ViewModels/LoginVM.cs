@@ -75,10 +75,20 @@ namespace TopInsuranceWPF.ViewModels
                         menu.DataContext = menuVM;
                         menu.ShowDialog();
                         break;
+                    case EmployeeRole.Försäljningschef:
+                        // Hantera inloggning för SalesPerson
+                        MessageBox.Show($"Inloggad som {user.Name}");
+                        MenuWindow menu1 = new MenuWindow();
+                        RegisterBusinessCustomer menuFC = new RegisterBusinessCustomer();
+                        menuFC.DataContext = menuFC;
+                        menuFC.ShowDialog();
+                        break;
+
 
                     default:
                         MessageBox.Show("Ogiltig roll!");
                         break;
+
                 }
             }
             else

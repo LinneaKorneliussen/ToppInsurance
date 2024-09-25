@@ -9,9 +9,10 @@ namespace TopInsuranceDL
         private static UnitOfWork instance;
         private InsuranceContext context;
 
-        //public Repository<Person> PersonRepository { get; private set; }
         public Repository<Employee> EmployeeRepository { get; private set; }
-        // public Repository<LifeInsurance> LifeInsuranceRepository { get; private set; }  
+        public Repository<PrivateCustomer> PCRepository { get; private set; }
+        public Repository<BusinessCustomer> BCRepository { get; private set; }
+        
 
         public static UnitOfWork GetInstance()
         {
@@ -19,16 +20,14 @@ namespace TopInsuranceDL
             {
                 instance = new UnitOfWork();
                 instance.context = new InsuranceContext();
-                //instance.PersonRepository = new Repository<Person>(instance.context);
                 instance.EmployeeRepository = new Repository<Employee>(instance.context);
-                //instance.LifeInsuranceRepository = new Repository<LifeInsurance>(instance.context);
+                instance.PCRepository = new Repository<PrivateCustomer>(instance.context);
+                instance.BCRepository = new Repository<BusinessCustomer>(instance.context);
+               
             }
             return instance;
         }
-        private UnitOfWork()
-        {
-
-        }
+        private UnitOfWork() {}
         public void Save()
         {
             context.SaveChanges();
