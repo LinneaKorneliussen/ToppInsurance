@@ -170,6 +170,16 @@ namespace TopInsuranceWPF.ViewModels
                 return;
             }
 
+            int orgNumber = int.Parse(NewOrganizationalnumber);
+            int zipcode = int.Parse(NewZipcode);
+            int countrycode = int.Parse(NewCountryCode);
+
+            businessController.CreateNewBusinessCustomer(NewName, NewPhoneNumber, NewEmailadress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
+
+            MessageBox.Show($"Företagskund registerades korrekt, Se detaljer nedan:\n Namn: {NewName}\n SSN: {NewName}\n Adress: {NewAddress}\n Telefonnummer: {NewPhoneNumber}\n Email: {NewEmailadress}");
+
+            ClearFields();
+
 
             //if (!IsValidPhoneNumber(NewPhoneNumber))
             //{
@@ -182,16 +192,12 @@ namespace TopInsuranceWPF.ViewModels
             //    MessageBox.Show("Organizational number is not unique.");
             //    return;
             //}
+        }
+        #endregion
 
-
-            int orgNumber = int.Parse(NewOrganizationalnumber);
-            int zipcode = int.Parse(NewZipcode);
-            int countrycode = int.Parse(NewCountryCode);
-
-            businessController.CreateNewBusinessCustomer(NewName, NewPhoneNumber, NewEmailadress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
-
-            MessageBox.Show($"Patient registered successfully, See details below:\n Name: {NewName}\n SSN: {NewName}\n Address: {NewAddress}\n Phone: {NewPhoneNumber}\n Email: {NewEmailadress}");
-
+        #region Clear fields
+        private void ClearFields()
+        {
             NewName = string.Empty;
             NewPhoneNumber = string.Empty;
             NewEmailadress = string.Empty;
@@ -201,7 +207,6 @@ namespace TopInsuranceWPF.ViewModels
             NewCompanyName = string.Empty;
             NewOrganizationalnumber = string.Empty;
             NewCountryCode = string.Empty;
-
         }
         #endregion
 
@@ -215,59 +220,59 @@ namespace TopInsuranceWPF.ViewModels
                 case "NewName":
                     if (string.IsNullOrWhiteSpace(NewName))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Namn är obligatoriskt.";
                     }
                     break;
                 case "NewPhoneNumber":
                     if (string.IsNullOrWhiteSpace(NewPhoneNumber))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Telefonnummer är obligatoriskt.";
                     }
                     break;
                 case "NewEmailadress":
                     if (string.IsNullOrWhiteSpace(NewEmailadress))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "E-post är obligatoriskt.";
                     }
                     break;
                 case "NewAddress":
                     if (string.IsNullOrWhiteSpace(NewAddress))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Adress är obligatoriskt.";
                     }
                     break;
                 case "NewZipcode":
                     if (string.IsNullOrWhiteSpace(NewZipcode))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Postnummer är obligatoriskt.";
                     }
                     break;
                 case "NewCity":
                     if (string.IsNullOrEmpty(NewCity))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Stad är obligatoriskt.";
                     }
                     break;
                 case "NewCompanyName":
                     if (string.IsNullOrEmpty(NewCompanyName))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Företagsnamn är obligatoriskt.";
                     }
                     break;
                 case "NewOrganizationalnumber": // Ändrat här för att matcha fältet korrekt
                     if (string.IsNullOrEmpty(NewOrganizationalnumber))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Org.nummer är obligatoriskt.";
                     }
                     break;
                 case "NewCountryCode":
                     if (string.IsNullOrEmpty(NewCountryCode))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Landskod är obligatoriskt.";
                     }
                     break;
                 default:
-                    errorMessage = "Invalid column name.";
+                    errorMessage = "Felaktigt.";
                     break;
             }
 

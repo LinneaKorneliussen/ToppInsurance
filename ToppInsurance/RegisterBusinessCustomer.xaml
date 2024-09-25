@@ -11,14 +11,14 @@
     <Window.DataContext>
         <vm:RegisterBusinessCustomerVM/>
     </Window.DataContext>
-    
+
     <Grid>
         <DockPanel>
             <!-- Menu Bar -->
             <Menu DockPanel.Dock="Top" Background="#223A2A" Foreground="White" Height="30" FontWeight="Bold">
             </Menu>
 
-            
+
             <!--Meny åt vänster-->
             <Grid>
                 <Grid.ColumnDefinitions>
