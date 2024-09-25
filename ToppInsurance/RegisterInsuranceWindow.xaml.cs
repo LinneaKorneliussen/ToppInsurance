@@ -17,9 +17,9 @@ namespace TopInsuranceWPF
     /// <summary>
     /// Interaction logic for RegisterInsurance.xaml
     /// </summary>
-    public partial class RegisterInsurance : Window
+    public partial class RegisterInsuranceWindow : Window
     {
-        public RegisterInsurance()
+        public RegisterInsuranceWindow()
         {
             InitializeComponent();
         }
