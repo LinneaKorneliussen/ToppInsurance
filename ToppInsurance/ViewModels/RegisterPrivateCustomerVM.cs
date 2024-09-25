@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceBL;
+﻿using TopInsuranceBL;
 using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
