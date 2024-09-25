@@ -48,41 +48,19 @@ namespace TopInsuranceWPF.ViewModels
         private void Login()
         {
 
-            Person user = loginController.AuthorizeUser(Username, Password);
+            Employee user = loginController.AuthorizeUser(Username, Password);
 
-            if (user != null && user is Employee employee) // Typa om här
+            if (user != null) // Typa om här
             {
-                switch (employee.EmployeeRole) // Använd den typade instansen
+                switch (user.EmployeeRole) // Använd den typade instansen
                 {
                     case EmployeeRole.Säljare:
                         // Hantera inloggning för SalesPerson
-                        MessageBox.Show("Inloggad som SalesPerson!");
+                        MessageBox.Show($"Inloggad som {user.Name}");
                         MenuWindow menu = new MenuWindow();
+                        MenuVM menuVM = new MenuVM(user);
+                        menu.DataContext = menuVM;
                         menu.ShowDialog();
-                        break;
-
-                    case EmployeeRole.Försäljningsassistent:
-                        // Hantera inloggning för SalesAssistant
-                        MessageBox.Show("Inloggad som SalesAssistant!");
-                        // Navigera till SalesAssistant-vyn eller logik
-                        break;
-
-                    case EmployeeRole.VD:
-                        // Hantera inloggning för VD
-                        MessageBox.Show("Inloggad som VD!");
-                        // Navigera till VD-vyn eller logik
-                        break;
-
-                    case EmployeeRole.Ekonomiassistent:
-                        // Hantera inloggning för EconomicAssistant
-                        MessageBox.Show("Inloggad som EconomicAssistant!");
-                        // Navigera till EconomicAssistant-vyn eller logik
-                        break;
-
-                    case EmployeeRole.Försäljningschef:
-                        // Hantera inloggning för SalesManager
-                        MessageBox.Show("Inloggad som SalesManager!");
-                        // Navigera till SalesManager-vyn eller logik
                         break;
 
                     default:
