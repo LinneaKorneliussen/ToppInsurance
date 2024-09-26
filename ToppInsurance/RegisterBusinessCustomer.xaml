@@ -1,113 +1,19 @@
-﻿<Window x:Class="TopInsuranceWPF.RegisterBusinessCustomer"
+﻿<UserControl x:Class="TopInsuranceWPF.RegisterBusinessCustomer"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TopInsuranceWPF"
+        xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
         mc:Ignorable="d"
         xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        Title="RegisterBusinessCustomer" Height="650" Width="1000">
+        Background="White" Height="650" Width="900">
+
+    <UserControl.DataContext>
+        <vm:RegisterBusinessCustomerVM/>
+    </UserControl.DataContext>
+
     <Grid>
         <DockPanel>
-            <!-- Menu Bar -->
-            <Menu DockPanel.Dock="Top" Background="#223A2A" Foreground="White" Height="30" FontWeight="Bold">
-            </Menu>
-
-            
-            <!--Meny åt vänster-->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Button HorizontalAlignment="Left" Margin="20 28 0 35">
-                        <material:PackIconMaterial  Kind="Menu" Width="15" Height="15"/>
-                    </Button>
-
-                    <Border Grid.Row="1" Background="#223A2A" CornerRadius="0 30 0 0">
-                        <DockPanel>
-                            <Border Width="80" Height="80" Padding="3" Background="#223A2A" CornerRadius="100" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="20 -30 0 0">
-                                <Ellipse>
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="/Assets/logo.jpg"/>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                            </Border>
-
-                            <!-- Left Sidebar Menu -->
-                            <TextBlock Text="Anna Andersson" Foreground="White" FontSize="22" FontWeight="SemiBold" DockPanel.Dock="Top" Margin="5 25 0 10" TextAlignment="Center"/>
-                            <TextBlock Text="Säljare" Foreground="White" FontSize="14" FontWeight="SemiBold" DockPanel.Dock="Top" TextAlignment="Center"/>
-
-                            <Separator Margin="25" Background="White" DockPanel.Dock="Top" Height="0.8"/>
-
-                            <StackPanel DockPanel.Dock="Top" >
-                                <Button Style="{StaticResource menuButton}">
-                                    <StackPanel Orientation="Horizontal" >
-                                        <material:PackIconMaterial Kind="HomeVariant"  Style="{StaticResource menuButtonIcon}"/>
-                                        <TextBlock Text="Startsida" />
-                                    </StackPanel>
-                                </Button>
-
-                                <Button Style="{StaticResource menuButton}">
-                                    <StackPanel Orientation="Horizontal" >
-                                        <material:PackIconMaterial Kind="AccountPlus" Style="{StaticResource menuButtonIcon}"/>
-                                        <TextBlock Text="Registrera privatkund" />
-                                    </StackPanel>
-                                </Button>
-
-                                <!--Den här knappen ska vara markerad-->
-                                <Button Style="{StaticResource menuButton}">
-                                    <StackPanel Orientation="Horizontal" >
-                                        <material:PackIconMaterial Kind="Briefcase"  Style="{StaticResource menuButtonIcon}"/>
-                                        <TextBlock Text="Registrera företagskund" />
-                                    </StackPanel>
-                                </Button>
-
-                                <Button Style="{StaticResource menuButton}">
-                                    <StackPanel Orientation="Horizontal" >
-                                        <material:PackIconMaterial Kind="NoteTextOutline" Style="{StaticResource menuButtonIcon}"/>
-                                        <TextBlock Text="Registrera försäkring" />
-                                    </StackPanel>
-                                </Button>
-
-                                <Button Style="{StaticResource menuButton}">
-                                    <StackPanel Orientation="Horizontal" >
-                                        <material:PackIconMaterial Kind="AccountEdit" Style="{StaticResource menuButtonIcon}"/>
-                                        <TextBlock Text="Ändra kunduppgifter" />
-                                    </StackPanel>
-                                </Button>
-
-                                <Button Style="{StaticResource menuButton}">
-                                    <StackPanel Orientation="Horizontal" >
-                                        <material:PackIconMaterial Kind="ChartBar"  Style="{StaticResource menuButtonIcon}"/>
-                                        <TextBlock Text="Statistik" />
-                                    </StackPanel>
-                                </Button>
-
-                            </StackPanel>
-
-                            <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0 15 20">
-                                <StackPanel Orientation="Horizontal" >
-                                    <material:PackIconMaterial Kind="Logout"  Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Logga ut" />
-                                </StackPanel>
-                            </Button>
-
-                        </DockPanel>
-                    </Border>
-
-                </Grid>
-
-            </Grid>
-
-
             <!-- Main Content Area -->
             <Grid Margin="10">
                 <Grid.RowDefinitions>
@@ -150,56 +56,69 @@
 
                     <!-- Name Field -->
                     <TextBlock Text="Namn:" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+                    <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
+                             Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                     <!-- Phone Number -->
                     <TextBlock Text="Telefonnummer:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtPhoneNumber" Grid.Row="1" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+                    <TextBox x:Name="txtPhoneNumber" Grid.Row="1" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
+                             Text="{Binding NewPhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                     <!-- Email -->
                     <TextBlock Text="E-postadress:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+                    <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
+                            Text="{Binding NewEmailadress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                     <!-- Address -->
                     <TextBlock Text="Adress:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtAddress" Grid.Row="3" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+                    <TextBox x:Name="txtAddress" Grid.Row="3" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
+                             Text="{Binding NewAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                     <!-- Zipcode -->
                     <TextBlock Text="Postnummer:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtZipcode" Grid.Row="4" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+                    <TextBox x:Name="txtZipcode" Grid.Row="4" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
+                             Text="{Binding NewZipcode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                     <!-- City -->
                     <TextBlock Text="Stad:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtCity" Grid.Row="5" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+                    <TextBox x:Name="txtCity" Grid.Row="5" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
+                             Text="{Binding NewCity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                     <!-- Företagsnamn -->
                     <TextBlock Text="Företagsnamn:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtCompanyName" Grid.Row="6" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+                    <TextBox x:Name="txtCompanyName" Grid.Row="6" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
+                             Text="{Binding NewCompanyName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                     <!-- Organisationsnummer -->
                     <TextBlock Text="Organisationsnummer:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtOrgNumber" Grid.Row="7" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+                    <TextBox x:Name="txtOrgNumber" Grid.Row="7" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
+                             Text="{Binding NewOrganizationalnumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                     <!-- Landskod -->
                     <TextBlock Text="Landskod:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtCountryCode" Grid.Row="8" Grid.Column="1" Width="500" Margin="5" Style="{StaticResource {x:Type TextBox}}"/>
+                    <TextBox x:Name="txtCountryCode" Grid.Row="8" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
+                             Text="{Binding NewCountryCode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                 </Grid>
 
                 <!-- DataGrid Section -->
                 <StackPanel Grid.Row="2" Margin="5">
                     <Label Content="Kundregister" FontWeight="Bold" FontSize="14"/>
-                    <DataGrid x:Name="dataGridCustomers" AutoGenerateColumns="True" CanUserAddRows="False" Height="70"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <DataGrid x:Name="dataGridCustomers" AutoGenerateColumns="True" Height="110" 
+                                  ItemsSource="{Binding BCcustomers}" BorderBrush="gray" BorderThickness="5"/>
+                    </ScrollViewer>
                 </StackPanel>
 
                 <!-- Buttons Section -->
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                     <Button Content="Ångra" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
                     <Button Content="Avsluta" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
-                    <Button Content="Registrera kund" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
+                    <Button Content="Registrera kund" Width="150" Margin="5" Background="#223A2A" 
+                            Foreground="White" Command="{Binding AddBusinessCustomerCommand}"/>
                 </StackPanel>
             </Grid>
         </DockPanel>
 
     </Grid>
-</Window>
+</UserControl>

@@ -38,6 +38,19 @@ namespace TopInsuranceWPF.ViewModels
                 OnPropertyChanged(nameof(Password));
             }
         }
+
+        private bool _isPasswordVisible;
+        public bool IsPasswordVisible
+        {
+            get => _isPasswordVisible;
+            set
+            {
+                _isPasswordVisible = value;
+                OnPropertyChanged(nameof(IsPasswordVisible));
+            }
+        }
+
+
         #endregion
 
         #region Login Commands
@@ -62,10 +75,18 @@ namespace TopInsuranceWPF.ViewModels
                         menu.DataContext = menuVM;
                         menu.ShowDialog();
                         break;
+                    case EmployeeRole.Försäljningschef:
+                        // Hantera inloggning för SalesPerson
+                        MessageBox.Show($"Inloggad som {user.Name}");
+                        MenuWindow menu1 = new MenuWindow();
+                        menu1.ShowDialog(); 
+                        break;
+
 
                     default:
                         MessageBox.Show("Ogiltig roll!");
                         break;
+
                 }
             }
             else

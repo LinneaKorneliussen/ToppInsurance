@@ -7,18 +7,18 @@ namespace TopInsuranceEntities
         [Key]
         public int PersonId { get; init; }
         public string Name { get; set; }
-        public int Phonenumber { get; set; }
-        public string Emailadress { get; set; }
+        public string Phonenumber { get; set; }
+        public string Emailaddress { get; set; }
         public string Address { get; set; }
         public int Zipcode { get; set; }
         public string City { get; set; }
 
-        public Person(string name, int phonenumber, string emailadress, string address, int zipcode, string city)
+        public Person(string name, string phonenumber, string emailaddress, string address, int zipcode, string city)
         {
             Name = name;
             Phonenumber = phonenumber;
             Address = address;
-            Emailadress = emailadress;
+            Emailaddress = emailaddress;
             Zipcode = zipcode;
             City = city;
         }

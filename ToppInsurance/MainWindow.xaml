@@ -6,11 +6,16 @@
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
+                 xmlns:converters="clr-namespace:TopInsuranceWPF.Converters"
                  mc:Ignorable="d"
                  Title="Toppförsäkringar AB" Height="550" Width="800"
                  WindowStartupLocation="CenterScreen"
                  Background="White" AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResize">
-    
+
+    <Window.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+
     <Window.DataContext>
         <vm:LoginVM/>
     </Window.DataContext>
@@ -54,24 +59,23 @@
                     <iconPacks:PackIconMaterial Kind="Lock" Width="30" Height="30" 
                                                     VerticalAlignment="Center" 
                                                     HorizontalAlignment="Left"/>
-                    <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="300" Height="35" Margin="10,0,0,0" 
+                    <PasswordBox vm:PasswordHelper.Attach="True"
+                                 vm:PasswordHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="300" Height="35" Margin="10,0,0,0" 
                                  mah:TextBoxHelper.Watermark="Lösenord"/>
                 </StackPanel>
 
                 <!--Show password checkbox -->
-                <!--
-                <CheckBox Content="Visa lösenord" 
+                <!--<CheckBox Content="Visa lösenord" 
                           VerticalAlignment="Center" 
                           HorizontalAlignment="Left" 
                           Margin="40,0,0,0"
-                          Checked="ShowPassword_Checked"
-                          Unchecked="ShowPassword_Unchecked"/>-->
+                          IsChecked="{Binding IsPasswordVisible, Mode=TwoWay}"/>-->
 
                 <!-- Log in button -->
                 <Button Content="Logga in" Width="150" Height="40" 
                         HorizontalAlignment="Center" VerticalAlignment="Center"
                         Background="#223A2A" Foreground="White" FontWeight="Bold"
-                        Margin="0,20,0,0" Command="{Binding LoginCommand}"/>
+                        Margin="0,0,0,0" Command="{Binding LoginCommand}"/>
             </StackPanel>
         </Border>
     </Grid>

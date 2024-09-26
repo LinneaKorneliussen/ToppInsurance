@@ -3,6 +3,8 @@ using System.Windows.Input;
 using System.Windows;
 using TopInsuranceWPF.Commands;
 using TopInsuranceBL;
+using System.Collections.ObjectModel;
+using System.Numerics;
 using TopInsuranceEntities;
 
 
@@ -15,9 +17,12 @@ namespace TopInsuranceWPF.ViewModels
         public RegisterBusinessCustomerVM()
         {
             businessController = new BusinessController();
+            AddBusinessCustomerCommand = new RelayCommand(AddBusinessCustomer);
+            List<BusinessCustomer> customers = businessController.GetAllBusinessCustomers();
+            BCcustomers = new ObservableCollection<BusinessCustomer>(customers);
         }
 
-        #region Properties Add privatecustomer
+        #region Properties Add business customer
 
         private string _newName;
         public string NewName
@@ -168,29 +173,61 @@ namespace TopInsuranceWPF.ViewModels
                 return;
             }
 
+            int orgNumber = int.Parse(NewOrganizationalnumber);
+            int zipcode = int.Parse(NewZipcode);
+            int countrycode = int.Parse(NewCountryCode);
 
-            if (!IsValidPhoneNumber(NewPhoneNumber))
-            {
-                MessageBox.Show("Invalid phonenumber format.\nPlease make sure the phonenumber follows the format (xxx-xxxxxxx)");
-                return;
-            }
+            businessController.CreateNewBusinessCustomer(NewName, NewPhoneNumber, NewEmailadress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
+
+            MessageBox.Show($"Företagskunden har registrerats korrekt!\n\n" +
+                $"Här är detaljerna:\n" +
+                $"-------------------------\n" +
+                $"Namn: {NewName}\n" +
+                $"Telefonnummer: {NewPhoneNumber}\n" +
+                $"E-post: {NewEmailadress}\n" +
+                $"Adress: {NewAddress}\n" +
+                "Postnummer: {zipcode}\n" +
+                $"Stad: {NewCity}\n" +
+                $"Företagsnamn: {NewCompanyName}\n" +
+                $"Organisationsnummer: {orgNumber}\n" +
+                $"Landkod: {countrycode}\n" +
+                $"-------------------------\n" +
+                $"Tack för att du registrerade en ny företagskund!\n" +
+                $"Vi ser fram emot att hjälpa er vidare.");
+
+            ClearFields();
+
+
+            //if (!IsValidPhoneNumber(NewPhoneNumber))
+            //{
+            //    MessageBox.Show("Invalid phonenumber format.\nPlease make sure the phonenumber follows the format (xxx-xxxxxxx)");
+            //    return;
+            //}
 
             //if (!businessController.IsOrganizationalnumberUnique(NewOrganizationalnumber))
             //{
             //    MessageBox.Show("Organizational number is not unique.");
             //    return;
             //}
+        }
+        #endregion
 
+        #region Get all business customer
+        private ObservableCollection<BusinessCustomer> _BCcustomers;
+        public ObservableCollection<BusinessCustomer> BCcustomers
+        {
+            get { return _BCcustomers; }
+            set
+            {
+                _BCcustomers = value;
+                OnPropertyChanged(nameof(BCcustomers));
+            }
+        }
+        #endregion
 
-            int orgNumber = int.Parse(NewOrganizationalnumber);
-            int zipcode = int.Parse(NewZipcode);
-            int countrycode = int.Parse(NewCountryCode);
-            int phonenumber = int.Parse(NewPhoneNumber);
-
-            businessController.CreateNewBusinessCustomer(NewCompanyName, orgNumber, countrycode, NewName, phonenumber, NewEmailadress, NewAddress, zipcode, NewCity);
-
-            MessageBox.Show($"Patient registered successfully, See details below:\n Name: {NewName}\n SSN: {NewName}\n Address: {NewAddress}\n Phone: {NewPhoneNumber}\n Email: {NewEmailadress}");
-
+        #region Clear fields
+        private void ClearFields()
+        {
             NewName = string.Empty;
             NewPhoneNumber = string.Empty;
             NewEmailadress = string.Empty;
@@ -200,7 +237,6 @@ namespace TopInsuranceWPF.ViewModels
             NewCompanyName = string.Empty;
             NewOrganizationalnumber = string.Empty;
             NewCountryCode = string.Empty;
-
         }
         #endregion
 
@@ -214,68 +250,65 @@ namespace TopInsuranceWPF.ViewModels
                 case "NewName":
                     if (string.IsNullOrWhiteSpace(NewName))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Namn är obligatoriskt.";
                     }
                     break;
                 case "NewPhoneNumber":
                     if (string.IsNullOrWhiteSpace(NewPhoneNumber))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Telefonnummer är obligatoriskt.";
                     }
                     break;
                 case "NewEmailadress":
                     if (string.IsNullOrWhiteSpace(NewEmailadress))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "E-post är obligatoriskt.";
                     }
                     break;
                 case "NewAddress":
                     if (string.IsNullOrWhiteSpace(NewAddress))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Adress är obligatoriskt.";
                     }
                     break;
                 case "NewZipcode":
                     if (string.IsNullOrWhiteSpace(NewZipcode))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Postnummer är obligatoriskt.";
                     }
                     break;
                 case "NewCity":
                     if (string.IsNullOrEmpty(NewCity))
                     {
-                        errorMessage = "Field is required.";
-
+                        errorMessage = "Stad är obligatoriskt.";
                     }
                     break;
                 case "NewCompanyName":
                     if (string.IsNullOrEmpty(NewCompanyName))
                     {
-                        errorMessage = "Field is required.";
-
+                        errorMessage = "Företagsnamn är obligatoriskt.";
                     }
                     break;
-                case "NewOrganizationalNumber":
+                case "NewOrganizationalnumber": // Ändrat här för att matcha fältet korrekt
                     if (string.IsNullOrEmpty(NewOrganizationalnumber))
                     {
-                        errorMessage = "Field is required.";
-
+                        errorMessage = "Org.nummer är obligatoriskt.";
                     }
                     break;
                 case "NewCountryCode":
                     if (string.IsNullOrEmpty(NewCountryCode))
                     {
-                        errorMessage = "Field is required.";
-
+                        errorMessage = "Landskod är obligatoriskt.";
                     }
                     break;
                 default:
-                    errorMessage = "Invalid column name.";
+                    errorMessage = "Felaktigt.";
                     break;
             }
 
             return errorMessage;
         }
+
 
         public override string this[string columnName]
         {
