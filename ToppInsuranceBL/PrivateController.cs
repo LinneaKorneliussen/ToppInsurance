@@ -16,6 +16,13 @@ namespace TopInsuranceBL
             privateRepository = new PrivateRepository();
         }
 
+        #region SSN unique Method
+        public bool SSNUnique(string ssn)
+        {
+            return privateRepository.SSNUnique(ssn);
+        }
+        #endregion
+
         #region Register new patient Method
         public void CreateNewPrivateCustomer(string name, string phoneNumber, string emailAddress, string address, int zipCode, string city, string ssn, string workPhonenumber)
         {
