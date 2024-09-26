@@ -11,16 +11,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using TopInsuranceEntities;
 
 namespace TopInsuranceWPF
 {
     /// <summary>
-    /// Interaction logic for MenuWindow.xaml
+    /// Interaction logic for MenuWindowRP.xaml
     /// </summary>
-    public partial class MenuWindow : Window
+    public partial class MenuWindowRP : Window
     {
-        public MenuWindow()
+        public MenuWindowRP()
         {
             InitializeComponent();
         }
