@@ -87,18 +87,88 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" BorderThickness="0 0 0 1" BorderBrush="{TemplateBinding BorderBrush}">
+                            <Border x:Name="border" 
+                        Background="{TemplateBinding Background}" 
+                        BorderThickness="0 0 0 1" 
+                        BorderBrush="{TemplateBinding BorderBrush}">
                                 <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
+                            <ControlTemplate.Triggers>
+                                <!-- Trigger för att ändra BorderBrush när knappen trycks ner -->
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="#2F4F4F" />
+                                    <!-- Ändra färgen till det du vill -->
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
 
-            
+            <!-- Modern TabItem Style -->
+            <Style x:Key="ModernTabItemStyle" TargetType="TabItem">
+                <!-- Grundinställningar för TabItem -->
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="#606060"/>
+                <Setter Property="Padding" Value="15,10"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+
+                <!-- Template (Layout för TabItem) -->
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabItem">
+                            <Grid>
+                                <!-- Layouten för varje flik -->
+                                <Border x:Name="TabItemBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="0,0,0,3" 
+                                BorderBrush="Transparent"
+                                Padding="{TemplateBinding Padding}">
+
+                                    <!-- ContentPresenter för flikens innehåll -->
+                                    <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+
+                            <!-- Triggers för olika tillstånd -->
+                            <ControlTemplate.Triggers>
+                                <!-- När TabItem är vald -->
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="TabItemBorder" Property="BorderBrush" Value="#223A2A"/>
+                                    <!-- Grön linje för vald flik -->
+                                    <Setter TargetName="TabItemBorder" Property="Background" Value="#F0F4F8"/>
+                                    <!-- Bakgrundsfärg på vald flik -->
+                                    <Setter Property="Foreground" Value="#223A2A"/>
+                                    <!-- Mörk textfärg på vald flik -->
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <!-- Fetstil för vald flik -->
+                                </Trigger>
+
+                                <!-- När musen är över TabItem -->
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="TabItemBorder" Property="Background" Value="#E7EBEF"/>
+                                    <!-- Ljusgrå bakgrund vid hover -->
+                                    <Setter Property="Foreground" Value="#000000"/>
+                                    <!-- Svart text vid hover -->
+                                </Trigger>
+
+                                <!-- Om TabItem inte är vald -->
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter TargetName="TabItemBorder" Property="BorderBrush" Value="Transparent"/>
+                                    <Setter TargetName="TabItemBorder" Property="Background" Value="Transparent"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
             <!--Längst ner på EditCustomer-->
             <Style x:Key="pagingButton" TargetType="Button">
-                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Background" Value="#6C7682" />
                 <Setter Property="Foreground" Value="#6C7682" />
                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                 <Setter Property="Margin" Value="1 0" />
