@@ -3,8 +3,9 @@ using System.Windows.Input;
 using System.Windows;
 using TopInsuranceWPF.Commands;
 using TopInsuranceBL;
+using System.Collections.ObjectModel;
+using System.Numerics;
 using TopInsuranceEntities;
-using ControlzEx.Standard;
 
 
 namespace TopInsuranceWPF.ViewModels
@@ -17,9 +18,11 @@ namespace TopInsuranceWPF.ViewModels
         {
             businessController = new BusinessController();
             AddBusinessCustomerCommand = new RelayCommand(AddBusinessCustomer);
+            List<BusinessCustomer> customers = businessController.GetAllBusinessCustomers();
+            BCcustomers = new ObservableCollection<BusinessCustomer>(customers);
         }
 
-        #region Properties Add privatecustomer
+        #region Properties Add business customer
 
         private string _newName;
         public string NewName
@@ -176,7 +179,21 @@ namespace TopInsuranceWPF.ViewModels
 
             businessController.CreateNewBusinessCustomer(NewName, NewPhoneNumber, NewEmailadress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
 
-            MessageBox.Show($"Företagskund registerades korrekt, Se detaljer nedan:\n Namn: {NewName}\n SSN: {NewName}\n Adress: {NewAddress}\n Telefonnummer: {NewPhoneNumber}\n Email: {NewEmailadress}");
+            MessageBox.Show($"Företagskunden har registrerats korrekt!\n\n" +
+                $"Här är detaljerna:\n" +
+                $"-------------------------\n" +
+                $"Namn: {NewName}\n" +
+                $"Telefonnummer: {NewPhoneNumber}\n" +
+                $"E-post: {NewEmailadress}\n" +
+                $"Adress: {NewAddress}\n" +
+                "Postnummer: {zipcode}\n" +
+                $"Stad: {NewCity}\n" +
+                $"Företagsnamn: {NewCompanyName}\n" +
+                $"Organisationsnummer: {orgNumber}\n" +
+                $"Landkod: {countrycode}\n" +
+                $"-------------------------\n" +
+                $"Tack för att du registrerade en ny företagskund!\n" +
+                $"Vi ser fram emot att hjälpa er vidare.");
 
             ClearFields();
 
@@ -192,6 +209,19 @@ namespace TopInsuranceWPF.ViewModels
             //    MessageBox.Show("Organizational number is not unique.");
             //    return;
             //}
+        }
+        #endregion
+
+        #region Get all business customer
+        private ObservableCollection<BusinessCustomer> _BCcustomers;
+        public ObservableCollection<BusinessCustomer> BCcustomers
+        {
+            get { return _BCcustomers; }
+            set
+            {
+                _BCcustomers = value;
+                OnPropertyChanged(nameof(BCcustomers));
+            }
         }
         #endregion
 

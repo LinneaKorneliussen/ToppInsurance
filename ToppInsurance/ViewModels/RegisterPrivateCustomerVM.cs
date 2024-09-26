@@ -1,4 +1,6 @@
-﻿using TopInsuranceBL;
+﻿using System.Windows.Input;
+using System.Windows;
+using TopInsuranceBL;
 using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
@@ -10,6 +12,7 @@ namespace TopInsuranceWPF.ViewModels
         public RegisterPrivateCustomerVM()
         {
             privateController = new PrivateController();
+            AddPrivateCustomerCommand = new RelayCommand(AddPrivateCustomer);
         }
 
         #region Properties Add privatecustomer
@@ -128,6 +131,59 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
+        #region Registrate new business customer Command and Methods 
+        public ICommand AddPrivateCustomerCommand { get; }
+        private void AddPrivateCustomer()
+        {
+            string errorMessage = ValidateField("NewName");
+            errorMessage ??= ValidateField("NewPhoneNumber");
+            errorMessage ??= ValidateField("NewEmailAddress");
+            errorMessage ??= ValidateField("NewAddress");
+            errorMessage ??= ValidateField("NewZipcode");
+            errorMessage ??= ValidateField("NewCity");
+            errorMessage ??= ValidateField("NewSSN");
+            errorMessage ??= ValidateField("NewWorkPhoneNumber");
+
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                MessageBox.Show(errorMessage);
+                return;
+            }
+
+            // Parse the zipcode and date for customer creation
+            int zipcode = int.Parse(NewZipcode);
+          
+
+
+            privateController.CreateNewPrivateCustomer(NewName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewSSN, NewWorkPhoneNumber);
+
+            MessageBox.Show($"Kunden har registrerats framgångsrikt!\n\n" +
+                   $"Namn: {NewName}\n" +
+                   $"E-post: {NewEmailAddress}\n" +
+                   $"Telefon: {NewPhoneNumber}\n" +
+                   $"Adress: {NewAddress}\n" +
+                   $"Postnummer: {NewZipcode}\n" +
+                   $"Stad: {NewCity}\n" +
+                   $"Personnummer: {NewSSN}");
+
+            ClearFields();
+        }
+        #endregion
+
+        #region Clear fields Method
+        private void ClearFields()
+        {
+            NewName = string.Empty;
+            NewPhoneNumber = string.Empty;
+            NewEmailAddress = string.Empty;
+            NewAddress = string.Empty;
+            NewZipcode = string.Empty;
+            NewCity = string.Empty;
+            NewSSN = string.Empty;
+            NewWorkPhoneNumber = string.Empty;
+        }
+        #endregion
+
         #region Validation
         private string ValidateField(string columnName)
         {
@@ -173,10 +229,9 @@ namespace TopInsuranceWPF.ViewModels
                     }
                     break;
                 case "NewSSN":
-                    if (string.IsNullOrEmpty(NewSSN))
+                    if (string.IsNullOrWhiteSpace(NewSSN)) 
                     {
-                        errorMessage = "Field is required.";
-
+                        errorMessage = "Date is required."; 
                     }
                     break;
                 case "NewWorkPhoneNumber":

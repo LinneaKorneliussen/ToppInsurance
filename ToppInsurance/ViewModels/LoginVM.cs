@@ -79,9 +79,7 @@ namespace TopInsuranceWPF.ViewModels
                         // Hantera inloggning för SalesPerson
                         MessageBox.Show($"Inloggad som {user.Name}");
                         MenuWindow menu1 = new MenuWindow();
-                        RegisterBusinessCustomer menuFC = new RegisterBusinessCustomer();
-                        menuFC.DataContext = menuFC;
-                        menuFC.ShowDialog();
+                        menu1.ShowDialog(); 
                         break;
 
 

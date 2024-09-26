@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using TopInsuranceEntities;
@@ -31,6 +32,14 @@ namespace TopInsuranceDL
         //    bool isUnique = !unitOfWork.BusinessRepository.Any(p => p.Organizationalnumber == organizationalnumber);
         //    return isUnique;
         //}
+        #endregion
+
+        #region Get all business customers Method
+        public List<BusinessCustomer> GetAllBusinessCustomers()
+        {
+            return unitOfWork.BCRepository.GetAll().ToList();
+        }
+
         #endregion
 
     }
