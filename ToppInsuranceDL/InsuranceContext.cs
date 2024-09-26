@@ -62,10 +62,11 @@ namespace TopInsuranceDL
             //// Private Customer
             //PCustomers.Add(new PrivateCustomer("Jeanette Karlsson", "0764907867", "Jeanette@gmail.com", "Sveavägen 6", 65789, "Göteborg", "8905286789", "0368976543"));
 
+
             //// Business Customer 
             //BCustomers.Add(new BusinessCustomer("Sven Göransson", "0768792345", "Sven@icabanken.se", "Ica vägen 6", 76890, "Borås", "Ica banken", 89020201, 46));
 
-            //SaveChanges();
+            SaveChanges();
         }
     }
 }

@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:TopInsuranceWPF"
+        xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
         mc:Ignorable="d"
         Title="EditCustomerWindow" Height="650" Width="1000">
+
+    <Window.DataContext>
+        <vm:EditCustomerVM/>
+    </Window.DataContext>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -99,80 +104,127 @@
             </Border>
         </Grid>
 
-        <!-- Top Menu Bar -->
-        <DockPanel Grid.Column="1" LastChildFill="True">
-            <Menu DockPanel.Dock="Top" Background="#223A2A" Foreground="White" Height="40" FontWeight="Bold" FontSize="14">
-            </Menu>
+        <!--Main Section-->
+        <Grid Grid.Column="1" Margin="25,20,25,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-            <!-- Main Content for Searching and Editing Customer Information -->
-            <Grid Margin="20">
+            <!-- Page Title -->
+            <TextBlock Text="Ändra kunduppgifter" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0" Foreground="#121518" HorizontalAlignment="Left"/>
+
+            <!-- Separator -->
+            <Separator Height="1" Grid.Row="3" Background="#DAE2EA" Margin="0 -1 0 10"/>
+
+            <!-- Tab buttons -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 10 0 0">
+                <Button Style="{StaticResource tabButton}" Content="Privatkund" BorderBrush="#223A2A"/>
+                <Button Style="{StaticResource tabButton}" Content="Företagskund" Width="118"/>
+            </StackPanel>
+
+            <!-- Counter Title -->
+            <TextBlock Text="Kundregister" Grid.Row="4" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+            
+            <!-- Filter Textbox -->
+            <Grid Width="400" HorizontalAlignment="Right" Grid.Row="4">
+                <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False"
+                           Panel.ZIndex="1" Text="Sök här ..."/>
+                <TextBox Name="textBoxFilter" Style="{StaticResource searchTextbox}" />
+                <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#B0B9C6" HorizontalAlignment="Right" />
+            </Grid>
+
+            <DataGrid Grid.Row="5" Name="customersDataGrid" AutoGenerateColumns="False" Height="200">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Namn" IsReadOnly="True" Width="100">
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Telefonnummer" Binding="{Binding Phone}" IsReadOnly="True" Width="150"/>
+                    <DataGridTextColumn Header="Emailadress" Binding="{Binding Email}" IsReadOnly="True" Width="150"/>
+                    <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="*"/>
+                    <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="*"/>
+                    <DataGridTextColumn Header="Postnummer" Binding="{Binding ZipCode}" IsReadOnly="True" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+
+            <!-- Grid för att redigera uppgifter för vald kund -->
+            <Grid Grid.Row="6" Margin="20 10 0 0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Customer Type Selection -->
-                <TextBlock Text="Välj kund" FontSize="16" FontWeight="Bold" Foreground="#2F4F4F" Margin="0,0,0,10" />
-                <ComboBox x:Name="cmbCustomerType" Width="300" Height="30" Margin="0,0,0,10">
-                    <ComboBoxItem Content="Privatkund"/>
-                    <ComboBoxItem Content="Företagskund"/>
-                </ComboBox>
+                <!-- Rubrik -->
+                <TextBlock Text="Redigera kunduppgifter" Grid.Row="0" FontSize="20" FontWeight="Bold" Margin="0 10 0 10"/>
 
-                 <!--Search Section--> 
-                <TextBlock Text="Sök kund..." FontSize="16" FontWeight="Bold" Foreground="#2F4F4F" Margin="300,0,0,10" />
-                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,10">
-                    <TextBox x:Name="txtSearch" Width="300" Height="30" Margin="-10, 10, 10, 0"/>
-                    <Button Content="Sök" Width="100" Height="30" Background="#223A2A" Foreground="White"/>
+                <!-- Namn -->
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 5 0 0">
+                    <TextBlock Text="Namn:" Width="120" VerticalAlignment="Center"/>
+                    <TextBox Width="300" Text="{Binding SelectedCustomer.Name, Mode=TwoWay}" BorderBrush="Black"/>
                 </StackPanel>
 
-                <!-- Search Results (Customer List) -->
-                <ListView x:Name="lvCustomers" Grid.Row="2" Height="200" Margin="0,10,0,10" BorderBrush="LightGray" BorderThickness="1">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Namn" DisplayMemberBinding="{Binding Name}" Width="200"/>
-                            <GridViewColumn Header="Telefon" DisplayMemberBinding="{Binding Phone}" Width="150"/>
-                            <GridViewColumn Header="E-post" DisplayMemberBinding="{Binding Email}" Width="250"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-
-                <!-- Form for Editing Customer Information -->
-                <Grid Grid.Row="3" Margin="0,100,0,27" Grid.RowSpan="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <!-- Form Fields -->
-                    <TextBlock Text="Namn:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Width="400" Margin="5"/>
-
-                    <TextBlock Text="Telefonnummer:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtPhoneNumber" Grid.Row="1" Grid.Column="1" Width="400" Margin="5"/>
-
-                    <TextBlock Text="E-post:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="1" Width="400" Margin="5"/>
-
-                    <TextBlock Text="Adress:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtAddress" Grid.Row="3" Grid.Column="1" Width="400" Margin="5"/>
-                </Grid>
-
-                <!-- Buttons Section -->
-                <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,240,0,0">
-                    <Button Content="Spara ändringar" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
-                    <Button Content="Ångra" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                <!-- Adress -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 5 0 0">
+                    <TextBlock Text="Adress:" Width="120" VerticalAlignment="Center"/>
+                    <TextBox Width="300" Text="{Binding SelectedCustomer.Address, Mode=TwoWay}" BorderBrush="Black"/>
                 </StackPanel>
+
+                <!-- Stad -->
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0 5 0 0">
+                    <TextBlock Text="Stad:" Width="120" VerticalAlignment="Center"/>
+                    <TextBox Width="300" Text="{Binding SelectedCustomer.City, Mode=TwoWay}" BorderBrush="Black"/>
+                </StackPanel>
+
+                <!-- Postnummer -->
+                <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0 5 0 0">
+                    <TextBlock Text="Postnummer:" Width="120" VerticalAlignment="Center"/>
+                    <TextBox Width="300" Text="{Binding SelectedCustomer.ZipCode, Mode=TwoWay}" BorderBrush="Black"/>
+                </StackPanel>
+
+                <!-- Telefonnummer -->
+                <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="0 5 0 0">
+                    <TextBlock Text="Telefonnummer:" Width="120" VerticalAlignment="Center"/>
+                    <TextBox Width="300" Text="{Binding SelectedCustomer.PhoneNumber, Mode=TwoWay}" BorderBrush="Black"/>
+                </StackPanel>
+
+                <!--Pagingation Section-->
+                <Border Grid.Row="6" HorizontalAlignment="Right" BorderBrush="#DEE4EC" BorderThickness="1" CornerRadius="5" Padding="5" Background="#ffffff" Margin="0 10 10 10">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource pagingButton}">
+                            <material:PackIconMaterial Kind="ChevronLeft" Style="{StaticResource pagingButtonIcon}"/>
+                        </Button>
+                        <Rectangle Width="1" Fill="#DEE4EC" Margin="3 7"/>
+
+                        <Button Style="{StaticResource pagingButton}" Content="1"/>
+                        <Button Style="{StaticResource pagingButton}" Content="2" Background="#223A2A" Foreground="#ffffff"/>
+                        <Button Style="{StaticResource pagingButton}" Content="3"/>
+
+                        <TextBlock Text="..." Foreground="#6C7682" VerticalAlignment="Center" Margin="10 0" FontSize="15"/>
+
+                        <Button Style="{StaticResource pagingButton}" Content="7"/>
+                        <Button Style="{StaticResource pagingButton}" Content="8"/>
+                        <Button Style="{StaticResource pagingButton}" Content="9"/>
+
+                        <Rectangle Width="1" Fill="#DEE4EC" Margin="3 7"/>
+                        <Button Style="{StaticResource pagingButton}">
+                            <material:PackIconMaterial Kind="ChevronRight" Style="{StaticResource pagingButtonIcon}"/>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+
             </Grid>
-        </DockPanel>
+        </Grid>
     </Grid>
 </Window>
