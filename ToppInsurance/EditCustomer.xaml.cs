@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace TopInsuranceWPF
 {
     /// <summary>
-    /// Interaction logic for EditCustomerWindow.xaml
+    /// Interaction logic for EditCustomer.xaml
     /// </summary>
-    public partial class EditCustomerWindow : Window
+    public partial class EditCustomer : UserControl
     {
-        public EditCustomerWindow()
+        public EditCustomer()
         {
             InitializeComponent();
         }
