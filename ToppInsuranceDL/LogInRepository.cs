@@ -9,6 +9,7 @@ namespace TopInsuranceDL
 
         public Employee LoggedIn { get; private set; }
 
+        #region Authorize User method
         public Employee AuthorizeUser(string agencynumber, string password)
         {
       
@@ -28,6 +29,7 @@ namespace TopInsuranceDL
             LoggedIn = null;
             return null;
         }
+        #endregion
 
     }
 

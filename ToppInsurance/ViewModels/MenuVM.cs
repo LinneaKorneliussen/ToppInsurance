@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Net.NetworkInformation;
 using System.Windows;
 using System.Numerics;
+using ControlzEx.Standard;
 
 
 namespace TopInsuranceWPF.ViewModels
@@ -22,13 +23,16 @@ namespace TopInsuranceWPF.ViewModels
         public MenuVM(Employee user)
         {
             userName = user.Name;
-            userRole = user.EmployeeRole.ToString(); // Sätt användarens roll
+            userRole = user.EmployeeRole.ToString();
+            CurrentViewModel = new MenuVM();
+            BusinessAddCommand = new RelayCommand(AddBusinessCustomerBTN);
+            PrivateAddCommand = new RelayCommand(AddPrivateCustomerBTN);
         }
         public MenuVM() { }
         #endregion
 
         // Logged in user
-        #region Logged in user
+        #region Propertys 
         private string userName;
         public string UserName
         {
@@ -53,11 +57,38 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
+        private object _currentViewModel;
+        public object CurrentViewModel
+        {
+            get { return _currentViewModel; }
+            set
+            {
+                _currentViewModel = value;
+                OnPropertyChanged(nameof(CurrentViewModel));
+            }
+        }
+
         public string UserInfo
         {
             get { return $"{UserName} - {UserRole}"; } // Returnerar både namn och roll
         }
         #endregion
+
+
+        #region MenuVM Commands
+        public ICommand BusinessAddCommand { get; }
+        public ICommand PrivateAddCommand { get; }
+        #endregion
+
+        private void AddBusinessCustomerBTN()
+        {
+            CurrentViewModel = new RegisterBusinessCustomer();
+        }
+
+        private void AddPrivateCustomerBTN()
+        {
+            CurrentViewModel = new RegisterPrivateCustomer();
+        }
 
 
         // Implementera den abstrakta indexeraren från ObservableObject

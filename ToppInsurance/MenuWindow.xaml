@@ -7,124 +7,111 @@
         xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
         xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="MenuWindow" Height="650" Width="1000">
+        Title="MenuWindow" Height="650" Width="1100">
 
     <Window.DataContext>
         <vm:MenuVM/>
     </Window.DataContext>
 
     <Grid>
-            <DockPanel>
+        <DockPanel>
+            <!-- Menu Bar -->
+            <Menu DockPanel.Dock="Top" Background="#223A2A" Foreground="White" Height="40" FontWeight="Bold" FontSize="14" />
 
-                <!-- Menu Bar -->
-            <Menu DockPanel.Dock="Top" Background="#223A2A" Foreground="White" Height="40" FontWeight="Bold" FontSize="14" >
-            </Menu>
-
-            <!--Meny åt vänster-->
+            <!-- Huvudlayout för vänster meny och content area -->
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <!-- För meny -->
                     <ColumnDefinition Width="200"/>
+                    <!-- För huvudinnehåll -->
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                <!-- Vänster meny -->
+                <Border Grid.Column="0" Background="#223A2A" CornerRadius="0 30 0 0">
+                    <DockPanel>
+                        <Border Width="80" Height="80" Padding="3" Background="#223A2A" CornerRadius="100" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="20 -30 0 0">
+                            <Ellipse>
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="/Assets/logo.jpg"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Border>
 
-                    <Button HorizontalAlignment="Left" Margin="20 28 0 35">
-                        <material:PackIconMaterial  Kind="Menu" Width="15" Height="15"/>
-                    </Button>
+                        <TextBlock Text="{Binding UserName}" Foreground="White" FontSize="20" FontWeight="SemiBold" DockPanel.Dock="Top" Margin="5 25 0 10" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding UserRole}" Foreground="White" FontSize="14" FontWeight="SemiBold" DockPanel.Dock="Top" TextAlignment="Center"/>
 
-                    <Border Grid.Row="1" Background="#223A2A" CornerRadius="0 30 0 0">
-                        <DockPanel>
-                            <Border Width="80" Height="80" Padding="3" Background="#223A2A" CornerRadius="100" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="20 -30 0 0">
-                                <Ellipse>
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="/Assets/logo.jpg"/>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                            </Border>
+                        <Separator Margin="25" Background="White" DockPanel.Dock="Top" Height="0.8"/>
 
-                            <!-- Left Sidebar Menu -->
-                            <TextBlock Text="{Binding UserName}" Foreground="White" FontSize="20" FontWeight="SemiBold" DockPanel.Dock="Top" Margin="5 25 0 10" TextAlignment="Center"/>
-                            <TextBlock Text="{Binding UserRole}" Foreground="White" FontSize="14" FontWeight="SemiBold" DockPanel.Dock="Top" TextAlignment="Center"/>
-
-                            <Separator Margin="25" Background="White" DockPanel.Dock="Top" Height="0.8"/>
-
-                            <StackPanel DockPanel.Dock="Top" >
-                                <Button Style="{StaticResource menuButton}">
-                                    <StackPanel Orientation="Horizontal" >
-                                        <material:PackIconMaterial Kind="HomeVariant"  Style="{StaticResource menuButtonIcon}"/>
-                                        <TextBlock Text="Startsida" />
-                                    </StackPanel>
-                                </Button>
-
-                                <Button Style="{StaticResource menuButton}">
-                                    <StackPanel Orientation="Horizontal" >
-                                        <material:PackIconMaterial Kind="AccountPlus" Style="{StaticResource menuButtonIcon}"/>
-                                        <TextBlock Text="Registrera privatkund" />
-                                    </StackPanel>
-                                </Button>
-
-                                <Button Style="{StaticResource menuButton}">
-                                    <StackPanel Orientation="Horizontal" >
-                                        <material:PackIconMaterial Kind="Briefcase"  Style="{StaticResource menuButtonIcon}"/>
-                                        <TextBlock Text="Registrera företagskund" />
-                                    </StackPanel>
-                                </Button>
-
-                                <Button Style="{StaticResource menuButton}">
-                                    <StackPanel Orientation="Horizontal" >
-                                        <material:PackIconMaterial Kind="NoteTextOutline" Style="{StaticResource menuButtonIcon}"/>
-                                        <TextBlock Text="Registrera försäkring" />
-                                    </StackPanel>
-                                </Button>
-
-                                <Button Style="{StaticResource menuButton}">
-                                    <StackPanel Orientation="Horizontal" >
-                                        <material:PackIconMaterial Kind="AccountEdit" Style="{StaticResource menuButtonIcon}"/>
-                                        <TextBlock Text="Ändra kunduppgifter" />
-                                    </StackPanel>
-                                </Button>
-
-                                <Button Style="{StaticResource menuButton}">
-                                    <StackPanel Orientation="Horizontal" >
-                                        <material:PackIconMaterial Kind="ChartBar"  Style="{StaticResource menuButtonIcon}"/>
-                                        <TextBlock Text="Statistik" />
-                                    </StackPanel>
-                                </Button>
-
-                            </StackPanel>
-
-                            <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0 15 20">
-                                <StackPanel Orientation="Horizontal" >
-                                    <material:PackIconMaterial Kind="Logout"  Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Logga ut" />
+                        <StackPanel DockPanel.Dock="Top">
+                            <Button Style="{StaticResource menuButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <material:PackIconMaterial Kind="HomeVariant" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Startsida" />
                                 </StackPanel>
                             </Button>
 
-                        </DockPanel>
-                    </Border>
+                            <Button Style="{StaticResource menuButton}" Command="{Binding PrivateAddCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <material:PackIconMaterial Kind="AccountPlus" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Registrera privatkund" />
+                                </StackPanel>
+                            </Button>
 
-                </Grid>
-                
-            </Grid>
-                
+                            <Button Style="{StaticResource menuButton}" Command="{Binding BusinessAddCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <material:PackIconMaterial Kind="Briefcase" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Registrera företagskund" />
+                                </StackPanel>
+                            </Button>
+
+                            <Button Style="{StaticResource menuButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <material:PackIconMaterial Kind="NoteTextOutline" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Registrera försäkring" />
+                                </StackPanel>
+                            </Button>
+
+                            <Button Style="{StaticResource menuButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <material:PackIconMaterial Kind="AccountEdit" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Ändra kunduppgifter" />
+                                </StackPanel>
+                            </Button>
+
+                            <Button Style="{StaticResource menuButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <material:PackIconMaterial Kind="ChartBar" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Statistik" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+
+                        <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0 15 20">
+                            <StackPanel Orientation="Horizontal">
+                                <material:PackIconMaterial Kind="Logout" Style="{StaticResource menuButtonIcon}"/>
+                                <TextBlock Text="Logga ut" />
+                            </StackPanel>
+                        </Button>
+                    </DockPanel>
+                </Border>
 
                 <!-- Main Content Area -->
-                <Grid Background="White" Margin="0,30,0,0">
+                <Grid Grid.Column="1">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
                         <!-- Title -->
                         <TextBlock Text="Välkommen till Toppförsäkringar" FontSize="26" FontWeight="Bold" Foreground="#2F4F4F" Margin="0,0,0,20"/>
 
                         <!-- Image under title -->
                         <Image Source="Assets/Tflogotyp.png" Width="400" Height="auto" Stretch="Uniform" Margin="0,20"/>
-
                     </StackPanel>
+
+                    <ScrollViewer>
+                        <ContentControl x:Name="ContentArea" Content="{Binding CurrentViewModel}" />
+                    </ScrollViewer>
                 </Grid>
-            </DockPanel>
-    
-</Grid>
+            </Grid>
+        </DockPanel>
+    </Grid>
 </Window>
+
