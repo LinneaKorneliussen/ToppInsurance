@@ -16,15 +16,27 @@ namespace TopInsuranceWPF.ViewModels
     public class EditCustomerVM : ObservableObject
     {
         private BusinessController businessController;
+        private PrivateController privateController;
 
         public EditCustomerVM() 
         {
+
             businessController = new BusinessController();
             UpdateBCcustomersCommand = new RelayCommand(UpdateBCcustomers);
             List<BusinessCustomer> customers = businessController.GetAllBusinessCustomers();
-            BCcustomers = new ObservableCollection<BusinessCustomer>();
+            BCcustomers = new ObservableCollection<BusinessCustomer>(customers);
+
+
+            privateController = new PrivateController();
+            UpdatePcustomersCommand = new RelayCommand(UpdatePcustomers);
+            FindPcustomersCommand = new RelayCommand(FindPcustomers);
+            List<PrivateCustomer> privateCustomers = privateController.GetAllPrivateCustomers();
+            Pcustomers = new ObservableCollection<PrivateCustomer>(privateCustomers);
         }
 
+        
+
+        
 
         #region Get all business customers
         private ObservableCollection<BusinessCustomer> _BCcustomers;
@@ -40,7 +52,7 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
-        #region Update patient properties
+        #region Update Business 
         private string _newValue;
         public string NewValue
         {
@@ -81,7 +93,7 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
-        #region Properties Add business customer
+        #region Properties update Business customer
 
         private string _newName;
         public string NewName
@@ -197,7 +209,18 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
-        #region Update selected Business customer Command and Methods
+        #region Find Business customer Command and Methods
+
+        public ICommand FindBCcustomersCommand { get; }
+        private void FindBCcustomers()
+        {
+            List<BusinessCustomer> businessCustomers = businessController.GetAllBusinessCustomers();
+            BCcustomers = new ObservableCollection<BusinessCustomer>(businessCustomers);
+      
+        }
+        #endregion
+
+        #region Update Business customer Command and Methods
         public ICommand UpdateBCcustomersCommand { get; }
         private void UpdateBCcustomers()
         {
@@ -253,14 +276,7 @@ namespace TopInsuranceWPF.ViewModels
         }
 
         #endregion
-
-        public ICommand FindBCcustomersCommand { get; }
-        //private void FindBCcustomers()
-        //{
-        //    List<BusinessCustomer> businessCustomersList = businessController.GetAllBusinessCustomers();
-        //    BusinessCustomer = new ObservableCollection<BusinessCustomer>(businessCustomersList);
-        //}
-
+        
         #region Validation
         private string ValidateField(string columnName)
         {
@@ -328,6 +344,129 @@ namespace TopInsuranceWPF.ViewModels
         }
 
         #endregion
+
+
+
+        #region Get all private customers
+        private ObservableCollection<PrivateCustomer> _Pcustomers;
+        public ObservableCollection<PrivateCustomer> Pcustomers
+        {
+            get { return _Pcustomers; }
+            set
+            {
+                _Pcustomers = value;
+                OnPropertyChanged(nameof(Pcustomers));
+            }
+        }
+
+        #endregion
+
+        #region Update private  
+     
+
+        private PrivateCustomer _selectedPcustomers;
+        public PrivateCustomer SelectedPcustomers
+        {
+            get { return _selectedPcustomers; }
+            set
+            {
+                _selectedPcustomers = value;
+                OnPropertyChanged(nameof(SelectedPcustomers));
+            }
+        }
+
+      
+        #endregion
+
+        #region Properties update private customer
+
+
+        private string _newWorkPhoneNumber;
+        public string NewWorkPhoneNumber
+        {
+            get { return _newWorkPhoneNumber; }
+            set
+            {
+                if (_newWorkPhoneNumber != value)
+                {
+                    _newWorkPhoneNumber = value;
+                    OnPropertyChanged(NewWorkPhoneNumber);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Find private customer Command and Methods
+
+        public ICommand FindPcustomersCommand { get; }
+        private void FindPcustomers()
+        {
+            List<PrivateCustomer> privateCustomers = privateController.GetAllPrivateCustomers();
+            Pcustomers = new ObservableCollection<PrivateCustomer>(privateCustomers);
+
+        }
+
+        #endregion
+
+        #region Update private customer Command and Methods
+        public ICommand UpdatePcustomersCommand { get; }
+        private void UpdatePcustomers()
+        {
+            string errorMessage = ValidateField("NewName");
+            errorMessage ??= ValidateField("NewPhoneNumber");
+            errorMessage ??= ValidateField("NewEmailadress");
+            errorMessage ??= ValidateField("NewAddress");
+            errorMessage ??= ValidateField("NewZipcode");
+            errorMessage ??= ValidateField("NewCity");
+            errorMessage ??= ValidateField("NewWorkPhonenumber");
+
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                MessageBox.Show(errorMessage);
+                return;
+            }
+
+            int zipcode = int.Parse(NewZipcode);
+
+
+            if (SelectedPcustomers != null && !string.IsNullOrWhiteSpace(NewValue) && SelectedFieldToUpdate != null)
+            {
+                if (SelectedFieldToUpdate == "PhoneNumber")
+                {
+
+                    if (!IsValidPhoneNumber(NewValue))
+                    {
+                        MessageBox.Show("Invalid phonenumber format.\nPlease make sure the phonenumber follows the format (xxx-xxxxxxx)");
+                        return;
+                    }
+                }
+
+                privateController.UpdatePrivateCustomers(SelectedPcustomers, SelectedFieldToUpdate, NewValue);
+
+                MessageBox.Show($"Följande uppgifter har uppdaterats!\n\n" +
+                $"Här är detaljerna:\n" +
+                $"-------------------------\n" +
+                $"Namn: {NewName}\n" +
+                $"Telefonnummer: {NewPhoneNumber}\n" +
+                $"E-post: {NewEmailadress}\n" +
+                $"Adress: {NewAddress}\n" +
+                $"Postnummer: {NewZipcode}\n" +
+                $"Stad: {NewCity}\n" +
+                $"Jobbtelefon: {NewWorkPhoneNumber}\n" +
+                $"-------------------------\n");
+                NewValue = string.Empty;
+            }
+            else
+            {
+                MessageBox.Show("Please make sure to select a patient, choose a field to update, and provide a new value.");
+            }
+
+        }
+
+        #endregion
+
+       
     }
 
 
