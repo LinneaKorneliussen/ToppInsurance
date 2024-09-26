@@ -6,15 +6,10 @@
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
-                 xmlns:converters="clr-namespace:TopInsuranceWPF.Converters"
                  mc:Ignorable="d"
                  Title="Toppförsäkringar AB" Height="550" Width="800"
                  WindowStartupLocation="CenterScreen"
                  Background="White" AllowsTransparency="True" WindowStyle="None" ResizeMode="CanResize">
-
-    <Window.Resources>
-        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-    </Window.Resources>
 
     <Window.DataContext>
         <vm:LoginVM/>
@@ -28,10 +23,10 @@
         </Grid.RowDefinitions>
 
         <!-- Margins -->
-        <Border Grid.Row="0" Background="White" />
+        <Border Grid.Row="0" Background="#223A2A" />
         <Image Grid.Row="1" Source="/TopInsuranceWPF;component/Assets/grantopp.jpg" 
                Width="Auto" Height="Auto" Stretch="Fill" Opacity="0.5"/>
-        <Border Grid.Row="2" Background="White" />
+        <Border Grid.Row="2" Background="#223A2A" />
 
         <!-- Log in window -->
         <Border Grid.Row="1" Background="White" 
@@ -51,6 +46,7 @@
                                                     VerticalAlignment="Center" 
                                                     HorizontalAlignment="Left"/>
                     <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="300" Height="35" Margin="10,0,0,0" 
+                             BorderThickness="1" Background="GhostWhite"
                              mah:TextBoxHelper.Watermark="Användarnamn"/>
                 </StackPanel>
 
@@ -60,22 +56,17 @@
                                                     VerticalAlignment="Center" 
                                                     HorizontalAlignment="Left"/>
                     <PasswordBox vm:PasswordHelper.Attach="True"
-                                 vm:PasswordHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="300" Height="35" Margin="10,0,0,0" 
+                                 vm:PasswordHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Width="300" Height="35" Margin="10,0,0,0"
+                                 Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}"
+                                 BorderThickness="1" Background="GhostWhite" Foreground="Black"
                                  mah:TextBoxHelper.Watermark="Lösenord"/>
                 </StackPanel>
-
-                <!--Show password checkbox -->
-                <!--<CheckBox Content="Visa lösenord" 
-                          VerticalAlignment="Center" 
-                          HorizontalAlignment="Left" 
-                          Margin="40,0,0,0"
-                          IsChecked="{Binding IsPasswordVisible, Mode=TwoWay}"/>-->
 
                 <!-- Log in button -->
                 <Button Content="Logga in" Width="150" Height="40" 
                         HorizontalAlignment="Center" VerticalAlignment="Center"
                         Background="#223A2A" Foreground="White" FontWeight="Bold"
-                        Margin="0,0,0,0" Command="{Binding LoginCommand}"/>
+                        Margin="0,20,0,0" Command="{Binding LoginCommand}"/>
             </StackPanel>
         </Border>
     </Grid>

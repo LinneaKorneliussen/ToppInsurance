@@ -66,7 +66,7 @@ namespace TopInsuranceDL
             //// Business Customer 
             //BCustomers.Add(new BusinessCustomer("Sven Göransson", "0768792345", "Sven@icabanken.se", "Ica vägen 6", 76890, "Borås", "Ica banken", 89020201, 46));
 
-            SaveChanges();
+            //SaveChanges();
         }
     }
 }
