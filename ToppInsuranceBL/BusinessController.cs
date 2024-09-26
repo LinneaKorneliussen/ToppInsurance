@@ -22,10 +22,10 @@ namespace TopInsuranceBL
         #endregion
 
         #region Business unique Method
-        //public bool IsOrganizationalnumberUnique(string organizationalnumber)
-        //{
-        //    return businessRepository.IsOrganizationalnumberUnique(organizationalnumber);
-        //}
+        public bool IsOrganizationalnumberUnique(int orgNumber)
+        {
+            return businessRepository.IsOrganizationalnumberUnique(orgNumber);
+        }
         #endregion
 
         #region Get all business customers Method

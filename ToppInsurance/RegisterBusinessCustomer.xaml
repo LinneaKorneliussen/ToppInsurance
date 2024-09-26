@@ -67,7 +67,7 @@
                     <!-- Email -->
                     <TextBlock Text="E-postadress:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
                     <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
-                            Text="{Binding NewEmailadress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            Text="{Binding NewEmailAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                     <!-- Address -->
                     <TextBlock Text="Adress:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
