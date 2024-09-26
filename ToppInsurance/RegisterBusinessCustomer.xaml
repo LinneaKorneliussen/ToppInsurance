@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
         mc:Ignorable="d"
-        xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
         Background="White" Height="650" Width="900">
 
     <UserControl.DataContext>
@@ -14,7 +13,6 @@
 
     <Grid>
         <DockPanel>
-            <!-- Main Content Area -->
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -23,17 +21,11 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- Header Section -->
                 <StackPanel Grid.Row="0" Orientation="Vertical" Background="#EDEDED" Margin="0,0,0,10">
                     <TextBlock Text="Registrera ny företagskund" FontSize="22" FontWeight="Bold" Foreground="#2F4F4F"/>
                     <TextBlock Text="Fyll i informationen nedan för att registrera en ny företagskund." FontSize="14" Foreground="#555555"/>
                 </StackPanel>
 
-                <!-- Form Section -->
                 <Grid Grid.Row="1" Margin="20" Background="White">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
@@ -54,54 +46,53 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Name Field -->
                     <TextBlock Text="Namn:" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
-                             Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                             Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
+                             Background="GhostWhite" BorderThickness="1"/>
 
-                    <!-- Phone Number -->
                     <TextBlock Text="Telefonnummer:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtPhoneNumber" Grid.Row="1" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
-                             Text="{Binding NewPhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="txtPhoneNumber" Grid.Row="1" Grid.Column="1" Margin="5" Width="450" HorizontalAlignment="Left"
+                             Text="{Binding NewPhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                             Background="GhostWhite" BorderThickness="1"/>
 
-                    <!-- Email -->
                     <TextBlock Text="E-postadress:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
-                            Text="{Binding NewEmailAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                             Text="{Binding NewEmailAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                             Background="GhostWhite" BorderThickness="1"/>
 
-                    <!-- Address -->
                     <TextBlock Text="Adress:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtAddress" Grid.Row="3" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
-                             Text="{Binding NewAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="txtAddress" Grid.Row="3" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left" 
+                             Text="{Binding NewAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                             Background="GhostWhite" BorderThickness="1"/>
 
-                    <!-- Zipcode -->
                     <TextBlock Text="Postnummer:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtZipcode" Grid.Row="4" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
-                             Text="{Binding NewZipcode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="txtZipcode" Grid.Row="4" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                             Text="{Binding NewZipcode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                             Background="GhostWhite" BorderThickness="1"/>
 
-                    <!-- City -->
                     <TextBlock Text="Stad:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtCity" Grid.Row="5" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
-                             Text="{Binding NewCity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="txtCity" Grid.Row="5" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left" 
+                             Text="{Binding NewCity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                             Background="GhostWhite" BorderThickness="1"/>
 
-                    <!-- Företagsnamn -->
                     <TextBlock Text="Företagsnamn:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtCompanyName" Grid.Row="6" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
-                             Text="{Binding NewCompanyName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="txtCompanyName" Grid.Row="6" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                             Text="{Binding NewCompanyName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                             Background="GhostWhite" BorderThickness="1"/>
 
-                    <!-- Organisationsnummer -->
                     <TextBlock Text="Organisationsnummer:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtOrgNumber" Grid.Row="7" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
-                             Text="{Binding NewOrganizationalnumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="txtOrgNumber" Grid.Row="7" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                             Text="{Binding NewOrganizationalnumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                             Background="GhostWhite" BorderThickness="1"/>
 
-                    <!-- Landskod -->
                     <TextBlock Text="Landskod:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtCountryCode" Grid.Row="8" Grid.Column="1" Width="650" Margin="5" Style="{StaticResource {x:Type TextBox}}" BorderBrush="gray"
-                             Text="{Binding NewCountryCode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <TextBox x:Name="txtCountryCode" Grid.Row="8" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                             Text="{Binding NewCountryCode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                             Background="GhostWhite" BorderThickness="1"/>
 
                 </Grid>
 
-                <!-- DataGrid Section -->
                 <StackPanel Grid.Row="2" Margin="5">
                     <Label Content="Kundregister" FontWeight="Bold" FontSize="14"/>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -110,7 +101,6 @@
                     </ScrollViewer>
                 </StackPanel>
 
-                <!-- Buttons Section -->
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                     <Button Content="Ångra" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
                     <Button Content="Avsluta" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
@@ -119,6 +109,6 @@
                 </StackPanel>
             </Grid>
         </DockPanel>
-
     </Grid>
 </UserControl>
+
