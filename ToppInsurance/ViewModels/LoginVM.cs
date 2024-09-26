@@ -51,30 +51,33 @@ namespace TopInsuranceWPF.ViewModels
 
             Employee user = loginController.AuthorizeUser(Username, Password);
 
-            if (user != null) // Typa om här
+            if (user != null)
             {
-                switch (user.EmployeeRole) // Använd den typade instansen
+                switch (user.EmployeeRole)
                 {
                     case EmployeeRole.Säljare:
-                        // Hantera inloggning för SalesPerson
                         MessageBox.Show($"Inloggad som {user.Name}");
-                        MenuWindow menu = new MenuWindow();
-                        MenuVM menuVM = new MenuVM(user);
-                        menu.DataContext = menuVM;
-                        menu.ShowDialog();
-                        break;
-                    case EmployeeRole.Försäljningschef:
-                        // Hantera inloggning för SalesPerson
-                        MessageBox.Show($"Inloggad som {user.Name}");
-                        MenuWindow menu1 = new MenuWindow();
-                        menu1.ShowDialog(); 
+                        MenuWindowSP menuSP = new MenuWindowSP();
+                        MenuSalespersonVM menuSalesperson = new MenuSalespersonVM(user);
+                        menuSP.DataContext = menuSalesperson;
+                        menuSP.ShowDialog();
+                        ClearFields();
                         break;
 
+                    case EmployeeRole.Försäljningschef:
+                    case EmployeeRole.VD:
+                    case EmployeeRole.Ekonomiassistent:
+                        MessageBox.Show($"Inloggad som {user.Name}");
+                        MenuWindowRP menuRP = new MenuWindowRP();
+                        MenuResponsibleVM menuResponsible = new MenuResponsibleVM(user);
+                        menuRP.DataContext = menuResponsible;
+                        menuRP.ShowDialog();
+                        ClearFields();
+                        break;
 
                     default:
-                        MessageBox.Show("Ogiltig roll!");
+                        MessageBox.Show("Okänd roll");
                         break;
-
                 }
             }
             else
@@ -86,7 +89,15 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
-        // Validation using the IDataErrorInfo interface
+        #region Clear fields 
+        private void ClearFields()
+        {
+            Username = string.Empty;
+            Password = string.Empty;
+        }
+
+        #endregion
+
         #region Validation 
         private string ValidateField(string columnName)
         {

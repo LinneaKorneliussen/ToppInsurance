@@ -8,32 +8,28 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TopInsuranceEntities;
 using TopInsuranceWPF.Commands;
-using System.Windows.Controls;
-using System.Net.NetworkInformation;
 using System.Windows;
-using System.Numerics;
-using ControlzEx.Standard;
+
 
 
 namespace TopInsuranceWPF.ViewModels
 {
-    public class MenuVM : ObservableObject
+    public class MenuSalespersonVM : ObservableObject
     {
-        #region Constructor for ViewModel
-        public MenuVM(Employee user)
+        public MenuSalespersonVM(Employee user)
         {
             userName = user.Name;
             userRole = user.EmployeeRole.ToString();
-            CurrentViewModel = new MenuVM();
+            CurrentViewModel = new MenuSalespersonVM();
+            HomePageCommand = new RelayCommand(ShowHomePage);
             BusinessAddCommand = new RelayCommand(AddBusinessCustomerBTN);
             PrivateAddCommand = new RelayCommand(AddPrivateCustomerBTN);
+            NewInsuranceCommand = new RelayCommand(NewInsuranceBTN);
             EditCustomerCommand = new RelayCommand(EditCustomerBTN);
-
+            LogOffCommand = new RelayCommand(LogOffBTN);
         }
-        public MenuVM() { }
-        #endregion
+        public MenuSalespersonVM() { }
 
-        // Logged in user
         #region Propertys 
         private string userName;
         public string UserName
@@ -76,14 +72,20 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
-
         #region MenuVM Commands
+        public ICommand HomePageCommand { get; }
         public ICommand BusinessAddCommand { get; }
         public ICommand PrivateAddCommand { get; }
-
+        public ICommand NewInsuranceCommand { get; }
         public ICommand EditCustomerCommand { get; }
+        public ICommand LogOffCommand { get; }
         #endregion
 
+        #region Command Methods
+        private void ShowHomePage()
+        {
+            CurrentViewModel = null; 
+        }
         private void AddBusinessCustomerBTN()
         {
             CurrentViewModel = new RegisterBusinessCustomer();
@@ -94,14 +96,24 @@ namespace TopInsuranceWPF.ViewModels
             CurrentViewModel = new RegisterPrivateCustomer();
         }
 
+        private void NewInsuranceBTN()
+        {
+            CurrentViewModel = new NewInsurance();
+        }
+
         private void EditCustomerBTN()
         {
             CurrentViewModel = new EditCustomer();
         }
 
+        private void LogOffBTN()
+        {
+            Window currentWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            currentWindow?.Close();
+        }
+        #endregion
 
-
-        // Implementera den abstrakta indexeraren från ObservableObject
+        #region Validation 
         public override string this[string columnName]
         {
             get
@@ -118,7 +130,7 @@ namespace TopInsuranceWPF.ViewModels
                 return result;
             }
         }
+        #endregion
 
-        public override string Error => null;
     }
 }

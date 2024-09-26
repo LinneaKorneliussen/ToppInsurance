@@ -1,4 +1,4 @@
-﻿<Window x:Class="TopInsuranceWPF.MenuWindow"
+﻿<Window x:Class="TopInsuranceWPF.MenuWindowSP"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,10 +7,10 @@
         xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
         xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="MenuWindow" Height="650" Width="1100">
+        Title="MenuWindowSP" Height="650" Width="1100">
 
     <Window.DataContext>
-        <vm:MenuVM/>
+        <vm:MenuSalespersonVM/>
     </Window.DataContext>
 
     <Grid>
@@ -44,7 +44,7 @@
                         <Separator Margin="25" Background="White" DockPanel.Dock="Top" Height="0.8"/>
 
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource menuButton}" Command="{Binding HomePageCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <material:PackIconMaterial Kind="HomeVariant" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Startsida" />
@@ -65,7 +65,7 @@
                                 </StackPanel>
                             </Button>
 
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource menuButton}" Command="{Binding NewInsuranceCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <material:PackIconMaterial Kind="NoteTextOutline" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Registrera försäkring" />
@@ -78,16 +78,10 @@
                                     <TextBlock Text="Ändra kunduppgifter" />
                                 </StackPanel>
                             </Button>
-
-                            <Button Style="{StaticResource menuButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <material:PackIconMaterial Kind="ChartBar" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Statistik" />
-                                </StackPanel>
-                            </Button>
                         </StackPanel>
 
-                        <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0 15 20">
+                        <Button Style="{StaticResource menuButton}" Command="{Binding LogOffCommand}" 
+                                VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0 15 20">
                             <StackPanel Orientation="Horizontal">
                                 <material:PackIconMaterial Kind="Logout" Style="{StaticResource menuButtonIcon}"/>
                                 <TextBlock Text="Logga ut" />
