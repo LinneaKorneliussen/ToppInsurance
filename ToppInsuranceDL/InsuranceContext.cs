@@ -10,7 +10,7 @@ namespace TopInsuranceDL
         public DbSet<Employee> Employees { get; set; }
         public InsuranceContext()
         {
-           //ResetSeed();
+           ResetSeed();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,37 +30,37 @@ namespace TopInsuranceDL
 
         public void ResetSeed()
         {
-            //Database.EnsureDeleted();
-            //Database.EnsureCreated();
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
 
-            //var employee1 = new Employee(
-            //    "Linnea Korneliussen",
-            //    0722136462,
-            //    "Linnea@hotmail.com",
-            //    "Västanvindsgatan 6",
-            //    41717,
-            //    "Göteborg",
-            //    EmployeeRole.Säljare,
-            //    "Hej123"
-            //);
+            var employee1 = new Employee(
+                "Linnea Korneliussen",
+                0722136462,
+                "Linnea@hotmail.com",
+                "Västanvindsgatan 6",
+                41717,
+                "Göteborg",
+                EmployeeRole.Säljare,
+                "Hej123"
+            );
 
-            //Employees.Add(employee1);
+            Employees.Add(employee1);
 
-            //var employee2 = new Employee(
-            //    "Lisa Nilsson",
-            //    098765387,
-            //    "LisaNilsson@gmail.com",
-            //    "Stengatan 5",
-            //    93874,
-            //    "Oslo",
-            //    EmployeeRole.Säljare,
-            //    "1234"
-            //);
+            var employee2 = new Employee(
+                "Lisa Nilsson",
+                098765387,
+                "LisaNilsson@gmail.com",
+                "Stengatan 5",
+                93874,
+                "Oslo",
+                EmployeeRole.Säljare,
+                "1234"
+            );
 
-            //Employees.Add(employee2);
+            Employees.Add(employee2);
 
 
-            //SaveChanges();
+            SaveChanges();
         }
     }
 }
