@@ -42,5 +42,48 @@ namespace TopInsuranceDL
 
         #endregion
 
+        public void UpdateBusinessCustomers(BusinessCustomer businessCustomersToUpdate, string choice, string newValue)
+        {
+            if (businessCustomersToUpdate != null)
+            {
+                switch (choice)
+                {
+                    case "Name":
+                        businessCustomersToUpdate.Name = newValue;
+                        unitOfWork.Save();
+                        break;
+                    case "Phonenumber":
+                        businessCustomersToUpdate.Phonenumber = newValue;
+                        unitOfWork.Save();
+                        break;
+                    case "Emailaddress":
+                        businessCustomersToUpdate.Emailaddress = newValue;
+                        unitOfWork.Save();
+                        break;
+                    case "Address":
+                        businessCustomersToUpdate.Address = newValue;
+                        unitOfWork.Save();
+                        break;
+                    //case "Zipcode":
+                    //    businessCustomersToUpdate.Zipcode = newValue;
+                    //    unitOfWork.Save();
+                    //    break;
+                    case "City":
+                        businessCustomersToUpdate.City = newValue;
+                        unitOfWork.Save();
+                        break;
+                    case "CompanyName":
+                        businessCustomersToUpdate.CompanyName = newValue;
+                        unitOfWork.Save();
+                        break;
+                    default:
+                        break;
+
+                }
+
+            }
+
+        }
+
     }
 }
