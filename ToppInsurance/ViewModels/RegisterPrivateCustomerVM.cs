@@ -131,8 +131,11 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
-        #region Registrate new business customer Command and Methods 
+        #region Commands
         public ICommand AddPrivateCustomerCommand { get; }
+        #endregion
+
+        #region Add Private customer Methods 
         private void AddPrivateCustomer()
         {
             string errorMessage = ValidateField("NewName");
@@ -149,13 +152,19 @@ namespace TopInsuranceWPF.ViewModels
                 MessageBox.Show(errorMessage);
                 return;
             }
-
-            // Parse the zipcode and date for customer creation
-            int zipcode = int.Parse(NewZipcode);
-          
-
+            if (!ValidateNumericFields(out int zipcode))
+            {
+                return;
+            }
+            if (!privateController.SSNUnique(NewSSN))
+            {
+                MessageBox.Show("Personen finns redan registrerad");
+                return;
+            }
 
             privateController.CreateNewPrivateCustomer(NewName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewSSN, NewWorkPhoneNumber);
+
+            #region Show message
 
             MessageBox.Show($"Kunden har registrerats framgångsrikt!\n\n" +
                    $"Namn: {NewName}\n" +
@@ -167,8 +176,9 @@ namespace TopInsuranceWPF.ViewModels
                    $"Personnummer: {NewSSN}");
 
             ClearFields();
+            #endregion
         }
-        #endregion
+#endregion
 
         #region Clear fields Method
         private void ClearFields()
@@ -194,55 +204,55 @@ namespace TopInsuranceWPF.ViewModels
                 case "NewName":
                     if (string.IsNullOrWhiteSpace(NewName))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Namn är obligatoriskt";
                     }
                     break;
                 case "NewPhoneNumber":
                     if (string.IsNullOrWhiteSpace(NewPhoneNumber))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Telefonnummer är obligatoriskt.";
                     }
                     break;
                 case "NewEmailAddress":
                     if (string.IsNullOrWhiteSpace(NewEmailAddress))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "E-mail är obligatoriskt";
                     }
                     break;
                 case "NewAddress":
                     if (string.IsNullOrWhiteSpace(NewAddress))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Adress är oblugatoriskt";
                     }
                     break;
                 case "NewZipcode":
                     if (string.IsNullOrWhiteSpace(NewZipcode))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Postnummer är obligatoriskt";
                     }
                     break;
                 case "NewCity":
                     if (string.IsNullOrEmpty(NewCity))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Stad är obligatoriskt";
 
                     }
                     break;
                 case "NewSSN":
-                    if (string.IsNullOrWhiteSpace(NewSSN)) 
+                    if (string.IsNullOrWhiteSpace(NewSSN))
                     {
-                        errorMessage = "Date is required."; 
+                        errorMessage = "Personnummer är obligatoriskt";
                     }
                     break;
                 case "NewWorkPhoneNumber":
                     if (string.IsNullOrEmpty(NewWorkPhoneNumber))
                     {
-                        errorMessage = "Field is required.";
+                        errorMessage = "Arbetstelefon är obligatoriskt";
 
                     }
                     break;
                 default:
-                    errorMessage = "Invalid column name.";
+                    errorMessage = "Ogiltigt kolumnnamn";
                     break;
             }
 
@@ -256,7 +266,23 @@ namespace TopInsuranceWPF.ViewModels
                 return ValidateField(columnName);
             }
         }
-        #endregion
 
-    }
+        private bool ValidateNumericFields(out int zipcode)
+        {
+            zipcode = 0;
+
+            if (!int.TryParse(NewZipcode, out zipcode))
+            {
+                MessageBox.Show("Postnumret måste vara ett giltigt nummer.");
+                return false;
+            }
+
+            return true;
+
+
+            
+
+        }
+       #endregion
+    } 
 }
