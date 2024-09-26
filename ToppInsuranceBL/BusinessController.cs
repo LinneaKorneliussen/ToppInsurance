@@ -1,4 +1,5 @@
-﻿using TopInsuranceDL;
+﻿using System.Numerics;
+using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
@@ -26,5 +27,15 @@ namespace TopInsuranceBL
         //    return businessRepository.IsOrganizationalnumberUnique(organizationalnumber);
         //}
         #endregion
+
+        #region Get all business customers Method
+        public List<BusinessCustomer> GetAllBusinessCustomers()
+        {
+            return businessRepository.GetAllBusinessCustomers();
+        }
+
+        #endregion
+
+
     }
 }

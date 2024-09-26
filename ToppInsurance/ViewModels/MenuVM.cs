@@ -24,13 +24,15 @@ namespace TopInsuranceWPF.ViewModels
         {
             userName = user.Name;
             userRole = user.EmployeeRole.ToString();
+            CurrentViewModel = new MenuVM();
             BusinessAddCommand = new RelayCommand(AddBusinessCustomerBTN);
+            PrivateAddCommand = new RelayCommand(AddPrivateCustomerBTN);
         }
         public MenuVM() { }
         #endregion
 
         // Logged in user
-        #region Logged in user
+        #region Propertys 
         private string userName;
         public string UserName
         {
@@ -55,6 +57,17 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
+        private object _currentViewModel;
+        public object CurrentViewModel
+        {
+            get { return _currentViewModel; }
+            set
+            {
+                _currentViewModel = value;
+                OnPropertyChanged(nameof(CurrentViewModel));
+            }
+        }
+
         public string UserInfo
         {
             get { return $"{UserName} - {UserRole}"; } // Returnerar både namn och roll
@@ -64,12 +77,17 @@ namespace TopInsuranceWPF.ViewModels
 
         #region MenuVM Commands
         public ICommand BusinessAddCommand { get; }
+        public ICommand PrivateAddCommand { get; }
         #endregion
 
         private void AddBusinessCustomerBTN()
         {
-            RegisterBusinessCustomer registerBusinessCustomer = new RegisterBusinessCustomer();
-            registerBusinessCustomer.ShowDialog();
+            CurrentViewModel = new RegisterBusinessCustomer();
+        }
+
+        private void AddPrivateCustomerBTN()
+        {
+            CurrentViewModel = new RegisterPrivateCustomer();
         }
 
 
