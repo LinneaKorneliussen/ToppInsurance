@@ -24,5 +24,58 @@ namespace TopInsuranceDL
             unitOfWork.Save();
         }
         #endregion
+
+        #region Get all private customers Method
+        public List<PrivateCustomer> GetAllPrivateCustomers()
+        {
+            return unitOfWork.PCRepository.GetAll().ToList();
+        }
+
+        #endregion
+
+        #region Update private customer Method
+        public void UpdatePrivateCustomers(PrivateCustomer privateCustomersToUpdate, string choice, string newValue)
+        {
+            if (privateCustomersToUpdate != null)
+            {
+                switch (choice)
+                {
+                    case "Name":
+                        privateCustomersToUpdate.Name = newValue;
+                        unitOfWork.Save();
+                        break;
+                    case "Phonenumber":
+                        privateCustomersToUpdate.Phonenumber = newValue;
+                        unitOfWork.Save();
+                        break;
+                    case "Emailaddress":
+                        privateCustomersToUpdate.Emailaddress = newValue;
+                        unitOfWork.Save();
+                        break;
+                    case "Address":
+                        privateCustomersToUpdate.Address = newValue;
+                        unitOfWork.Save();
+                        break;
+                    //case "Zipcode":
+                    //    businessCustomersToUpdate.Zipcode = newValue;
+                    //    unitOfWork.Save();
+                    //    break;
+                    case "City":
+                        privateCustomersToUpdate.City = newValue;
+                        unitOfWork.Save();
+                        break;
+                    case "WorkPhonenumber":
+                        privateCustomersToUpdate.WorkPhonenumber = newValue;
+                        unitOfWork.Save();
+                        break;
+                    default:
+                        break;
+
+                }
+
+            }
+
+        }
+        #endregion
     }
 }
