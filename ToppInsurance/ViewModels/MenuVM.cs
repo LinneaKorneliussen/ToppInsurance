@@ -27,6 +27,8 @@ namespace TopInsuranceWPF.ViewModels
             CurrentViewModel = new MenuVM();
             BusinessAddCommand = new RelayCommand(AddBusinessCustomerBTN);
             PrivateAddCommand = new RelayCommand(AddPrivateCustomerBTN);
+            EditCustomerCommand = new RelayCommand(EditCustomerBTN);
+
         }
         public MenuVM() { }
         #endregion
@@ -78,6 +80,8 @@ namespace TopInsuranceWPF.ViewModels
         #region MenuVM Commands
         public ICommand BusinessAddCommand { get; }
         public ICommand PrivateAddCommand { get; }
+
+        public ICommand EditCustomerCommand { get; }
         #endregion
 
         private void AddBusinessCustomerBTN()
@@ -89,6 +93,12 @@ namespace TopInsuranceWPF.ViewModels
         {
             CurrentViewModel = new RegisterPrivateCustomer();
         }
+
+        private void EditCustomerBTN()
+        {
+            CurrentViewModel = new EditCustomer();
+        }
+
 
 
         // Implementera den abstrakta indexeraren från ObservableObject

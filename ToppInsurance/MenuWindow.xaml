@@ -72,7 +72,7 @@
                                 </StackPanel>
                             </Button>
 
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource menuButton}" Command="{Binding EditCustomerCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <material:PackIconMaterial Kind="AccountEdit" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Ändra kunduppgifter" />
