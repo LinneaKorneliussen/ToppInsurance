@@ -26,12 +26,12 @@ namespace TopInsuranceDL
         }
         #endregion
 
-        #region Patient peronalnumber unique Method
-        //public bool IsOrganizationalnumberUnique(string organizationalnumber)
-        //{
-        //    bool isUnique = !unitOfWork.BusinessRepository.Any(p => p.Organizationalnumber == organizationalnumber);
-        //    return isUnique;
-        //}
+        #region Org.number unique check Method
+        public bool IsOrganizationalnumberUnique(int organizationalnumber)
+        {
+            bool isUnique = !unitOfWork.BCRepository.Any(p => p.Organizationalnumber == organizationalnumber);
+            return isUnique;
+        }
         #endregion
 
         #region Get all business customers Method

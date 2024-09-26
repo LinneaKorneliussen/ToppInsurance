@@ -1,15 +1,15 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows;
 using TopInsuranceWPF.Commands;
 using TopInsuranceBL;
 using System.Collections.ObjectModel;
-using System.Numerics;
 using TopInsuranceEntities;
+
 
 
 namespace TopInsuranceWPF.ViewModels
 {
+   
     public class RegisterBusinessCustomerVM : ObservableObject
     {
         private BusinessController businessController;
@@ -18,12 +18,12 @@ namespace TopInsuranceWPF.ViewModels
         {
             businessController = new BusinessController();
             AddBusinessCustomerCommand = new RelayCommand(AddBusinessCustomer);
+
             List<BusinessCustomer> customers = businessController.GetAllBusinessCustomers();
             BCcustomers = new ObservableCollection<BusinessCustomer>(customers);
         }
 
-        #region Properties Add business customer
-
+        #region Properties
         private string _newName;
         public string NewName
         {
@@ -33,7 +33,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newName != value)
                 {
                     _newName = value;
-                    OnPropertyChanged(NewName);
+                    OnPropertyChanged();
                 }
             }
         }
@@ -47,21 +47,21 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newPhoneNumber != value)
                 {
                     _newPhoneNumber = value;
-                    OnPropertyChanged(NewPhoneNumber);
+                    OnPropertyChanged();
                 }
             }
         }
 
-        private string _newEmailadress;
-        public string NewEmailadress
+        private string _newEmailAddress;
+        public string NewEmailAddress
         {
-            get { return _newEmailadress; }
+            get { return _newEmailAddress; }
             set
             {
-                if (_newEmailadress != value)
+                if (_newEmailAddress != value)
                 {
-                    _newEmailadress = value;
-                    OnPropertyChanged(NewEmailadress);
+                    _newEmailAddress = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newAddress != value)
                 {
                     _newAddress = value;
-                    OnPropertyChanged(NewAddress);
+                    OnPropertyChanged();
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newZipcode != value)
                 {
                     _newZipcode = value;
-                    OnPropertyChanged(NewZipcode);
+                    OnPropertyChanged();
                 }
             }
         }
@@ -103,7 +103,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newCity != value)
                 {
                     _newCity = value;
-                    OnPropertyChanged(NewCity);
+                    OnPropertyChanged();
                 }
             }
         }
@@ -117,7 +117,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newCompanyName != value)
                 {
                     _newCompanyName = value;
-                    OnPropertyChanged(NewCompanyName);
+                    OnPropertyChanged();
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newOrganizationalnumber != value)
                 {
                     _newOrganizationalnumber = value;
-                    OnPropertyChanged(NewOrganizationalnumber);
+                    OnPropertyChanged();
                 }
             }
         }
@@ -145,21 +145,23 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newCountryCode != value)
                 {
                     _newCountryCode = value;
-                    OnPropertyChanged(NewCountryCode);
+                    OnPropertyChanged();
                 }
             }
         }
 
-
         #endregion
 
-        #region Registrate new business customer Command and Methods 
+        #region Commands
         public ICommand AddBusinessCustomerCommand { get; }
+        #endregion
+
+        #region Add Business Customer Methods
         private void AddBusinessCustomer()
         {
             string errorMessage = ValidateField("NewName");
             errorMessage ??= ValidateField("NewPhoneNumber");
-            errorMessage ??= ValidateField("NewEmailadress");
+            errorMessage ??= ValidateField("NewEmailAddress");
             errorMessage ??= ValidateField("NewAddress");
             errorMessage ??= ValidateField("NewZipcode");
             errorMessage ??= ValidateField("NewCity");
@@ -172,56 +174,50 @@ namespace TopInsuranceWPF.ViewModels
                 MessageBox.Show(errorMessage);
                 return;
             }
+            if (!ValidateNumericFields(out int orgNumber, out int zipcode, out int countrycode))
+            {
+                return; 
+            }
+            if (!businessController.IsOrganizationalnumberUnique(orgNumber))
+            {
+                MessageBox.Show("Organisationsnumret är inte unikt.");
+                return; 
+            }
 
-            int orgNumber = int.Parse(NewOrganizationalnumber);
-            int zipcode = int.Parse(NewZipcode);
-            int countrycode = int.Parse(NewCountryCode);
+            businessController.CreateNewBusinessCustomer(NewName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
+            ShowMessage(NewName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
 
-            businessController.CreateNewBusinessCustomer(NewName, NewPhoneNumber, NewEmailadress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
-
-            MessageBox.Show($"Företagskunden har registrerats korrekt!\n\n" +
-                $"Här är detaljerna:\n" +
-                $"-------------------------\n" +
-                $"Namn: {NewName}\n" +
-                $"Telefonnummer: {NewPhoneNumber}\n" +
-                $"E-post: {NewEmailadress}\n" +
-                $"Adress: {NewAddress}\n" +
-                "Postnummer: {zipcode}\n" +
-                $"Stad: {NewCity}\n" +
-                $"Företagsnamn: {NewCompanyName}\n" +
-                $"Organisationsnummer: {orgNumber}\n" +
-                $"Landkod: {countrycode}\n" +
-                $"-------------------------\n" +
-                $"Tack för att du registrerade en ny företagskund!\n" +
-                $"Vi ser fram emot att hjälpa er vidare.");
-
-            ClearFields();
-
-
-            //if (!IsValidPhoneNumber(NewPhoneNumber))
-            //{
-            //    MessageBox.Show("Invalid phonenumber format.\nPlease make sure the phonenumber follows the format (xxx-xxxxxxx)");
-            //    return;
-            //}
-
-            //if (!businessController.IsOrganizationalnumberUnique(NewOrganizationalnumber))
-            //{
-            //    MessageBox.Show("Organizational number is not unique.");
-            //    return;
-            //}
+            BCcustomers.Add(new BusinessCustomer
+            {
+                Name = NewName,
+                Phonenumber = NewPhoneNumber,
+                Emailaddress = NewEmailAddress,
+                Address = NewAddress,
+                Zipcode = zipcode,
+                City = NewCity,
+                CompanyName = NewCompanyName,
+                Organizationalnumber = orgNumber,
+                CountryCode = countrycode
+            });
+            ClearFields(); 
         }
         #endregion
 
-        #region Get all business customer
-        private ObservableCollection<BusinessCustomer> _BCcustomers;
-        public ObservableCollection<BusinessCustomer> BCcustomers
+        #region Show message 
+        private void ShowMessage(string newName, string newPhoneNumber, string newEmailAddress, string newAddress, int zipcode,
+                                 string newCity, string newCompanyName, int orgNumber, int countrycode)
         {
-            get { return _BCcustomers; }
-            set
-            {
-                _BCcustomers = value;
-                OnPropertyChanged(nameof(BCcustomers));
-            }
+            MessageBox.Show($"Företagskunden har registrerats korrekt!\n\n" +
+                             $"Namn: {newName}\n" +
+                             $"Telefonnummer: {newPhoneNumber}\n" +
+                             $"E-post: {newEmailAddress}\n" +
+                             $"Adress: {newAddress}\n" +
+                             $"Postnummer: {zipcode}\n" +
+                             $"Stad: {newCity}\n" +
+                             $"Företagsnamn: {newCompanyName}\n" +
+                             $"Organisationsnummer: {orgNumber}\n" +
+                             $"Landkod: {countrycode}\n" +
+                             $"Tack för att du registrerade en ny företagskund!");
         }
         #endregion
 
@@ -230,7 +226,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             NewName = string.Empty;
             NewPhoneNumber = string.Empty;
-            NewEmailadress = string.Empty;
+            NewEmailAddress = string.Empty;
             NewAddress = string.Empty;
             NewZipcode = string.Empty;
             NewCity = string.Empty;
@@ -247,80 +243,113 @@ namespace TopInsuranceWPF.ViewModels
 
             switch (columnName)
             {
-                case "NewName":
+                case nameof(NewName):
                     if (string.IsNullOrWhiteSpace(NewName))
                     {
                         errorMessage = "Namn är obligatoriskt.";
                     }
                     break;
-                case "NewPhoneNumber":
+                case nameof(NewPhoneNumber):
                     if (string.IsNullOrWhiteSpace(NewPhoneNumber))
                     {
                         errorMessage = "Telefonnummer är obligatoriskt.";
                     }
                     break;
-                case "NewEmailadress":
-                    if (string.IsNullOrWhiteSpace(NewEmailadress))
+                case nameof(NewEmailAddress):
+                    if (string.IsNullOrWhiteSpace(NewEmailAddress))
                     {
-                        errorMessage = "E-post är obligatoriskt.";
+                        errorMessage = "Email är obligatoriskt.";
                     }
                     break;
-                case "NewAddress":
+                case nameof(NewAddress):
                     if (string.IsNullOrWhiteSpace(NewAddress))
                     {
                         errorMessage = "Adress är obligatoriskt.";
                     }
                     break;
-                case "NewZipcode":
+                case nameof(NewZipcode):
                     if (string.IsNullOrWhiteSpace(NewZipcode))
                     {
                         errorMessage = "Postnummer är obligatoriskt.";
                     }
                     break;
-                case "NewCity":
-                    if (string.IsNullOrEmpty(NewCity))
+                case nameof(NewCity):
+                    if (string.IsNullOrWhiteSpace(NewCity))
                     {
                         errorMessage = "Stad är obligatoriskt.";
                     }
                     break;
-                case "NewCompanyName":
-                    if (string.IsNullOrEmpty(NewCompanyName))
+                case nameof(NewCompanyName):
+                    if (string.IsNullOrWhiteSpace(NewCompanyName))
                     {
                         errorMessage = "Företagsnamn är obligatoriskt.";
                     }
                     break;
-                case "NewOrganizationalnumber": // Ändrat här för att matcha fältet korrekt
-                    if (string.IsNullOrEmpty(NewOrganizationalnumber))
+                case nameof(NewOrganizationalnumber):
+                    if (string.IsNullOrWhiteSpace(NewOrganizationalnumber))
                     {
-                        errorMessage = "Org.nummer är obligatoriskt.";
+                        errorMessage = "Org.nr är obligatoriskt.";
                     }
                     break;
-                case "NewCountryCode":
-                    if (string.IsNullOrEmpty(NewCountryCode))
+                case nameof(NewCountryCode):
+                    if (string.IsNullOrWhiteSpace(NewCountryCode))
                     {
                         errorMessage = "Landskod är obligatoriskt.";
                     }
                     break;
                 default:
-                    errorMessage = "Felaktigt.";
+                    errorMessage = "Ogiltigt kolumnnamn.";
                     break;
             }
 
             return errorMessage;
         }
 
-
         public override string this[string columnName]
         {
-            get
+            get => ValidateField(columnName);
+        }
+
+        private bool ValidateNumericFields(out int orgNumber, out int zipcode, out int countrycode)
+        {
+            orgNumber = 0;
+            zipcode = 0;
+            countrycode = 0;
+
+            if (!int.TryParse(NewZipcode, out zipcode))
             {
-                return ValidateField(columnName);
+                MessageBox.Show("Postnumret måste vara ett giltigt nummer.");
+                return false;
             }
+            if (!int.TryParse(NewOrganizationalnumber, out orgNumber))
+            {
+                MessageBox.Show("Org.nr måste vara ett giltigt nummer.");
+                return false;
+            }
+            if (!int.TryParse(NewCountryCode, out countrycode))
+            {
+                MessageBox.Show("Landskoden måste vara ett giltigt nummer.");
+                return false;
+            }
+
+            return true;
         }
         #endregion
 
+        #region Collection for business customers
 
+        private ObservableCollection<BusinessCustomer> _BCcustomers;
+        public ObservableCollection<BusinessCustomer> BCcustomers
+        {
+            get { return _BCcustomers; }
+            set
+            {
+                _BCcustomers = value;
+                OnPropertyChanged();
+            }
+        }
 
+        #endregion
     }
 
 }
