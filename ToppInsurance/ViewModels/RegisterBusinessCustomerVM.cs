@@ -258,7 +258,7 @@ namespace TopInsuranceWPF.ViewModels
                 case nameof(NewEmailAddress):
                     if (string.IsNullOrWhiteSpace(NewEmailAddress))
                     {
-                        errorMessage = "Email är obligatoriskt.";
+                        errorMessage = "E-mail är obligatoriskt.";
                     }
                     break;
                 case nameof(NewAddress):

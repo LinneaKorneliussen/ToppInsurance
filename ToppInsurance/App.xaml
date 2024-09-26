@@ -112,7 +112,6 @@
                 <Setter Property="Height" Value="10" />
             </Style>
 
-           
         </ResourceDictionary>
     </Application.Resources>
 </Application>
