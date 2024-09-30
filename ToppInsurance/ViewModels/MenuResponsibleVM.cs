@@ -20,7 +20,11 @@ namespace TopInsuranceWPF.ViewModels
             HomePageCommand = new RelayCommand(ShowHomePage);
             BusinessAddCommand = new RelayCommand(AddBusinessCustomerBTN);
             PrivateAddCommand = new RelayCommand(AddPrivateCustomerBTN);
-            NewInsuranceCommand = new RelayCommand(NewInsuranceBTN);
+            LifeInsuranceCommand = new RelayCommand(LifeInsuranceBTN);
+            SicknessAccidentCommand = new RelayCommand(SicknessAccidentBTN);
+            BusinessInsuranceCommand = new RelayCommand(BusinessInsuranceBTN);
+            VehicleInsuranceCommand = new RelayCommand(VehicleInsuranceBTN);
+            RealEstateInsuranceCommand = new RelayCommand(RealEstateInsuranceBTN);
             EditCustomerCommand = new RelayCommand(EditCustomerBTN);
             RegisterEmployerCommand = new RelayCommand(RegisterEmployerBTN);
             ShowStatisticsCommand = new RelayCommand(ShowStatisticsBTN);
@@ -75,7 +79,11 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand HomePageCommand { get; }
         public ICommand BusinessAddCommand { get; }
         public ICommand PrivateAddCommand { get; }
-        public ICommand NewInsuranceCommand { get; }
+        public ICommand LifeInsuranceCommand { get; }
+        public ICommand SicknessAccidentCommand { get; }
+        public ICommand BusinessInsuranceCommand { get; }
+        public ICommand VehicleInsuranceCommand { get; }
+        public ICommand RealEstateInsuranceCommand { get; }
         public ICommand EditCustomerCommand { get; }
         public ICommand ShowStatisticsCommand { get; }
         public ICommand RegisterEmployerCommand { get; }
@@ -96,10 +104,29 @@ namespace TopInsuranceWPF.ViewModels
         {
             CurrentViewModel = new RegisterPrivateCustomer();
         }
-
-        private void NewInsuranceBTN()
+        private void LifeInsuranceBTN()
         {
-            CurrentViewModel = new NewInsurance();
+            CurrentViewModel = new LifeInsurance();
+        }
+
+        private void SicknessAccidentBTN()
+        {
+            CurrentViewModel = new SicknessAccident();
+        }
+
+        private void BusinessInsuranceBTN()
+        {
+            CurrentViewModel = new BusinessInsurance();
+        }
+
+        private void VehicleInsuranceBTN()
+        {
+            CurrentViewModel = new VehicleInsurance();
+        }
+
+        private void RealEstateInsuranceBTN()
+        {
+            CurrentViewModel = new RealEstateInsurance();
         }
 
         private void EditCustomerBTN()
