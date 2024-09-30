@@ -84,6 +84,14 @@
                                     <TextBlock Text="Statistik" />
                                 </StackPanel>
                             </Button>
+
+                            <Button Style="{StaticResource menuButton}" Command="{Binding RegisterEmployerCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <material:PackIconMaterial Kind="AccountPlusOutline" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Registrera säljare" />
+                                </StackPanel>
+                            </Button>
+                            
                         </StackPanel>
 
                         <Button Style="{StaticResource menuButton}" Command="{Binding LogOffCommand}" 
