@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using TopInsuranceEntities;
+using System.Reflection;
+
 
 namespace TopInsuranceDL
 {
@@ -42,45 +45,11 @@ namespace TopInsuranceDL
 
         #endregion
 
-        public void UpdateBusinessCustomers(BusinessCustomer businessCustomersToUpdate, string choice, string newValue)
+        public void UpdateBusinessCustomers(BusinessCustomer businessCustomersToUpdate)
         {
-            if (businessCustomersToUpdate != null)
+            if(businessCustomersToUpdate != null)
             {
-                switch (choice)
-                {
-                    case "Name":
-                        businessCustomersToUpdate.Name = newValue;
-                        unitOfWork.Save();
-                        break;
-                    case "Phonenumber":
-                        businessCustomersToUpdate.Phonenumber = newValue;
-                        unitOfWork.Save();
-                        break;
-                    case "Emailaddress":
-                        businessCustomersToUpdate.Emailaddress = newValue;
-                        unitOfWork.Save();
-                        break;
-                    case "Address":
-                        businessCustomersToUpdate.Address = newValue;
-                        unitOfWork.Save();
-                        break;
-                    //case "Zipcode":
-                    //    businessCustomersToUpdate.Zipcode = newValue;
-                    //    unitOfWork.Save();
-                    //    break;
-                    case "City":
-                        businessCustomersToUpdate.City = newValue;
-                        unitOfWork.Save();
-                        break;
-                    case "CompanyName":
-                        businessCustomersToUpdate.CompanyName = newValue;
-                        unitOfWork.Save();
-                        break;
-                    default:
-                        break;
-
-                }
-
+                unitOfWork.Save();
             }
 
         }
