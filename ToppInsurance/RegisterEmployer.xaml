@@ -84,10 +84,19 @@
                 </Grid>
 
                 <StackPanel Grid.Row="2" Margin="5">
-                    <Label Content="Säljarregister" FontWeight="Bold" FontSize="14"/>
+                    <Label Content="Kundregister" FontWeight="Bold" FontSize="14"/>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <DataGrid x:Name="dataGridCustomers" AutoGenerateColumns="True" Height="110" 
-                                  ItemsSource="{Binding Employers}" BorderBrush="gray" BorderThickness="5"/>
+                        <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="170"
+                  ItemsSource="{Binding Employers}" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Namn" Binding="{Binding Name}" IsReadOnly="True" Width="120"/>
+                                <DataGridTextColumn Header="Telefonnummer" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="150"/>
+                                <DataGridTextColumn Header="Emailadress" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="150"/>
+                                <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="*"/>
+                                <DataGridTextColumn Header="Postnummer" Binding="{Binding Zipcode}" IsReadOnly="True" Width="*"/>
+                                <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </ScrollViewer>
                 </StackPanel>
 
