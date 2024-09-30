@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="TopInsuranceWPF.BusinessInsurance"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
+             xmlns:local="clr-namespace:TopInsuranceWPF"
+             mc:Ignorable="d"
+             Background="LightBlue" Height="450" Width="800">
+
+    <UserControl.DataContext>
+        <vm:BusinessInsuranceVM/>
+    </UserControl.DataContext>
+
+
+    <Grid>
+            
+    </Grid>
+</UserControl>

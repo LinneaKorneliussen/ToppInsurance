@@ -65,12 +65,70 @@
                                 </StackPanel>
                             </Button>
 
-                            <Button Style="{StaticResource menuButton}" Command="{Binding NewInsuranceCommand}">
-                                <StackPanel Orientation="Horizontal">
-                                    <material:PackIconMaterial Kind="NoteTextOutline" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Registrera försäkring" />
+                            <!-- Huvudmeny-knappen för att visa/expanda privatförsäkringar -->
+                            <Expander Style="{StaticResource menuExpander}">
+                                <Expander.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <material:PackIconMaterial Kind="Crowd" 
+                                       Width="15" Height="15" Margin="-4 2 10 0" Foreground="White" />
+                                        <TextBlock Text="Privatförsäkringar" 
+                                        VerticalAlignment="Center" Foreground="White"/>
+                                    </StackPanel>
+                                </Expander.Header>
+
+                                <StackPanel>
+                                    <Button Style="{StaticResource menuButton}" Command="{Binding LifeInsuranceCommand}" Margin="-10 5 -10 0" FontSize="10">
+                                        <StackPanel Orientation="Horizontal">
+                                            <material:PackIconMaterial Kind="Heart" Style="{StaticResource expanderIcon}"/>
+                                            <TextBlock Text="Livförsäkring" />
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button Style="{StaticResource menuButton}" Command="{Binding SicknessAccidentCommand}" Margin="-10 5 -10 0" FontSize="9">
+                                        <StackPanel Orientation="Horizontal">
+                                            <material:PackIconMaterial Kind="Lifebuoy" Style="{StaticResource expanderIcon}"/>
+                                            <TextBlock Text="Sjuk- och olycksfallförsäkring" />
+                                        </StackPanel>
+                                    </Button>
                                 </StackPanel>
-                            </Button>
+                            </Expander>
+                            
+                            <!--Företagsförsäkringar-->
+                            <Expander Style="{StaticResource menuExpander}">
+                                <Expander.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <material:PackIconMaterial Kind="Domain" 
+                                        Width="15" Height="15" Margin="-4 2 10 0" Foreground="White" />
+                                        <TextBlock Text="Företagsförsäkringar" 
+                                        VerticalAlignment="Center" Foreground="White"/>
+                                    </StackPanel>
+                                </Expander.Header>
+
+                                <StackPanel>
+                                    <Button Style="{StaticResource menuButton}" Command="{Binding BusinessInsuranceCommand }" Margin="-10 5 -10 0" FontSize="9">
+                                        <StackPanel Orientation="Horizontal">
+                                            <material:PackIconMaterial Kind="AccountGroup" Style="{StaticResource expanderIcon}"/>
+                                            <TextBlock Text="Företagsförsäkring" />
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button Style="{StaticResource menuButton}" Command="{Binding VehicleInsuranceCommand}" Margin="-10 5 -10 0" FontSize="9">
+                                        <StackPanel Orientation="Horizontal">
+                                            <material:PackIconMaterial Kind="Car" Style="{StaticResource expanderIcon}"/>
+                                            <TextBlock Text="Fordonsförsäkring" />
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button Style="{StaticResource menuButton}" Command="{Binding RealEstateInsuranceCommand}" Margin="-10 5 -10 0" FontSize="9">
+                                        <StackPanel Orientation="Horizontal">
+                                            <material:PackIconMaterial Kind="factory" Style="{StaticResource expanderIcon}"/>
+                                            <TextBlock Text="Fastighetsförsäkringar" />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </Expander>
+
+
 
                             <Button Style="{StaticResource menuButton}" Command="{Binding EditCustomerCommand}">
                                 <StackPanel Orientation="Horizontal">
