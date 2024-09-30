@@ -98,39 +98,5 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
-        #region Validation 
-        private string ValidateField(string columnName)
-        {
-            string errorMessage = null;
-
-            switch (columnName)
-            {
-                case "Username": 
-                    if (string.IsNullOrWhiteSpace(Username))
-                    {
-                        errorMessage = "Agency number must be a positive integer.";
-                    }
-                    break;
-                case "Password":
-                    if (string.IsNullOrWhiteSpace(Password))
-                    {
-                        errorMessage = "Field is required.";
-                    }
-                    break;
-            }
-
-            return errorMessage;
-        }
-
-
-        public override string this[string columnName]
-        {
-            get
-            {
-                return ValidateField(columnName);
-            }
-        }
-        #endregion
-
     }
 }
