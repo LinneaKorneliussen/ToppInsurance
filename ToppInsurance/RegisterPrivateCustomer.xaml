@@ -106,7 +106,8 @@
                 <StackPanel Grid.Row="2" Margin="5">
                     <Label Content="Kundregister" FontWeight="Bold" FontSize="14"/>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <DataGrid x:Name="dataGridCustomers" AutoGenerateColumns="True" Height="170" BorderBrush="gray" BorderThickness="5"/>
+                        <DataGrid x:Name="dataGridCustomers" AutoGenerateColumns="True" Height="170"
+                                  ItemsSource="{Binding PCustomers}" BorderBrush="gray" BorderThickness="5"/>
                     </ScrollViewer>
                 </StackPanel>
 

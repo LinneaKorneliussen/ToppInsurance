@@ -4,13 +4,14 @@ using TopInsuranceWPF.Commands;
 using TopInsuranceBL;
 using System.Collections.ObjectModel;
 using TopInsuranceEntities;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 
 
 namespace TopInsuranceWPF.ViewModels
 {
-   
-    public class RegisterBusinessCustomerVM : ObservableObject
+    public class RegisterBusinessCustomerVM : ObservableObject, IDataErrorInfo
     {
         private BusinessController businessController;
 
@@ -152,6 +153,21 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
+        #region Collection for business customers
+
+        private ObservableCollection<BusinessCustomer> _BCcustomers;
+        public ObservableCollection<BusinessCustomer> BCcustomers
+        {
+            get { return _BCcustomers; }
+            set
+            {
+                _BCcustomers = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
         #region Commands
         public ICommand AddBusinessCustomerCommand { get; }
         #endregion
@@ -159,29 +175,24 @@ namespace TopInsuranceWPF.ViewModels
         #region Add Business Customer Methods
         private void AddBusinessCustomer()
         {
-            string errorMessage = ValidateField("NewName");
-            errorMessage ??= ValidateField("NewPhoneNumber");
-            errorMessage ??= ValidateField("NewEmailAddress");
-            errorMessage ??= ValidateField("NewAddress");
-            errorMessage ??= ValidateField("NewZipcode");
-            errorMessage ??= ValidateField("NewCity");
-            errorMessage ??= ValidateField("NewCompanyName");
-            errorMessage ??= ValidateField("NewOrganizationalnumber");
-            errorMessage ??= ValidateField("NewCountryCode");
-
-            if (!string.IsNullOrEmpty(errorMessage))
+            if (!ValidateAllFields())
             {
-                MessageBox.Show(errorMessage);
                 return;
             }
+
             if (!ValidateNumericFields(out int orgNumber, out int zipcode, out int countrycode))
             {
-                return; 
+                return;
+            }
+            if (!IsValidPhoneNumber(NewPhoneNumber))
+            {
+                MessageBox.Show("Telefonnummer är inte i rätt format!");
+                return;
             }
             if (!businessController.IsOrganizationalnumberUnique(orgNumber))
             {
                 MessageBox.Show("Organisationsnumret är inte unikt.");
-                return; 
+                return;
             }
 
             businessController.CreateNewBusinessCustomer(NewName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
@@ -199,116 +210,109 @@ namespace TopInsuranceWPF.ViewModels
                 Organizationalnumber = orgNumber,
                 CountryCode = countrycode
             });
-            ClearFields(); 
+            ClearFields();
+        }
+
+        private bool ValidateAllFields()
+        {
+            string[] fields = { nameof(NewName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity), nameof(NewCompanyName), nameof(NewOrganizationalnumber), nameof(NewCountryCode) };
+            foreach (var field in fields)
+            {
+                if (!string.IsNullOrEmpty(this[field]))
+                {
+                    MessageBox.Show(this[field]);
+                    return false;
+                }
+            }
+            return true;
         }
         #endregion
 
-        #region Show message 
+        #region Show message Method
         private void ShowMessage(string newName, string newPhoneNumber, string newEmailAddress, string newAddress, int zipcode,
                                  string newCity, string newCompanyName, int orgNumber, int countrycode)
         {
             MessageBox.Show($"Företagskunden har registrerats korrekt!\n\n" +
-                             $"Namn: {newName}\n" +
-                             $"Telefonnummer: {newPhoneNumber}\n" +
-                             $"E-post: {newEmailAddress}\n" +
-                             $"Adress: {newAddress}\n" +
-                             $"Postnummer: {zipcode}\n" +
-                             $"Stad: {newCity}\n" +
-                             $"Företagsnamn: {newCompanyName}\n" +
-                             $"Organisationsnummer: {orgNumber}\n" +
-                             $"Landkod: {countrycode}\n" +
-                             $"Tack för att du registrerade en ny företagskund!");
+                            $"Namn: {newName}\n" +
+                            $"Telefonnummer: {newPhoneNumber}\n" +
+                            $"E-post: {newEmailAddress}\n" +
+                            $"Adress: {newAddress}\n" +
+                            $"Postnummer: {zipcode}\n" +
+                            $"Stad: {newCity}\n" +
+                            $"Företagsnamn: {newCompanyName}\n" +
+                            $"Organisationsnummer: {orgNumber}\n" +
+                            $"Landkod: {countrycode}\n" +
+                            $"Tack för att du registrerade en ny företagskund!");
         }
         #endregion
 
-        #region Clear fields
-        private void ClearFields()
+        #region Validation IDataErrorInfo
+        public string this[string columnName]
         {
-            NewName = string.Empty;
-            NewPhoneNumber = string.Empty;
-            NewEmailAddress = string.Empty;
-            NewAddress = string.Empty;
-            NewZipcode = string.Empty;
-            NewCity = string.Empty;
-            NewCompanyName = string.Empty;
-            NewOrganizationalnumber = string.Empty;
-            NewCountryCode = string.Empty;
-        }
-        #endregion
-
-        #region Validation
-        private string ValidateField(string columnName)
-        {
-            string errorMessage = null;
-
-            switch (columnName)
+            get
             {
-                case nameof(NewName):
-                    if (string.IsNullOrWhiteSpace(NewName))
-                    {
-                        errorMessage = "Namn är obligatoriskt.";
-                    }
-                    break;
-                case nameof(NewPhoneNumber):
-                    if (string.IsNullOrWhiteSpace(NewPhoneNumber))
-                    {
-                        errorMessage = "Telefonnummer är obligatoriskt.";
-                    }
-                    break;
-                case nameof(NewEmailAddress):
-                    if (string.IsNullOrWhiteSpace(NewEmailAddress))
-                    {
-                        errorMessage = "E-mail är obligatoriskt.";
-                    }
-                    break;
-                case nameof(NewAddress):
-                    if (string.IsNullOrWhiteSpace(NewAddress))
-                    {
-                        errorMessage = "Adress är obligatoriskt.";
-                    }
-                    break;
-                case nameof(NewZipcode):
-                    if (string.IsNullOrWhiteSpace(NewZipcode))
-                    {
-                        errorMessage = "Postnummer är obligatoriskt.";
-                    }
-                    break;
-                case nameof(NewCity):
-                    if (string.IsNullOrWhiteSpace(NewCity))
-                    {
-                        errorMessage = "Stad är obligatoriskt.";
-                    }
-                    break;
-                case nameof(NewCompanyName):
-                    if (string.IsNullOrWhiteSpace(NewCompanyName))
-                    {
-                        errorMessage = "Företagsnamn är obligatoriskt.";
-                    }
-                    break;
-                case nameof(NewOrganizationalnumber):
-                    if (string.IsNullOrWhiteSpace(NewOrganizationalnumber))
-                    {
-                        errorMessage = "Org.nr är obligatoriskt.";
-                    }
-                    break;
-                case nameof(NewCountryCode):
-                    if (string.IsNullOrWhiteSpace(NewCountryCode))
-                    {
-                        errorMessage = "Landskod är obligatoriskt.";
-                    }
-                    break;
-                default:
-                    errorMessage = "Ogiltigt kolumnnamn.";
-                    break;
+                switch (columnName)
+                {
+                    case nameof(NewName):
+                        if (string.IsNullOrWhiteSpace(NewName))
+                        {
+                            return "Namn är obligatoriskt.";
+                        }
+                        break;
+                    case nameof(NewPhoneNumber):
+                        if (string.IsNullOrWhiteSpace(NewPhoneNumber))
+                        {
+                            return "Telefonnummer är obligatoriskt.";
+                        }
+                        break;
+                    case nameof(NewEmailAddress):
+                        if (string.IsNullOrWhiteSpace(NewEmailAddress))
+                        {
+                            return "E-mail är obligatoriskt.";
+                        }
+                        break;
+                    case nameof(NewAddress):
+                        if (string.IsNullOrWhiteSpace(NewAddress))
+                        {
+                            return "Adress är obligatoriskt.";
+                        }
+                        break;
+                    case nameof(NewZipcode):
+                        if (string.IsNullOrWhiteSpace(NewZipcode))
+                        {
+                            return "Postnummer är obligatoriskt.";
+                        }
+                        break;
+                    case nameof(NewCity):
+                        if (string.IsNullOrWhiteSpace(NewCity))
+                        {
+                            return "Stad är obligatoriskt.";
+                        }
+                        break;
+                    case nameof(NewCompanyName):
+                        if (string.IsNullOrWhiteSpace(NewCompanyName))
+                        {
+                            return "Företagsnamn är obligatoriskt.";
+                        }
+                        break;
+                    case nameof(NewOrganizationalnumber):
+                        if (string.IsNullOrWhiteSpace(NewOrganizationalnumber))
+                        {
+                            return "Org.nr är obligatoriskt.";
+                        }
+                        break;
+                    case nameof(NewCountryCode):
+                        if (string.IsNullOrWhiteSpace(NewCountryCode))
+                        {
+                            return "Landskod är obligatoriskt.";
+                        }
+                        break;
+                }
+                return null;
             }
-
-            return errorMessage;
         }
 
-        public override string this[string columnName]
-        {
-            get => ValidateField(columnName);
-        }
+        public string Error => null;
 
         private bool ValidateNumericFields(out int orgNumber, out int zipcode, out int countrycode)
         {
@@ -334,22 +338,29 @@ namespace TopInsuranceWPF.ViewModels
 
             return true;
         }
-        #endregion
 
-        #region Collection for business customers
-
-        private ObservableCollection<BusinessCustomer> _BCcustomers;
-        public ObservableCollection<BusinessCustomer> BCcustomers
+        public bool IsValidPhoneNumber(string phoneNumber)
         {
-            get { return _BCcustomers; }
-            set
-            {
-                _BCcustomers = value;
-                OnPropertyChanged();
-            }
+            string pattern = @"^\d{3}-\d{7}$";
+            return Regex.IsMatch(phoneNumber, pattern);
         }
-
         #endregion
+
+        #region Clear fields Method
+        private void ClearFields()
+        {
+            NewName = string.Empty;
+            NewPhoneNumber = string.Empty;
+            NewEmailAddress = string.Empty;
+            NewAddress = string.Empty;
+            NewZipcode = string.Empty;
+            NewCity = string.Empty;
+            NewCompanyName = string.Empty;
+            NewOrganizationalnumber = string.Empty;
+            NewCountryCode = string.Empty;
+        }
+        #endregion
+
     }
 
 }

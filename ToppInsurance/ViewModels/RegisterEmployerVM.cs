@@ -1,25 +1,28 @@
-﻿using System.Windows.Input;
-using System.Windows;
-using TopInsuranceBL;
+﻿using TopInsuranceBL;
 using TopInsuranceWPF.Commands;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
+using TopInsuranceEntities;
+using System.Windows.Input;
+using System.Windows;
 
 
 
 namespace TopInsuranceWPF.ViewModels
 {
-    public class RegisterEmployerVM : ObservableObject
+    public class RegisterEmployerVM : ObservableObject, IDataErrorInfo
     {
         private EmployerController employerController;
 
-        public void RegisterBusinessCustomerVM()
+        public RegisterEmployerVM()
         {
             employerController = new EmployerController();
-            //AddBusinessCustomerCommand = new RelayCommand(AddBusinessCustomer);
 
-            //List<BusinessCustomer> customers = businessController.GetAllBusinessCustomers();
-            //BCcustomers = new ObservableCollection<BusinessCustomer>(customers);
+            AddEmployerCommand = new RelayCommand(AddEmployer);
+            Clearfieldscommand = new RelayCommand(ClearFields);
 
-            
+            List<Employee> employees = employerController.GetAllEmployers();
+            Employers = new ObservableCollection<Employee>(employees);
         }
 
         #region Properties
@@ -107,20 +110,6 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        private string _newEmployeerole;
-        public string NewEmployeeRole
-        {
-            get { return _newEmployeerole; }
-            set
-            {
-                if (_newEmployeerole != value)
-                {
-                    _newEmployeerole = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
         private string _newPassword;
         public string NewPassword
         {
@@ -134,11 +123,88 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
-
-
         #endregion
 
-        #region Validation
+        #region Observable employers
+        private ObservableCollection<Employee> _employers;
+        public ObservableCollection<Employee> Employers
+        {
+            get { return _employers; }
+            set
+            {
+                _employers = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Add empoloyee command and Method
+        public ICommand AddEmployerCommand { get; }
+
+        private void AddEmployer()
+        {
+
+            string errorMessage = ValidateField("NewName");
+            errorMessage ??= ValidateField("NewPhoneNumber");
+            errorMessage ??= ValidateField("NewEmailAddress");
+            errorMessage ??= ValidateField("NewAddress");
+            errorMessage ??= ValidateField("NewZipcode");
+            errorMessage ??= ValidateField("NewCity");
+            errorMessage ??= ValidateField("NewPassword");
+
+
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                MessageBox.Show(errorMessage);
+                return;
+            }
+            if (!ValidateNumericFields(out int zipcode))
+            {
+                return;
+            }
+
+            EmployeeRole defaultRole = EmployeeRole.Säljare;
+
+
+            employerController.AddEmployer(NewName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, defaultRole, NewPassword);
+
+            MessageBox.Show($"Säljaren har registrerats korrekt!\n\n" +
+                             $"Namn: {NewName}\n" +
+                             $"Telefonnummer: {NewPhoneNumber}\n" +
+                             $"E-post: {NewEmailAddress}\n" +
+                             $"Adress: {NewAddress}\n" +
+                             $"Postnummer: {zipcode}\n" +
+                             $"Stad: {NewCity}\n");
+
+            ClearFields();
+
+        }
+        #endregion
+
+        #region Clear fields Command and Method
+        public ICommand Clearfieldscommand { get; }
+        private void ClearFields()
+        {
+            NewName = string.Empty;
+            NewPhoneNumber = string.Empty;
+            NewEmailAddress = string.Empty;
+            NewAddress = string.Empty;
+            NewZipcode = string.Empty;
+            NewCity = string.Empty;
+            NewPassword = string.Empty;
+
+
+        }
+        #endregion
+
+        #region Validation IDataErrorInfo 
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get => ValidateField(columnName);
+        }
+
         private string ValidateField(string columnName)
         {
             string errorMessage = null;
@@ -181,19 +247,12 @@ namespace TopInsuranceWPF.ViewModels
                         errorMessage = "Stad är obligatoriskt.";
                     }
                     break;
-                case nameof(NewEmployeeRole):
-                    if (string.IsNullOrWhiteSpace(NewEmployeeRole))
-                    {
-                        errorMessage = "Roll är obligatoriskt.";
-                    }
-                    break;
                 case nameof(NewPassword):
                     if (string.IsNullOrWhiteSpace(NewPassword))
                     {
-                        errorMessage = "Roll är obligatoriskt.";
+                        errorMessage = "Lösenord är obligatoriskt.";
                     }
                     break;
-
                 default:
                     errorMessage = "Ogiltigt kolumnnamn.";
                     break;
@@ -203,14 +262,20 @@ namespace TopInsuranceWPF.ViewModels
         }
 
 
-        public override string this[string columnName]
+        private bool ValidateNumericFields(out int zipcode)
         {
-            get => ValidateField(columnName);
-        }
+            zipcode = 0;
 
+
+            if (!int.TryParse(NewZipcode, out zipcode))
+            {
+                MessageBox.Show("Postnumret måste vara ett giltigt nummer.");
+                return false;
+            }
+
+            return true;
+        }
         #endregion
 
     }
-
-
 }

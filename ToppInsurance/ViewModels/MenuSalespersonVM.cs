@@ -113,24 +113,5 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
-        #region Validation 
-        public override string this[string columnName]
-        {
-            get
-            {
-                string result = string.Empty;
-                switch (columnName)
-                {
-                    case nameof(UserName):
-                        if (string.IsNullOrWhiteSpace(UserName))
-                            result = "Användarnamnet får inte vara tomt.";
-                        break;
-                        // Lägg till fler valideringar 
-                }
-                return result;
-            }
-        }
-        #endregion
-
     }
 }

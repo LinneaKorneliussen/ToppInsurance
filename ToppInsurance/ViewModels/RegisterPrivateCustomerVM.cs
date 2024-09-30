@@ -2,10 +2,14 @@
 using System.Windows;
 using TopInsuranceBL;
 using TopInsuranceWPF.Commands;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
+using System.Collections.ObjectModel;
+using TopInsuranceEntities;
 
 namespace TopInsuranceWPF.ViewModels
 {
-    public class RegisterPrivateCustomerVM : ObservableObject
+    public class RegisterPrivateCustomerVM : ObservableObject, IDataErrorInfo
     {
         private PrivateController privateController;
 
@@ -13,9 +17,11 @@ namespace TopInsuranceWPF.ViewModels
         {
             privateController = new PrivateController();
             AddPrivateCustomerCommand = new RelayCommand(AddPrivateCustomer);
+            List<PrivateCustomer> customers = privateController.GetAllPrivateCustomers();
+            PCustomers = new ObservableCollection<PrivateCustomer>(customers);
         }
 
-        #region Properties Add privatecustomer
+        #region Properties
 
         private string _newName;
         public string NewName
@@ -26,7 +32,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newName != value)
                 {
                     _newName = value;
-                    OnPropertyChanged(NewName);
+                    OnPropertyChanged(nameof(NewName));
                 }
             }
         }
@@ -40,7 +46,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newPhoneNumber != value)
                 {
                     _newPhoneNumber = value;
-                    OnPropertyChanged(NewPhoneNumber);
+                    OnPropertyChanged(nameof(NewPhoneNumber));
                 }
             }
         }
@@ -54,7 +60,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newEmailAddress != value)
                 {
                     _newEmailAddress = value;
-                    OnPropertyChanged(NewEmailAddress);
+                    OnPropertyChanged(nameof(NewEmailAddress));
                 }
             }
         }
@@ -68,7 +74,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newAddress != value)
                 {
                     _newAddress = value;
-                    OnPropertyChanged(NewAddress);
+                    OnPropertyChanged(nameof(NewAddress));
                 }
             }
         }
@@ -82,7 +88,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newZipcode != value)
                 {
                     _newZipcode = value;
-                    OnPropertyChanged(NewZipcode);
+                    OnPropertyChanged(nameof(NewZipcode));
                 }
             }
         }
@@ -96,7 +102,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newCity != value)
                 {
                     _newCity = value;
-                    OnPropertyChanged(NewCity);
+                    OnPropertyChanged(nameof(NewCity));
                 }
             }
         }
@@ -110,7 +116,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newSSN != value)
                 {
                     _newSSN = value;
-                    OnPropertyChanged(NewSSN);
+                    OnPropertyChanged(nameof(NewSSN));
                 }
             }
         }
@@ -124,8 +130,23 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newWorkPhoneNumber != value)
                 {
                     _newWorkPhoneNumber = value;
-                    OnPropertyChanged(NewWorkPhoneNumber);
+                    OnPropertyChanged(nameof(NewWorkPhoneNumber));
                 }
+            }
+        }
+
+        #endregion
+
+        #region Collection for business customers
+
+        private ObservableCollection<PrivateCustomer> _PCustomers;
+        public ObservableCollection<PrivateCustomer> PCustomers
+        {
+            get { return _PCustomers; }
+            set
+            {
+                _PCustomers = value;
+                OnPropertyChanged();
             }
         }
 
@@ -135,25 +156,27 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand AddPrivateCustomerCommand { get; }
         #endregion
 
-        #region Add Private customer Methods 
+        #region Add private customer Method
         private void AddPrivateCustomer()
         {
-            string errorMessage = ValidateField("NewName");
-            errorMessage ??= ValidateField("NewPhoneNumber");
-            errorMessage ??= ValidateField("NewEmailAddress");
-            errorMessage ??= ValidateField("NewAddress");
-            errorMessage ??= ValidateField("NewZipcode");
-            errorMessage ??= ValidateField("NewCity");
-            errorMessage ??= ValidateField("NewSSN");
-            errorMessage ??= ValidateField("NewWorkPhoneNumber");
-
-            if (!string.IsNullOrEmpty(errorMessage))
+            string error = this.Error;
+            if (!string.IsNullOrEmpty(error))
             {
-                MessageBox.Show(errorMessage);
+                MessageBox.Show(error);
                 return;
             }
             if (!ValidateNumericFields(out int zipcode))
             {
+                return;
+            }
+            if (!IsValidPersonalNumber(NewSSN))
+            {
+                MessageBox.Show("Felformat på personummret!");
+                return;
+            }
+            if(!IsValidPhoneNumber(NewWorkPhoneNumber) || !IsValidPhoneNumber(NewPhoneNumber))
+            {
+                MessageBox.Show("Felformat på telefonnummer!");
                 return;
             }
             if (!privateController.SSNUnique(NewSSN))
@@ -162,109 +185,123 @@ namespace TopInsuranceWPF.ViewModels
                 return;
             }
 
+            
             privateController.CreateNewPrivateCustomer(NewName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewSSN, NewWorkPhoneNumber);
 
-            #region Show message
-
+            
             MessageBox.Show($"Kunden har registrerats framgångsrikt!\n\n" +
-                   $"Namn: {NewName}\n" +
-                   $"E-post: {NewEmailAddress}\n" +
-                   $"Telefon: {NewPhoneNumber}\n" +
-                   $"Adress: {NewAddress}\n" +
-                   $"Postnummer: {NewZipcode}\n" +
-                   $"Stad: {NewCity}\n" +
-                   $"Personnummer: {NewSSN}");
+                            $"Namn: {NewName}\n" +
+                            $"E-post: {NewEmailAddress}\n" +
+                            $"Telefon: {NewPhoneNumber}\n" +
+                            $"Adress: {NewAddress}\n" +
+                            $"Postnummer: {NewZipcode}\n" +
+                            $"Stad: {NewCity}\n" +
+                            $"Personnummer: {NewSSN}");
 
+            PCustomers.Add(new PrivateCustomer
+            {
+                Name = NewName,
+                Phonenumber = NewPhoneNumber,
+                Emailaddress = NewEmailAddress,
+                Address = NewAddress,
+                Zipcode = zipcode,
+                City = NewCity,
+                SSN = NewSSN,
+                WorkPhonenumber = NewWorkPhoneNumber
+               
+            });
             ClearFields();
-            #endregion
         }
-#endregion
 
-        #region Clear fields Method
-        private void ClearFields()
-        {
-            NewName = string.Empty;
-            NewPhoneNumber = string.Empty;
-            NewEmailAddress = string.Empty;
-            NewAddress = string.Empty;
-            NewZipcode = string.Empty;
-            NewCity = string.Empty;
-            NewSSN = string.Empty;
-            NewWorkPhoneNumber = string.Empty;
-        }
+
         #endregion
 
-        #region Validation
+        #region Validation IDataErrorInfo
+        public string Error
+        {
+            get
+            {
+                string[] properties = { nameof(NewName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity), nameof(NewSSN), nameof(NewWorkPhoneNumber) };
+                foreach (var property in properties)
+                {
+                    string error = this[property];
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        return error;
+                    }
+                }
+                return null;
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                return ValidateField(columnName);
+            }
+        }
+
         private string ValidateField(string columnName)
         {
             string errorMessage = null;
 
             switch (columnName)
             {
-                case "NewName":
+                case nameof(NewName):
                     if (string.IsNullOrWhiteSpace(NewName))
                     {
-                        errorMessage = "Namn är obligatoriskt";
+                        errorMessage = "Namn är obligatoriskt.";
                     }
                     break;
-                case "NewPhoneNumber":
+                case nameof(NewPhoneNumber):
                     if (string.IsNullOrWhiteSpace(NewPhoneNumber))
                     {
                         errorMessage = "Telefonnummer är obligatoriskt.";
                     }
                     break;
-                case "NewEmailAddress":
+                case nameof(NewEmailAddress):
                     if (string.IsNullOrWhiteSpace(NewEmailAddress))
                     {
-                        errorMessage = "E-mail är obligatoriskt";
+                        errorMessage = "E-mail är obligatoriskt.";
                     }
                     break;
-                case "NewAddress":
+                case nameof(NewAddress):
                     if (string.IsNullOrWhiteSpace(NewAddress))
                     {
-                        errorMessage = "Adress är oblugatoriskt";
+                        errorMessage = "Adress är obligatoriskt.";
                     }
                     break;
-                case "NewZipcode":
+                case nameof(NewZipcode):
                     if (string.IsNullOrWhiteSpace(NewZipcode))
                     {
-                        errorMessage = "Postnummer är obligatoriskt";
+                        errorMessage = "Postnummer är obligatoriskt.";
                     }
                     break;
-                case "NewCity":
-                    if (string.IsNullOrEmpty(NewCity))
+                case nameof(NewCity):
+                    if (string.IsNullOrWhiteSpace(NewCity))
                     {
-                        errorMessage = "Stad är obligatoriskt";
-
+                        errorMessage = "Stad är obligatoriskt.";
                     }
                     break;
-                case "NewSSN":
+                case nameof(NewSSN):
                     if (string.IsNullOrWhiteSpace(NewSSN))
                     {
-                        errorMessage = "Personnummer är obligatoriskt";
+                        errorMessage = "Personnummer är obligatoriskt.";
                     }
                     break;
-                case "NewWorkPhoneNumber":
-                    if (string.IsNullOrEmpty(NewWorkPhoneNumber))
+                case nameof(NewWorkPhoneNumber):
+                    if (string.IsNullOrWhiteSpace(NewWorkPhoneNumber))
                     {
-                        errorMessage = "Arbetstelefon är obligatoriskt";
-
+                        errorMessage = "Arbetstelefon är obligatoriskt.";
                     }
                     break;
                 default:
-                    errorMessage = "Ogiltigt kolumnnamn";
+                    errorMessage = "Ogiltigt kolumnnamn.";
                     break;
             }
 
             return errorMessage;
-        }
-
-        public override string this[string columnName]
-        {
-            get
-            {
-                return ValidateField(columnName);
-            }
         }
 
         private bool ValidateNumericFields(out int zipcode)
@@ -278,11 +315,34 @@ namespace TopInsuranceWPF.ViewModels
             }
 
             return true;
-
-
-            
-
         }
-       #endregion
-    } 
+
+        public bool IsValidPersonalNumber(string personalNumber)
+        {
+            return Regex.IsMatch(personalNumber, @"^\d{8}-\d{4}$");
+        }
+
+        public bool IsValidPhoneNumber(string phoneNumber)
+        {
+            string pattern = @"^\d{3}-\d{7}$";
+            return Regex.IsMatch(phoneNumber, pattern);
+        }
+
+        #endregion
+
+        #region Clear Field Method
+        private void ClearFields()
+        {
+            NewName = string.Empty;
+            NewPhoneNumber = string.Empty;
+            NewEmailAddress = string.Empty;
+            NewAddress = string.Empty;
+            NewZipcode = string.Empty;
+            NewCity = string.Empty;
+            NewSSN = string.Empty;
+            NewWorkPhoneNumber = string.Empty;
+        }
+        #endregion
+    }
+
 }
