@@ -1,5 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using ControlzEx.Standard;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection.Emit;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using TopInsuranceBL;
@@ -18,7 +21,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             businessController = new BusinessController();
             privateController = new PrivateController();
-            UpdateBCcustomersCommand = new RelayCommand(UpdateBCcustomers);
+            UpdateBCcustomersCommand = new RelayCommand(UpdateBusinessCustomers);
             FieldsToUpdate = new ObservableCollection<string> { "Name", "Address", "PhoneNumber", "EmailAddress" };
             UpdatePcustomersCommand = new RelayCommand(UpdatePrivateCustomer);
             List<BusinessCustomer> customers = businessController.GetAllBusinessCustomers();
@@ -111,26 +114,7 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        private void RefreshSelectedBusinessCustomer()
-        {
-            if (SelectedBCcustomers != null)
-            {
-                var updatedBusinessCustomer = BCcustomers.FirstOrDefault(c => c.Name == SelectedBCcustomers.Name);
-
-                if (updatedBusinessCustomer != null)
-                {
-                    SelectedBCcustomers.Name = updatedBusinessCustomer.Name;
-                    SelectedBCcustomers.Address = updatedBusinessCustomer.Address;
-                    SelectedBCcustomers.Phonenumber = updatedBusinessCustomer.Phonenumber;
-                    SelectedBCcustomers.Emailaddress = updatedBusinessCustomer.Emailaddress;
-                    SelectedBCcustomers.Zipcode = updatedBusinessCustomer.Zipcode;
-                    SelectedBCcustomers.City = updatedBusinessCustomer.City;
-                    SelectedBCcustomers.CompanyName = updatedBusinessCustomer.CompanyName;
-
-                    OnPropertyChanged(nameof(SelectedBCcustomers));
-                }
-            }
-        }
+        
         #endregion
 
         #region Get all business customers
@@ -345,34 +329,47 @@ namespace TopInsuranceWPF.ViewModels
 
         #region Update Business customer Command and Methods
         public ICommand UpdateBCcustomersCommand { get; }
-        private void UpdateBCcustomers()
+        private void UpdateBusinessCustomers()
         {
+            string error = this.Error;
             if (SelectedBCcustomers != null)
             {
-                if (FieldsToUpdate != null)
+                // Validera och uppdatera varje fält om det är angivet
+                if (!string.IsNullOrEmpty(NewName))
                 {
-                    if (FieldsToUpdate.Contains("Name"))
-                    {
-                        SelectedBCcustomers.Name = NewName;
-                    }
-                    if (FieldsToUpdate.Contains("Address"))
-                    {
-                        SelectedBCcustomers.Address = NewAddress;
-                    }
-                    if (FieldsToUpdate.Contains("PhoneNumber"))
-                    {
-                        SelectedBCcustomers.Phonenumber = NewPhoneNumber;
-                    }
-                    if (FieldsToUpdate.Contains("EmailAddress"))
-                    {
-                        SelectedBCcustomers.Emailaddress = NewEmailadress;
-                    }
-                    businessController.UpdateBusinessCustomers(SelectedBCcustomers, selectedFieldToUpdate, NewValue);
-                    RefreshSelectedBusinessCustomer();
-                    ClearFields();
+                    SelectedBCcustomers.Name = NewName;
                 }
+                if (!string.IsNullOrEmpty(NewPhoneNumber))
+                {
+                    SelectedBCcustomers.Phonenumber = NewPhoneNumber;
+                }
+                if (!string.IsNullOrEmpty(NewEmailadress))
+                {
+                    SelectedBCcustomers.Emailaddress = NewEmailadress;
+                }
+                if (!string.IsNullOrEmpty(NewAddress))
+                {
+                    SelectedBCcustomers.Address = NewAddress;
+                }
+                //if (!ValidateNumericFields(string input))
+                //{
+                //    SelectedBCcustomers.Zipcode = NewZipcode;
+                //}
+                if (!string.IsNullOrEmpty(NewCity))
+                {
+                    SelectedBCcustomers.City = NewCity;
+                }
+                if (!string.IsNullOrEmpty(NewCompanyName))
+                {
+                    SelectedBCcustomers.CompanyName = NewCompanyName;
+                }
+
+                // Spara alla ändringar
+                businessController.UpdateBusinessCustomers(SelectedBCcustomers);
+                ClearFields();  
             }
         }
+
         #endregion
 
         #region Update private customer Command and Methods
@@ -439,34 +436,52 @@ namespace TopInsuranceWPF.ViewModels
         #endregion
 
         #region Validation IDataErrorInfo
+      
+        public string Error => null;
+
+        public string ValidateField(string columnName)
+        {
+            string errorMessage = null;
+
+            switch (columnName)
+            {
+                case nameof(NewPhoneNumber):
+                    if (!string.IsNullOrWhiteSpace(NewPhoneNumber) && !IsValidPhoneNumber(NewPhoneNumber))
+                    {
+                        errorMessage = "Telefonnummer är ogiltigt. Formatet ska vara 'XXX-XXXXXXX'.";
+                    }
+                    break;
+                case nameof(NewZipcode):
+                    if (!string.IsNullOrWhiteSpace(NewZipcode) && !ValidateNumericFields(NewZipcode))
+                    {
+                        errorMessage = "Postnumret måste vara ett giltigt nummer.";
+                    }
+                    break;
+                default:
+                    errorMessage = "Ogiltigt kolumnnamn.";
+                    break;
+            }
+
+            return errorMessage;
+        }
+        public bool IsValidPhoneNumber(string phoneNumber)
+        {
+            string pattern = @"^\d{3}-\d{7}$";
+            return Regex.IsMatch(phoneNumber, pattern);
+        }
+
+        private bool ValidateNumericFields(string input)
+        {
+            return int.TryParse(input, out _);
+        }
+
         public string this[string columnName]
         {
             get
             {
-                switch (columnName)
-                {
-                    case nameof(NewName):
-                        if (string.IsNullOrWhiteSpace(NewName))
-                            return "Namnet får inte vara tomt.";
-                        break;
-                    case nameof(NewEmailadress):
-                        if (string.IsNullOrWhiteSpace(NewEmailadress))
-                            return "Ogiltig e-postadress.";
-                        break;
-                    case nameof(NewPhoneNumber):
-                        if (string.IsNullOrWhiteSpace(NewPhoneNumber))
-                            return "Telefonnumret får inte vara tomt.";
-                        break;
-                    case nameof(NewAddress):
-                        if (string.IsNullOrWhiteSpace(NewAddress))
-                            return "Adressen får inte vara tom.";
-                        break;
-                }
-                return null;
+                return ValidateField(columnName);
             }
         }
-
-        public string Error => null;
 
         #endregion
 
