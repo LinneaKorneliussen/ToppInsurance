@@ -36,9 +36,9 @@ namespace TopInsuranceBL
 
         #endregion
 
-        public void UpdateBusinessCustomers(BusinessCustomer businessCustomersToUpdate, string choice, string newValue)
+        public void UpdateBusinessCustomers(BusinessCustomer businessCustomersToUpdate)
         {
-            businessRepository.UpdateBusinessCustomers(businessCustomersToUpdate, choice, newValue);
+            businessRepository.UpdateBusinessCustomers(businessCustomersToUpdate);
         }
 
 
