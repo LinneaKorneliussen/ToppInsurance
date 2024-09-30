@@ -173,10 +173,22 @@ namespace TopInsuranceWPF.ViewModels
                              $"Telefonnummer: {NewPhoneNumber}\n" +
                              $"E-post: {NewEmailAddress}\n" +
                              $"Adress: {NewAddress}\n" +
-                             $"Postnummer: {zipcode}\n" +
+                             $"Postnummer: {NewZipcode}\n" +
                              $"Stad: {NewCity}\n");
 
+
+            Employers.Add(new Employee
+            {
+                Name = NewName,
+                Phonenumber = NewPhoneNumber,
+                Emailaddress = NewEmailAddress,
+                Address = NewAddress,
+                Zipcode = zipcode,
+                City = NewCity,
+            });
+
             ClearFields();
+
 
         }
         #endregion
