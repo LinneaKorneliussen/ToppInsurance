@@ -33,7 +33,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newFirstName != value)
                 {
                     _newFirstName = value;
-                    OnPropertyChanged(nameof(_newFirstName));
+                    OnPropertyChanged(nameof(NewFirstName));
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newLastName != value)
                 {
                     _newLastName = value;
-                    OnPropertyChanged(nameof(_newLastName));
+                    OnPropertyChanged(nameof(NewLastName));
                 }
             }
         }

@@ -34,7 +34,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newFirstName != value)
                 {
                     _newFirstName = value;
-                    OnPropertyChanged(nameof(_newFirstName));
+                    OnPropertyChanged(nameof(NewFirstName));
                 }
             }
         }
@@ -48,7 +48,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newLastName != value)
                 {
                     _newLastName = value;
-                    OnPropertyChanged(nameof(_newLastName));
+                    OnPropertyChanged(nameof(NewLastName));
                 }
             }
         }
@@ -62,7 +62,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newPhoneNumber != value)
                 {
                     _newPhoneNumber = value;
-                    OnPropertyChanged(nameof(_newPhoneNumber));
+                    OnPropertyChanged(nameof(NewPhoneNumber));
                 }
             }
         }
@@ -76,7 +76,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newEmailAddress != value)
                 {
                     _newEmailAddress = value;
-                    OnPropertyChanged(nameof(_newEmailAddress));
+                    OnPropertyChanged(nameof(NewEmailAddress));
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newAddress != value)
                 {
                     _newAddress = value;
-                    OnPropertyChanged(nameof(_newAddress));
+                    OnPropertyChanged(nameof(NewAddress));
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newZipcode != value)
                 {
                     _newZipcode = value;
-                    OnPropertyChanged(nameof(_newZipcode));
+                    OnPropertyChanged(nameof(NewZipcode));
                 }
             }
         }
@@ -118,7 +118,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newCity != value)
                 {
                     _newCity = value;
-                    OnPropertyChanged(nameof(_newCity));
+                    OnPropertyChanged(nameof(NewCity));
                 }
             }
         }
@@ -132,7 +132,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newCompanyName != value)
                 {
                     _newCompanyName = value;
-                    OnPropertyChanged(nameof(_newCompanyName));
+                    OnPropertyChanged(nameof(NewCompanyName));
                 }
             }
         }
@@ -146,7 +146,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newOrganizationalnumber != value)
                 {
                     _newOrganizationalnumber = value;
-                    OnPropertyChanged(nameof(_newOrganizationalnumber));
+                    OnPropertyChanged(nameof(NewOrganizationalnumber));
                 }
             }
         }
@@ -160,7 +160,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newCountryCode != value)
                 {
                     _newCountryCode = value;
-                    OnPropertyChanged(nameof(_newCountryCode));
+                    OnPropertyChanged(nameof(NewCountryCode));
                 }
             }
         }
@@ -176,7 +176,7 @@ namespace TopInsuranceWPF.ViewModels
             set
             {
                 _BCcustomers = value;
-                OnPropertyChanged(nameof(_BCcustomers));
+                OnPropertyChanged(nameof(BCcustomers));
             }
         }
 
