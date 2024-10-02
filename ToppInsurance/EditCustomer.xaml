@@ -53,11 +53,12 @@
                     <!-- DataGrid för att visa privatkunder -->
                     <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="361" ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectedPcustomers, Mode=TwoWay}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Namn" Binding="{Binding Name}" IsReadOnly="True" Width="120"/>
+                            <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="120"/>
+                            <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="120"/>
                             <DataGridTextColumn Header="Telefonnummer" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="150"/>
                             <DataGridTextColumn Header="Emailadress" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="150"/>
                             <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="*"/>
-                            <DataGridTextColumn Header="Postnummer" Binding="{Binding ZipCode}" IsReadOnly="True" Width="*"/>
+                            <DataGridTextColumn Header="Postnummer" Binding="{Binding Zipcode}" IsReadOnly="True" Width="*"/>
                             <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="*"/>
                             <DataGridTextColumn Header="Jobbtelefon" Binding="{Binding WorkPhonenumber}" IsReadOnly="True" Width="*"/>
                         </DataGrid.Columns>
@@ -66,6 +67,7 @@
                     <!-- Formulär för att redigera privatkundernas uppgifter -->
                     <Grid Margin="0 0 0 0">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
@@ -88,7 +90,8 @@
 
 
                         <TextBlock Grid.Column="0" Grid.Row="0" Text="Vald privatkund:" FontSize="20" FontWeight="Bold" Margin="0,10,0,10"/>
-                        <Label Grid.Column="0" Grid.Row="1" Content="{Binding SelectedPcustomers.Name}" FontSize="16" Margin="5,5,5,5"/>
+                        <Label Grid.Column="0" Grid.Row="1" Content="{Binding SelectedPcustomers.FirstName}" FontSize="16" Margin="5,5,5,5"/>
+                        <Label Grid.Column="0" Grid.Row="1" Content="{Binding SelectedPcustomers.LastName}" FontSize="16" Margin="5,5,5,5"/>
                         <Label Grid.Column="0" Grid.Row="2" Content="{Binding SelectedPcustomers.Phonenumber}" FontSize="16" Margin="5,5,5,5"/>
                         <Label Grid.Column="0" Grid.Row="3" Content="{Binding SelectedPcustomers.Emailaddress}" FontSize="16" Margin="5,5,5,5"/>
                         <Label Grid.Column="0" Grid.Row="4" Content="{Binding SelectedPcustomers.Address}" FontSize="16" Margin="5,5,5,5"/>
@@ -101,7 +104,12 @@
 
                         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Margin="0 5 0 0">
                             <TextBlock Text="Namn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewFirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Margin="0 5 0 0">
+                            <TextBlock Text="Namn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewLastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" Margin="0 5 0 0">
@@ -187,7 +195,8 @@
                     <!-- DataGrid för att visa företagskunder -->
                     <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="320" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectedBCcustomers, Mode=TwoWay}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Namn" Binding="{Binding Name}" IsReadOnly="True" Width="120"/>
+                            <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="120"/>
+                            <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="120"/>
                             <DataGridTextColumn Header="Telefonnummer" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="150"/>
                             <DataGridTextColumn Header="Emailadress" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="150"/>
                             <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="*"/>
@@ -224,7 +233,8 @@
 
 
                         <TextBlock Grid.Column="0" Grid.Row="0" Text="Vald företagskund:" FontSize="20" FontWeight="Bold" Margin="0,10,0,10"/>
-                        <Label Grid.Column="0" Grid.Row="1" Content="{Binding SelectedBCcustomers.Name}" FontSize="16" Margin="5,5,5,5"/>
+                        <Label Grid.Column="0" Grid.Row="1" Content="{Binding SelectedPcustomers.FirstName}" FontSize="16" Margin="5,5,5,5"/>
+                        <Label Grid.Column="0" Grid.Row="1" Content="{Binding SelectedPcustomers.LastName}" FontSize="16" Margin="5,5,5,5"/>
                         <Label Grid.Column="0" Grid.Row="2" Content="{Binding SelectedBCcustomers.Phonenumber}" FontSize="16" Margin="5,5,5,5"/>
                         <Label Grid.Column="0" Grid.Row="3" Content="{Binding SelectedBCcustomers.Emailaddress}" FontSize="16" Margin="5,5,5,5"/>
                         <Label Grid.Column="0" Grid.Row="4" Content="{Binding SelectedBCcustomers.Address}" FontSize="16" Margin="5,5,5,5"/>
@@ -237,7 +247,12 @@
 
                         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Margin="0 5 0 0">
                             <TextBlock Text="Namn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewFirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Margin="0 5 0 0">
+                            <TextBlock Text="Namn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewLastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" Margin="0 5 0 0">
