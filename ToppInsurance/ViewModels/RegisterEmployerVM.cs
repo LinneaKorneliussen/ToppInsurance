@@ -233,7 +233,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             get
             {
-                string[] properties = { nameof(NewFirstName), nameof(NewLastName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity), nameof(NewSSN), nameof(NewWorkPhoneNumber) };
+                string[] properties = { nameof(NewFirstName), nameof(NewLastName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity) };
                 foreach (var property in properties)
                 {
                     string error = this[property];
