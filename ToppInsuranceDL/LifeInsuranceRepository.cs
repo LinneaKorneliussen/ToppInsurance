@@ -22,18 +22,18 @@ namespace TopInsuranceDL
         private void UpdateBaseAmounts()
         {
             int currentYear = DateTime.Now.Year;
-            int baseIncrease = 50000; 
+            int baseIncrease = 50000;
             for (int i = 0; i < baseAmounts.Count; i++)
             {
-                baseAmounts[i] += baseIncrease * (currentYear - 2023); 
+                int yearsPassed = currentYear - 2023;
+                baseAmounts[i] = baseAmounts[i] + (baseIncrease * yearsPassed);
             }
         }
         #endregion
 
         #region Get Base Amounts Method
         public List<int> GetBaseAmounts()
-        {
-            UpdateBaseAmounts(); 
+        { 
             return baseAmounts;
         }
         #endregion

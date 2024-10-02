@@ -17,6 +17,13 @@ namespace TopInsuranceBL
             lifeInsuranceRepository = new LifeInsuranceRepository();
         }
 
+        #region Get Base Amounts Method
+        public List<int> GetBaseAmounts()
+        {
+            return lifeInsuranceRepository.GetBaseAmounts();
+        }
+        #endregion
+
         #region Get all private customers Method
         public List<PrivateCustomer> GetAllPrivateCustomers()
         {
@@ -30,6 +37,7 @@ namespace TopInsuranceBL
         {
             lifeInsuranceRepository.AddLifeInsurance(p, startDate, endDate, insuranceType, paymentform, baseAmount, status, note);
         }
+
         #endregion
 
     }
