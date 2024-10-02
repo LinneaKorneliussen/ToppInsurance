@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
         mc:Ignorable="d"
-        Background="White" Height="650" Width="900">
+        Background="White" Height="750" Width="900">
 
     <UserControl.DataContext>
         <vm:RegisterBusinessCustomerVM/>
@@ -102,8 +102,9 @@
 
                 <StackPanel Grid.Row="2" Margin="1">
                     <Label Content="Kundregister" FontWeight="Bold" FontSize="14"/>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <DataGrid x:Name="dataGridCustomers" AutoGenerateColumns="True" Height="110" 
+                    <ScrollViewer VerticalScrollBarVisibility="Visible"
+                                  HorizontalScrollBarVisibility="Visible">
+                        <DataGrid x:Name="dataGridCustomers" AutoGenerateColumns="True" Height="150" Width="850" 
                                   ItemsSource="{Binding BCcustomers}" BorderBrush="gray" BorderThickness="5"/>
                     </ScrollViewer>
                 </StackPanel>
