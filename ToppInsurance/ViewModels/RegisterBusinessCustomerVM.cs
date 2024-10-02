@@ -104,7 +104,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newZipcode != value)
                 {
                     _newZipcode = value;
-                    OnPropertyChanged(nameof(_newZipcode);
+                    OnPropertyChanged(nameof(_newZipcode));
                 }
             }
         }
