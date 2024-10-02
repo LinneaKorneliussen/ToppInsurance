@@ -18,9 +18,9 @@ namespace TopInsuranceEntities
         public ICollection<RealEstateInsurance> RealEstateInsurances { get; set; }
         public ICollection<VehicleInsurance> VehicleInsurances{ get; set; }
 
-        public BusinessCustomer(string name, string phoneNumber, string emailAddress, string address,
+        public BusinessCustomer(string firstName, string lastName, string phoneNumber, string emailAddress, string address,
                           int zipCode, string city, string companyName, int organizationalNumber, int countryCode)
-      : base(name, phoneNumber, emailAddress, address, zipCode, city) 
+      : base(firstName, lastName, phoneNumber, emailAddress, address, zipCode, city) 
         {
             CompanyName = companyName;
             Organizationalnumber = organizationalNumber;

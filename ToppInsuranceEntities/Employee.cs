@@ -14,8 +14,8 @@ namespace TopInsuranceEntities
 
         private static List<string> generatedAgencyNumbers = new List<string>();
 
-        public Employee(string name, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
-            : base(name, phoneNumber, emailAddress, address, zipCode, city)
+        public Employee(string firstName, string lastName, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
+            : base(firstName, lastName, phoneNumber, emailAddress, address, zipCode, city)
         {
             EmployeeRole = employeeRole;
             PasswordHash = HashFunction(password);

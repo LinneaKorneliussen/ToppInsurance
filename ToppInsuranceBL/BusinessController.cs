@@ -14,10 +14,10 @@ namespace TopInsuranceBL
         }
 
         #region Register new business customer Method
-        public void CreateNewBusinessCustomer(string name, string phoneNumber, 
-            string emailAddress, string address, int zipCode, string city, string companyName, int organizationalNumber, int countryCode)
+        public void CreateNewBusinessCustomer(string firstName, string lastName, string phoneNumber, string emailAddress,
+            string address, int zipCode, string city, string companyName, int organizationalNumber, int countryCode)
         {
-            businessRepository.CreateNewBusinessCustomer(name, phoneNumber, emailAddress, address, zipCode, city, companyName, organizationalNumber, countryCode);
+            businessRepository.CreateNewBusinessCustomer(firstName, lastName, phoneNumber, emailAddress, address, zipCode, city, companyName, organizationalNumber, countryCode);
         }
         #endregion
 
@@ -36,11 +36,12 @@ namespace TopInsuranceBL
 
         #endregion
 
+        #region Update business Customers 
         public void UpdateBusinessCustomers(BusinessCustomer businessCustomersToUpdate)
         {
             businessRepository.UpdateBusinessCustomers(businessCustomersToUpdate);
         }
-
+        #endregion
 
     }
 }
