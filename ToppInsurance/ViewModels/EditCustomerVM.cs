@@ -61,7 +61,7 @@ namespace TopInsuranceWPF.ViewModels
             {
                 // Filtrera kunderna baserat på söktexten (söker på namn, e-post och telefonnummer) 
                 var filteredBusinessCustomers = businessCustomers
-                    .Where(c => c.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                    .Where(c => c.LastName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
                                 c.Emailaddress.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
                                 c.Phonenumber.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
                     .ToList();
@@ -83,7 +83,7 @@ namespace TopInsuranceWPF.ViewModels
             else
             {
                 var filteredCustomers = privateCustomers
-                    .Where(c => c.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                    .Where(c => c.LastName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
                                 c.Emailaddress.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
                                 c.Phonenumber.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
                     .ToList();
@@ -92,28 +92,6 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        private void RefreshSelectedCustomer()
-        {
-            if (SelectedPcustomers != null)
-            {
-                var updatedCustomer = Pcustomers.FirstOrDefault(c => c.Name == SelectedPcustomers.Name);
-
-                if (updatedCustomer != null)
-                {
-                    SelectedPcustomers.Name = updatedCustomer.Name;
-                    SelectedPcustomers.Address = updatedCustomer.Address;
-                    SelectedPcustomers.Phonenumber = updatedCustomer.Phonenumber;
-                    SelectedPcustomers.Emailaddress = updatedCustomer.Emailaddress;
-                    SelectedPcustomers.Zipcode = updatedCustomer.Zipcode;
-                    SelectedPcustomers.City = updatedCustomer.City;
-                    SelectedPcustomers.WorkPhonenumber = updatedCustomer.WorkPhonenumber;
-
-                    OnPropertyChanged(nameof(SelectedPcustomers));
-                }
-            }
-        }
-
-        
         #endregion
 
         #region Get all business customers
@@ -143,16 +121,30 @@ namespace TopInsuranceWPF.ViewModels
         #endregion
 
         #region Properties update Business customer
-        private string _newName;
-        public string NewName
+        private string _newFirstName;
+        public string NewFirstName
         {
-            get { return _newName; }
+            get { return _newFirstName; }
             set
             {
-                if (_newName != value)
+                if (_newFirstName != value)
                 {
-                    _newName = value;
-                    OnPropertyChanged(nameof(NewName));
+                    _newFirstName = value;
+                    OnPropertyChanged(nameof(NewFirstName));
+                }
+            }
+        }
+
+        private string _newLastName;
+        public string NewLastName
+        {
+            get { return _newLastName; }
+            set
+            {
+                if (_newLastName != value)
+                {
+                    _newLastName = value;
+                    OnPropertyChanged(nameof(NewLastName));
                 }
             }
         }
@@ -330,30 +322,54 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand UpdateBCcustomersCommand { get; }
         private void UpdateBusinessCustomers()
         {
-            string error = this.Error;
+
             if (SelectedBCcustomers != null)
             {
-                // Validera och uppdatera varje fält om det är angivet
                 if (!string.IsNullOrEmpty(NewName))
                 {
-                    SelectedBCcustomers.Name = NewName;
+                    SelectedBCcustomers.FirstName = NewFirstName;
                 }
+                if (!string.IsNullOrEmpty(NewName))
+                {
+                    SelectedBCcustomers.LastName = NewLastName;
+                }
+
                 if (!string.IsNullOrEmpty(NewPhoneNumber))
                 {
-                    SelectedBCcustomers.Phonenumber = NewPhoneNumber;
+                    if (IsValidPhoneNumber(NewPhoneNumber))
+                    {
+                        SelectedBCcustomers.Phonenumber = NewPhoneNumber;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ogiltigt telefonnummer. Vänligen ange ett telefonnummer i formatet XXX-XXXXXXX.");
+                        return;
+                    }
                 }
+
                 if (!string.IsNullOrEmpty(NewEmailadress))
                 {
                     SelectedBCcustomers.Emailaddress = NewEmailadress;
                 }
+
                 if (!string.IsNullOrEmpty(NewAddress))
                 {
                     SelectedBCcustomers.Address = NewAddress;
                 }
-                //if (!ValidateNumericFields(string input))
-                //{
-                //    SelectedBCcustomers.Zipcode = NewZipcode;
-                //}
+
+                if (!string.IsNullOrEmpty(NewZipcode))
+                {
+                    if (ValidateZipcode(NewZipcode))
+                    {
+                        SelectedBCcustomers.Zipcode = int.Parse(NewZipcode);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Postnumret måste vara ett giltigt nummer");
+                        return;
+                    }
+                }
+
                 if (!string.IsNullOrEmpty(NewCity))
                 {
                     SelectedBCcustomers.City = NewCity;
@@ -363,10 +379,23 @@ namespace TopInsuranceWPF.ViewModels
                     SelectedBCcustomers.CompanyName = NewCompanyName;
                 }
 
-                // Spara alla ändringar
                 businessController.UpdateBusinessCustomers(SelectedBCcustomers);
-                ClearFields();  
+                ClearFields(); 
+
+
+                MessageBox.Show($"Kundens uppgifter har uppdaterats!\n\n" +
+                $"Förnamn: {SelectedPcustomers.FirstName}\n" +
+                $"Efternamn: {SelectedPcustomers.LastName}\n" +
+                $"E-post: {SelectedBCcustomers.Emailaddress}\n" +
+                $"Telefon: {SelectedBCcustomers.Phonenumber}\n" +
+                $"Adress: {SelectedBCcustomers.Address}\n" +
+                $"Postnummer: {SelectedBCcustomers.Zipcode}\n" +
+                $"Stad: {SelectedBCcustomers.City}\n" +
+                $"Arbetsnummer: {SelectedBCcustomers.CompanyName}");
             }
+
+             
+
         }
 
         #endregion
@@ -375,43 +404,89 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand UpdatePcustomersCommand { get; }
         private void UpdatePrivateCustomer()
         {
-            string error = this.Error;
+            
             if (SelectedPcustomers != null)
             {
-                // Validera och uppdatera varje fält om det är angivet
-                if (!string.IsNullOrEmpty(NewName))
+                if (!string.IsNullOrEmpty(NewFirstName))
                 {
-                    SelectedPcustomers.Name = NewName;
+                    SelectedPcustomers.FistName = NewFirstName;
                 }
+                if (!string.IsNullOrEmpty(NewLastName))
+                {
+                    SelectedPcustomers.LastName = NewFirstName;
+                }
+
                 if (!string.IsNullOrEmpty(NewPhoneNumber))
                 {
-                    SelectedPcustomers.Phonenumber = NewPhoneNumber;
+                    if (IsValidPhoneNumber(NewPhoneNumber))
+                    {
+                        SelectedPcustomers.Phonenumber = NewPhoneNumber;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ogiltigt telefonnummer. Vänligen ange ett telefonnummer i formatet XXX-XXXXXXX.");
+                        return; 
+                    }
                 }
+
                 if (!string.IsNullOrEmpty(NewEmailadress))
                 {
                     SelectedPcustomers.Emailaddress = NewEmailadress;
                 }
+
                 if (!string.IsNullOrEmpty(NewAddress))
                 {
                     SelectedPcustomers.Address = NewAddress;
                 }
-                //if (!ValidateNumericFields(string input))
-                //{
-                //    SelectedBCcustomers.Zipcode = NewZipcode;
-                //}
+
+                if (!string.IsNullOrEmpty(NewZipcode))
+                {
+                    if (ValidateZipcode(NewZipcode))
+                    {
+                        SelectedPcustomers.Zipcode = int.Parse(NewZipcode);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Postnumret måste vara ett giltigt nummer");
+                        return;
+                    }
+                }
+
                 if (!string.IsNullOrEmpty(NewCity))
                 {
                     SelectedPcustomers.City = NewCity;
                 }
+
                 if (!string.IsNullOrEmpty(NewWorkPhoneNumber))
                 {
-                    SelectedPcustomers.WorkPhonenumber = NewWorkPhoneNumber;
+                    if (IsValidPhoneNumber(NewWorkPhoneNumber))
+                    {
+                        SelectedPcustomers.WorkPhonenumber = NewWorkPhoneNumber;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ogiltigt jobbtelefonnummer. Vänligen ange ett telefonnummer i formatet XXX-XXXXXXX.");
+                        return;
+                    }
                 }
+                
 
                 // Spara alla ändringar
                 privateController.UpdatePrivateCustomer(SelectedPcustomers);
                 ClearFields();
+
+                MessageBox.Show($"Kundens uppgifter har uppdaterats!\n\n" +
+                $"Förnamn: {SelectedPcustomers.FirstName}\n" +
+                $"Efternamn: {SelectedPcustomers.LastName}\n" +
+                $"E-post: {SelectedPcustomers.Emailaddress}\n" +
+                $"Telefon: {SelectedPcustomers.Phonenumber}\n" +
+                $"Adress: {SelectedPcustomers.Address}\n" +
+                $"Postnummer: {SelectedPcustomers.Zipcode}\n" +
+                $"Stad: {SelectedPcustomers.City}\n" +
+                $"Arbetsnummer: {SelectedPcustomers.WorkPhonenumber}");
             }
+            
+
         }
         #endregion
 
@@ -432,6 +507,7 @@ namespace TopInsuranceWPF.ViewModels
         #endregion
 
         #region Validation IDataErrorInfo
+
       
         public string Error => null;
 
@@ -444,13 +520,7 @@ namespace TopInsuranceWPF.ViewModels
                 case nameof(NewPhoneNumber):
                     if (!string.IsNullOrWhiteSpace(NewPhoneNumber) && !IsValidPhoneNumber(NewPhoneNumber))
                     {
-                        errorMessage = "Telefonnummer är ogiltigt. Formatet ska vara 'XXX-XXXXXXX'.";
-                    }
-                    break;
-                case nameof(NewZipcode):
-                    if (!string.IsNullOrWhiteSpace(NewZipcode) && !ValidateNumericFields(NewZipcode))
-                    {
-                        errorMessage = "Postnumret måste vara ett giltigt nummer.";
+                        errorMessage = "Formatet ska vara 'XXX-XXXXXXX'.";
                     }
                     break;
                 default:
@@ -460,15 +530,17 @@ namespace TopInsuranceWPF.ViewModels
 
             return errorMessage;
         }
+
         public bool IsValidPhoneNumber(string phoneNumber)
         {
             string pattern = @"^\d{3}-\d{7}$";
             return Regex.IsMatch(phoneNumber, pattern);
         }
+        #endregion
 
-        private bool ValidateNumericFields(string input)
+        private bool ValidateZipcode(string zipcode)
         {
-            return int.TryParse(input, out _);
+            return int.TryParse(zipcode, out _);
         }
 
         public string this[string columnName]
@@ -479,7 +551,7 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        #endregion
+     
 
     }
 
