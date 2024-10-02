@@ -8,6 +8,7 @@ namespace TopInsuranceEntities
 {
     public class Salary
     {
+        public int SalaryId { get; init; }   
         public double Commission { get; set; }
 
         public Salary(double commission)

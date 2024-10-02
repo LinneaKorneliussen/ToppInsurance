@@ -103,8 +103,8 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                    <Button Content="Ångra" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
-                    <Button Content="Avsluta" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                    <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" 
+                            Foreground="White" Command="{Binding ClearFieldsCommand}"/>
                     <Button Content="Registrera kund" Width="150" Margin="5" Background="#223A2A" 
                             Foreground="White" Command="{Binding AddBusinessCustomerCommand}"/>
                 </StackPanel>

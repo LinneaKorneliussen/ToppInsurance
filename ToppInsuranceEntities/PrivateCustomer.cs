@@ -14,6 +14,8 @@ namespace TopInsuranceEntities
         public string SSN { get; set; }
         public string WorkPhonenumber { get; set; }
 
+        public LifeInsurance LifeInsurance { get; set; }
+        public ICollection<SicknessAndAccidentInsurance> SicknessAndAccidentInsurances { get; set; }
         public PrivateCustomer(string name, string phoneNumber, string emailAddress, string address, int zipCode, string city, string ssn, string workPhonenumber)
             : base(name, phoneNumber, emailAddress, address, zipCode, city) 
         {

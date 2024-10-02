@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TopInsuranceEntities
 {
     public abstract class Insurance
     {
-        public int InternalSerialNumber { get; set; }
-        public string Prefix { get; set; }
+        [Key] 
+        public int InsuranceId { get; init; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public InsuranceType Type { get; set; }
@@ -19,11 +15,9 @@ namespace TopInsuranceEntities
         public Status Status { get; set; }
         public string Note { get; set; }
 
-        public Insurance(int internalSerialNumber, string prefix, DateTime startDate, DateTime endDate, 
+        public Insurance( DateTime startDate, DateTime endDate, 
             InsuranceType type, Paymentform paymentform, int premium, int baseAmount, Status status, string note)
         {
-            InternalSerialNumber = internalSerialNumber;
-            Prefix = prefix;
             StartDate = startDate;
             EndDate = endDate;
             Type = type;
@@ -33,5 +27,7 @@ namespace TopInsuranceEntities
             Status = status;
             Note = note;
         }
+
+        public Insurance() { }
     }
 }

@@ -8,10 +8,15 @@ namespace TopInsuranceEntities
 {
     public class LifeInsurance : Insurance
     {
-        public LifeInsurance(int internalSerialNumber, string prefix, DateTime startDate, DateTime endDate, InsuranceType type, 
+        public int PrivateCustomerId { get; set; }
+        public PrivateCustomer PrivateCustomer { get; private set; }
+        public LifeInsurance(PrivateCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type, 
             Paymentform paymentform, int premium, int baseAmount, Status status, string note) : 
-            base(internalSerialNumber, prefix, startDate, endDate, type, paymentform, premium, baseAmount, status, note)
+            base(startDate, endDate, type, paymentform, premium, baseAmount, status, note)
         {
+            PrivateCustomer = customer;
         }
+
+        public LifeInsurance() { }
     }
 }
