@@ -22,7 +22,6 @@ namespace TopInsuranceWPF.ViewModels
             businessController = new BusinessController();
             privateController = new PrivateController();
             UpdateBCcustomersCommand = new RelayCommand(UpdateBusinessCustomers);
-            FieldsToUpdate = new ObservableCollection<string> { "Name", "Address", "PhoneNumber", "EmailAddress" };
             UpdatePcustomersCommand = new RelayCommand(UpdatePrivateCustomer);
             List<BusinessCustomer> customers = businessController.GetAllBusinessCustomers();
             List<PrivateCustomer> privateCustomers = privateController.GetAllPrivateCustomers();
@@ -274,19 +273,19 @@ namespace TopInsuranceWPF.ViewModels
         #endregion
 
         #region Update Business Properties
-        private string _newValue;
-        public string NewValue
-        {
-            get { return _newValue; }
-            set
-            {
-                if (_newValue != value)
-                {
-                    _newValue = value;
-                    OnPropertyChanged(nameof(NewValue));
-                }
-            }
-        }
+        //private string _newValue;
+        //public string NewValue
+        //{
+        //    get { return _newValue; }
+        //    set
+        //    {
+        //        if (_newValue != value)
+        //        {
+        //            _newValue = value;
+        //            OnPropertyChanged(nameof(NewValue));
+        //        }
+        //    }
+        //}
 
         private BusinessCustomer _selectedBCcustomers;
         public BusinessCustomer SelectedBCcustomers
@@ -299,19 +298,19 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        private ObservableCollection<string> fieldsToUpdate;
-        public ObservableCollection<string> FieldsToUpdate
-        {
-            get { return fieldsToUpdate; }
-            set { fieldsToUpdate = value; OnPropertyChanged(nameof(FieldsToUpdate)); }
-        }
+        //private ObservableCollection<string> fieldsToUpdate;
+        //public ObservableCollection<string> FieldsToUpdate
+        //{
+        //    get { return fieldsToUpdate; }
+        //    set { fieldsToUpdate = value; OnPropertyChanged(nameof(FieldsToUpdate)); }
+        //}
 
-        private string selectedFieldToUpdate;
-        public string SelectedFieldToUpdate
-        {
-            get { return selectedFieldToUpdate; }
-            set { selectedFieldToUpdate = value; OnPropertyChanged(nameof(SelectedFieldToUpdate)); }
-        }
+        //private string selectedFieldToUpdate;
+        //public string SelectedFieldToUpdate
+        //{
+        //    get { return selectedFieldToUpdate; }
+        //    set { selectedFieldToUpdate = value; OnPropertyChanged(nameof(SelectedFieldToUpdate)); }
+        //}
         #endregion
 
         #region Update private Properties
@@ -376,44 +375,42 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand UpdatePcustomersCommand { get; }
         private void UpdatePrivateCustomer()
         {
-            if (SelectedPcustomers != null && !string.IsNullOrWhiteSpace(NewValue) && SelectedFieldToUpdate != null)
+            string error = this.Error;
+            if (SelectedPcustomers != null)
             {
-                privateController.UpdatePrivateCustomers(SelectedPcustomers, SelectedFieldToUpdate, NewValue);
+                // Validera och uppdatera varje fält om det är angivet
+                if (!string.IsNullOrEmpty(NewName))
+                {
+                    SelectedPcustomers.Name = NewName;
+                }
+                if (!string.IsNullOrEmpty(NewPhoneNumber))
+                {
+                    SelectedPcustomers.Phonenumber = NewPhoneNumber;
+                }
+                if (!string.IsNullOrEmpty(NewEmailadress))
+                {
+                    SelectedPcustomers.Emailaddress = NewEmailadress;
+                }
+                if (!string.IsNullOrEmpty(NewAddress))
+                {
+                    SelectedPcustomers.Address = NewAddress;
+                }
+                //if (!ValidateNumericFields(string input))
+                //{
+                //    SelectedBCcustomers.Zipcode = NewZipcode;
+                //}
+                if (!string.IsNullOrEmpty(NewCity))
+                {
+                    SelectedPcustomers.City = NewCity;
+                }
+                if (!string.IsNullOrEmpty(NewWorkPhoneNumber))
+                {
+                    SelectedPcustomers.WorkPhonenumber = NewWorkPhoneNumber;
+                }
 
-                if (SelectedFieldToUpdate == "Name")
-                {
-                    SelectedPcustomers.Name = NewValue; 
-                }
-                if (SelectedFieldToUpdate == "Phonenumber")
-                {
-                    SelectedPcustomers.Phonenumber = NewValue; 
-                }
-                if (SelectedFieldToUpdate == "Emailaddress")
-                {
-                    SelectedPcustomers.Emailaddress = NewValue; 
-                }
-
-                RefreshSelectedCustomer();
+                // Spara alla ändringar
+                privateController.UpdatePrivateCustomer(SelectedPcustomers);
                 ClearFields();
-
-                // Visa bekräftelsemeddelande
-                MessageBox.Show($"Följande uppgifter har uppdaterats!\n\n" +
-                    $"Här är detaljerna:\n" +
-                    $"-------------------------\n" +
-                    $"Namn: {SelectedPcustomers.Name}\n" +
-                    $"Telefonnummer: {SelectedPcustomers.Phonenumber}\n" +
-                    $"E-post: {SelectedPcustomers.Emailaddress}\n" +
-                    $"Adress: {SelectedPcustomers.Address}\n" +
-                    $"Postnummer: {SelectedPcustomers.Zipcode}\n" +
-                    $"Stad: {SelectedPcustomers.City}\n" +
-                    $"Jobbtelefon: {SelectedPcustomers.WorkPhonenumber}\n" +
-                    $"-------------------------\n");
-
-                NewValue = string.Empty;
-            }
-            else
-            {
-                MessageBox.Show("Please make sure to select a patient, choose a field to update, and provide a new value.");
             }
         }
         #endregion
@@ -431,7 +428,6 @@ namespace TopInsuranceWPF.ViewModels
             NewCompanyName = string.Empty;
             NewCountryCode = string.Empty;
             NewWorkPhoneNumber = string.Empty;
-            FieldsToUpdate = new ObservableCollection<string>();
         }
         #endregion
 
