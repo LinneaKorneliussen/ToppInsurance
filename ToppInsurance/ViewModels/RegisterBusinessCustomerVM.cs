@@ -25,16 +25,30 @@ namespace TopInsuranceWPF.ViewModels
         }
 
         #region Properties
-        private string _newName;
-        public string NewName
+        private string _newFirstName;
+        public string NewFirstName
         {
-            get { return _newName; }
+            get { return _newFirstName; }
             set
             {
-                if (_newName != value)
+                if (_newFirstName != value)
                 {
-                    _newName = value;
-                    OnPropertyChanged();
+                    _newFirstName = value;
+                    OnPropertyChanged(nameof(_newFirstName));
+                }
+            }
+        }
+
+        private string _newLastName;
+        public string NewLastName
+        {
+            get { return _newLastName; }
+            set
+            {
+                if (_newLastName != value)
+                {
+                    _newLastName = value;
+                    OnPropertyChanged(nameof(_newLastName));
                 }
             }
         }
@@ -48,7 +62,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newPhoneNumber != value)
                 {
                     _newPhoneNumber = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(_newPhoneNumber));
                 }
             }
         }
@@ -62,7 +76,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newEmailAddress != value)
                 {
                     _newEmailAddress = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(_newEmailAddress));
                 }
             }
         }
@@ -76,7 +90,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newAddress != value)
                 {
                     _newAddress = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(_newAddress));
                 }
             }
         }
@@ -90,7 +104,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newZipcode != value)
                 {
                     _newZipcode = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(_newZipcode);
                 }
             }
         }
@@ -104,7 +118,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newCity != value)
                 {
                     _newCity = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(_newCity));
                 }
             }
         }
@@ -118,7 +132,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newCompanyName != value)
                 {
                     _newCompanyName = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(_newCompanyName));
                 }
             }
         }
@@ -132,7 +146,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newOrganizationalnumber != value)
                 {
                     _newOrganizationalnumber = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(_newOrganizationalnumber));
                 }
             }
         }
@@ -146,7 +160,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newCountryCode != value)
                 {
                     _newCountryCode = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(_newCountryCode));
                 }
             }
         }
@@ -162,7 +176,7 @@ namespace TopInsuranceWPF.ViewModels
             set
             {
                 _BCcustomers = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(_BCcustomers));
             }
         }
 
@@ -196,12 +210,13 @@ namespace TopInsuranceWPF.ViewModels
                 return;
             }
 
-            businessController.CreateNewBusinessCustomer(NewName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
-            ShowMessage(NewName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
+            businessController.CreateNewBusinessCustomer(NewFirstName, NewLastName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
+            ShowMessage(NewFirstName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
 
             BCcustomers.Add(new BusinessCustomer
             {
-                Name = NewName,
+                FirstName = NewFirstName,
+                LastName = NewLastName,
                 Phonenumber = NewPhoneNumber,
                 Emailaddress = NewEmailAddress,
                 Address = NewAddress,
@@ -216,11 +231,11 @@ namespace TopInsuranceWPF.ViewModels
         #endregion
 
         #region Show message Method
-        private void ShowMessage(string newName, string newPhoneNumber, string newEmailAddress, string newAddress, int zipcode,
+        private void ShowMessage(string newFirstName, string newPhoneNumber, string newEmailAddress, string newAddress, int zipcode,
                                  string newCity, string newCompanyName, int orgNumber, int countrycode)
         {
             MessageBox.Show($"Företagskunden har registrerats korrekt!\n\n" +
-                            $"Namn: {newName}\n" +
+                            $"Namn: {newFirstName}\n" +
                             $"Telefonnummer: {newPhoneNumber}\n" +
                             $"E-post: {newEmailAddress}\n" +
                             $"Adress: {newAddress}\n" +
@@ -240,10 +255,16 @@ namespace TopInsuranceWPF.ViewModels
             {
                 switch (columnName)
                 {
-                    case nameof(NewName):
-                        if (string.IsNullOrWhiteSpace(NewName))
+                    case nameof(NewFirstName):
+                        if (string.IsNullOrWhiteSpace(NewFirstName))
                         {
-                            return "Namn är obligatoriskt.";
+                            return "Förnamn är obligatoriskt.";
+                        }
+                        break;
+                    case nameof(NewLastName):
+                        if (string.IsNullOrWhiteSpace(NewLastName))
+                        {
+                            return "Efternamn är obligatoriskt.";
                         }
                         break;
                     case nameof(NewPhoneNumber):
@@ -306,7 +327,7 @@ namespace TopInsuranceWPF.ViewModels
         #region Validation Method 
         private bool ValidateAllFields()
         {
-            string[] fields = { nameof(NewName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity), nameof(NewCompanyName), nameof(NewOrganizationalnumber), nameof(NewCountryCode) };
+            string[] fields = { nameof(NewFirstName), nameof(NewLastName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity), nameof(NewCompanyName), nameof(NewOrganizationalnumber), nameof(NewCountryCode) };
             foreach (var field in fields)
             {
                 if (!string.IsNullOrEmpty(this[field]))
@@ -352,7 +373,8 @@ namespace TopInsuranceWPF.ViewModels
         #region Clear fields Method
         private void ClearFields()
         {
-            NewName = string.Empty;
+            NewFirstName = string.Empty;
+            NewLastName = string.Empty;
             NewPhoneNumber = string.Empty;
             NewEmailAddress = string.Empty;
             NewAddress = string.Empty;

@@ -24,19 +24,34 @@ namespace TopInsuranceWPF.ViewModels
 
         #region Properties
 
-        private string _newName;
-        public string NewName
+        private string _newFirstName;
+        public string NewFirstName
         {
-            get { return _newName; }
+            get { return _newFirstName; }
             set
             {
-                if (_newName != value)
+                if (_newFirstName != value)
                 {
-                    _newName = value;
-                    OnPropertyChanged(nameof(NewName));
+                    _newFirstName = value;
+                    OnPropertyChanged(nameof(_newFirstName));
                 }
             }
         }
+
+        private string _newLastName;
+        public string NewLastName
+        {
+            get { return _newLastName; }
+            set
+            {
+                if (_newLastName != value)
+                {
+                    _newLastName = value;
+                    OnPropertyChanged(nameof(_newLastName));
+                }
+            }
+        }
+
 
         private string _newPhoneNumber;
         public string NewPhoneNumber
@@ -188,11 +203,12 @@ namespace TopInsuranceWPF.ViewModels
             }
 
             
-            privateController.CreateNewPrivateCustomer(NewName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewSSN, NewWorkPhoneNumber);
+            privateController.CreateNewPrivateCustomer(NewFirstName, NewLastName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewSSN, NewWorkPhoneNumber);
 
             
             MessageBox.Show($"Kunden har registrerats framgångsrikt!\n\n" +
-                            $"Namn: {NewName}\n" +
+                            $"Förnamn: {NewFirstName}\n" +
+                            $"Efternamn: {NewLastName}\n" +
                             $"E-post: {NewEmailAddress}\n" +
                             $"Telefon: {NewPhoneNumber}\n" +
                             $"Adress: {NewAddress}\n" +
@@ -202,7 +218,8 @@ namespace TopInsuranceWPF.ViewModels
 
             PCustomers.Add(new PrivateCustomer
             {
-                Name = NewName,
+                FirstName = NewFirstName,
+                LastName = NewLastName,
                 Phonenumber = NewPhoneNumber,
                 Emailaddress = NewEmailAddress,
                 Address = NewAddress,
@@ -223,7 +240,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             get
             {
-                string[] properties = { nameof(NewName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity), nameof(NewSSN), nameof(NewWorkPhoneNumber) };
+                string[] properties = { nameof(NewFirstName), nameof(NewLastName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity), nameof(NewSSN), nameof(NewWorkPhoneNumber) };
                 foreach (var property in properties)
                 {
                     string error = this[property];
@@ -250,10 +267,16 @@ namespace TopInsuranceWPF.ViewModels
 
             switch (columnName)
             {
-                case nameof(NewName):
-                    if (string.IsNullOrWhiteSpace(NewName))
+                case nameof(NewFirstName):
+                    if (string.IsNullOrWhiteSpace(NewFirstName))
                     {
-                        errorMessage = "Namn är obligatoriskt.";
+                        errorMessage = "Förnamn är obligatoriskt.";
+                    }
+                    break;
+                case nameof(NewLastName):
+                    if (string.IsNullOrWhiteSpace(NewFirstName))
+                    {
+                        errorMessage = "Efternamn är obligatoriskt.";
                     }
                     break;
                 case nameof(NewPhoneNumber):
@@ -335,7 +358,8 @@ namespace TopInsuranceWPF.ViewModels
         #region Clear Field Method
         private void ClearFields()
         {
-            NewName = string.Empty;
+            NewFirstName = string.Empty;
+            NewLastName = string.Empty;
             NewPhoneNumber = string.Empty;
             NewEmailAddress = string.Empty;
             NewAddress = string.Empty;

@@ -45,50 +45,56 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="Namn:" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
-                             Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
+                    <TextBlock Text="Förnamn:" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtFirstName" Grid.Row="0" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                             Text="{Binding NewFirstName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
                              Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
-                    <TextBlock Text="Telefonnummer:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtPhoneNumber" Grid.Row="1" Grid.Column="1" Margin="5" Width="450" HorizontalAlignment="Left"
+                    <TextBlock Text="Efternamn:" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtLastName" Grid.Row="1" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                             Text="{Binding NewLastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
+                             Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
+
+                    <TextBlock Text="Telefonnummer:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtPhoneNumber" Grid.Row="2" Grid.Column="1" Margin="5" Width="450" HorizontalAlignment="Left"
                              Text="{Binding NewPhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                              Background="GhostWhite" mah:TextBoxHelper.Watermark="070-xxxxxxx" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}" />
 
-                    <TextBlock Text="E-postadress:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                    <TextBlock Text="E-postadress:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtEmail" Grid.Row="3" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
                              Text="{Binding NewEmailAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                              Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
-                    <TextBlock Text="Adress:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtAddress" Grid.Row="3" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left" 
+                    <TextBlock Text="Adress:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtAddress" Grid.Row="4" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left" 
                              Text="{Binding NewAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                              Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
-                    <TextBlock Text="Postnummer:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtZipcode" Grid.Row="4" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                    <TextBlock Text="Postnummer:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtZipcode" Grid.Row="5" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
                              Text="{Binding NewZipcode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                              Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
-                    <TextBlock Text="Stad:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtCity" Grid.Row="5" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left" 
+                    <TextBlock Text="Stad:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtCity" Grid.Row="6" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left" 
                              Text="{Binding NewCity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                              Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
-                    <TextBlock Text="Företagsnamn:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtCompanyName" Grid.Row="6" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                    <TextBlock Text="Företagsnamn:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtCompanyName" Grid.Row="7" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
                              Text="{Binding NewCompanyName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                              Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
-                    <TextBlock Text="Organisationsnummer:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtOrgNumber" Grid.Row="7" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                    <TextBlock Text="Organisationsnummer:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtOrgNumber" Grid.Row="8" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
                              Text="{Binding NewOrganizationalnumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                              Background="GhostWhite" BorderThickness="1" mah:TextBoxHelper.Watermark="xxxxxxxx" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
-                    <TextBlock Text="Landskod:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtCountryCode" Grid.Row="8" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                    <TextBlock Text="Landskod:" Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox x:Name="txtCountryCode" Grid.Row="9" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
                              Text="{Binding NewCountryCode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                              Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
