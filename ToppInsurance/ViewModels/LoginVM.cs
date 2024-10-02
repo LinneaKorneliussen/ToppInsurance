@@ -56,7 +56,7 @@ namespace TopInsuranceWPF.ViewModels
                 switch (user.EmployeeRole)
                 {
                     case EmployeeRole.Säljare:
-                        MessageBox.Show($"Inloggad som {user.Name}");
+                        MessageBox.Show($"Inloggad som {user.FirstName} {user.LastName}");
                         MenuWindowSP menuSP = new MenuWindowSP();
                         MenuSalespersonVM menuSalesperson = new MenuSalespersonVM(user);
                         menuSP.DataContext = menuSalesperson;
@@ -67,7 +67,7 @@ namespace TopInsuranceWPF.ViewModels
                     case EmployeeRole.Försäljningschef:
                     case EmployeeRole.VD:
                     case EmployeeRole.Ekonomiassistent:
-                        MessageBox.Show($"Inloggad som {user.Name}");
+                        MessageBox.Show($"Inloggad som {user.FirstName} {user.LastName}");
                         MenuWindowRP menuRP = new MenuWindowRP();
                         MenuResponsibleVM menuResponsible = new MenuResponsibleVM(user);
                         menuRP.DataContext = menuResponsible;

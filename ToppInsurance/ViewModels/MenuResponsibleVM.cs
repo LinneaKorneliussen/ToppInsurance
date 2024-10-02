@@ -14,7 +14,8 @@ namespace TopInsuranceWPF.ViewModels
     {
         public MenuResponsibleVM(Employee user)
         {
-            userName = user.Name;
+            userFirstName = user.FirstName;
+            userLastName = user.LastName;
             userRole = user.EmployeeRole.ToString();
             CurrentViewModel = new MenuResponsibleVM();
             HomePageCommand = new RelayCommand(ShowHomePage);
@@ -34,14 +35,25 @@ namespace TopInsuranceWPF.ViewModels
         public MenuResponsibleVM() { }
 
         #region Propertys 
-        private string userName;
-        public string UserName
+        private string userFirstName;
+        public string UserFirstName
         {
-            get { return userName; }
+            get { return userFirstName; }
             set
             {
-                userName = value;
-                OnPropertyChanged(nameof(UserName));
+                userFirstName = value;
+                OnPropertyChanged(nameof(UserFirstName));
+                OnPropertyChanged(nameof(UserInfo));
+            }
+        }
+        private string userLastName;
+        public string UserLastName
+        {
+            get { return userLastName; }
+            set
+            {
+                userLastName = value;
+                OnPropertyChanged(nameof(UserLastName));
                 OnPropertyChanged(nameof(UserInfo));
             }
         }
@@ -71,7 +83,7 @@ namespace TopInsuranceWPF.ViewModels
 
         public string UserInfo
         {
-            get { return $"{UserName} - {UserRole}"; }
+            get { return $"{UserFirstName} {UserLastName} - {UserRole}"; }
         }
         #endregion
 
