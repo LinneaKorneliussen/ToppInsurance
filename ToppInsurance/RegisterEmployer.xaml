@@ -45,41 +45,46 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="Förnamn:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5" />
+                    <TextBox x:Name="txtFirstName" Grid.Row="0" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                     Text="{Binding NewFirstName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                     VerticalAlignment="Center" Padding="5" Background="GhostWhite" BorderThickness="1" />
 
-                    <TextBlock Text="Namn:" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtName" Grid.Row="0" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
-                             Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
-                             Background="GhostWhite" BorderThickness="1"/>
+'                    <TextBlock Text="Efternamn:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5" />
+                    <TextBox x:Name="txtLastName" Grid.Row="1" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                     Text="{Binding NewLastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                     VerticalAlignment="Center" Padding="5" Background="GhostWhite" BorderThickness="1" />
 
-                    <TextBlock Text="Telefonnummer:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtPhoneNumber" Grid.Row="1" Grid.Column="1" Margin="5" Width="450" HorizontalAlignment="Left"
-                             Text="{Binding NewPhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                             Background="GhostWhite" BorderThickness="1"/>
+                    <TextBlock Text="Telefonnummer:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5" />
+                    <TextBox x:Name="txtPhoneNumber" Grid.Row="2" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                     Text="{Binding NewPhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     VerticalAlignment="Center" Padding="5" Background="GhostWhite" BorderThickness="1" />
 
-                    <TextBlock Text="E-postadress:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtEmail" Grid.Row="2" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
-                             Text="{Binding NewEmailAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                             Background="GhostWhite" BorderThickness="1"/>
+                    <TextBlock Text="E-postadress:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5" />
+                    <TextBox x:Name="txtEmail" Grid.Row="3" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                     Text="{Binding NewEmailAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     VerticalAlignment="Center" Padding="5" Background="GhostWhite" BorderThickness="1" />
 
-                    <TextBlock Text="Adress:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtAddress" Grid.Row="3" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left" 
-                             Text="{Binding NewAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                             Background="GhostWhite" BorderThickness="1"/>
+                    <TextBlock Text="Adress:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="5" />
+                    <TextBox x:Name="txtAddress" Grid.Row="4" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                     Text="{Binding NewAddress, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     VerticalAlignment="Center" Padding="5" Background="GhostWhite" BorderThickness="1" />
 
-                    <TextBlock Text="Postnummer:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtZipcode" Grid.Row="4" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
-                             Text="{Binding NewZipcode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                             Background="GhostWhite" BorderThickness="1"/>
+                    <TextBlock Text="Postnummer:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="5" />
+                    <TextBox x:Name="txtZipcode" Grid.Row="5" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                     Text="{Binding NewZipcode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     VerticalAlignment="Center" Padding="5" Background="GhostWhite" BorderThickness="1" />
 
-                    <TextBlock Text="Stad:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtCity" Grid.Row="5" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left" 
-                             Text="{Binding NewCity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                             Background="GhostWhite" BorderThickness="1"/>
+                    <TextBlock Text="Stad:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="5" />
+                    <TextBox x:Name="txtCity" Grid.Row="6" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                     Text="{Binding NewCity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     VerticalAlignment="Center" Padding="5" Background="GhostWhite" BorderThickness="1" />
 
-                    <TextBlock Text="Lösenord:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox x:Name="txtLösenord" Grid.Row="6" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left" 
-                             Text="{Binding NewPassword, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                             Background="GhostWhite" BorderThickness="1"/>
+                    <TextBlock Text="Lösenord:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="5" />
+                    <TextBox x:Name="txtPassword" Grid.Row="7" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
+                     Text="{Binding NewPassword, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                     VerticalAlignment="Center" Padding="5" Background="GhostWhite" BorderThickness="1" />
 
                 </Grid>
 
@@ -89,7 +94,8 @@
                         <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="170"
                   ItemsSource="{Binding Employers}" >
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Namn" Binding="{Binding Name}" IsReadOnly="True" Width="120"/>
+                                <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="120"/>
+                                <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="120"/>
                                 <DataGridTextColumn Header="Telefonnummer" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="150"/>
                                 <DataGridTextColumn Header="Emailadress" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="150"/>
                                 <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="*"/>
@@ -101,8 +107,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                    <Button Content="Ångra" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding Clearfieldscommand}"/>
-                    <Button Content="Avsluta" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                    <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding Clearfieldscommand}"/>
                     <Button Content="Registrera säljare" Width="150" Margin="5" Background="#223A2A" 
                             Foreground="White" Command="{Binding AddEmployerCommand}"/>
                 </StackPanel>
