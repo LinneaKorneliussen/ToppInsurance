@@ -11,16 +11,21 @@ namespace TopInsuranceEntities
         public string RealEstateAddress { get; set; }
         public double RealEstateValue { get; set; }
         public int RealEstatePremium { get; set; }
-
-        public RealEstateInsurance(string realEstateAddress, double realEstateValue, 
-            int realEstatePremium, int internalSerialNumber, string prefix, DateTime startDate, 
-            DateTime endDate, InsuranceType type, Paymentform paymentform, int premium, int baseAmount, Status status, string note) : 
-            base(internalSerialNumber, prefix, startDate, endDate, type, paymentform, premium, baseAmount, status, note)
+        public int BusinessCustomerId { get; set; }
+        public BusinessCustomer BusinessCustomer { get; private set; }
+        public ICollection<Inventory> Inventories { get; private set; } = new List<Inventory>();
+        public RealEstateInsurance(BusinessCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type, 
+            Paymentform paymentform, int premium, int baseAmount, Status status, string note,
+            string realEstateAddress, double realEstateValue, int realEstatePremium) : 
+            base(startDate, endDate, type, paymentform, premium, baseAmount, status, note)
         {
+            BusinessCustomer = customer;
             RealEstateAddress = realEstateAddress;
             RealEstateValue = realEstateValue;
             RealEstatePremium = realEstatePremium;
         }
+
+        public RealEstateInsurance() {}
 
     }
 }

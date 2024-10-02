@@ -8,13 +8,22 @@ namespace TopInsuranceEntities
 {
     public class VehicleInsurance : Insurance
     {
-        // EJ KLAR, MER SKA IN HÄR 
         public string TrafficInsurance {  get; set; }
+        public Vehicle Vehicle { get; set; }
+        public int BusinessCustomerId { get; set; }
+        public BusinessCustomer BusinessCustomer { get; private set; }
 
-        public VehicleInsurance(string trafficInsurance, int internalSerialNumber, string prefix, DateTime startDate, DateTime endDate, InsuranceType type, Paymentform paymentform, int premium, int baseAmount, Status status, string note) : base(internalSerialNumber, prefix, startDate, endDate, type, paymentform, premium, baseAmount, status, note)
+        public VehicleInsurance(BusinessCustomer customer, Vehicle car, string prefix, DateTime startDate, DateTime endDate, 
+            InsuranceType type, Paymentform paymentform, int premium, int baseAmount, Status status, string note,
+            string trafficInsurance) : 
+            base(startDate, endDate, type, paymentform, premium, baseAmount, status, note)
         {
+            BusinessCustomer = customer;
+            Vehicle = car;
             TrafficInsurance = trafficInsurance;
         }
+
+        public VehicleInsurance() { }
 
     }
 }

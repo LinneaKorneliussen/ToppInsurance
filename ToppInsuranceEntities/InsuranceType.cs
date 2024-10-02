@@ -9,7 +9,8 @@ namespace TopInsuranceEntities
     public enum InsuranceType
     {
         Livförsäkring,
-        SjukOchOlycksfallsförsäkring,
+        SjukOchOlycksfallsförsäkringVUXEN,
+        SjukOchOlycksfallsförsäkringBARN,
         Företagsförsäkring,
         Fordonsförsäkring,
         FastighetsOchInventarieförsäkring

@@ -19,7 +19,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             businessController = new BusinessController();
             AddBusinessCustomerCommand = new RelayCommand(AddBusinessCustomer);
-
+            ClearFieldsCommand = new RelayCommand(ClearFields);
             List<BusinessCustomer> customers = businessController.GetAllBusinessCustomers();
             BCcustomers = new ObservableCollection<BusinessCustomer>(customers);
         }
@@ -170,6 +170,7 @@ namespace TopInsuranceWPF.ViewModels
 
         #region Commands
         public ICommand AddBusinessCustomerCommand { get; }
+        public ICommand ClearFieldsCommand { get; }
         #endregion
 
         #region Add Business Customer Methods
@@ -211,20 +212,6 @@ namespace TopInsuranceWPF.ViewModels
                 CountryCode = countrycode
             });
             ClearFields();
-        }
-
-        private bool ValidateAllFields()
-        {
-            string[] fields = { nameof(NewName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity), nameof(NewCompanyName), nameof(NewOrganizationalnumber), nameof(NewCountryCode) };
-            foreach (var field in fields)
-            {
-                if (!string.IsNullOrEmpty(this[field]))
-                {
-                    MessageBox.Show(this[field]);
-                    return false;
-                }
-            }
-            return true;
         }
         #endregion
 
@@ -314,6 +301,23 @@ namespace TopInsuranceWPF.ViewModels
 
         public string Error => null;
 
+        #endregion
+
+        #region Validation Method 
+        private bool ValidateAllFields()
+        {
+            string[] fields = { nameof(NewName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity), nameof(NewCompanyName), nameof(NewOrganizationalnumber), nameof(NewCountryCode) };
+            foreach (var field in fields)
+            {
+                if (!string.IsNullOrEmpty(this[field]))
+                {
+                    MessageBox.Show(this[field]);
+                    return false;
+                }
+            }
+            return true;
+        }
+
         private bool ValidateNumericFields(out int orgNumber, out int zipcode, out int countrycode)
         {
             orgNumber = 0;
@@ -338,7 +342,6 @@ namespace TopInsuranceWPF.ViewModels
 
             return true;
         }
-
         public bool IsValidPhoneNumber(string phoneNumber)
         {
             string pattern = @"^\d{3}-\d{7}$";

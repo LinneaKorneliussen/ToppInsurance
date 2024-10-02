@@ -12,7 +12,14 @@ namespace TopInsuranceDL
         public Repository<Employee> EmployeeRepository { get; private set; }
         public Repository<PrivateCustomer> PCRepository { get; private set; }
         public Repository<BusinessCustomer> BCRepository { get; private set; }
-        
+        public Repository<BusinessInsurance> BCInsuranceRepository { get; private set; }
+        public Repository<VehicleInsurance> VehicleInsuranceRepository { get; private set; }
+        public Repository<RealEstateInsurance> RealEstateInsuranceRepository { get; private set; }
+        public Repository<LifeInsurance> LifeInsuranceRepository { get; private set; }
+        public Repository<SicknessAndAccidentInsurance> SicknessAndAccidentInsuranceRepository { get; private set; }
+        public Repository<Vehicle> VehicleRepository { get; private set; }
+        public Repository<Inventory> InventoryRepository { get; private set; }
+
 
         public static UnitOfWork GetInstance()
         {

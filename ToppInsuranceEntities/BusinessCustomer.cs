@@ -14,6 +14,10 @@ namespace TopInsuranceEntities
         public int Organizationalnumber { get; set; }   
         public int CountryCode { get; set; }
 
+        public ICollection<BusinessInsurance> BusinessInsurances { get; set; }
+        public ICollection<RealEstateInsurance> RealEstateInsurances { get; set; }
+        public ICollection<VehicleInsurance> VehicleInsurances{ get; set; }
+
         public BusinessCustomer(string name, string phoneNumber, string emailAddress, string address,
                           int zipCode, string city, string companyName, int organizationalNumber, int countryCode)
       : base(name, phoneNumber, emailAddress, address, zipCode, city) 
