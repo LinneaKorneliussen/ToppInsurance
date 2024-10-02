@@ -40,9 +40,9 @@ namespace TopInsuranceBL
         #endregion
 
         #region Update private customers Method
-        public void UpdatePrivateCustomers(PrivateCustomer privateCustomersToUpdate, string choice, string newValue)
+        public void UpdatePrivateCustomer(PrivateCustomer privateCustomersToUpdate)
         {
-            privateRepository.UpdatePrivateCustomers(privateCustomersToUpdate, choice, newValue);
+            privateRepository.UpdatePrivateCustomer(privateCustomersToUpdate);
         }
         #endregion
     }
