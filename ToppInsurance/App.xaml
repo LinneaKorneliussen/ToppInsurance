@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -173,8 +174,30 @@
                 </Setter>
             </Style>
 
+            <ControlTemplate x:Key="ValidationErrorTemplate" TargetType="Control">
+                <DockPanel LastChildFill="True">
+                    <material:PackIconMaterial Width="16" Height="16" Kind="AlertCircle" Foreground="DarkSalmon" DockPanel.Dock="Right" Margin="5,0,0,0"
+                                   ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource AncestorType=Control}}"/>
+                    <AdornedElementPlaceholder x:Name="controlWithError" />
+                </DockPanel>
+            </ControlTemplate>
 
-          
+            <Style TargetType="TextBox" x:Key="ValidationTextBoxStyle">
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Margin" Value="0,0,5,0"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="ToolTip" Value="{x:Null}"/>
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="true">
+                        <Setter Property="BorderBrush" Value="DarkSalmon"/>
+                        <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+
+
 
         </ResourceDictionary>
     </Application.Resources>
