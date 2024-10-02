@@ -24,10 +24,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <!-- Separator -->
-
-        <!-- TabControl för innehåll -->
-        <TabControl Name="MyTabControl" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        
+        <TabControl Name="MyTabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
                     <Setter Property="Background" Value="AliceBlue"/>
@@ -36,263 +34,212 @@
 
 
 
-
             <TabItem Header="Privatkunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
                 <StackPanel Background="White" Width="900">
 
                     <!-- Filter Textbox -->
-                    <Grid Width="400" HorizontalAlignment="Right" Margin="0 0 0 10">
-                        <TextBlock Margin="0 0 90 0" VerticalAlignment="Center" Foreground="#223A2A" IsHitTestVisible="False" Text="Sök här ..."/>
-                        <TextBox Width="300" Margin="5 0 50 0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
-                        <Button Content="Sök" Width="50" Margin="230 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindPcustomersCommand}"/>
-                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 115 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
+                    <Grid Width="500" HorizontalAlignment="Right" Margin="0 0 20 10">
+                        <TextBox Text="{Binding SearchPrivateCustomer, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="5 0 100 0" Style="{StaticResource searchTextbox}"/>
+                        <Button Content="Sök" Width="50" Margin="290 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindPcustomersCommand}"/>
+                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 160 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
                     </Grid>
                     <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
 
 
-                    <!-- DataGrid för att visa privatkunder -->
-                    <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="361" ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectedPcustomers, Mode=TwoWay}">
+                    <!-- DataGrid för att visa företagskunder -->
+                    <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="320" FontWeight="Normal" ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectedPcustomers, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="120"/>
-                            <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="120"/>
-                            <DataGridTextColumn Header="Telefonnummer" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="150"/>
-                            <DataGridTextColumn Header="Emailadress" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="150"/>
-                            <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="*"/>
-                            <DataGridTextColumn Header="Postnummer" Binding="{Binding Zipcode}" IsReadOnly="True" Width="*"/>
-                            <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="*"/>
-                            <DataGridTextColumn Header="Jobbtelefon" Binding="{Binding WorkPhonenumber}" IsReadOnly="True" Width="*"/>
+                            <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="TelefonNr" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="E-mail" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="PostNr" Binding="{Binding Zipcode}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Jobbnummer" Binding="{Binding WorkPhonenumber}" IsReadOnly="True" Width="auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <!-- Formulär för att redigera privatkundernas uppgifter -->
-                    <Grid Margin="0 0 0 0">
+                    <!-- Formulär för att redigera kunduppgifter -->
+                    <Grid Margin="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="21*" />
-                            <!-- Första kolumnen -->
-                            <ColumnDefinition Width="29*" />
-                            <!-- Andra kolumnen -->
-                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Redigera kunduppgifter" Grid.Row="0" FontSize="20" FontWeight="Bold" Margin="0 10"/>
 
-
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Vald privatkund:" FontSize="20" FontWeight="Bold" Margin="0,10,0,10"/>
-                        <Label Grid.Column="0" Grid.Row="1" Content="{Binding SelectedPcustomers.FirstName}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="1" Content="{Binding SelectedPcustomers.LastName}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="2" Content="{Binding SelectedPcustomers.Phonenumber}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="3" Content="{Binding SelectedPcustomers.Emailaddress}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="4" Content="{Binding SelectedPcustomers.Address}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="5" Content="{Binding SelectedPcustomers.Zipcode}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="6" Content="{Binding SelectedPcustomers.City}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="7" Content="{Binding SelectedPcustomers.WorkPhonenumber}" FontSize="16" Margin="5,5,5,5"/>
-
-
-                        <TextBlock Grid.Column="1" Text="Redigera kunduppgifter" Grid.Row="0" FontSize="20" FontWeight="Bold" Margin="0 10 0 10"/>
-
-                        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Margin="0 5 0 0">
-                            <TextBlock Text="Namn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
+                            <TextBlock Text="Förnamn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <TextBox Width="300" Text="{Binding NewFirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Margin="0 5 0 0">
-                            <TextBlock Text="Namn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
+                            <TextBlock Text="Efternamn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <TextBox Width="300" Text="{Binding NewLastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" Margin="0 5 0 0">
+                        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Telefonnummer:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <TextBox Width="300" Text="{Binding NewPhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" Margin="0 5 0 0">
+                        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="E-postadress:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <TextBox Width="300" Text="{Binding NewEmailadress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal" Margin="0 5 0 0">
+                        <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Adress:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <TextBox Width="300" Text="{Binding NewAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="5" Orientation="Horizontal" Margin="0 5 0 0">
+                        <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Postnummer:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <TextBox Width="300" Text="{Binding NewZipcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal" Margin="0 5 0 0">
+                        <StackPanel Grid.Row="7" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Stad:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewCity, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="7" Orientation="Horizontal" Margin="0 5 0 0">
+                        <StackPanel Grid.Row="8" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Jobbtelefon:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewWorkPhoneNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewWorkPhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
-
 
                         <!-- Buttons -->
-                        <StackPanel Grid.Column="1" Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0 60 0">
-                            <Button Content="Ångra" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
-                            <Button Content="Avsluta" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                        <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0 60 0">
+                            <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
                             <Button Content="Spara ändringar" Command="{Binding UpdatePcustomersCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
                         </StackPanel>
-
                     </Grid>
+
                 </StackPanel>
             </TabItem>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <TabItem Header="Företagskunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
                 <StackPanel Background="White" Width="900">
 
                     <!-- Filter Textbox -->
-                    <Grid Width="400" HorizontalAlignment="Right" Margin="0 0 20 10">
-                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
-                        <Button Content="Sök" Width="50" Margin="230 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
-                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 115 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
+                    <Grid Width="500" HorizontalAlignment="Right" Margin="0 0 20 10">
+                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
+                        <Button Content="Sök" Width="50" Margin="290 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
+                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 160 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
                     </Grid>
                     <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
                     
                     
                     <!-- DataGrid för att visa företagskunder -->
-                    <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="320" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectedBCcustomers, Mode=TwoWay}">
+                    <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="320" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectedBCcustomers, Mode=TwoWay}" RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="120"/>
-                            <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="120"/>
-                            <DataGridTextColumn Header="Telefonnummer" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="150"/>
-                            <DataGridTextColumn Header="Emailadress" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="150"/>
-                            <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="*"/>
-                            <DataGridTextColumn Header="Postnummer" Binding="{Binding Zipcode}" IsReadOnly="True" Width="*"/>
-                            <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="*"/>
-                            <DataGridTextColumn Header="Företagsnamn" Binding="{Binding CompanyName}" IsReadOnly="True" Width="*"/>
-                            <DataGridTextColumn Header="Organisationsnummer" Binding="{Binding Organizationalnumber}" IsReadOnly="True" Width="*"/>
-                            <DataGridTextColumn Header="Landskod" Binding="{Binding CountryCode}" IsReadOnly="True" Width="*"/>
+                            <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="TelefonNr" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="E-mail" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Företagsnamn" Binding="{Binding CompanyName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="OrganisationsNr" Binding="{Binding Organizationalnumber}" IsReadOnly="True" Width="auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
                     <!-- Formulär för att redigera kunduppgifter -->
-                    <Grid Margin="0 0 0 0">
+                    <Grid Margin="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="21*" />
-                            <!-- Första kolumnen -->
-                            <ColumnDefinition Width="29*" />
-                            <!-- Andra kolumnen -->
-                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Redigera kunduppgifter" Grid.Row="0" FontSize="20" FontWeight="Bold" Margin="0 10"/>
 
-
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Vald företagskund:" FontSize="20" FontWeight="Bold" Margin="0,10,0,10"/>
-                        <Label Grid.Column="0" Grid.Row="1" Content="{Binding SelectedPcustomers.FirstName}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="1" Content="{Binding SelectedPcustomers.LastName}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="2" Content="{Binding SelectedBCcustomers.Phonenumber}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="3" Content="{Binding SelectedBCcustomers.Emailaddress}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="4" Content="{Binding SelectedBCcustomers.Address}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="5" Content="{Binding SelectedBCcustomers.Zipcode}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="6" Content="{Binding SelectedBCcustomers.City}" FontSize="16" Margin="5,5,5,5"/>
-                        <Label Grid.Column="0" Grid.Row="7" Content="{Binding SelectedBCcustomers.CompanyName}" FontSize="16" Margin="5,5,5,5"/>
-         
-
-                        <TextBlock Grid.Column="1" Text="Redigera kunduppgifter" Grid.Row="0" FontSize="20" FontWeight="Bold" Margin="0 10 0 10"/>
-
-                        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Margin="0 5 0 0">
-                            <TextBlock Text="Namn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
+                            <TextBlock Text="Förnamn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <TextBox Width="300" Text="{Binding NewFirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Margin="0 5 0 0">
-                            <TextBlock Text="Namn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
+                            <TextBlock Text="Efternamn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <TextBox Width="300" Text="{Binding NewLastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" Margin="0 5 0 0">
+                        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Telefonnummer:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <TextBox Width="300" Text="{Binding NewPhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" Margin="0 5 0 0">
+                        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="E-postadress:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <TextBox Width="300" Text="{Binding NewEmailadress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal" Margin="0 5 0 0">
+                        <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Adress:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <TextBox Width="300" Text="{Binding NewAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="5" Orientation="Horizontal" Margin="0 5 0 0">
+                        <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Postnummer:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <TextBox Width="300" Text="{Binding NewZipcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal" Margin="0 5 0 0">
+                        <StackPanel Grid.Row="7" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Stad:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewCity, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="7" Orientation="Horizontal" Margin="0 5 0 0">
+                        <StackPanel Grid.Row="8" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Företagsnamn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewCompanyName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewCompanyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
                         </StackPanel>
-
 
                         <!-- Buttons -->
-                        <StackPanel Grid.Column="1" Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0 60 0">
-                            <Button Content="Ångra" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
-                            <Button Content="Avsluta" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                        <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0 60 0">
+                            <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
                             <Button Content="Spara ändringar" Command="{Binding UpdateBCcustomersCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
                         </StackPanel>
                     </Grid>
+
                 </StackPanel>
             </TabItem>
         </TabControl>
