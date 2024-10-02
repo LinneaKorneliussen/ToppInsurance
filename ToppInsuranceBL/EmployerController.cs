@@ -14,12 +14,12 @@ namespace TopInsuranceBL
         }
 
         #region Register new employer method
-        public void AddEmployer(string name, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
+        public void AddEmployer(string firstName, string lastName, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
         {
             //Skapar ett stanrdarvärde för employerrole 
-            Employee newEmployer = new Employee(name, phoneNumber, emailAddress, address, zipCode, city, employeeRole, password);
+            Employee newEmployer = new Employee(firstName, lastName, phoneNumber, emailAddress, address, zipCode, city, employeeRole, password);
 
-            employerRepository.AddEmployer(name, phoneNumber, emailAddress, address, zipCode, city, employeeRole, password);
+            employerRepository.AddEmployer(firstName, lastName, phoneNumber, emailAddress, address, zipCode, city, employeeRole, password);
         }
         #endregion
 

@@ -26,15 +26,30 @@ namespace TopInsuranceWPF.ViewModels
         }
 
         #region Properties
-        private string _newName;
-        public string NewName
+
+
+        private string _newFirstName;
+        public string NewFirstName
         {
-            get { return _newName; }
+            get { return _newFirstName; }
             set
             {
-                if (_newName != value)
+                if (_newFirstName != value)
                 {
-                    _newName = value;
+                    _newFirstName = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private string _newLastName;
+        public string NewLastName
+        {
+            get { return _newLastName; }
+            set
+            {
+                if (_newLastName != value)
+                {
+                    _newLastName = value;
                     OnPropertyChanged();
                 }
             }
@@ -144,7 +159,8 @@ namespace TopInsuranceWPF.ViewModels
         private void AddEmployer()
         {
 
-            string errorMessage = ValidateField("NewName");
+            string errorMessage = ValidateField("NewFirstName");
+            errorMessage = ValidateField("NewLastName");
             errorMessage ??= ValidateField("NewPhoneNumber");
             errorMessage ??= ValidateField("NewEmailAddress");
             errorMessage ??= ValidateField("NewAddress");
@@ -166,10 +182,11 @@ namespace TopInsuranceWPF.ViewModels
             EmployeeRole defaultRole = EmployeeRole.Säljare;
 
 
-            employerController.AddEmployer(NewName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, defaultRole, NewPassword);
+            employerController.AddEmployer(NewFirstName, NewLastName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, defaultRole, NewPassword);
 
             MessageBox.Show($"Säljaren har registrerats korrekt!\n\n" +
-                             $"Namn: {NewName}\n" +
+                             $"Namn: {NewFirstName}\n" +
+                             $"Namn: {NewLastName}\n" +
                              $"Telefonnummer: {NewPhoneNumber}\n" +
                              $"E-post: {NewEmailAddress}\n" +
                              $"Adress: {NewAddress}\n" +
@@ -179,7 +196,8 @@ namespace TopInsuranceWPF.ViewModels
 
             Employers.Add(new Employee
             {
-                Name = NewName,
+                FirstName = NewFirstName,
+                LastName = NewLastName,
                 Phonenumber = NewPhoneNumber,
                 Emailaddress = NewEmailAddress,
                 Address = NewAddress,
@@ -197,7 +215,8 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand Clearfieldscommand { get; }
         private void ClearFields()
         {
-            NewName = string.Empty;
+            NewFirstName = string.Empty;
+            NewLastName = string.Empty;
             NewPhoneNumber = string.Empty;
             NewEmailAddress = string.Empty;
             NewAddress = string.Empty;
@@ -210,7 +229,22 @@ namespace TopInsuranceWPF.ViewModels
         #endregion
 
         #region Validation IDataErrorInfo 
-        public string Error => null;
+        public string Error
+        {
+            get
+            {
+                string[] properties = { nameof(NewFirstName), nameof(NewLastName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity), nameof(NewSSN), nameof(NewWorkPhoneNumber) };
+                foreach (var property in properties)
+                {
+                    string error = this[property];
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        return error;
+                    }
+                }
+                return null;
+            }
+        }
 
         public string this[string columnName]
         {
@@ -223,10 +257,16 @@ namespace TopInsuranceWPF.ViewModels
 
             switch (columnName)
             {
-                case nameof(NewName):
-                    if (string.IsNullOrWhiteSpace(NewName))
+                case nameof(NewFirstName):
+                    if (string.IsNullOrWhiteSpace(NewFirstName))
                     {
-                        errorMessage = "Namn är obligatoriskt.";
+                        errorMessage = "Förnamn är obligatoriskt.";
+                    }
+                    break;
+                case nameof(NewLastName):
+                    if (string.IsNullOrWhiteSpace(NewLastName))
+                    {
+                        errorMessage = "Efternamn är obligatoriskt.";
                     }
                     break;
                 case nameof(NewPhoneNumber):
@@ -272,7 +312,6 @@ namespace TopInsuranceWPF.ViewModels
 
             return errorMessage;
         }
-
 
         private bool ValidateNumericFields(out int zipcode)
         {
