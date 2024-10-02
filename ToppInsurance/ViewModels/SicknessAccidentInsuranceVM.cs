@@ -9,6 +9,5 @@ namespace TopInsuranceWPF.ViewModels
 {
     public class SicknessAccidentInsuranceVM : ObservableObject
     {
-        public override string this[string columnName] => throw new NotImplementedException();
     }
 }
