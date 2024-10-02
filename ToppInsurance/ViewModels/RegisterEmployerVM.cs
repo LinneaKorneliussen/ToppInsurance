@@ -185,8 +185,8 @@ namespace TopInsuranceWPF.ViewModels
             employerController.AddEmployer(NewFirstName, NewLastName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, defaultRole, NewPassword);
 
             MessageBox.Show($"Säljaren har registrerats korrekt!\n\n" +
-                             $"Namn: {NewFirstName}\n" +
-                             $"Namn: {NewLastName}\n" +
+                             $"Förnamn: {NewFirstName}\n" +
+                             $"Efternamn: {NewLastName}\n" +
                              $"Telefonnummer: {NewPhoneNumber}\n" +
                              $"E-post: {NewEmailAddress}\n" +
                              $"Adress: {NewAddress}\n" +

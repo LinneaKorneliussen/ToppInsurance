@@ -325,11 +325,11 @@ namespace TopInsuranceWPF.ViewModels
 
             if (SelectedBCcustomers != null)
             {
-                if (!string.IsNullOrEmpty(NewName))
+                if (!string.IsNullOrEmpty(NewFirstName))
                 {
                     SelectedBCcustomers.FirstName = NewFirstName;
                 }
-                if (!string.IsNullOrEmpty(NewName))
+                if (!string.IsNullOrEmpty(NewLastName))
                 {
                     SelectedBCcustomers.LastName = NewLastName;
                 }
@@ -409,7 +409,7 @@ namespace TopInsuranceWPF.ViewModels
             {
                 if (!string.IsNullOrEmpty(NewFirstName))
                 {
-                    SelectedPcustomers.FistName = NewFirstName;
+                    SelectedPcustomers.FirstName = NewFirstName;
                 }
                 if (!string.IsNullOrEmpty(NewLastName))
                 {
@@ -494,7 +494,8 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand ClearCommand { get; }
         private void ClearFields()
         {
-            NewName = string.Empty;
+            NewFirstName = string.Empty;
+            NewLastName = string.Empty;
             NewEmailadress = string.Empty;
             NewPhoneNumber = string.Empty;
             NewAddress = string.Empty;
