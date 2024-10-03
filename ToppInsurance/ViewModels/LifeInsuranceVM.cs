@@ -5,6 +5,7 @@ using TopInsuranceEntities;
 using TopInsuranceBL;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace TopInsuranceWPF.ViewModels
 {
@@ -26,6 +27,7 @@ namespace TopInsuranceWPF.ViewModels
             Paymentforms = Enum.GetValues(typeof(Paymentform)) as IEnumerable<Paymentform>;
             FindCustomerCommand = new RelayCommand(FindCustomer);
             AddLifeInsuranceCommand = new RelayCommand(AddLifeInsurance);
+            ClearCommand = new RelayCommand(ClearFields);
 
         }
 
@@ -162,6 +164,7 @@ namespace TopInsuranceWPF.ViewModels
         #region Commands 
         public ICommand FindCustomerCommand { get; }
         public ICommand AddLifeInsuranceCommand { get; }
+        public ICommand ClearCommand { get; }
 
         #endregion
 
@@ -269,7 +272,7 @@ namespace TopInsuranceWPF.ViewModels
         private void ClearFields()
         {
             Note = string.Empty;
-
+            SearchText = string.Empty ;
         }
         #endregion
 
