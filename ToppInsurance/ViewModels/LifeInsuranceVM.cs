@@ -4,10 +4,11 @@ using TopInsuranceWPF.Commands;
 using TopInsuranceEntities;
 using TopInsuranceBL;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace TopInsuranceWPF.ViewModels
 {
-    public class LifeInsuranceVM : ObservableObject
+    public class LifeInsuranceVM : ObservableObject, IDataErrorInfo
 
     {
         private LifeInsuranceController lifeInsuranceController;
@@ -16,6 +17,8 @@ namespace TopInsuranceWPF.ViewModels
 
         public LifeInsuranceVM()
         {
+            NewStartDate = DateTime.Now;
+            NewEndDate = DateTime.Now.AddYears(1);
             user = UserContext.Instance.LoggedInUser; 
             lifeInsuranceController = new LifeInsuranceController();
             List<int> baseamounts = lifeInsuranceController.GetBaseAmounts();
@@ -25,7 +28,6 @@ namespace TopInsuranceWPF.ViewModels
             AddLifeInsuranceCommand = new RelayCommand(AddLifeInsurance);
 
         }
-
 
         #region Properties
         private PrivateCustomer _selectedCustomer;
@@ -176,6 +178,13 @@ namespace TopInsuranceWPF.ViewModels
         #region Add life Insurance Method
         private void AddLifeInsurance()
         {
+            string error = this.Error;
+            if (!string.IsNullOrEmpty(error))
+            {
+                MessageBox.Show(error);
+                return;
+            }
+
             if (SelectedCustomer != null)
             {
                 if (!lifeInsuranceController.CustomerHasInsurance(SelectedCustomer))
@@ -185,6 +194,7 @@ namespace TopInsuranceWPF.ViewModels
                     lifeInsuranceController.AddLifeInsurance(SelectedCustomer, NewStartDate, NewEndDate,
                                                              insurance, SelectedPaymentForm, SelectedBaseAmount, Note, user);
                     MessageBox.Show($"Du har registrerat en livförsäkring för {SelectedCustomer.FirstName} {SelectedCustomer.LastName}");
+                    ClearFields();
                 }
                 else
                 {
@@ -195,6 +205,71 @@ namespace TopInsuranceWPF.ViewModels
             {
                 MessageBox.Show("Ingen kund vald. Vänligen välj en kund för att registrera livförsäkringen.");
             }
+        }
+        #endregion
+
+        #region Validation IDataErrorInfo
+        public string Error
+        {
+            get
+            {
+                string[] properties = { nameof(NewStartDate), nameof(NewEndDate) };
+                foreach (var property in properties)
+                {
+                    string error = this[property];
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        return error;
+                    }
+                }
+                return null;
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                return ValidateField(columnName);
+            }
+        }
+
+        private string ValidateField(string columnName)
+        {
+            string errorMessage = null;
+
+            switch (columnName)
+            {
+                case nameof(NewStartDate):
+                    if (NewStartDate < DateTime.Today)
+                    {
+                        errorMessage = "Går inte att teckna en försäkring för redan passerade datum";
+                    }
+                    break;
+                case nameof(NewEndDate):
+                    if (NewEndDate < DateTime.Today)
+                    {
+                        errorMessage = "Går inte att teckna försäkring för redan passerade datum";
+                    }
+                    else if (NewEndDate < NewStartDate)
+                    {
+                        errorMessage = "Slutdatum kan inte vara före startdatum.";
+                    }
+                    break;
+                default:
+                    errorMessage = "Ogiltigt kolumnnamn.";
+                    break;
+            }
+
+            return errorMessage;
+        }
+        #endregion
+
+        #region Clear Field Method
+        private void ClearFields()
+        {
+            Note = string.Empty;
+
         }
         #endregion
 

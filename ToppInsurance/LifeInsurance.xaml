@@ -99,33 +99,28 @@
                         <TextBlock Text="Startdatum:" Grid.Row="0" VerticalAlignment="Center" Margin="5"/>
                         <DatePicker x:Name="dpStartdate" Grid.Row="0" Width="250" Margin="0,5,0,5" HorizontalAlignment="Center"
                                     SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-                                    Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}" />
+                                    Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationDatePickerStyle}" />
 
                         <TextBlock Text="Slutdatum:" Grid.Row="1" VerticalAlignment="Center" Margin="5"/>
                         <DatePicker x:Name="dpEnddate" Grid.Row="1" Width="250" Margin="0,5,0,5" HorizontalAlignment="Center"
                                     SelectedDate="{Binding NewEndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-                                    Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"/>
+                                    Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationDatePickerStyle}"/>
 
                         <TextBlock Text="Betalningsätt:" Grid.Row="2" VerticalAlignment="Center" Margin="5"/>
                         <ComboBox x:Name="cbPaymentMethod" Grid.Row="2" Width="250" Height="25" Margin="0,5,0,5" VerticalAlignment="Center"
                                   BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                                  ItemsSource="{Binding Paymentforms}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay}"/>
-
-                        <!--<TextBlock Text="Premie:" Grid.Row="3" VerticalAlignment="Center" Margin="5"/>
-                        <TextBox x:Name="txtPremium" Grid.Row="3" Width="250" Margin="0,5,0,5" HorizontalAlignment="Center"
-                                 Text="{Binding Premium, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-                                 Background="GhostWhite" BorderThickness="1"/>-->
+                                  ItemsSource="{Binding Paymentforms}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay}"
+/>
 
                         <TextBlock Text="Basbelopp:" Grid.Row="4" VerticalAlignment="Center" Margin="5"/>
                         <ComboBox x:Name="cbBaseAmount" Grid.Row="4" Width="250" Height="25" Margin="0,5,0,5" HorizontalAlignment="Center"
-                                  Background="GhostWhite" BorderThickness="1"
-                                  ItemsSource="{Binding BaseAmount}" SelectedItem="{Binding SelectedBaseAmount, Mode=TwoWay}" 
+                                  Background="GhostWhite" BorderThickness="1" ItemsSource="{Binding BaseAmount}" SelectedItem="{Binding SelectedBaseAmount, Mode=TwoWay}" 
                                   Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"/>
 
                         <TextBlock Text="Notering:" Grid.Row="5" VerticalAlignment="Center" Margin="5"/>
                         <TextBox x:Name="txtNotes" Grid.Row="5" Width="250" Margin="0,5,0,5" HorizontalAlignment="Center"
                                 Text="{Binding Note, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-                                Background="GhostWhite" BorderThickness="1"/>
+                                Background="GhostWhite" BorderThickness="1" mah:TextBoxHelper.Watermark="Valfritt"/>
                     </Grid>
 
                     <!-- Buttons Section -->
