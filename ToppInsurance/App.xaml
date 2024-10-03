@@ -38,7 +38,6 @@
                 </Style.Triggers>
             </Style>
 
-           
 
             <Style x:Key="menuButtonIcon" TargetType="material:PackIconMaterial">
                 <Setter Property="Margin" Value="0 2 10 0" />
@@ -195,18 +194,19 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-
-            <Style x:Key="DataGridRowStyle" TargetType="DataGridRow">
+            
+            <!--Radiobutton styles-->
+            <Style x:Key="RadioButtonStyle" TargetType="RadioButton">
                 <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Foreground" Value="Black"/>
                 <Style.Triggers>
-                    <Trigger Property="IsSelected" Value="True">
-                        <Setter Property="Background" Value="#5CD67B"/>
-                        <Setter Property="Foreground" Value="Black"/>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Background" Value="#223A2A"/>
+                        <Setter Property="Foreground" Value="#223A2A"/>
                     </Trigger>
                 </Style.Triggers>
             </Style>
-            
+
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
