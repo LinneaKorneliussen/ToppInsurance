@@ -191,7 +191,7 @@ namespace TopInsuranceWPF.ViewModels
                 MessageBox.Show("Felformat på personummret!");
                 return;
             }
-            if(!IsValidPhoneNumber(NewWorkPhoneNumber) || !IsValidPhoneNumber(NewPhoneNumber))
+            if(!IsValidPhoneNumber(NewPhoneNumber) || !IsValidPhoneNumber(NewWorkPhoneNumber))
             {
                 MessageBox.Show("Felformat på telefonnummer!");
                 return;
@@ -349,7 +349,7 @@ namespace TopInsuranceWPF.ViewModels
 
         public bool IsValidPhoneNumber(string phoneNumber)
         {
-            string pattern = @"^\d{3}-\d{7}$";
+            string pattern = @"^\d{3}-\d{7}$"; 
             return Regex.IsMatch(phoneNumber, pattern);
         }
 

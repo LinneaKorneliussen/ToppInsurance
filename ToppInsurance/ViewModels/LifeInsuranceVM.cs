@@ -12,19 +12,35 @@ namespace TopInsuranceWPF.ViewModels
     {
         private LifeInsuranceController lifeInsuranceController;
         public IEnumerable<Paymentform> Paymentforms {  get; }
+        private Employee user;
 
         public LifeInsuranceVM()
         {
+            user = UserContext.Instance.LoggedInUser; 
             lifeInsuranceController = new LifeInsuranceController();
-            List<PrivateCustomer> customers = lifeInsuranceController.GetAllPrivateCustomers();
             List<int> baseamounts = lifeInsuranceController.GetBaseAmounts();
             BaseAmount = new ObservableCollection<int>(baseamounts); 
             Paymentforms = Enum.GetValues(typeof(Paymentform)) as IEnumerable<Paymentform>;
+            FindCustomerCommand = new RelayCommand(FindCustomer);
+            AddLifeInsuranceCommand = new RelayCommand(AddLifeInsurance);
 
         }
 
 
         #region Properties
+        private PrivateCustomer _selectedCustomer;
+        public PrivateCustomer SelectedCustomer
+        {
+            get { return _selectedCustomer; }
+            set
+            {
+                if (_selectedCustomer != value)
+                {
+                    _selectedCustomer = value;
+                    OnPropertyChanged(nameof(SelectedCustomer));
+                }
+            }
+        }
 
         private DateTime _newStartDate;
         public DateTime NewStartDate 
@@ -34,7 +50,7 @@ namespace TopInsuranceWPF.ViewModels
             { 
                 if (_newStartDate != value)
                 {
-                    NewStartDate = value;
+                    _newStartDate = value;
                     OnPropertyChanged(nameof(NewStartDate));
                 }
             }
@@ -48,7 +64,7 @@ namespace TopInsuranceWPF.ViewModels
             {
                 if (_newEndDate != value)
                 {
-                    NewStartDate = value;
+                    _newEndDate = value;
                     OnPropertyChanged(nameof(NewEndDate));
                 }
             }
@@ -68,8 +84,8 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        private Paymentform _selectedBaseAmount;
-        public Paymentform SelectedBaseAmount
+        private int _selectedBaseAmount;
+        public int SelectedBaseAmount
         {
             get { return _selectedBaseAmount; }
             set
@@ -109,16 +125,9 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
-
-
-
-
-
         #endregion
 
-
-
-
+        #region Observable Collection 
         private ObservableCollection<int> _baseAmounts;
         public ObservableCollection<int> BaseAmount
         {
@@ -133,7 +142,61 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
+        private ObservableCollection<PrivateCustomer> _privateCustomers;
+        public ObservableCollection<PrivateCustomer> PrivateCustomers
+        {
+            get { return _privateCustomers; }
+            set
+            {
+                if (_privateCustomers != value)
+                {
+                    _privateCustomers = value;
+                    OnPropertyChanged(nameof(PrivateCustomers));
+                }
+            }
+        }
+        #endregion
 
+        #region Commands 
+        public ICommand FindCustomerCommand { get; }
+        public ICommand AddLifeInsuranceCommand { get; }
+
+        #endregion
+
+        #region Find Customer Method
+        private void FindCustomer()
+        {
+            var filteredCustomers = lifeInsuranceController.SearchPrivateCustomers(SearchText);
+
+            PrivateCustomers = new ObservableCollection<PrivateCustomer>(filteredCustomers);
+            SearchText = string.Empty; 
+        }
+        #endregion
+
+        #region Add life Insurance Method
+        private void AddLifeInsurance()
+        {
+            if (SelectedCustomer != null)
+            {
+                if (!lifeInsuranceController.CustomerHasInsurance(SelectedCustomer))
+                {
+                    InsuranceType insurance = InsuranceType.Livförsäkring;
+
+                    lifeInsuranceController.AddLifeInsurance(SelectedCustomer, NewStartDate, NewEndDate,
+                                                             insurance, SelectedPaymentForm, SelectedBaseAmount, Note, user);
+                    MessageBox.Show($"Du har registrerat en livförsäkring för {SelectedCustomer.FirstName} {SelectedCustomer.LastName}");
+                }
+                else
+                {
+                    MessageBox.Show($"Kunden {SelectedCustomer.FirstName} {SelectedCustomer.LastName} har redan en livförsäkring.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ingen kund vald. Vänligen välj en kund för att registrera livförsäkringen.");
+            }
+        }
+        #endregion
 
     }
 }

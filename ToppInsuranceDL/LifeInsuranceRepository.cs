@@ -38,18 +38,32 @@ namespace TopInsuranceDL
         }
         #endregion
 
-        #region Get all private customers Method
-        public List<PrivateCustomer> GetAllPrivateCustomers()
+        #region Search Private Customers Method
+        public List<PrivateCustomer> SearchPrivateCustomers(string searchTerm)
         {
-            return unitOfWork.PCRepository.GetAll().ToList();
+            List<PrivateCustomer> allCustomers = unitOfWork.PCRepository.GetAll().ToList();
+
+            var matchingCustomers = allCustomers.Where(c =>
+                c.LastName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                c.SSN.Contains(searchTerm)).ToList();
+
+            return matchingCustomers;
+        }
+        #endregion
+
+        #region Check If Customer Already Has Insurance Method
+        public bool CustomerHasInsurance(PrivateCustomer customer)
+        {   
+            List<LifeInsurance> lifeInsurances = unitOfWork.LifeInsuranceRepository.GetAll().ToList();
+            return lifeInsurances.Any(l => l.PrivateCustomerId == customer.PersonId);
         }
         #endregion
 
         #region Add life insurance Method for private customer 
         public void AddLifeInsurance(PrivateCustomer p, DateTime startDate, DateTime endDate, InsuranceType insuranceType, 
-            Paymentform paymentform, int baseAmount, Status status, string note)
+            Paymentform paymentform, int baseAmount, string note, Employee user)
         {
-            LifeInsurance lifeInsurance = new LifeInsurance(p, startDate, endDate, insuranceType, paymentform, status, note, baseAmount);
+            LifeInsurance lifeInsurance = new LifeInsurance(p, startDate, endDate, insuranceType, paymentform, note, baseAmount, user);
             unitOfWork.LifeInsuranceRepository.Add(lifeInsurance);
             unitOfWork.Save();
 

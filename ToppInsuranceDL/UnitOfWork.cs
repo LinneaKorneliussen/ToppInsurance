@@ -30,7 +30,14 @@ namespace TopInsuranceDL
                 instance.EmployeeRepository = new Repository<Employee>(instance.context);
                 instance.PCRepository = new Repository<PrivateCustomer>(instance.context);
                 instance.BCRepository = new Repository<BusinessCustomer>(instance.context);
-               
+                instance.BCInsuranceRepository = new Repository<BusinessInsurance>(instance.context);
+                instance.VehicleInsuranceRepository = new Repository<VehicleInsurance>(instance.context);
+                instance.RealEstateInsuranceRepository = new Repository<RealEstateInsurance>(instance.context);
+                instance.LifeInsuranceRepository = new Repository<LifeInsurance>(instance.context);
+                instance.SicknessAndAccidentInsuranceRepository = new Repository<SicknessAndAccidentInsurance>(instance.context);
+                instance.VehicleRepository = new Repository<Vehicle> (instance.context);
+                instance.InventoryRepository = new Repository<Inventory>(instance.context);
+
             }
             return instance;
         }

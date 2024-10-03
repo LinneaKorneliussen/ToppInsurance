@@ -38,7 +38,6 @@ namespace TopInsuranceWPF.ViewModels
                 OnPropertyChanged(nameof(Password));
             }
         }
-
         #endregion
 
         #region Login Commands
@@ -48,15 +47,17 @@ namespace TopInsuranceWPF.ViewModels
         #region Login Methods 
         private void Login()
         {
-
             Employee user = loginController.AuthorizeUser(Username, Password);
 
             if (user != null)
             {
+                UserContext.Instance.SetUser(user);
+
+                MessageBox.Show($"Inloggad som {user.FirstName} {user.LastName}");
+
                 switch (user.EmployeeRole)
                 {
                     case EmployeeRole.Säljare:
-                        MessageBox.Show($"Inloggad som {user.FirstName} {user.LastName}");
                         MenuWindowSP menuSP = new MenuWindowSP();
                         MenuSalespersonVM menuSalesperson = new MenuSalespersonVM(user);
                         menuSP.DataContext = menuSalesperson;
@@ -67,7 +68,6 @@ namespace TopInsuranceWPF.ViewModels
                     case EmployeeRole.Försäljningschef:
                     case EmployeeRole.VD:
                     case EmployeeRole.Ekonomiassistent:
-                        MessageBox.Show($"Inloggad som {user.FirstName} {user.LastName}");
                         MenuWindowRP menuRP = new MenuWindowRP();
                         MenuResponsibleVM menuResponsible = new MenuResponsibleVM(user);
                         menuRP.DataContext = menuResponsible;
@@ -84,9 +84,7 @@ namespace TopInsuranceWPF.ViewModels
             {
                 MessageBox.Show("Misslyckades med inloggning. Försök igen!");
             }
-
         }
-
         #endregion
 
         #region Clear fields 
@@ -95,8 +93,10 @@ namespace TopInsuranceWPF.ViewModels
             Username = string.Empty;
             Password = string.Empty;
         }
-
         #endregion
-
     }
+
+
+
+
 }

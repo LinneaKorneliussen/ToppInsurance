@@ -15,9 +15,9 @@ namespace TopInsuranceEntities
         public BusinessCustomer BusinessCustomer { get; private set; }
         public ICollection<Inventory> Inventories { get; private set; } = new List<Inventory>();
         public RealEstateInsurance(BusinessCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type, 
-            Paymentform paymentform, Status status, string note,
-            string realEstateAddress, double realEstateValue, int realEstatePremium) : 
-            base(startDate, endDate, type, paymentform, status, note)
+            Paymentform paymentform, string note,
+            string realEstateAddress, double realEstateValue, int realEstatePremium, Employee user) : 
+            base(startDate, endDate, type, paymentform, note, user)
         {
             BusinessCustomer = customer;
             RealEstateAddress = realEstateAddress;
