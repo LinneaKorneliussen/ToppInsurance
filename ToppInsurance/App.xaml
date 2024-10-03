@@ -206,7 +206,6 @@
                 </Style.Triggers>
             </Style>
 
-            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
         </ResourceDictionary>
     </Application.Resources>
