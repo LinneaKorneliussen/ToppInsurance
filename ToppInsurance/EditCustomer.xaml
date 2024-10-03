@@ -119,7 +119,12 @@
 
                         <!-- Buttons -->
                         <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0 60 0">
-                            <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
+                            <Button Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding Clearfieldscommand}">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <material:PackIconMaterial Kind="Undo" Width="24" Height="24" Foreground="White" />
+                                    <TextBlock Text="Återställ fält" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                             <Button Content="Spara ändringar" Command="{Binding UpdatePcustomersCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
                         </StackPanel>
                     </Grid>

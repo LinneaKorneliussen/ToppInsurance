@@ -274,7 +274,7 @@ namespace TopInsuranceWPF.ViewModels
                     }
                     break;
                 case nameof(NewLastName):
-                    if (string.IsNullOrWhiteSpace(NewFirstName))
+                    if (string.IsNullOrWhiteSpace(NewLastName))
                     {
                         errorMessage = "Efternamn är obligatoriskt.";
                     }
