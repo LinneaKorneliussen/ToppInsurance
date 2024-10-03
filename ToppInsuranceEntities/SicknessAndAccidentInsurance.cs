@@ -35,6 +35,21 @@ namespace TopInsuranceEntities
         private void CalculatePremium()
         {
             Premium = (int)(BaseAmount * 0.0005);
+
+            if (AdditionalInsurance == AdditionalInsurance.InvaliditetVidOlycksfall)
+            {
+                Premium += (int)(BaseAmount * 0.0003);
+            }
+            if (AdditionalInsurance == AdditionalInsurance.ErsättningVidLångvarigSjukskrivning)
+            {
+                Premium += (int)(BaseAmount * 0.0005);
+            }
+            if (AdditionalInsurance == AdditionalInsurance.Båda)
+            {
+                Premium += (int)(BaseAmount * 0.0003);
+                Premium += (int)(BaseAmount * 0.0005);
+            }
+
         }
     }
 
