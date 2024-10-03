@@ -9,16 +9,14 @@ namespace TopInsuranceEntities
     public class LifeInsurance : Insurance
     {
         public int BaseAmount { get; set; }
-        public DateTime CalenderYear { get; set; }
         public int PrivateCustomerId { get; set; }
         public PrivateCustomer PrivateCustomer { get; private set; }
         public LifeInsurance(PrivateCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type, 
-            Paymentform paymentform, Status status, string note, int baseAmount) : 
-            base(startDate, endDate, type, paymentform, status, note)
+            Paymentform paymentform, string note, int baseAmount, Employee user) : 
+            base(startDate, endDate, type, paymentform, note, user)
         {
             PrivateCustomer = customer;
             BaseAmount = baseAmount;
-            CalenderYear = new DateTime(SigningDate.Year, 1, 1);
             CalculatePremium();
         }
 

@@ -24,21 +24,27 @@ namespace TopInsuranceBL
         }
         #endregion
 
-        #region Get all private customers Method
-        public List<PrivateCustomer> GetAllPrivateCustomers()
+        #region Search Private Customers Method
+        public List<PrivateCustomer> SearchPrivateCustomers(string searchTerm)
         {
-            return lifeInsuranceRepository.GetAllPrivateCustomers();
+            return lifeInsuranceRepository.SearchPrivateCustomers(searchTerm);
         }
         #endregion
 
-        #region Add LifeInsurance Method for private customer
+        #region Check If Customer Already Has Insurance Method
+        public bool CustomerHasInsurance(PrivateCustomer customer)
+        {
+            return lifeInsuranceRepository.CustomerHasInsurance(customer);
+        }
+        #endregion
+
+        #region Add Life Insurance Method for private customer
         public void AddLifeInsurance(PrivateCustomer p, DateTime startDate, DateTime endDate, InsuranceType insuranceType,
-            Paymentform paymentform, int baseAmount, Status status, string note)
+            Paymentform paymentform, int baseAmount, string note, Employee user)
         {
-            lifeInsuranceRepository.AddLifeInsurance(p, startDate, endDate, insuranceType, paymentform, baseAmount, status, note);
+            lifeInsuranceRepository.AddLifeInsurance(p, startDate, endDate, insuranceType, paymentform, baseAmount, note, user);
         }
-
         #endregion
-
     }
+
 }

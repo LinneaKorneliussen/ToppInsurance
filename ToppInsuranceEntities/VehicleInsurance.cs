@@ -14,8 +14,8 @@ namespace TopInsuranceEntities
         public BusinessCustomer BusinessCustomer { get; private set; }
 
         public VehicleInsurance(BusinessCustomer customer, Vehicle car, string prefix, DateTime startDate, DateTime endDate, 
-            InsuranceType type, Paymentform paymentform, Status status, string note, string trafficInsurance) : 
-            base(startDate, endDate, type, paymentform, status, note)
+            InsuranceType type, Paymentform paymentform, string note, string trafficInsurance, Employee user) : 
+            base(startDate, endDate, type, paymentform, note, user)
         {
             BusinessCustomer = customer;
             Vehicle = car;

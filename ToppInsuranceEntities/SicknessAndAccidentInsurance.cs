@@ -9,7 +9,6 @@ namespace TopInsuranceEntities
     public class SicknessAndAccidentInsurance : Insurance
     {
         public int BaseAmount { get; set; }
-        public DateTime CalenderYear { get; set; }
         public string? InsuranceFirstName { get; set; }
         public string? InsuranceLastName { get; set; }
         public string? InsuranceSSN { get; set; }
@@ -18,9 +17,9 @@ namespace TopInsuranceEntities
         public PrivateCustomer PrivateCustomer { get; set; }
 
         public SicknessAndAccidentInsurance(PrivateCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type,
-            Paymentform paymentform, Status status, string note, string? insuranceFirstName, string? insuranceLastName, string? 
-            insuranceSSN, AdditionalInsurance additionalInsurance, int baseAmount)
-        : base(startDate, endDate, type, paymentform, status, note)
+            Paymentform paymentform, string note, string? insuranceFirstName, string? insuranceLastName, string? 
+            insuranceSSN, AdditionalInsurance additionalInsurance, int baseAmount, Employee user)
+        : base(startDate, endDate, type, paymentform, note, user)
         {
             PrivateCustomer = customer;
             InsuranceFirstName = insuranceFirstName;
@@ -28,7 +27,6 @@ namespace TopInsuranceEntities
             InsuranceSSN = insuranceSSN;
             AdditionalInsurance = additionalInsurance;
             BaseAmount = baseAmount;
-            CalenderYear = new DateTime(SigningDate.Year, 1, 1);
             CalculatePremium();
         }
 
@@ -37,6 +35,21 @@ namespace TopInsuranceEntities
         private void CalculatePremium()
         {
             Premium = (int)(BaseAmount * 0.0005);
+
+            if (AdditionalInsurance == AdditionalInsurance.InvaliditetVidOlycksfall)
+            {
+                Premium += (int)(BaseAmount * 0.0003);
+            }
+            if (AdditionalInsurance == AdditionalInsurance.ErsättningVidLångvarigSjukskrivning)
+            {
+                Premium += (int)(BaseAmount * 0.0005);
+            }
+            if (AdditionalInsurance == AdditionalInsurance.Båda)
+            {
+                Premium += (int)(BaseAmount * 0.0003);
+                Premium += (int)(BaseAmount * 0.0005);
+            }
+
         }
     }
 
