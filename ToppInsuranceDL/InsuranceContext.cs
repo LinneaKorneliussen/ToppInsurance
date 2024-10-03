@@ -102,8 +102,13 @@ namespace TopInsuranceDL
             //PCustomers.Add(pcAnna);
 
             //// Life Insurance for private customers 
+
+            //LifeInsurance lifeInsuranceJeanette = new LifeInsurance(pcJeanette, new DateTime(2024, 1, 1), new DateTime(2025, 1, 1), InsuranceType.Livförsäkring, Paymentform.Månad, 500, 100000, Status.Aktiv, "Jeanette's life insurance note");
+            //LifeInsurance lifeInsuranceErik = new LifeInsurance(pcErik, new DateTime(2024, 1, 1), new DateTime(2025, 1, 1), InsuranceType.Livförsäkring, Paymentform.Månad, 600, 120000, Status.Aktiv, "Erik's life insurance note");
+
             //LifeInsurance lifeInsuranceJeanette = new LifeInsurance(pcJeanette, new DateTime(2024, 2, 11), new DateTime(2025, 1, 1), InsuranceType.Livförsäkring, Paymentform.Månad, Status.Aktiv, "Jeanette's life insurance note", 550000);
             //LifeInsurance lifeInsuranceErik = new LifeInsurance(pcErik, new DateTime(2024, 4, 17), new DateTime(2025, 1, 1), InsuranceType.Livförsäkring, Paymentform.Månad, Status.Aktiv, "Erik's life insurance note", 450000);
+
 
             //LifeInsurances.Add(lifeInsuranceJeanette);
             //LifeInsurances.Add(lifeInsuranceErik);
@@ -257,10 +262,10 @@ namespace TopInsuranceDL
             //BusinessInsurances.Add(businessInsuranceOlof);
             //#endregion
 
-            SaveChanges();
+
+            //SaveChanges();
         }
         #endregion
-
 
     }
 }
