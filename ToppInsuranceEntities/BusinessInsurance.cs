@@ -12,9 +12,9 @@ namespace TopInsuranceEntities
         public BusinessCustomer BusinessCustomer { get; private set; }
 
         public BusinessInsurance(BusinessCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type, 
-            Paymentform paymentform, int premium, int baseAmount, Status status, string note,
+            Paymentform paymentform, Status status, string note,
             string contactPerson, string contactPhNo) : 
-            base(startDate, endDate, type, paymentform, premium, baseAmount, status, note)
+            base(startDate, endDate, type, paymentform, status, note)
         {
             BusinessCustomer = customer;
             ContactPerson = contactPerson;

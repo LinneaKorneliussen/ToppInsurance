@@ -17,14 +17,28 @@ namespace TopInsuranceBL
             lifeInsuranceRepository = new LifeInsuranceRepository();
         }
 
-        //public PrivateCustomer GetPrivateCustomer(string ssn)
-        //{
+        #region Get Base Amounts Method
+        public List<int> GetBaseAmounts()
+        {
+            return lifeInsuranceRepository.GetBaseAmounts();
+        }
+        #endregion
 
-        //}
+        #region Get all private customers Method
+        public List<PrivateCustomer> GetAllPrivateCustomers()
+        {
+            return lifeInsuranceRepository.GetAllPrivateCustomers();
+        }
+        #endregion
 
+        #region Add LifeInsurance Method for private customer
+        public void AddLifeInsurance(PrivateCustomer p, DateTime startDate, DateTime endDate, InsuranceType insuranceType,
+            Paymentform paymentform, int baseAmount, Status status, string note)
+        {
+            lifeInsuranceRepository.AddLifeInsurance(p, startDate, endDate, insuranceType, paymentform, baseAmount, status, note);
+        }
 
-
-
+        #endregion
 
     }
 }

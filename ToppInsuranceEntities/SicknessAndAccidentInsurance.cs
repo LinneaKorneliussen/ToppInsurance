@@ -8,6 +8,8 @@ namespace TopInsuranceEntities
 {
     public class SicknessAndAccidentInsurance : Insurance
     {
+        public int BaseAmount { get; set; }
+        public DateTime CalenderYear { get; set; }
         public string? InsuranceFirstName { get; set; }
         public string? InsuranceLastName { get; set; }
         public string? InsuranceSSN { get; set; }
@@ -16,18 +18,26 @@ namespace TopInsuranceEntities
         public PrivateCustomer PrivateCustomer { get; set; }
 
         public SicknessAndAccidentInsurance(PrivateCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type,
-            Paymentform paymentform, int premium, int baseAmount, Status status, string note,
-            string? insuranceFirstName, string? insuranceLastName, string? insuranceSSN, AdditionalInsurance additionalInsurance)
-        : base(startDate, endDate, type, paymentform, premium, baseAmount, status, note)
+            Paymentform paymentform, Status status, string note, string? insuranceFirstName, string? insuranceLastName, string? 
+            insuranceSSN, AdditionalInsurance additionalInsurance, int baseAmount)
+        : base(startDate, endDate, type, paymentform, status, note)
         {
             PrivateCustomer = customer;
             InsuranceFirstName = insuranceFirstName;
             InsuranceLastName = insuranceLastName;
             InsuranceSSN = insuranceSSN;
             AdditionalInsurance = additionalInsurance;
+            BaseAmount = baseAmount;
+            CalenderYear = new DateTime(SigningDate.Year, 1, 1);
+            CalculatePremium();
         }
 
         public SicknessAndAccidentInsurance() {}
+
+        private void CalculatePremium()
+        {
+            Premium = (int)(BaseAmount * 0.0005);
+        }
     }
 
 }
