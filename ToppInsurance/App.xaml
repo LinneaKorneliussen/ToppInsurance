@@ -194,7 +194,21 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-            
+
+            <Style TargetType="DatePicker" x:Key="ValidationDatePickerStyle">
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Margin" Value="0,0,5,0"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="ToolTip" Value="{x:Null}"/>
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="true">
+                        <Setter Property="BorderBrush" Value="DarkSalmon"/>
+                        <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
             <!--Radiobutton styles-->
             <Style x:Key="RadioButtonStyle" TargetType="RadioButton">
                 <Setter Property="Background" Value="Transparent"/>
