@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
+        xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Background="White" Height="650" Width="900">
     
@@ -26,7 +27,7 @@
                     <TextBlock Text="Fyll i informationen nedan för att registrera en ny säljare." FontSize="14" Foreground="#555555"/>
                 </StackPanel>
 
-                <Grid Grid.Row="1" Margin="20" Background="White">
+                <Grid Grid.Row="1" Margin="20" Background="White" Height="300">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
                         <ColumnDefinition Width="*"/>
@@ -88,10 +89,10 @@
 
                 </Grid>
 
-                <StackPanel Grid.Row="2" Margin="5">
-                    <Label Content="Kundregister" FontWeight="Bold" FontSize="14"/>
+                <StackPanel Grid.Row="2">
+                    <Label Content="Kundregister" FontWeight="Bold" FontSize="14" />
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="170"
+                        <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="120"
                   ItemsSource="{Binding Employers}" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Agenturnummer" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="120"/>
@@ -107,10 +108,22 @@
                     </ScrollViewer>
                 </StackPanel>
 
-                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                    <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding Clearfieldscommand}"/>
-                    <Button Content="Registrera säljare" Width="150" Margin="5" Background="#223A2A" 
-                            Foreground="White" Command="{Binding AddEmployerCommand}"/>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="30 10 0 5">
+                    <Button Width="120" Height="30" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding Clearfieldscommand}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <material:PackIconMaterial Kind="Undo" Width="14" Height="14" Foreground="White" />
+                            <TextBlock Text="ÅTERSTÄLL FÄLT" Margin="3,0,0,0" VerticalAlignment="Center" FontSize="10"/>
+                        </StackPanel>
+                    </Button>
+
+
+                    <Button Width="120" Height="30" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding RefreshCommand}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <material:PackIconMaterial Kind="Update" Width="14" Height="14" Foreground="White" />
+                            <TextBlock Text="UPPDATERA SIDAN" Margin="3,0,0,0" VerticalAlignment="Center" FontSize="10"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Content="Registrera säljare" Width="120" Height="30" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding AddEmployerCommand}"/>
                 </StackPanel>
             </Grid>
         </DockPanel>

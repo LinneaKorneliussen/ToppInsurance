@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using TopInsuranceEntities;
 using System.Windows.Input;
 using System.Windows;
+using System.Text.RegularExpressions;
 
 
 
@@ -20,9 +21,22 @@ namespace TopInsuranceWPF.ViewModels
 
             AddEmployerCommand = new RelayCommand(AddEmployer);
             Clearfieldscommand = new RelayCommand(ClearFields);
+            RefreshCommand = new RelayCommand(RefreshSalesPerson);
 
             List<Employee> employees = employerController.GetAllEmployers();
             Employers = new ObservableCollection<Employee>(employees);
+        }
+
+        private ICommand refreshcommand;
+        public ICommand RefreshCommand
+        {
+            get { return refreshcommand; }
+            set { refreshcommand = value; }
+        }
+        private void RefreshSalesPerson()
+        {
+            List<Employee> salesPersons = employerController.GetAllEmployers();
+            Employers = new ObservableCollection<Employee>(salesPersons);
         }
 
         #region Properties
@@ -159,25 +173,22 @@ namespace TopInsuranceWPF.ViewModels
         private void AddEmployer()
         {
 
-            string errorMessage = ValidateField("NewFirstName");
-            errorMessage = ValidateField("NewLastName");
-            errorMessage ??= ValidateField("NewPhoneNumber");
-            errorMessage ??= ValidateField("NewEmailAddress");
-            errorMessage ??= ValidateField("NewAddress");
-            errorMessage ??= ValidateField("NewZipcode");
-            errorMessage ??= ValidateField("NewCity");
-            errorMessage ??= ValidateField("NewPassword");
-
-
-            if (!string.IsNullOrEmpty(errorMessage))
+            string error = this.Error;
+            if (!string.IsNullOrEmpty(error))
             {
-                MessageBox.Show(errorMessage);
+                MessageBox.Show(error);
+                return;
+            }
+            if (!IsValidPhoneNumber(NewPhoneNumber) || !IsValidPhoneNumber(NewPhoneNumber))
+            {
+                MessageBox.Show("Felformat på telefonnummer!");
                 return;
             }
             if (!ValidateNumericFields(out int zipcode))
             {
                 return;
             }
+
 
             EmployeeRole defaultRole = EmployeeRole.Säljare;
 
@@ -233,7 +244,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             get
             {
-                string[] properties = { nameof(NewFirstName), nameof(NewLastName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity) };
+                string[] properties = { nameof(NewFirstName), nameof(NewLastName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity), nameof(NewPassword) };
                 foreach (var property in properties)
                 {
                     string error = this[property];
@@ -248,7 +259,10 @@ namespace TopInsuranceWPF.ViewModels
 
         public string this[string columnName]
         {
-            get => ValidateField(columnName);
+            get
+            {
+                return ValidateField(columnName);
+            }
         }
 
         private string ValidateField(string columnName)
@@ -317,7 +331,6 @@ namespace TopInsuranceWPF.ViewModels
         {
             zipcode = 0;
 
-
             if (!int.TryParse(NewZipcode, out zipcode))
             {
                 MessageBox.Show("Postnumret måste vara ett giltigt nummer.");
@@ -325,6 +338,13 @@ namespace TopInsuranceWPF.ViewModels
             }
 
             return true;
+        }
+
+
+        public bool IsValidPhoneNumber(string phoneNumber)
+        {
+            string pattern = @"^\d{3}-\d{7}$";
+            return Regex.IsMatch(phoneNumber, pattern);
         }
         #endregion
 
