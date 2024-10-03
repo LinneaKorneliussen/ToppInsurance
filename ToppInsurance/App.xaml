@@ -38,7 +38,6 @@
                 </Style.Triggers>
             </Style>
 
-           
 
             <Style x:Key="menuButtonIcon" TargetType="material:PackIconMaterial">
                 <Setter Property="Margin" Value="0 2 10 0" />
@@ -195,9 +194,19 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+            
+            <!--Radiobutton styles-->
+            <Style x:Key="RadioButtonStyle" TargetType="RadioButton">
+                <Setter Property="Background" Value="Transparent"/>
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Background" Value="#223A2A"/>
+                        <Setter Property="Foreground" Value="#223A2A"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
 
-
-
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
         </ResourceDictionary>
     </Application.Resources>
