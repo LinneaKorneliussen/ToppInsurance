@@ -206,6 +206,19 @@
                 </Style.Triggers>
             </Style>
 
+            <Style x:Key="DataGridRowStyle" TargetType="DataGridRow">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#5CD67B"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
 
         </ResourceDictionary>
     </Application.Resources>
