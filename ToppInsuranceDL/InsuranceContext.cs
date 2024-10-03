@@ -45,15 +45,22 @@ namespace TopInsuranceDL
             modelBuilder.Entity<PrivateCustomer>().ToTable("PrivateCustomer");
             modelBuilder.Entity<PrivateCustomer>().HasIndex(p => p.SSN).IsUnique();
 
+            modelBuilder.Entity<LifeInsurance>().HasOne(e => e.Employee).WithMany(l => l.lifeInsurances).HasForeignKey(l => l.EmployeeId);
+            modelBuilder.Entity<SicknessAndAccidentInsurance>().HasOne(e => e.Employee).WithMany(s => s.accidentInsurances).HasForeignKey(s => s.EmployeeId);
+
             modelBuilder.Entity<BusinessCustomer>().ToTable("BusinessCustomer");
             modelBuilder.Entity<BusinessCustomer>().HasIndex(b => b.Organizationalnumber).IsUnique();
+
+            modelBuilder.Entity<BusinessInsurance>().HasOne(e => e.Employee).WithMany(b => b.businessInsurances).HasForeignKey(b => b.EmployeeId);
+            modelBuilder.Entity<VehicleInsurance>().HasOne(e => e.Employee).WithMany(v => v.vehicleInsurances).HasForeignKey(v => v.EmployeeId);
+            modelBuilder.Entity<RealEstateInsurance>().HasOne(e => e.Employee).WithMany(r => r.realEstateInsurances).HasForeignKey(r => r.EmployeeId);
 
             modelBuilder.Entity<BusinessInsurance>().ToTable("BusinessInsurance");
             modelBuilder.Entity<BusinessCustomer>().HasMany(b => b.BusinessInsurances).WithOne(b => b.BusinessCustomer).HasForeignKey(b => b.BusinessCustomerId);
 
             modelBuilder.Entity<VehicleInsurance>().ToTable("VehicleInsurance");
             modelBuilder.Entity<BusinessCustomer>().HasMany(b => b.VehicleInsurances).WithOne(v => v.BusinessCustomer).HasForeignKey(v => v.BusinessCustomerId);
-            modelBuilder.Entity<VehicleInsurance>().HasOne(i => i.Vehicle).WithOne(v => v.VehicleInsurance).HasForeignKey<Vehicle>(v => v.VechileInsuranceId);
+            modelBuilder.Entity<VehicleInsurance>().HasOne(i => i.Vehicle).WithOne(v => v.VehicleInsurance).HasForeignKey<Vehicle>(v => v.VehicleInsuranceId);
 
             modelBuilder.Entity<RealEstateInsurance>().ToTable("RealEstateInsurance");
             modelBuilder.Entity<BusinessCustomer>().HasMany(b => b.RealEstateInsurances).WithOne(r => r.BusinessCustomer).HasForeignKey(r => r.BusinessCustomerId);
@@ -65,6 +72,8 @@ namespace TopInsuranceDL
             modelBuilder.Entity<SicknessAndAccidentInsurance>().ToTable("SicknessAndAccidentInsurance");
             modelBuilder.Entity<PrivateCustomer>().HasMany(p => p.SicknessAndAccidentInsurances).WithOne(s => s.PrivateCustomer).HasForeignKey(s => s.PrivateCustomerId);
 
+
+
         }
         #endregion
 
@@ -74,59 +83,68 @@ namespace TopInsuranceDL
             //Database.EnsureDeleted();
             //Database.EnsureCreated();
 
-            //#region Employees
-            //// Employee
-            //Employees.Add(new Employee("Linnea", "Korneliussen", "072-2136462", "Linnea@hotmail.com", "Västanvindsgatan 6", 41717, "Göteborg", EmployeeRole.Säljare, "Hej123"));
-            //Employees.Add(new Employee("Irene", "Johansson", "098-7653872", "IreneJohansson@toppförsäkringar.com", "Stengatan 5", 93874, "Oslo", EmployeeRole.Säljare, "Irene"));
-            //Employees.Add(new Employee("Karin", "Sundberg", "098-7453882", "Karin.sundberg@toppförsäkringar.com", "Lagercrantz plats 9", 50431, "Borås", EmployeeRole.Försäljningsassistent, "Kakan"));
-            //Employees.Add(new Employee("Vigo", "Persson", "078-7345382", "Vigge@toppförsäkringar.com", "Odengatan 23", 50620, "Borås", EmployeeRole.Säljare, "Viggo"));
-            //Employees.Add(new Employee("Birgitta", "Frisk", "070-0958328", "Birgittafrisk@toppförsäkringar.com", "Druveforsvägen 11A", 50420, "Borås", EmployeeRole.Säljare, "Birgitta"));
-            //Employees.Add(new Employee("Boris", "Alm", "073-86745933", "Borisalm@toppförsäkringar.com", "Göteborgsvägen 2", 51820, "Borås", EmployeeRole.Säljare, "Boris"));
-            //Employees.Add(new Employee("Linda", "Jonsson", "070-7575411", "Lindajonsson@toppförsäkringar.com", "Salmeniigatan 3", 50325, "Borås", EmployeeRole.Säljare, "Linda"));
-            //Employees.Add(new Employee("Malin", "Nilsdotter", "076-5176729", "Malinnilsdotter@toppförsäkringar.com", "Körsbärsvägen 16", 53212, "Borås", EmployeeRole.Säljare, "Malin"));
-            //Employees.Add(new Employee("Mikael", "Lund", "078-7238382", "Mikaellund@toppförsäkringar.com", "Roseniigatan 13", 50421, "Borås", EmployeeRole.Säljare, "Micke"));
-            //Employees.Add(new Employee("Patrik", "Hedman", "070-7124386", "Patrikhedman@toppförsäkringar.com", "Makgrillsgatan 83", 51820, "Borås", EmployeeRole.Säljare, "Patrik"));
-            //Employees.Add(new Employee("Sten", "Hård", "070-7121001", "Stenhård@toppförsäkringar.com", "Strandvägen 10", 50550, "Stockholm", EmployeeRole.VD, "Lösenord"));
-            //Employees.Add(new Employee("Ann-Sofie", "Larsson", "073-5296398", "Annsofielarsson@toppförsäkringar.com", "Senapsgatan 154", 50539, "Borås", EmployeeRole.Ekonomiassistent, "Annsofie"));
-            //Employees.Add(new Employee("Iren", "Panik", "073-1142646", "Irenpanik@toppförsäkringar.com", "Öresjövägen 29", 51821, "Borås", EmployeeRole.Försäljningschef, "Irenpanik"));
-            //#endregion
+            //// Skapa anställda som objekt
+            //Employee linnea = new Employee("Linnea", "Korneliussen", "072-2136462", "Linnea@hotmail.com", "Västanvindsgatan 6", 41717, "Göteborg", EmployeeRole.Säljare, "Hej123");
+            //Employee irene = new Employee("Irene", "Johansson", "098-7653872", "IreneJohansson@toppförsäkringar.com", "Stengatan 5", 93874, "Oslo", EmployeeRole.Säljare, "Irene");
+            //Employee karin = new Employee("Karin", "Sundberg", "098-7453882", "Karin.sundberg@toppförsäkringar.com", "Lagercrantz plats 9", 50431, "Borås", EmployeeRole.Försäljningsassistent, "Kakan");
+            //Employee vigo = new Employee("Vigo", "Persson", "078-7345382", "Vigge@toppförsäkringar.com", "Odengatan 23", 50620, "Borås", EmployeeRole.Säljare, "Viggo");
+            //Employee birgitta = new Employee("Birgitta", "Frisk", "070-0958328", "Birgittafrisk@toppförsäkringar.com", "Druveforsvägen 11A", 50420, "Borås", EmployeeRole.Säljare, "Birgitta");
+            //Employee boris = new Employee("Boris", "Alm", "073-86745933", "Borisalm@toppförsäkringar.com", "Göteborgsvägen 2", 51820, "Borås", EmployeeRole.Säljare, "Boris");
+            //Employee linda = new Employee("Linda", "Jonsson", "070-7575411", "Lindajonsson@toppförsäkringar.com", "Salmeniigatan 3", 50325, "Borås", EmployeeRole.Säljare, "Linda");
+            //Employee malin = new Employee("Malin", "Nilsdotter", "076-5176729", "Malinnilsdotter@toppförsäkringar.com", "Körsbärsvägen 16", 53212, "Borås", EmployeeRole.Säljare, "Malin");
+            //Employee mikael = new Employee("Mikael", "Lund", "078-7238382", "Mikaellund@toppförsäkringar.com", "Roseniigatan 13", 50421, "Borås", EmployeeRole.Säljare, "Micke");
+            //Employee patrik = new Employee("Patrik", "Hedman", "070-7124386", "Patrikhedman@toppförsäkringar.com", "Makgrillsgatan 83", 51820, "Borås", EmployeeRole.Säljare, "Patrik");
+            //Employee sten = new Employee("Sten", "Hård", "070-7121001", "Stenhård@toppförsäkringar.com", "Strandvägen 10", 50550, "Stockholm", EmployeeRole.VD, "Lösenord");
+            //Employee annSofie = new Employee("Ann-Sofie", "Larsson", "073-5296398", "Annsofielarsson@toppförsäkringar.com", "Senapsgatan 154", 50539, "Borås", EmployeeRole.Ekonomiassistent, "Annsofie");
+            //Employee iren = new Employee("Iren", "Panik", "073-1142646", "Irenpanik@toppförsäkringar.com", "Öresjövägen 29", 51821, "Borås", EmployeeRole.Försäljningschef, "Irenpanik");
+
+            //// Lägga till anställda i listan
+            //Employees.Add(linnea);
+            //Employees.Add(irene);
+            //Employees.Add(karin);
+            //Employees.Add(vigo);
+            //Employees.Add(birgitta);
+            //Employees.Add(boris);
+            //Employees.Add(linda);
+            //Employees.Add(malin);
+            //Employees.Add(mikael);
+            //Employees.Add(patrik);
+            //Employees.Add(sten);
+            //Employees.Add(annSofie);
+            //Employees.Add(iren);
 
             //#region Private customers and Insurances 
             //// Private Customers
-            //PrivateCustomer pcJeanette = new PrivateCustomer("Jeanette", "Karlsson", "076-4907867", "Jeanette@gmail.com", "Sveavägen 6", 65789, "Göteborg", "19940518-6460", "0368976543");
-            //PrivateCustomer pcErik = new PrivateCustomer("Erik", "Svensson", "073-6789012", "Erik@gmail.com", "Huvudgatan 2", 65345, "Malmö", "19900214-1234", "0456789012");
-            //PrivateCustomer pcAnna = new PrivateCustomer("Anna", "Larsson", "070-2345678", "Anna@gmail.com", "Fikagatan 4", 67234, "Stockholm", "19850622-5678", "0987654321");
+            //PrivateCustomer pcJeanette = new PrivateCustomer("Jeanette", "Karlsson", "076-4907867", "Jeanette@gmail.com", "Sveavägen 6", 65789, "Göteborg", "19940518-6460", "036-8976543");
+            //PrivateCustomer pcErik = new PrivateCustomer("Erik", "Svensson", "073-6789012", "Erik@gmail.com", "Huvudgatan 2", 65345, "Malmö", "19900214-1234", "045-6789012");
+            //PrivateCustomer pcAnna = new PrivateCustomer("Anna", "Larsson", "070-2345678", "Anna@gmail.com", "Fikagatan 4", 67234, "Stockholm", "19850622-5678", "098-7654321");
 
             //PCustomers.Add(pcJeanette);
             //PCustomers.Add(pcErik);
             //PCustomers.Add(pcAnna);
 
             //// Life Insurance for private customers 
-
-            //LifeInsurance lifeInsuranceJeanette = new LifeInsurance(pcJeanette, new DateTime(2024, 1, 1), new DateTime(2025, 1, 1), InsuranceType.Livförsäkring, Paymentform.Månad, 500, 100000, Status.Aktiv, "Jeanette's life insurance note");
-            //LifeInsurance lifeInsuranceErik = new LifeInsurance(pcErik, new DateTime(2024, 1, 1), new DateTime(2025, 1, 1), InsuranceType.Livförsäkring, Paymentform.Månad, 600, 120000, Status.Aktiv, "Erik's life insurance note");
-
-            //LifeInsurance lifeInsuranceJeanette = new LifeInsurance(pcJeanette, new DateTime(2024, 2, 11), new DateTime(2025, 1, 1), InsuranceType.Livförsäkring, Paymentform.Månad, Status.Aktiv, "Jeanette's life insurance note", 550000);
-            //LifeInsurance lifeInsuranceErik = new LifeInsurance(pcErik, new DateTime(2024, 4, 17), new DateTime(2025, 1, 1), InsuranceType.Livförsäkring, Paymentform.Månad, Status.Aktiv, "Erik's life insurance note", 450000);
-
+            //LifeInsurance lifeInsuranceJeanette = new LifeInsurance(pcJeanette, new DateTime(2024, 2, 11), new DateTime(2025, 1, 1), InsuranceType.Livförsäkring, Paymentform.Månad, "Jeanette's life insurance note", 550000, linnea);
+            //LifeInsurance lifeInsuranceErik = new LifeInsurance(pcErik, new DateTime(2024, 10, 4), new DateTime(2025, 1, 1), InsuranceType.Livförsäkring, Paymentform.Månad, "Erik's life insurance note", 450000, linda);
+            //LifeInsurance lifeInsuranceAnna = new LifeInsurance(pcAnna, new DateTime(2024, 2, 4), new DateTime(2024, 8, 1), InsuranceType.Livförsäkring, Paymentform.Månad, "Annas life insurance note", 450000, karin);
 
             //LifeInsurances.Add(lifeInsuranceJeanette);
             //LifeInsurances.Add(lifeInsuranceErik);
+            //LifeInsurances.Add(lifeInsuranceAnna);
 
             //// Sickness and accident Insurance for private customers
             //SicknessAndAccidentInsurance sicknessAndAccidentInsuranceJeanette = new SicknessAndAccidentInsurance(pcJeanette,
             // new DateTime(2024, 1, 1),
             // new DateTime(2025, 1, 1),
             // InsuranceType.SjukOchOlycksfallsförsäkringBARN,
-            // Paymentform.Månad,
-            // 300,
-            // 50000,
-            // Status.Aktiv,
+            // Paymentform.År,
             // "Jeanettes sjuk- och olycksfallsförsäkring",
-            // "Jeanette",
+            // "Lena",
             // "Karlsson",
             // "19940518-6460",
-            // AdditionalInsurance.ErsättningVidLångvarigSjukskrivning);
+            // AdditionalInsurance.ErsättningVidLångvarigSjukskrivning,
+            // 750000,
+            // linnea);
 
 
             //SicknessAndAccidentInsurance sicknessAndAccidentInsuranceErik = new SicknessAndAccidentInsurance(pcErik,
@@ -134,29 +152,25 @@ namespace TopInsuranceDL
             //    new DateTime(2025, 1, 1),
             //    InsuranceType.SjukOchOlycksfallsförsäkringVUXEN,
             //    Paymentform.Månad,
-            //    350,
-            //    60000,
-            //    Status.Aktiv,
             //    "Eriks sjuk- och olycksfallsförsäkring",
-            //    "Erik",
-            //    "Svensson",
-            //    "19900214-1234",
-            //    AdditionalInsurance.Ingen);
+            //    null, null, null,
+            //    AdditionalInsurance.Ingen,
+            //    350000,
+            //    boris);
 
 
             //SicknessAndAccidentInsurance sicknessAndAccidentInsuranceAnna = new SicknessAndAccidentInsurance(pcAnna,
             //    new DateTime(2024, 1, 1),
             //    new DateTime(2025, 1, 1),
-            //    InsuranceType.SjukOchOlycksfallsförsäkringVUXEN,
+            //    InsuranceType.SjukOchOlycksfallsförsäkringBARN,
             //    Paymentform.Månad,
-            //    400,
-            //    70000,
-            //    Status.Aktiv,
             //    "Annars sjuk- och olycksfallsförsäkring",
-            //    "Anna",
+            //    "Lisa",
             //    "Larsson",
             //    "19850622-5678",
-            //    AdditionalInsurance.InvaliditetVidOlycksfall);
+            //    AdditionalInsurance.Båda,
+            //    950000,
+            //    linnea);
 
             //SicknessAndAccidentInsurances.Add(sicknessAndAccidentInsuranceJeanette);
             //SicknessAndAccidentInsurances.Add(sicknessAndAccidentInsuranceErik);
@@ -263,7 +277,7 @@ namespace TopInsuranceDL
             //#endregion
 
 
-            //SaveChanges();
+            SaveChanges();
         }
         #endregion
 

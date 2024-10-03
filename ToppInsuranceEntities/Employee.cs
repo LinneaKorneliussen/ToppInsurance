@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Security.Cryptography;
+using System.Collections;
 
 
 
@@ -13,6 +14,12 @@ namespace TopInsuranceEntities
         public string AgencyNumber { get; private set; }
 
         private static List<string> generatedAgencyNumbers = new List<string>();
+        public ICollection<LifeInsurance> lifeInsurances { get; set; }
+        public ICollection<SicknessAndAccidentInsurance> accidentInsurances { get; set; }
+        public ICollection<BusinessInsurance> businessInsurances { get; set; }
+        public ICollection<VehicleInsurance> vehicleInsurances{ get; set; }
+        public ICollection<RealEstateInsurance> realEstateInsurances { get; set; }
+
 
         public Employee(string firstName, string lastName, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
             : base(firstName, lastName, phoneNumber, emailAddress, address, zipCode, city)
