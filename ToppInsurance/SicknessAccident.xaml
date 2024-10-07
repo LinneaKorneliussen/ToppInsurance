@@ -106,14 +106,7 @@
 
                 <!--Försäkringsuppgifter som ska fyllas i-->
                 <TextBlock Text="Startdatum:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <DatePicker x:Name="dpStartdate" Grid.Row="1" Grid.Column="1" Width="150" Margin="15,4,0,0" HorizontalAlignment="Left"
-                     SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-                     Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}" Height="27" VerticalAlignment="Top" />
 
-                <TextBlock Text="Slutdatum:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <DatePicker x:Name="dpEnddate" Grid.Row="2" Grid.Column="1" Width="150" Margin="15,4,0,6" HorizontalAlignment="Left"
-                     SelectedDate="{Binding NewEndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-                     Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"/>
 
                 <TextBlock Text="Betalningssätt:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbPaymentMethod" Grid.Row="3" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
