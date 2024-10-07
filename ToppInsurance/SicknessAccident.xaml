@@ -103,25 +103,36 @@
                 </Grid.ColumnDefinitions>
 
 
-
                 <!--Försäkringsuppgifter som ska fyllas i-->
                 <TextBlock Text="Startdatum:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
+                <DatePicker x:Name="dpStartdate" Grid.Row="1" Grid.Column="1" Width="150" Margin="15,4,0,0" HorizontalAlignment="Left"
+                 SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                 Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"/>
+
+                <TextBlock Text="Slutdatum:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
+                <DatePicker x:Name="dpEnddate" Grid.Row="2" Grid.Column="1" Width="150" Margin="15,4,0,6" HorizontalAlignment="Left"
+                 SelectedDate="{Binding NewEndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                 Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"/>
 
 
+                <!--TEST AV COMBOBOX--> 
+                
                 <TextBlock Text="Betalningssätt:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbPaymentMethod" Grid.Row="3" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
                      Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                     ItemsSource="{Binding Paymentforms}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay}" Grid.Column="1" Height="20"/>
+                     ItemsSource="{Binding Paymentforms}" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay}" Grid.Column="1" 
+                          Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"/>
+                
 
                 <TextBlock Text="Basbelopp:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbBasBelopp" Grid.Row="4" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
-                     Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                     ItemsSource="{Binding CurrentBaseAmounts}" SelectedItem="{Binding SelectedBaseAmount, Mode=TwoWay}" Height="20"/>
+                     Background="White" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
+                     ItemsSource="{Binding CurrentBaseAmounts}" SelectedItem="{Binding SelectedBaseAmount, Mode=TwoWay}" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"/>
 
                 <TextBlock Text="Tilläggs val:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbAdditional" Grid.Row="5" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
                           Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                          ItemsSource="{Binding AdditionalInsurances}" SelectedItem="{Binding SelectedAdditional, Mode=TwoWay}" Height="20"/>
+                          ItemsSource="{Binding AdditionalInsurances}" SelectedItem="{Binding SelectedAdditional, Mode=TwoWay}" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"/>
 
                 <TextBlock Text="Noteringar:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <TextBox Grid.Row="6" Grid.Column="1" BorderBrush="Black" FontWeight="Normal"  Margin="-0,4,0,6" Width="300"
@@ -150,7 +161,7 @@
             </Grid>
 
             <StackPanel Grid.Row="9" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Width="270" Margin="20">
-                <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearFieldsCommand}"/>
+                <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
                 <Button Content="Spara ändringar" Command="{Binding AddSicknessAccidentInsuranceCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
             </StackPanel>
 
