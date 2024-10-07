@@ -11,11 +11,11 @@ namespace TopInsuranceDL
         public DbSet<Employee> Employees { get; set; }
         public DbSet<PrivateCustomer> PCustomers { get; set; }
         public DbSet<BusinessCustomer> BCustomers { get; set; }
-        public DbSet<BusinessInsurance> BusinessInsurances { get; set; }
+        public DbSet<LiabilityInsurance> LiabilityInsurances { get; set; }
         public DbSet<VehicleInsurance> VehicleInsurances { get; set; }
         public DbSet<RealEstateInsurance> RealEstateInsurances{ get; set; }
         public DbSet<LifeInsurance> LifeInsurances { get; set; }
-        public DbSet<SicknessAndAccidentInsurance> SicknessAndAccidentInsurances { get; set; }
+        public DbSet<SicknessAccidentInsurance> SicknessAccidentInsurances { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
 
@@ -46,16 +46,16 @@ namespace TopInsuranceDL
             modelBuilder.Entity<PrivateCustomer>().HasIndex(p => p.SSN).IsUnique();
 
             modelBuilder.Entity<LifeInsurance>().HasOne(e => e.Employee).WithMany(l => l.lifeInsurances).HasForeignKey(l => l.EmployeeId);
-            modelBuilder.Entity<SicknessAndAccidentInsurance>().HasOne(e => e.Employee).WithMany(s => s.accidentInsurances).HasForeignKey(s => s.EmployeeId);
+            modelBuilder.Entity<SicknessAccidentInsurance>().HasOne(e => e.Employee).WithMany(s => s.accidentInsurances).HasForeignKey(s => s.EmployeeId);
 
             modelBuilder.Entity<BusinessCustomer>().ToTable("BusinessCustomer");
             modelBuilder.Entity<BusinessCustomer>().HasIndex(b => b.Organizationalnumber).IsUnique();
 
-            modelBuilder.Entity<BusinessInsurance>().HasOne(e => e.Employee).WithMany(b => b.businessInsurances).HasForeignKey(b => b.EmployeeId);
+            modelBuilder.Entity<LiabilityInsurance>().HasOne(e => e.Employee).WithMany(b => b.liabilityInsurances).HasForeignKey(b => b.EmployeeId);
             modelBuilder.Entity<VehicleInsurance>().HasOne(e => e.Employee).WithMany(v => v.vehicleInsurances).HasForeignKey(v => v.EmployeeId);
             modelBuilder.Entity<RealEstateInsurance>().HasOne(e => e.Employee).WithMany(r => r.realEstateInsurances).HasForeignKey(r => r.EmployeeId);
 
-            modelBuilder.Entity<BusinessInsurance>().ToTable("BusinessInsurance");
+            modelBuilder.Entity<LiabilityInsurance>().ToTable("LiabilityInsurance");
             modelBuilder.Entity<BusinessCustomer>().HasMany(b => b.BusinessInsurances).WithOne(b => b.BusinessCustomer).HasForeignKey(b => b.BusinessCustomerId);
 
             modelBuilder.Entity<VehicleInsurance>().ToTable("VehicleInsurance");
@@ -69,7 +69,7 @@ namespace TopInsuranceDL
             modelBuilder.Entity<LifeInsurance>().ToTable("LifeInsurance");
             modelBuilder.Entity<PrivateCustomer>().HasOne(p => p.LifeInsurance).WithOne(l => l.PrivateCustomer).HasForeignKey<LifeInsurance>(l => l.PrivateCustomerId);
 
-            modelBuilder.Entity<SicknessAndAccidentInsurance>().ToTable("SicknessAndAccidentInsurance");
+            modelBuilder.Entity<SicknessAccidentInsurance>().ToTable("SicknessAccidentInsurance");
             modelBuilder.Entity<PrivateCustomer>().HasMany(p => p.SicknessAndAccidentInsurances).WithOne(s => s.PrivateCustomer).HasForeignKey(s => s.PrivateCustomerId);
 
 
@@ -133,7 +133,7 @@ namespace TopInsuranceDL
             //LifeInsurances.Add(lifeInsuranceAnna);
 
             //// Sickness and accident Insurance for private customers
-            //SicknessAndAccidentInsurance sicknessAndAccidentInsuranceJeanette = new SicknessAndAccidentInsurance(pcJeanette,
+            //SicknessAccidentInsurance sicknessAndAccidentInsuranceJeanette = new SicknessAccidentInsurance(pcJeanette,
             // new DateTime(2024, 1, 1),
             // new DateTime(2025, 1, 1),
             // InsuranceType.SjukOchOlycksfallsförsäkringBARN,
@@ -147,7 +147,7 @@ namespace TopInsuranceDL
             // linnea);
 
 
-            //SicknessAndAccidentInsurance sicknessAndAccidentInsuranceErik = new SicknessAndAccidentInsurance(pcErik,
+            //SicknessAccidentInsurance sicknessAndAccidentInsuranceErik = new SicknessAccidentInsurance(pcErik,
             //    new DateTime(2024, 1, 1),
             //    new DateTime(2025, 1, 1),
             //    InsuranceType.SjukOchOlycksfallsförsäkringVUXEN,
@@ -159,7 +159,7 @@ namespace TopInsuranceDL
             //    boris);
 
 
-            //SicknessAndAccidentInsurance sicknessAndAccidentInsuranceAnna = new SicknessAndAccidentInsurance(pcAnna,
+            //SicknessAccidentInsurance sicknessAndAccidentInsuranceAnna = new SicknessAccidentInsurance(pcAnna,
             //    new DateTime(2024, 1, 1),
             //    new DateTime(2025, 1, 1),
             //    InsuranceType.SjukOchOlycksfallsförsäkringBARN,
@@ -172,9 +172,9 @@ namespace TopInsuranceDL
             //    950000,
             //    linnea);
 
-            //SicknessAndAccidentInsurances.Add(sicknessAndAccidentInsuranceJeanette);
-            //SicknessAndAccidentInsurances.Add(sicknessAndAccidentInsuranceErik);
-            //SicknessAndAccidentInsurances.Add(sicknessAndAccidentInsuranceAnna);
+            //SicknessAccidentInsurances.Add(sicknessAndAccidentInsuranceJeanette);
+            //SicknessAccidentInsurances.Add(sicknessAndAccidentInsuranceErik);
+            //SicknessAccidentInsurances.Add(sicknessAndAccidentInsuranceAnna);
             //#endregion
 
             //#region Business customers and Insurances 
@@ -246,7 +246,7 @@ namespace TopInsuranceDL
             //vehicleInsurance3.Vehicle = vehicle3;
 
             //// Business Insurance for business customers 
-            //BusinessInsurance businessInsuranceSven = new BusinessInsurance(
+            //LiabilityInsurance businessInsuranceSven = new LiabilityInsurance(
             //    businessCustomerSven,
             //    new DateTime(2024, 1, 1),
             //    new DateTime(2025, 1, 1),
@@ -259,7 +259,7 @@ namespace TopInsuranceDL
             //    "Sven Göransson",
             //    "076-8900123");
 
-            //BusinessInsurance businessInsuranceOlof = new BusinessInsurance(
+            //LiabilityInsurance businessInsuranceOlof = new LiabilityInsurance(
             //    businessCustomerOlof,
             //    new DateTime(2024, 2, 1),
             //    new DateTime(2025, 2, 1),
@@ -272,8 +272,8 @@ namespace TopInsuranceDL
             //    "Olof Persson",
             //    "073-1234567");
 
-            //BusinessInsurances.Add(businessInsuranceSven);
-            //BusinessInsurances.Add(businessInsuranceOlof);
+            //LiabilityInsurances.Add(businessInsuranceSven);
+            //LiabilityInsurances.Add(businessInsuranceOlof);
             //#endregion
 
 

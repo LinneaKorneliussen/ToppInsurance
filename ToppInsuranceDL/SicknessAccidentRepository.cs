@@ -74,7 +74,7 @@ namespace TopInsuranceDL
             AdditionalInsurance additionalInsurance, Employee user)
         {
             // Skapa den nya sjuk- och olycksfallsförsäkringen
-            SicknessAndAccidentInsurance sicknessInsurance = new SicknessAndAccidentInsurance(
+            SicknessAccidentInsurance sicknessInsurance = new SicknessAccidentInsurance(
                 customer, startDate, endDate,
                 insuranceType, paymentform, note, insuranceFirstName,
                 insuranceLastName, insuranceSSN, additionalInsurance, baseAmount, user);
