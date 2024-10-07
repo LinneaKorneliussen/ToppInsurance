@@ -6,7 +6,7 @@ using TopInsuranceBL;
 
 namespace TopInsuranceWPF.ViewModels
 {
-    public class BusinessInsuranceVM : ObservableObject
+    public class LiabilityInsuranceVM : ObservableObject
     {
     }
 }

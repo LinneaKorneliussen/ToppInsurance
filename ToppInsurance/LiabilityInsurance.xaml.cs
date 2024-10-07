@@ -15,12 +15,9 @@ using System.Windows.Shapes;
 
 namespace TopInsuranceWPF
 {
-    /// <summary>
-    /// Interaction logic for NewBusinessInsurance.xaml
-    /// </summary>
-    public partial class BusinessInsurance : UserControl
+    public partial class LiabilityInsurance : UserControl
     {
-        public BusinessInsurance()
+        public LiabilityInsurance()
         {
             InitializeComponent();
         }
