@@ -15,8 +15,8 @@ namespace TopInsuranceEntities
 
         private static List<string> generatedAgencyNumbers = new List<string>();
         public ICollection<LifeInsurance> lifeInsurances { get; set; }
-        public ICollection<SicknessAndAccidentInsurance> accidentInsurances { get; set; }
-        public ICollection<BusinessInsurance> businessInsurances { get; set; }
+        public ICollection<SicknessAccidentInsurance> accidentInsurances { get; set; }
+        public ICollection<LiabilityInsurance> liabilityInsurances { get; set; }
         public ICollection<VehicleInsurance> vehicleInsurances{ get; set; }
         public ICollection<RealEstateInsurance> realEstateInsurances { get; set; }
 

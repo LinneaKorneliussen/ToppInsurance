@@ -26,12 +26,11 @@ namespace TopInsuranceWPF.ViewModels
             sicknessAccidentController = new SicknessAccidentController();
             Paymentforms = Enum.GetValues(typeof(Paymentform)) as IEnumerable<Paymentform>;
             AdditionalInsurances = Enum.GetValues(typeof(AdditionalInsurance)) as IEnumerable<AdditionalInsurance>;
+            AdultsCommand = new RelayCommand(AdultCommand);
+            ChildsCommand = new RelayCommand(ChildCommand);
             FindCustomerCommand = new RelayCommand(FindCustomer);
             AddSicknessAccidentInsuranceCommand = new RelayCommand(AddSicknessAccidentInsurance);
             ClearFieldsCommand = new RelayCommand(ClearFields);
-            AdultsCommand = new RelayCommand(AdultCommand);
-            ChildsCommand = new RelayCommand(ChildCommand);
-
         }
 
         #region Properties
@@ -190,8 +189,6 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-
-
         private bool isAdultOptionSelected;
         public bool IsAdultOptionSelected
         {
@@ -255,10 +252,10 @@ namespace TopInsuranceWPF.ViewModels
 
         #region Commands 
         public ICommand FindCustomerCommand { get; }
-        public ICommand AddSicknessAccidentInsuranceCommand { get; }
-        public ICommand ClearFieldsCommand { get; }
         public ICommand ChildsCommand { get; }
         public ICommand AdultsCommand { get; }
+        public ICommand AddSicknessAccidentInsuranceCommand { get; }
+        public ICommand ClearFieldsCommand { get; }
         #endregion
 
         #region Child and Adult base amount Methods
@@ -268,7 +265,6 @@ namespace TopInsuranceWPF.ViewModels
             CurrentBaseAmounts = new ObservableCollection<int>(baseAmounts);
 
         }
-
         private void AdultCommand()
         {
             baseAmounts = sicknessAccidentController.GetBaseAmountsAdult();
@@ -322,7 +318,6 @@ namespace TopInsuranceWPF.ViewModels
             SearchText = string.Empty;
         }
         #endregion
-
     }
 
 }

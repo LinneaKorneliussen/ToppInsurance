@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TopInsuranceEntities
 {
-    public class SicknessAndAccidentInsurance : Insurance
+    public class SicknessAccidentInsurance : Insurance
     {
         public int BaseAmount { get; set; }
         public string? InsuranceFirstName { get; set; }
@@ -16,7 +16,7 @@ namespace TopInsuranceEntities
         public int PrivateCustomerId { get; set; }
         public PrivateCustomer PrivateCustomer { get; set; }
 
-        public SicknessAndAccidentInsurance(PrivateCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type,
+        public SicknessAccidentInsurance(PrivateCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type,
             Paymentform paymentform, string note, string? insuranceFirstName, string? insuranceLastName, string? 
             insuranceSSN, AdditionalInsurance additionalInsurance, int baseAmount, Employee user)
         : base(startDate, endDate, type, paymentform, note, user)
@@ -30,7 +30,7 @@ namespace TopInsuranceEntities
             CalculatePremium();
         }
 
-        public SicknessAndAccidentInsurance() {}
+        public SicknessAccidentInsurance() {}
 
         private void CalculatePremium()
         {

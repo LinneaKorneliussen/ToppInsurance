@@ -14,7 +14,7 @@ namespace TopInsuranceEntities
         public int Organizationalnumber { get; set; }   
         public int CountryCode { get; set; }
 
-        public ICollection<BusinessInsurance> BusinessInsurances { get; set; }
+        public ICollection<LiabilityInsurance> BusinessInsurances { get; set; }
         public ICollection<RealEstateInsurance> RealEstateInsurances { get; set; }
         public ICollection<VehicleInsurance> VehicleInsurances{ get; set; }
 

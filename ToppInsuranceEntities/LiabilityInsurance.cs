@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace TopInsuranceEntities
 {
-    public class BusinessInsurance : Insurance
+    public class LiabilityInsurance : Insurance
     {
         public string ContactPerson { get; set; }
         public string ContactPhNo { get; set; }
         public int BusinessCustomerId { get; set; }
         public BusinessCustomer BusinessCustomer { get; private set; }
 
-        public BusinessInsurance(BusinessCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type, 
+        public LiabilityInsurance(BusinessCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type, 
             Paymentform paymentform, string note,
             string contactPerson, string contactPhNo, Employee user) : 
             base(startDate, endDate, type, paymentform, note, user)
@@ -21,7 +21,7 @@ namespace TopInsuranceEntities
             ContactPhNo = contactPhNo;
         }
 
-        public BusinessInsurance() {}
+        public LiabilityInsurance() {}
 
 
     }
