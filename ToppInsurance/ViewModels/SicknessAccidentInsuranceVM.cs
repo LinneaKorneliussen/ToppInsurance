@@ -9,10 +9,11 @@ using TopInsuranceBL;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows;
+using System.ComponentModel;
 
 namespace TopInsuranceWPF.ViewModels
 {
-    public class SicknessAccidentInsuranceVM : ObservableObject
+    public class SicknessAccidentInsuranceVM : ObservableObject, IDataErrorInfo
     {
         private SicknessAccidentController sicknessAccidentController;
         public IEnumerable<Paymentform> Paymentforms { get; }
@@ -22,6 +23,8 @@ namespace TopInsuranceWPF.ViewModels
 
         public SicknessAccidentInsuranceVM()
         {
+            NewStartDate = DateTime.Now;
+            NewEndDate = DateTime.Now.AddYears(1);
             user = UserContext.Instance.LoggedInUser;
             sicknessAccidentController = new SicknessAccidentController();
             Paymentforms = Enum.GetValues(typeof(Paymentform)) as IEnumerable<Paymentform>;
@@ -31,6 +34,9 @@ namespace TopInsuranceWPF.ViewModels
             FindCustomerCommand = new RelayCommand(FindCustomer);
             AddSicknessAccidentInsuranceCommand = new RelayCommand(AddSicknessAccidentInsurance);
             ClearFieldsCommand = new RelayCommand(ClearFields);
+            ClearCommand = new RelayCommand(ClearFields);
+
+
         }
 
         #region Properties
@@ -275,10 +281,19 @@ namespace TopInsuranceWPF.ViewModels
         #region Find Customer Method
         private void FindCustomer()
         {
-            var filteredCustomers = sicknessAccidentController.SearchPrivateCustomers(SearchText);
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                var filteredCustomers = sicknessAccidentController.SearchPrivateCustomers(SearchText);
 
-            PrivateCustomers = new ObservableCollection<PrivateCustomer>(filteredCustomers);
-            SearchText = string.Empty;
+                PrivateCustomers = new ObservableCollection<PrivateCustomer>(filteredCustomers);
+                SearchText = string.Empty; 
+            }
+            else
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                PrivateCustomers = new ObservableCollection<PrivateCustomer>();
+            }
+
         }
         #endregion
 
@@ -288,6 +303,21 @@ namespace TopInsuranceWPF.ViewModels
             if (SelectedCustomer == null)
             {
                 MessageBox.Show("Vänligen välj en kund innan du lägger till en försäkring.", "Ingen kund vald", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            if (!IsAdultOptionSelected && !IsChildInsuranceSelected)
+            {
+                MessageBox.Show("Vänligen välj om försäkringen gäller vuxen eller barn.", "Ingen försäkringskategori vald", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            if (SelectedPaymentForm == null)
+            {
+                MessageBox.Show("Vänligen välj ett betalningssätt.", "Ingen betalningsmetod vald", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            if (SelectedBaseAmount <= 0)
+            {
+                MessageBox.Show("Vänligen välj ett basbelopp.", "Ingen basbelopp vald", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             if (IsAdultOptionSelected)
@@ -312,12 +342,76 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
-        #region Clear Fields Method
+        #region Validation IDataErrorInfo
+        public string Error
+        {
+            get
+            {
+                string[] properties = { nameof(NewStartDate), nameof(NewEndDate) };
+                foreach (var property in properties)
+                {
+                    string error = this[property];
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        return error;
+                    }
+                }
+                return null;
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                return ValidateField(columnName);
+            }
+        }
+
+        private string ValidateField(string columnName)
+        {
+            string errorMessage = null;
+
+            switch (columnName)
+            {
+                case nameof(NewStartDate):
+                    if (NewStartDate < DateTime.Today)
+                    {
+                        errorMessage = "Går inte att teckna en försäkring för redan passerade datum";
+                    }
+                    break;
+                case nameof(NewEndDate):
+                    if (NewEndDate < DateTime.Today)
+                    {
+                        errorMessage = "Går inte att teckna försäkring för redan passerade datum";
+                    }
+                    else if (NewEndDate < NewStartDate)
+                    {
+                        errorMessage = "Slutdatum kan inte vara före startdatum.";
+                    }
+                    break;
+                default:
+                    errorMessage = "Ogiltigt kolumnnamn.";
+                    break;
+            }
+
+            return errorMessage;
+        }
+
+        #endregion
+
+        #region Clear Command
+        public ICommand ClearCommand { get; }
         private void ClearFields()
         {
-            SearchText = string.Empty;
+            IsAdultOptionSelected = false;
+            IsChildInsuranceSelected = false; 
+            Note = string.Empty;
+        
+
         }
         #endregion
+
     }
 
 }
