@@ -23,7 +23,7 @@ namespace TopInsuranceWPF.ViewModels
             PrivateAddCommand = new RelayCommand(AddPrivateCustomerBTN);
             LifeInsuranceCommand = new RelayCommand(LifeInsuranceBTN);
             SicknessAccidentCommand = new RelayCommand(SicknessAccidentBTN);
-            BusinessInsuranceCommand = new RelayCommand(BusinessInsuranceBTN);
+            LiabilityInsuranceCommand = new RelayCommand(LiabilityInsuranceBTN);
             VehicleInsuranceCommand = new RelayCommand(VehicleInsuranceBTN);
             RealEstateInsuranceCommand = new RelayCommand(RealEstateInsuranceBTN);
             EditCustomerCommand = new RelayCommand(EditCustomerBTN);
@@ -93,7 +93,7 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand PrivateAddCommand { get; }
         public ICommand LifeInsuranceCommand { get; }
         public ICommand SicknessAccidentCommand { get; }
-        public ICommand BusinessInsuranceCommand { get; }
+        public ICommand LiabilityInsuranceCommand { get; }
         public ICommand VehicleInsuranceCommand { get; }
         public ICommand RealEstateInsuranceCommand { get; }
         public ICommand EditCustomerCommand { get; }
@@ -126,9 +126,9 @@ namespace TopInsuranceWPF.ViewModels
             CurrentViewModel = new SicknessAccident();
         }
 
-        private void BusinessInsuranceBTN()
+        private void LiabilityInsuranceBTN()
         {
-            CurrentViewModel = new BusinessInsurance();
+            CurrentViewModel = new LiabilityInsurance();
         }
 
         private void VehicleInsuranceBTN()
