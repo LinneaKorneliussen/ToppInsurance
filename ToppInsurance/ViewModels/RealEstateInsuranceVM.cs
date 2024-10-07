@@ -1,8 +1,199 @@
-﻿using TopInsuranceWPF.Commands;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using TopInsuranceBL;
+using TopInsuranceEntities;
+using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
     class RealEstateInsuranceVM : ObservableObject
     {
+        private RealEstateController realEstateController;
+        public IEnumerable<Paymentform> Paymentforms { get; }
+
+        private Employee user;
+
+        public RealEstateInsuranceVM()
+        {
+            NewStartDate = DateTime.Now;
+            NewEndDate = DateTime.Now.AddYears(1);
+            user = UserContext.Instance.LoggedInUser;
+            realEstateController = new RealEstateController();
+
+            Paymentforms = Enum.GetValues(typeof(Paymentform)) as IEnumerable<Paymentform>;
+
+
+        }
+
+        #region Properties
+        private BusinessCustomer _selectedCustomer;
+        public BusinessCustomer SelectedCustomer
+        {
+            get { return _selectedCustomer; }
+            set
+            {
+                if (_selectedCustomer != value)
+                {
+                    _selectedCustomer = value;
+                    OnPropertyChanged(nameof(SelectedCustomer));
+                }
+            }
+        }
+
+        private DateTime _newStartDate;
+        public DateTime NewStartDate
+        {
+            get { return _newStartDate; }
+            set
+            {
+                if (_newStartDate != value)
+                {
+                    _newStartDate = value;
+                    OnPropertyChanged(nameof(NewStartDate));
+                }
+            }
+        }
+
+        private DateTime _newEndDate;
+        public DateTime NewEndDate
+        {
+            get { return _newEndDate; }
+            set
+            {
+                if (_newEndDate != value)
+                {
+                    _newEndDate = value;
+                    OnPropertyChanged(nameof(NewEndDate));
+                }
+            }
+        }
+
+        private Paymentform _selectedPaymentForm;
+        public Paymentform SelectedPaymentForm
+        {
+            get { return _selectedPaymentForm; }
+            set
+            {
+                if (_selectedPaymentForm != value)
+                {
+                    _selectedPaymentForm = value;
+                    OnPropertyChanged(nameof(SelectedPaymentForm));
+                }
+            }
+        }
+
+        private string _note;
+        public string Note
+        {
+            get { return _note; }
+            set
+            {
+                if (_note != value)
+                {
+                    _note = value;
+                    OnPropertyChanged(nameof(Note));
+                }
+            }
+        }
+
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                if (_searchText != value)
+                {
+                    _searchText = value;
+                    OnPropertyChanged(nameof(SearchText));
+                }
+            }
+        }
+
+        private string _companyAddress;
+        public string CompanyAddress
+        {
+            get { return _companyAddress; }
+            set
+            {
+                if (_companyAddress != value)
+                {
+                    _companyAddress = value;
+                    OnPropertyChanged(nameof(CompanyAddress));
+                }
+            }
+        }
+
+        private string _valueRealEstate;
+        public string ValueRealEstate
+        {
+            get { return _valueRealEstate; }
+            set
+            {
+                if (_valueRealEstate != value)
+                {
+                    _valueRealEstate = value;
+                    OnPropertyChanged(nameof(ValueRealEstate));
+                }
+            }
+        }
+
+        private string _valueInventory;
+        public string ValueInventory
+        {
+            get { return _valueInventory; }
+            set
+            {
+                if (_valueInventory != value)
+                {
+                    _valueInventory = value;
+                    OnPropertyChanged(nameof(ValueInventory));
+                }
+            }
+        }
+
+        private bool isInventorySelected;
+        public bool IsInventorySelected
+        {
+            get { return isInventorySelected; }
+            set
+            {
+                if (isInventorySelected != value)
+                {
+                    isInventorySelected = value;
+                    OnPropertyChanged(nameof(IsInventorySelected));
+
+                }
+            }
+        }
+
+        #endregion
+
+        #region Observable collection 
+       
+        private ObservableCollection<BusinessCustomer> _businessCustomers;
+        public ObservableCollection<BusinessCustomer> BusinessCustomers
+        {
+            get { return _businessCustomers; }
+            set
+            {
+                if (_businessCustomers != value)
+                {
+                    _businessCustomers = value;
+                    OnPropertyChanged(nameof(BusinessCustomers));
+                }
+            }
+        }
+        #endregion
+
+        #region Commands 
+        public ICommand FindCustomerCommand { get; }
+        public ICommand AddInventoryCommand { get; }
+        public ICommand ClearFieldsCommand { get; } 
+
+        #endregion
+
+
+
     }
 }

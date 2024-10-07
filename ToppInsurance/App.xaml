@@ -230,6 +230,23 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+ 
+            <!--Ändrar färgen på combobox-->
+            <Style TargetType="ComboBoxItem" x:Key="CustomComboBoxItemStyle">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="Margin" Value="2" />
+                <Setter Property="Padding" Value="2" />
+                <Setter Property="Cursor" Value="Hand" />
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#5CD67B" />
+                        <!-- Bakgrundsfärgen på det valda objektet -->
+                        <Setter Property="Foreground" Value="White" />
+                        <!-- Textfärgen på det valda objektet -->
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
 
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 

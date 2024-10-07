@@ -171,10 +171,18 @@ namespace TopInsuranceWPF.ViewModels
         #region Find Customer Method
         private void FindCustomer()
         {
-            var filteredCustomers = lifeInsuranceController.SearchPrivateCustomers(SearchText);
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                var filteredCustomers = lifeInsuranceController.SearchPrivateCustomers(SearchText);
 
-            PrivateCustomers = new ObservableCollection<PrivateCustomer>(filteredCustomers);
-            SearchText = string.Empty; 
+                PrivateCustomers = new ObservableCollection<PrivateCustomer>(filteredCustomers);
+                SearchText = string.Empty; 
+            }
+            else
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                PrivateCustomers = new ObservableCollection<PrivateCustomer>();
+            }
         }
         #endregion
 
@@ -189,7 +197,12 @@ namespace TopInsuranceWPF.ViewModels
             }
 
             if (SelectedCustomer != null)
-            {
+            {              
+                if (SelectedBaseAmount <= 0)
+                {
+                    MessageBox.Show("Vänligen välj ett basbelopp.", "Ingen basbelopp vald", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
                 if (!lifeInsuranceController.CustomerHasInsurance(SelectedCustomer))
                 {
                     InsuranceType insurance = InsuranceType.Livförsäkring;
