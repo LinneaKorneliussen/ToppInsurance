@@ -106,10 +106,10 @@
                                 </Expander.Header>
 
                                 <StackPanel>
-                                    <Button Style="{StaticResource menuButton}" Command="{Binding BusinessInsuranceCommand }" Margin="-10 5 -10 0" FontSize="9">
+                                    <Button Style="{StaticResource menuButton}" Command="{Binding LiabilityInsuranceCommand }" Margin="-10 5 -10 0" FontSize="9">
                                         <StackPanel Orientation="Horizontal">
                                             <material:PackIconMaterial Kind="AccountGroup" Style="{StaticResource expanderIcon}"/>
-                                            <TextBlock Text="Företagsförsäkring" />
+                                            <TextBlock Text="Ansvarsförsäkring" />
                                         </StackPanel>
                                     </Button>
 
