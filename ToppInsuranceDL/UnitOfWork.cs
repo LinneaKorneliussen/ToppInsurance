@@ -12,7 +12,7 @@ namespace TopInsuranceDL
         public Repository<Employee> EmployeeRepository { get; private set; }
         public Repository<PrivateCustomer> PCRepository { get; private set; }
         public Repository<BusinessCustomer> BCRepository { get; private set; }
-        public Repository<LiabilityInsurance> BCInsuranceRepository { get; private set; }
+        public Repository<LiabilityInsurance> LiabilityInsuranceRepository { get; private set; }
         public Repository<VehicleInsurance> VehicleInsuranceRepository { get; private set; }
         public Repository<RealEstateInsurance> RealEstateInsuranceRepository { get; private set; }
         public Repository<LifeInsurance> LifeInsuranceRepository { get; private set; }
@@ -30,7 +30,7 @@ namespace TopInsuranceDL
                 instance.EmployeeRepository = new Repository<Employee>(instance.context);
                 instance.PCRepository = new Repository<PrivateCustomer>(instance.context);
                 instance.BCRepository = new Repository<BusinessCustomer>(instance.context);
-                instance.BCInsuranceRepository = new Repository<LiabilityInsurance>(instance.context);
+                instance.LiabilityInsuranceRepository = new Repository<LiabilityInsurance>(instance.context);
                 instance.VehicleInsuranceRepository = new Repository<VehicleInsurance>(instance.context);
                 instance.RealEstateInsuranceRepository = new Repository<RealEstateInsurance>(instance.context);
                 instance.LifeInsuranceRepository = new Repository<LifeInsurance>(instance.context);

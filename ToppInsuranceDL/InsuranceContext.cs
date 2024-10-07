@@ -21,7 +21,7 @@ namespace TopInsuranceDL
 
         public InsuranceContext()
         {
-           // ResetSeed();
+          // ResetSeed();
         }
 
         #region OnConfiguring 
@@ -146,7 +146,6 @@ namespace TopInsuranceDL
             // 750000,
             // linnea);
 
-
             //SicknessAccidentInsurance sicknessAndAccidentInsuranceErik = new SicknessAccidentInsurance(pcErik,
             //    new DateTime(2024, 1, 1),
             //    new DateTime(2025, 1, 1),
@@ -185,6 +184,75 @@ namespace TopInsuranceDL
             //BCustomers.Add(businessCustomerSven);
             //BCustomers.Add(businessCustomerOlof);
 
+            //// Business Insurance for business customers 
+            //LiabilityInsurance businessInsuranceSven = new LiabilityInsurance(
+            //    businessCustomerSven,
+            //    new DateTime(2024, 1, 1),
+            //    new DateTime(2025, 1, 1),
+            //    InsuranceType.Ansvarsförsäkring,
+            //    Paymentform.Månad,
+            //    "Notering om ansvarsförsäkring",
+            //    "Erik kontakt",
+            //    "072-9867234",
+            //    DeductibleLiability.HalvtPrisbasbelopp,
+            //    InsuranceAmount.ThreeMillion,
+            //    birgitta);
+
+            //LiabilityInsurance businessInsuranceOlof = new LiabilityInsurance(
+            //    businessCustomerOlof,
+            //    new DateTime(2024, 4, 12),
+            //    new DateTime(2025, 1, 1),
+            //    InsuranceType.Ansvarsförsäkring,
+            //    Paymentform.Månad,
+            //    "Notering om ansvarsförsäkring",
+            //    "Lenas kontakt",
+            //    "072-9867964",
+            //    DeductibleLiability.TreFjärdedelsPrisbasbelopp,
+            //    InsuranceAmount.FiveMillion,
+            //    birgitta);
+
+            //LiabilityInsurances.Add(businessInsuranceSven);
+            //LiabilityInsurances.Add(businessInsuranceOlof);
+
+            //// Vehivle for vehicle Insurance for business customers 
+            //Vehicle vehicle1 = new Vehicle(123456, "Volvo", 2020);
+            //Vehicle vehicle2 = new Vehicle(789012, "Scania", 2019);
+            //Vehicle vehicle3 = new Vehicle(345678, "Mercedes", 2021);
+
+            //Vehicles.Add(vehicle1);
+            //Vehicles.Add(vehicle2);
+            //Vehicles.Add(vehicle3);
+
+            //// Skapa fordonförsäkringar för affärsförsäkring
+            //VehicleInsurance vehicleInsurance1 = new VehicleInsurance(businessCustomerSven, vehicle1,
+            //    DeductibleVehicle.OneThousand, CoverageType.Trafik, RiskZone.Z2,
+            //    new DateTime(2024, 1, 1), new DateTime(2025, 1, 1),
+            //    InsuranceType.Fordonsförsäkring, Paymentform.År, "Volvo försäkring", birgitta);
+
+            //VehicleInsurance vehicleInsurance2 = new VehicleInsurance(businessCustomerOlof, vehicle2,
+            //    DeductibleVehicle.TwoThousand, CoverageType.Hel, RiskZone.Z1,
+            //    new DateTime(2024, 1, 1), new DateTime(2025, 1, 1),
+            //    InsuranceType.Fordonsförsäkring, Paymentform.År, "Scania försäkring", mikael);
+
+            //VehicleInsurance vehicleInsurance3 = new VehicleInsurance(businessCustomerOlof, vehicle3,
+            //    DeductibleVehicle.ThreeAndHalfThousand, CoverageType.Halv, RiskZone.Z3,
+            //    new DateTime(2024, 1, 1), new DateTime(2025, 1, 1),
+            //    InsuranceType.Fordonsförsäkring, Paymentform.År, "Mercedes försäkring", malin);
+
+
+            //VehicleInsurances.Add(vehicleInsurance1);
+            //VehicleInsurances.Add(vehicleInsurance2);
+            //VehicleInsurances.Add(vehicleInsurance3);
+
+            //vehicle1.VehicleInsurance = vehicleInsurance1;
+            //vehicle2.VehicleInsurance = vehicleInsurance2;
+            //vehicle3.VehicleInsurance = vehicleInsurance3;
+
+            //vehicleInsurance1.Vehicle = vehicle1;
+            //vehicleInsurance2.Vehicle = vehicle2;
+            //vehicleInsurance3.Vehicle = vehicle3;
+
+
             //// Real Estate Insurance for business customers 
             //RealEstateInsurance realEstateInsuranceSven = new RealEstateInsurance(businessCustomerSven,
             //    new DateTime(2024, 1, 1),
@@ -213,67 +281,6 @@ namespace TopInsuranceDL
 
             //inventorySven1.RealEstateInsurance = realEstateInsuranceSven;
             //inventorySven2.RealEstateInsurance = realEstateInsuranceSven;
-
-            //// Vehivle for vehicle Insurance for business customers 
-            //Vehicle vehicle1 = new Vehicle(123456, "Volvo", 2020);
-            //Vehicle vehicle2 = new Vehicle(789012, "Scania", 2019);
-            //Vehicle vehicle3 = new Vehicle(345678, "Mercedes", 2021);
-
-            //Vehicles.Add(vehicle1);
-            //Vehicles.Add(vehicle2);
-            //Vehicles.Add(vehicle3);
-
-            //// Vehicle Insurance for business insurance 
-            //VehicleInsurance vehicleInsurance1 = new VehicleInsurance(businessCustomerSven, vehicle1, "VTR", new DateTime(2024, 1, 1), new DateTime(2025, 1, 1),
-            //    InsuranceType.Fordonsförsäkring, Paymentform.År, 2000, 300000, Status.Aktiv, "Volvo försäkring", "Ja");
-
-            //VehicleInsurance vehicleInsurance2 = new VehicleInsurance(businessCustomerOlof, vehicle2, "VTR", new DateTime(2024, 1, 1), new DateTime(2025, 1, 1),
-            //    InsuranceType.Fordonsförsäkring, Paymentform.År, 2500, 350000, Status.Aktiv, "Scania försäkring", "Ja");
-
-            //VehicleInsurance vehicleInsurance3 = new VehicleInsurance(businessCustomerOlof, vehicle3, "VTR", new DateTime(2024, 1, 1), new DateTime(2025, 1, 1),
-            //    InsuranceType.Fordonsförsäkring, Paymentform.År, 2200, 320000, Status.Aktiv, "Mercedes försäkring", "Ja");
-
-            //VehicleInsurances.Add(vehicleInsurance1);
-            //VehicleInsurances.Add(vehicleInsurance2);
-            //VehicleInsurances.Add(vehicleInsurance3);
-
-            //vehicle1.VehicleInsurance = vehicleInsurance1;
-            //vehicle2.VehicleInsurance = vehicleInsurance2;
-            //vehicle3.VehicleInsurance = vehicleInsurance3;
-
-            //vehicleInsurance1.Vehicle = vehicle1;
-            //vehicleInsurance2.Vehicle = vehicle2;
-            //vehicleInsurance3.Vehicle = vehicle3;
-
-            //// Business Insurance for business customers 
-            //LiabilityInsurance businessInsuranceSven = new LiabilityInsurance(
-            //    businessCustomerSven,
-            //    new DateTime(2024, 1, 1),
-            //    new DateTime(2025, 1, 1),
-            //    InsuranceType.Företagsförsäkring,
-            //    Paymentform.Månad,
-            //    3000,
-            //    1000000,
-            //    Status.Aktiv,
-            //    "Försäkring för Ica banken",
-            //    "Sven Göransson",
-            //    "076-8900123");
-
-            //LiabilityInsurance businessInsuranceOlof = new LiabilityInsurance(
-            //    businessCustomerOlof,
-            //    new DateTime(2024, 2, 1),
-            //    new DateTime(2025, 2, 1),
-            //    InsuranceType.Företagsförsäkring,
-            //    Paymentform.År,
-            //    5000,
-            //    2000000,
-            //    Status.Aktiv,
-            //    "Försäkring för Persson Bygg",
-            //    "Olof Persson",
-            //    "073-1234567");
-
-            //LiabilityInsurances.Add(businessInsuranceSven);
-            //LiabilityInsurances.Add(businessInsuranceOlof);
             //#endregion
 
 

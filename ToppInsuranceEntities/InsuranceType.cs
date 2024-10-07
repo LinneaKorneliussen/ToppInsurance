@@ -11,7 +11,7 @@ namespace TopInsuranceEntities
         Livförsäkring,
         SjukOchOlycksfallsförsäkringVUXEN,
         SjukOchOlycksfallsförsäkringBARN,
-        Företagsförsäkring,
+        Ansvarsförsäkring,
         Fordonsförsäkring,
         FastighetsOchInventarieförsäkring
     }
