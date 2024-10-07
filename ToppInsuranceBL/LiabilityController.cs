@@ -31,6 +31,7 @@ namespace TopInsuranceBL
 
             liabilityRepository.AddLiabilityInsurance(customer, startDate, endDate, type, paymentform, note, contactPerson, contactPhNo, deductible, insuranceAmount, user);
         }
+
         #endregion
 
     }
