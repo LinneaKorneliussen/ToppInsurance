@@ -10,7 +10,6 @@ namespace TopInsuranceEntities
         public string ContactPhNo { get; set; }
         public DeductibleLiability Deductible { get; set; } 
         public InsuranceAmount InsuranceAmount { get; set; } 
-        public int MonthlyPremium { get; private set; }
         public int BusinessCustomerId { get; set; }
         public BusinessCustomer BusinessCustomer { get; private set; }
 
@@ -23,7 +22,7 @@ namespace TopInsuranceEntities
             ContactPhNo = contactPhNo;
             Deductible = deductible;
             InsuranceAmount = insuranceAmount;
-            MonthlyPremium = CalculateMonthlyPremium();
+            Premium = CalculateMonthlyPremium();
         }
 
         public LiabilityInsurance() { }
