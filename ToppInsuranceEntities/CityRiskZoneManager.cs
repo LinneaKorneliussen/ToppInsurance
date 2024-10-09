@@ -15,12 +15,14 @@ namespace TopInsuranceEntities
             CityRiskZones = new Dictionary<string, RiskZone>
         {
             { "Stockholm", RiskZone.Z1 },
-            { "Göteborg", RiskZone.Z2 },
-            { "Malmö", RiskZone.Z3 },
-            { "Uppsala", RiskZone.Z4 },
+            { "Göteborg", RiskZone.Z1 },
+            { "Malmö", RiskZone.Z2 },
+            { "Uppsala", RiskZone.Z2 },
             { "Linköping", RiskZone.Z3 },
-            { "Västerås", RiskZone.Z2 },
-            { "Örebro", RiskZone.Z4 }
+            { "Västerås", RiskZone.Z3 },
+            { "Örebro", RiskZone.Z4 },
+            { "Jönköping", RiskZone.Z3 }
+
         };
         }
 
