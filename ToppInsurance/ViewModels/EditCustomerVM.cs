@@ -79,14 +79,23 @@ namespace TopInsuranceWPF.ViewModels
                 var filteredBusinessCustomers = businessCustomers
                     .Where(c =>
                         (isNumber && c.Organizationalnumber == organizationalNumber) ||
-                        (!isNumber && c.CompanyName.Contains(SearchBusinessCustomer, StringComparison.OrdinalIgnoreCase))) 
+                        (!isNumber && c.CompanyName.Contains(SearchBusinessCustomer, StringComparison.OrdinalIgnoreCase)))
                     .ToList();
 
-                BCcustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
+                if (filteredBusinessCustomers.Any())
+                {
+                    BCcustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
+                }
+                else
+                {
+                    MessageBox.Show("Sökning misslyckades. Ange söktext.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    BCcustomers = new ObservableCollection<BusinessCustomer>();
+                }
             }
 
             SearchBusinessCustomer = string.Empty;
         }
+
 
 
         public ICommand FindPcustomersCommand { get; }
