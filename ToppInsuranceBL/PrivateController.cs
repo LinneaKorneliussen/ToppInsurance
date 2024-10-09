@@ -24,6 +24,13 @@ namespace TopInsuranceBL
         }
         #endregion
 
+        #region Search Private Customers Method
+        public List<PrivateCustomer> SearchPrivateCustomer(string searchTerm)
+        {
+            return privateRepository.SearchPrivateCustomer(searchTerm);
+        }
+        #endregion
+
         #region Register new patient Method
         public void CreateNewPrivateCustomer(string firstName, string lastName, string phoneNumber, string emailAddress, string address, int zipCode, string city, string ssn, string workPhonenumber)
         {
