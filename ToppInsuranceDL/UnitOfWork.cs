@@ -19,6 +19,10 @@ namespace TopInsuranceDL
         public Repository<SicknessAccidentInsurance> SicknessAccidentInsuranceRepository { get; private set; }
         public Repository<Vehicle> VehicleRepository { get; private set; }
         public Repository<Inventory> InventoryRepository { get; private set; }
+        public Repository<Sales> SalesRepository { get; private set; }
+
+
+
 
 
         public static UnitOfWork GetInstance()
@@ -37,6 +41,7 @@ namespace TopInsuranceDL
                 instance.SicknessAccidentInsuranceRepository = new Repository<SicknessAccidentInsurance>(instance.context);
                 instance.VehicleRepository = new Repository<Vehicle> (instance.context);
                 instance.InventoryRepository = new Repository<Inventory>(instance.context);
+                instance.SalesRepository = new Repository<Sales>(instance.context);
 
             }
             return instance;
