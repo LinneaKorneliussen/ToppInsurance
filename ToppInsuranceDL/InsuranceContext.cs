@@ -21,11 +21,7 @@ namespace TopInsuranceDL
 
         public InsuranceContext()
         {
- FeatureRegister
             //ResetSeed();
-
-          
- master
         }
 
         #region OnConfiguring 
