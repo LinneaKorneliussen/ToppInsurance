@@ -10,14 +10,10 @@ namespace TopInsuranceWPF.ViewModels
     public class UserContext
     {
         private static UserContext _instance;
-
-        // Den inloggade användaren
         public Employee LoggedInUser { get; private set; }
 
-        // Privat konstruktor för att förhindra instansiering utanför klassen
         private UserContext() { }
 
-        // Singleton instans
         public static UserContext Instance
         {
             get
@@ -30,13 +26,11 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        // Metod för att sätta den inloggade användaren
         public void SetUser(Employee user)
         {
             LoggedInUser = user;
         }
 
-        // Metod för att logga ut användaren
         public void Logout()
         {
             LoggedInUser = null;

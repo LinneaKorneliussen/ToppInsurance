@@ -9,14 +9,14 @@ namespace TopInsuranceEntities
     public class Vehicle
     {
         public int VehicleId { get; init; }  
-        public int RegistrationNumber { get; set; }
+        public string RegistrationNumber { get; set; }
         public string Brand { get; set; }
         public int Year { get; set; }
 
         public int VehicleInsuranceId { get; set; }
         public VehicleInsurance VehicleInsurance { get; set; }
 
-        public Vehicle(int registrationNumber, string brand, int year)
+        public Vehicle(string registrationNumber, string brand, int year)
         {
             RegistrationNumber = registrationNumber;
             Brand = brand;

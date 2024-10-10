@@ -11,17 +11,25 @@ namespace TopInsuranceEntities
         public int InventoryId { get; init; }
         public double InvValue { get; set; }
         public double InvPremium { get; set; }
+        public InventoryType InventoryType { get; set; }
 
-        public int? RealEstateInsuranceId { get; set; }
+        public int RealEstateInsuranceId { get; set; }
         public RealEstateInsurance RealEstateInsurance { get; set; }
 
 
-        public Inventory(double invValue)
+        public Inventory(InventoryType type, double invValue)
         {
+            InventoryType = type;
             InvValue = invValue;
-            InvPremium = invValue * 0.002;
+            CalculatePremium();
         }
-      
-        public Inventory() {}
+
+        public Inventory() { }
+
+        private void CalculatePremium()
+        {
+            InvPremium = InvValue * 0.002;
+        }
+
     }
 }

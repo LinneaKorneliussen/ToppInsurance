@@ -54,19 +54,6 @@ namespace TopInsuranceDL
         }
         #endregion
 
-        #region Search Private Customers Method
-        public List<PrivateCustomer> SearchPrivateCustomers(string searchTerm)
-        {
-            List<PrivateCustomer> allCustomers = unitOfWork.PCRepository.GetAll().ToList();
-
-            var matchingCustomers = allCustomers.Where(c =>
-                c.LastName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                c.SSN.Contains(searchTerm)).ToList();
-
-            return matchingCustomers;
-        }
-        #endregion
-
         #region Add Sickness and Accident Insurance Method for Private Customer
         public void AddSicknessAccidentInsurance(PrivateCustomer customer, DateTime startDate, DateTime endDate,
             InsuranceType insuranceType, Paymentform paymentform, int baseAmount, string note,

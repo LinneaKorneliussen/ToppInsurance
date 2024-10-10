@@ -8,10 +8,10 @@ namespace TopInsuranceEntities
 {
     public enum AdditionalInsurance
     {
-        Ingen,
-        Båda,
-        InvaliditetVidOlycksfall,
-        ErsättningVidLångvarigSjukskrivning
+        Ingen = 1,
+        Båda = 2,
+        InvaliditetVidOlycksfall = 3,
+        ErsättningVidLångvarigSjukskrivning = 4
         
     }
 }

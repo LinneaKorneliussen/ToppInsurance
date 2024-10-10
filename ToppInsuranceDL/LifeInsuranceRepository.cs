@@ -38,19 +38,6 @@ namespace TopInsuranceDL
         }
         #endregion
 
-        #region Search Private Customers Method
-        public List<PrivateCustomer> SearchPrivateCustomers(string searchTerm)
-        {
-            List<PrivateCustomer> allCustomers = unitOfWork.PCRepository.GetAll().ToList();
-
-            var matchingCustomers = allCustomers.Where(c =>
-                c.LastName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                c.SSN.Contains(searchTerm)).ToList();
-
-            return matchingCustomers;
-        }
-        #endregion
-
         #region Check If Customer Already Has Insurance Method
         public bool CustomerHasInsurance(PrivateCustomer customer)
         {   

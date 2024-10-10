@@ -13,6 +13,7 @@ namespace TopInsuranceWPF.ViewModels
 
     {
         private LifeInsuranceController lifeInsuranceController;
+        private PrivateController privateController;
         public IEnumerable<Paymentform> Paymentforms {  get; }
         private Employee user;
 
@@ -22,6 +23,7 @@ namespace TopInsuranceWPF.ViewModels
             NewEndDate = DateTime.Now.AddYears(1);
             user = UserContext.Instance.LoggedInUser; 
             lifeInsuranceController = new LifeInsuranceController();
+            privateController = new PrivateController();
             List<int> baseamounts = lifeInsuranceController.GetBaseAmounts();
             BaseAmount = new ObservableCollection<int>(baseamounts); 
             Paymentforms = Enum.GetValues(typeof(Paymentform)) as IEnumerable<Paymentform>;
@@ -173,7 +175,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
-                var filteredCustomers = lifeInsuranceController.SearchPrivateCustomers(SearchText);
+                var filteredCustomers = privateController.SearchPrivateCustomer(SearchText);
 
                 PrivateCustomers = new ObservableCollection<PrivateCustomer>(filteredCustomers);
                 SearchText = string.Empty; 
@@ -197,7 +199,12 @@ namespace TopInsuranceWPF.ViewModels
             }
 
             if (SelectedCustomer != null)
-            {              
+            {
+                if (SelectedPaymentForm == 0)
+                {
+                    MessageBox.Show("Vänligen välj en betalningsform.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
                 if (SelectedBaseAmount <= 0)
                 {
                     MessageBox.Show("Vänligen välj ett basbelopp.", "Ingen basbelopp vald", MessageBoxButton.OK, MessageBoxImage.Warning);

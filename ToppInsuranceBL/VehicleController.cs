@@ -17,13 +17,6 @@ namespace TopInsuranceBL
             vehicleRepository = new VehicleRepository();
         }
 
-        #region Search Business Customers Method
-        public List<BusinessCustomer> SearchBusinessCustomer(string searchTerm)
-        {
-            return vehicleRepository.SearchBusinessCustomer(searchTerm);
-        }
-        #endregion
-
         #region Add Vehicle Insurance Method
         public void AddVehicleInsurance(BusinessCustomer customer, Vehicle car, DeductibleVehicle deductible,
             CoverageType coverageType, RiskZone riskZone, DateTime startDate, DateTime endDate,

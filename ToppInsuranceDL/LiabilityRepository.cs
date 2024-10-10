@@ -16,22 +16,6 @@ namespace TopInsuranceDL
             unitOfWork = UnitOfWork.GetInstance();
         }
 
-        #region Search Business Customer Method 
-        public List<BusinessCustomer> SearchBusinessCustomer(string searchTerm)
-        {
-            List<BusinessCustomer> allCustomers = unitOfWork.BCRepository.GetAll().ToList();
-
-            bool isNumericSearch = int.TryParse(searchTerm, out int searchNumber);
-
-            var matchingCustomers = allCustomers.Where(c =>
-                c.CompanyName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                (isNumericSearch && c.Organizationalnumber.ToString().Contains(searchTerm))
-            ).ToList();
-
-            return matchingCustomers;
-        }
-        #endregion
-
         #region Add Sickness and Accident Insurance Method for Private Customer
         public void AddLiabilityInsurance(BusinessCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type,
             Paymentform paymentform, string note, string contactPerson, string contactPhNo, DeductibleLiability deductible, InsuranceAmount insuranceAmount, Employee user)

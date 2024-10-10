@@ -24,13 +24,6 @@ namespace TopInsuranceBL
         }
         #endregion
 
-        #region Search Private Customers Method
-        public List<PrivateCustomer> SearchPrivateCustomers(string searchTerm)
-        {
-            return lifeInsuranceRepository.SearchPrivateCustomers(searchTerm);
-        }
-        #endregion
-
         #region Check If Customer Already Has Insurance Method
         public bool CustomerHasInsurance(PrivateCustomer customer)
         {

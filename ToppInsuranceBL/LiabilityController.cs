@@ -17,13 +17,6 @@ namespace TopInsuranceBL
            liabilityRepository = new LiabilityRepository();
         }
 
-        #region Search Business Customers Method
-        public List<BusinessCustomer> SearchBusinessCustomer(string searchTerm)
-        {
-            return liabilityRepository.SearchBusinessCustomer(searchTerm);
-        }
-        #endregion
-
         #region Add Liability Insurance Method
         public void AddLiabilityInsurance(BusinessCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type,
             Paymentform paymentform, string note, string contactPerson, string contactPhNo, DeductibleLiability deductible, InsuranceAmount insuranceAmount, Employee user)
