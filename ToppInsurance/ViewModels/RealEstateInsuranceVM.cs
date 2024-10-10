@@ -9,6 +9,8 @@ namespace TopInsuranceWPF.ViewModels
     class RealEstateInsuranceVM : ObservableObject
     {
         private RealEstateController realEstateController;
+
+
         public IEnumerable<Paymentform> Paymentforms { get; }
 
         private Employee user;
@@ -22,7 +24,10 @@ namespace TopInsuranceWPF.ViewModels
 
             Paymentforms = Enum.GetValues(typeof(Paymentform)) as IEnumerable<Paymentform>;
 
+            Inventories = new ObservableCollection<Inventory>();
+            AddInventoryCommand = new RelayCommand(AddInventory);
 
+            RemoveInventoryCommand = new RelayCommand<Inventory>(RemoveInventory);
         }
 
         #region Properties
@@ -184,16 +189,51 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
+
+      
+        private ObservableCollection<Inventory> _inventories;
+        public ObservableCollection<Inventory> Inventories
+        {
+            get { return _inventories; }
+            set
+            {
+                if (_inventories != value)
+                {
+                    _inventories = value;
+                    OnPropertyChanged(nameof(Inventories));
+                }
+            }
+        }
         #endregion
 
         #region Commands 
         public ICommand FindCustomerCommand { get; }
+
         public ICommand AddInventoryCommand { get; }
-        public ICommand ClearFieldsCommand { get; } 
+
+        public ICommand RemoveInventoryCommand { get; }
+        public ICommand ClearFieldsCommand { get; }
+
 
         #endregion
 
+        #region Inventory methods
+        private void AddInventory()
+        {
+            Inventories.Add(new Inventory(0, 0));
 
+        }
+
+        private void RemoveInventory(Inventory inventory)
+        {
+            // Ta bort vald inventarie
+            if (Inventories.Contains(inventory))
+            {
+                Inventories.Remove(inventory);
+            }
+        }
+
+        #endregion
 
     }
 }
