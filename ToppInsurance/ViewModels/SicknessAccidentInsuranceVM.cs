@@ -10,12 +10,14 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace TopInsuranceWPF.ViewModels
 {
     public class SicknessAccidentInsuranceVM : ObservableObject, IDataErrorInfo
     {
         private SicknessAccidentController sicknessAccidentController;
+        private PrivateController privateController;
         public IEnumerable<Paymentform> Paymentforms { get; }
         public IEnumerable<AdditionalInsurance> AdditionalInsurances { get; }
         public List<int> baseAmounts;
@@ -27,6 +29,7 @@ namespace TopInsuranceWPF.ViewModels
             NewEndDate = DateTime.Now.AddYears(1);
             user = UserContext.Instance.LoggedInUser;
             sicknessAccidentController = new SicknessAccidentController();
+            privateController = new PrivateController();
             Paymentforms = Enum.GetValues(typeof(Paymentform)) as IEnumerable<Paymentform>;
             AdditionalInsurances = Enum.GetValues(typeof(AdditionalInsurance)) as IEnumerable<AdditionalInsurance>;
             AdultsCommand = new RelayCommand(AdultCommand);
@@ -224,7 +227,6 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
-
         #endregion
 
         #region Observable collection 
@@ -283,7 +285,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
-                var filteredCustomers = sicknessAccidentController.SearchPrivateCustomers(SearchText);
+                var filteredCustomers = privateController.SearchPrivateCustomer(SearchText);
 
                 PrivateCustomers = new ObservableCollection<PrivateCustomer>(filteredCustomers);
                 SearchText = string.Empty; 
@@ -297,48 +299,147 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
-        #region Add life Insurance Method
+        #region Add Sickness Accident Insurance
         private void AddSicknessAccidentInsurance()
         {
-            if (SelectedCustomer == null)
+            if (!ValidateCustomerSelection() || !ValidateInsuranceCategory() || !ValidatePaymentForm() || !ValidateBaseAmount() || !ValidateAdditonalInsurance())
             {
-                MessageBox.Show("Vänligen välj en kund innan du lägger till en försäkring.", "Ingen kund vald", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            if (!IsAdultOptionSelected && !IsChildInsuranceSelected)
-            {
-                MessageBox.Show("Vänligen välj om försäkringen gäller vuxen eller barn.", "Ingen försäkringskategori vald", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (SelectedPaymentForm == null)
-            {
-                MessageBox.Show("Vänligen välj ett betalningssätt.", "Ingen betalningsmetod vald", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (SelectedBaseAmount <= 0)
-            {
-                MessageBox.Show("Vänligen välj ett basbelopp.", "Ingen basbelopp vald", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+
             if (IsAdultOptionSelected)
             {
-                sicknessAccidentController.AddSicknessAccidentInsurance(SelectedCustomer, NewStartDate, NewEndDate, InsuranceType.SjukOchOlycksfallsförsäkringVUXEN,
-                    SelectedPaymentForm, SelectedBaseAmount, Note, null, null, null, SelectedAdditional, user);
-                MessageBox.Show("Sjuk- och olycksfallsförsäkring för vuxen har lagts till.", "Försäkring tillagd", MessageBoxButton.OK, MessageBoxImage.Information);
+                AddInsuranceForAdult();
             }
             else if (IsChildInsuranceSelected)
             {
-                if (string.IsNullOrWhiteSpace(FirstNameChild) || string.IsNullOrWhiteSpace(LastNameChild) || string.IsNullOrWhiteSpace(SSNChild))
+                if (!ValidateChildInfo())
                 {
-                    MessageBox.Show("Vänligen fyll i alla fält för barnets information (förnamn, efternamn, personnummer).", "Ofullständig information", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-
-                sicknessAccidentController.AddSicknessAccidentInsurance(SelectedCustomer, NewStartDate, NewEndDate, InsuranceType.SjukOchOlycksfallsförsäkringBARN, 
-                    SelectedPaymentForm, SelectedBaseAmount, Note, FirstNameChild, LastNameChild, SSNChild, SelectedAdditional, user);
-
-                MessageBox.Show("Sjuk- och olycksfallsförsäkring för barn har lagts till.", "Försäkring tillagd", MessageBoxButton.OK, MessageBoxImage.Information);
+                AddInsuranceForChild();
             }
+        }
+        #endregion
+
+        #region Validation Mathods 
+        private bool ValidateCustomerSelection()
+        {
+            if (SelectedCustomer == null)
+            {
+                ShowMessage("Vänligen välj en kund innan du lägger till en försäkring.", "Ingen kund vald");
+                return false;
+            }
+            return true;
+        }
+
+        public bool IsValidPersonalNumber(string personalNumber)
+        {
+            return Regex.IsMatch(personalNumber, @"^\d{8}-\d{4}$");
+        }
+
+        private bool ValidateInsuranceCategory()
+        {
+            if (!IsAdultOptionSelected && !IsChildInsuranceSelected)
+            {
+                ShowMessage("Vänligen välj om försäkringen gäller vuxen eller barn.", "Ingen försäkringskategori vald");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidatePaymentForm()
+        {
+            if (SelectedPaymentForm == 0)
+            {
+                ShowMessage("Vänligen välj ett betalningssätt.", "Ingen betalningsmetod vald");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidateAdditonalInsurance()
+        {
+            if (SelectedAdditional == 0)
+            {
+                ShowMessage("Vänligen välj ett tilläggsval.", "Inget tilläggsval vald");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidateBaseAmount()
+        {
+            if (SelectedBaseAmount <= 0)
+            {
+                ShowMessage("Vänligen välj ett basbelopp.", "Ingen basbelopp vald");
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidateChildInfo()
+        {
+            if (string.IsNullOrWhiteSpace(FirstNameChild) || string.IsNullOrWhiteSpace(LastNameChild) || string.IsNullOrWhiteSpace(SSNChild))
+            {
+                ShowMessage("Vänligen fyll i alla fält för barnets information (förnamn, efternamn, personnummer).", "Ofullständig information");
+                return false;
+            }
+            if (!IsValidPersonalNumber(SSNChild))
+            {
+                ShowMessage("Ogiltigt personnummer. Vänligen kontrollera att personnumret är i formatet YYYYMMDD-XXXX.", "Ogiltigt personnummer");
+                return false;
+            }
+            return true;
+        }
+        #endregion
+
+        #region Add insurance for child or adult Method
+        private void AddInsuranceForAdult()
+        {
+            sicknessAccidentController.AddSicknessAccidentInsurance(
+                SelectedCustomer,
+                NewStartDate,
+                NewEndDate,
+                InsuranceType.SjukOchOlycksfallsförsäkringVUXEN,
+                SelectedPaymentForm,
+                SelectedBaseAmount,
+                Note,
+                null,
+                null,
+                null,
+                SelectedAdditional,
+                user
+            );
+
+            ShowMessage("Sjuk- och olycksfallsförsäkring för vuxen har lagts till.", "Försäkring tillagd", MessageBoxImage.Information);
+        }
+
+        private void AddInsuranceForChild()
+        {
+            sicknessAccidentController.AddSicknessAccidentInsurance(
+                SelectedCustomer,
+                NewStartDate,
+                NewEndDate,
+                InsuranceType.SjukOchOlycksfallsförsäkringBARN,
+                SelectedPaymentForm,
+                SelectedBaseAmount,
+                Note,
+                FirstNameChild,
+                LastNameChild,
+                SSNChild,
+                SelectedAdditional,
+                user
+            );
+
+            ShowMessage("Sjuk- och olycksfallsförsäkring för barn har lagts till.", "Försäkring tillagd", MessageBoxImage.Information);
+        }
+        #endregion
+
+        #region Show message Method
+        private void ShowMessage(string message, string caption, MessageBoxImage icon = MessageBoxImage.Warning)
+        {
+            MessageBox.Show(message, caption, MessageBoxButton.OK, icon);
         }
         #endregion
 

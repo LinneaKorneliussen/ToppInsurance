@@ -31,13 +31,6 @@ namespace TopInsuranceBL
         }
         #endregion
 
-        #region Search Private Customers Method
-        public List<PrivateCustomer> SearchPrivateCustomers(string searchTerm)
-        {
-            return sicknessAccidentRepository.SearchPrivateCustomers(searchTerm);
-        }
-        #endregion
-
         #region Add Sickness and Accident Insurance Method for private customer
         public void AddSicknessAccidentInsurance(PrivateCustomer customer, DateTime startDate, DateTime endDate,
             InsuranceType insuranceType, Paymentform paymentform, int baseAmount, string note,

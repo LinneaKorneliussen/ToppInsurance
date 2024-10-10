@@ -12,6 +12,7 @@ namespace TopInsuranceWPF.ViewModels
     {
         private VehicleController vehicleController;
         private CityRiskZoneManager cityRiskZoneManager;
+        private BusinessController businessController;
         private Employee user;
 
         public IEnumerable<Paymentform> Paymentforms { get; }
@@ -24,9 +25,10 @@ namespace TopInsuranceWPF.ViewModels
             NewEndDate = DateTime.Now.AddYears(1);
             user = UserContext.Instance.LoggedInUser;
             vehicleController = new VehicleController();
+            businessController = new BusinessController();
+
             cityRiskZoneManager = new CityRiskZoneManager();
             Cities = new ObservableCollection<string>(cityRiskZoneManager.CityRiskZones.Keys);
-
             Paymentforms = Enum.GetValues(typeof(Paymentform)).Cast<Paymentform>();
             DeductibleVehicle = Enum.GetValues(typeof(DeductibleVehicle)).Cast<DeductibleVehicle>().Select(d => (int)d).ToList();
             CoverageType = Enum.GetValues(typeof(CoverageType)).Cast<CoverageType>();
@@ -163,8 +165,8 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        private int _registrationNumber;
-        public int RegistrationNumber
+        private string _registrationNumber;
+        public string RegistrationNumber
         {
             get { return _registrationNumber; }
             set
@@ -280,7 +282,7 @@ namespace TopInsuranceWPF.ViewModels
 
                 RiskZone selectedRiskZone = cityRiskZoneManager.GetRiskZoneByCity(SelectedCity);
 
-                if (string.IsNullOrEmpty(Brand) || RegistrationNumber <= 0 || YearModel <= 0)
+                if (string.IsNullOrEmpty(Brand) || string.IsNullOrEmpty(RegistrationNumber) || YearModel <= 0)
                 {
                     MessageBox.Show("Vänligen ange giltiga registreringsnummer, varumärke och årsmodell.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
@@ -314,7 +316,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             if (SearchBusinessCustomer != null)
             {
-                var filteredCustomers = vehicleController.SearchBusinessCustomer(SearchBusinessCustomer);
+                var filteredCustomers = businessController.SearchBusinessCustomer(SearchBusinessCustomer);
                 BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredCustomers);
                 SearchBusinessCustomer = string.Empty;
             }
@@ -369,7 +371,7 @@ namespace TopInsuranceWPF.ViewModels
         private void ClearFields()
         {
             SelectedBCcustomer = null;
-            RegistrationNumber = 0;
+            RegistrationNumber = string.Empty;
             Brand = string.Empty;
             YearModel = 0;
             SelectedDeductible = 0;
