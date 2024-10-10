@@ -95,45 +95,51 @@
                    Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"/>
 
                 <TextBlock Text="Betalningssätt:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <ComboBox x:Name="cbPaymentMethod" Grid.Row="3" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
+                <ComboBox x:Name="cbPaymentMethod" Grid.Row="3" Width="250" Margin="0,4,50,6" HorizontalAlignment="Center"
                    Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                   ItemsSource="{Binding Paymentforms}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay}" 
-                          Grid.Column="1" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"/>
+                   ItemsSource="{Binding Paymentforms}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                   Grid.Column="1" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}" 
+                   Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
-                <TextBlock Text="Noteringar:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
+                <TextBlock Text="Notering:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <TextBox Name="txtNotes" Grid.Row="4" Grid.Column="1" FontWeight="Normal"  Margin="-0,4,0,6" Width="300" 
-                         Text="{Binding Note}" Background="GhostWhite"/>
+                         Text="{Binding Note}" Background="GhostWhite" mah:TextBoxHelper.Watermark="Valfritt"/>
 
                 <TextBlock Text="Registreringsnummer:" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <TextBox Name="txtRegNumber" Grid.Row="1" Grid.Column="2" FontWeight="Normal"  Margin="100,4,0,6" Width="220"
-                         Text="{Binding RegistrationNumber}" Background="GhostWhite"/>
+                         Text="{Binding RegistrationNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                         Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
                 <TextBlock Text="Bilmärke:" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <TextBox Name="txtBrand" Grid.Row="2" Grid.Column="2" FontWeight="Normal"  Margin="100,4,0,6" Width="220"
-                         Text="{Binding Brand}" Background="GhostWhite"/>
+                         Text="{Binding Brand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
                 <TextBlock Text="Årsmodell:" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <TextBox Name="txtYearModel" Grid.Row="3" Grid.Column="2" FontWeight="Normal"  Margin="100,4,0,6" Width="220"
-                         Text="{Binding YearModel}" Background="GhostWhite"/>
+                         Text="{Binding YearModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                         Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
                 <TextBlock Text="Bilens hemmastad:" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbCity" Grid.Row="4" Width="220" Margin="100,4,0,6" HorizontalAlignment="Center"
                           Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                          ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity, Mode=TwoWay}" Grid.Column="2" Height="20"
-                          ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"/>
+                          ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Grid.Column="2" Height="20"
+                          ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+                          ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
 
                 <TextBlock Text="Självrisk:" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbDeductible" Grid.Row="5" Width="220" Margin="100,4,0,6" HorizontalAlignment="Center"
                           Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                          SelectedItem="{Binding SelectedDeductible, Mode=TwoWay}" ItemsSource="{Binding DeductibleVehicle}"
-                          Grid.Column="2" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"/>
+                          SelectedItem="{Binding SelectedDeductible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ItemsSource="{Binding DeductibleVehicle}"
+                          Grid.Column="2" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+                          ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
                 <TextBlock Text="Trafikförsäkring:" Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbTraficInsurance" Grid.Row="6" Width="220" Margin="100,4,0,6" HorizontalAlignment="Center"
                           Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                          ItemsSource="{Binding CoverageType}" SelectedItem="{Binding SelectedCoverageType, Mode=TwoWay}"  
-                          Grid.Column="2" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"/>
+                          ItemsSource="{Binding CoverageType}" SelectedItem="{Binding SelectedCoverageType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  
+                          Grid.Column="2" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+                          ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
                 <StackPanel Grid.Row="8" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Width="270" Margin="20">
                     <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>

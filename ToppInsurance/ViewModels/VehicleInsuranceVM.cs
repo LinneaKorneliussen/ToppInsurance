@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using TopInsuranceBL;
@@ -26,7 +27,6 @@ namespace TopInsuranceWPF.ViewModels
             user = UserContext.Instance.LoggedInUser;
             vehicleController = new VehicleController();
             businessController = new BusinessController();
-
             cityRiskZoneManager = new CityRiskZoneManager();
             Cities = new ObservableCollection<string>(cityRiskZoneManager.CityRiskZones.Keys);
             Paymentforms = Enum.GetValues(typeof(Paymentform)).Cast<Paymentform>();
@@ -269,24 +269,21 @@ namespace TopInsuranceWPF.ViewModels
                     MessageBox.Show("Vänligen välj en kund från listan.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                if (SelectedPaymentForm == 0)
+
+                string error = this.Error;
+                if (!string.IsNullOrEmpty(error))
                 {
-                    MessageBox.Show("Vänligen välj en betalningsform.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show(error, "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                if (string.IsNullOrEmpty(SelectedCity))
+
+                if (!IsValidRegistrationNumber(RegistrationNumber))
                 {
-                    MessageBox.Show("Vänligen välj en stad.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Ogiltigt registreringsnummer. Vänligen kontrollera att det är i formaten ABC123 eller ABC12A.", "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
                 RiskZone selectedRiskZone = cityRiskZoneManager.GetRiskZoneByCity(SelectedCity);
-
-                if (string.IsNullOrEmpty(Brand) || string.IsNullOrEmpty(RegistrationNumber) || YearModel <= 0)
-                {
-                    MessageBox.Show("Vänligen ange giltiga registreringsnummer, varumärke och årsmodell.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
 
                 Vehicle vehicle = new Vehicle(RegistrationNumber, Brand, YearModel);
 
@@ -311,6 +308,14 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
+        #region Validation method
+        private bool IsValidRegistrationNumber(string registrationNumber)
+        {
+            string pattern = @"^[A-Za-z]{3}\d{3}$|^[A-Za-z]{3}\d{2}[A-Za-z]{1}$";
+            return Regex.IsMatch(registrationNumber, pattern);
+        }
+        #endregion
+
         #region Search business customers
         private void FindBCcustomers()
         {
@@ -328,7 +333,8 @@ namespace TopInsuranceWPF.ViewModels
         {
             get
             {
-                string[] properties = { nameof(NewStartDate), nameof(NewEndDate) };
+                string[] properties = { nameof(NewStartDate), nameof(NewEndDate), nameof(SelectedPaymentForm), nameof(RegistrationNumber),
+                    nameof(Brand), nameof(YearModel), nameof(SelectedCity)  };
                 foreach (var property in properties)
                 {
                     string error = this[property];
@@ -351,20 +357,64 @@ namespace TopInsuranceWPF.ViewModels
 
         private string ValidateField(string columnName)
         {
-            string error = string.Empty;
+            string errorMessage = null;
 
-            if (columnName == nameof(NewStartDate) && NewStartDate < DateTime.Today)
+            switch (columnName)
             {
-                error = "Startdatum kan inte vara i det förflutna.";
+                case nameof(NewStartDate):
+                    if (NewStartDate < DateTime.Today)
+                    {
+                        errorMessage = "Går inte att teckna en försäkring för redan passerade datum";
+                    }
+                    break;
+                case nameof(NewEndDate):
+                    if (NewEndDate < DateTime.Today)
+                    {
+                        errorMessage = "Går inte att teckna försäkring för redan passerade datum";
+                    }
+                    else if (NewEndDate < NewStartDate)
+                    {
+                        errorMessage = "Slutdatum kan inte vara före startdatum.";
+                    }
+                    break;
+                case nameof(SelectedPaymentForm):
+                    if (SelectedPaymentForm == 0)
+                    {
+                        errorMessage = "Vänligen välj ett betalningssätt";
+                    }
+                    break;
+                case nameof(RegistrationNumber):
+                    if (string.IsNullOrWhiteSpace(RegistrationNumber))
+                    {
+                        errorMessage = "Ange fordonets reg.nr";
+                    }
+                    break;
+                case nameof(Brand):
+                    if (string.IsNullOrWhiteSpace(Brand))
+                    {
+                        errorMessage = "Ange fordonsmärke";
+                    }
+                    break;
+                case nameof(YearModel):
+                    if (YearModel <= 0)
+                    {
+                        errorMessage = "Ange fordonets årsmodell";
+                    }
+                    break;
+                case nameof(SelectedCity):
+                    if (string.IsNullOrWhiteSpace(SelectedCity))
+                    {
+                        errorMessage = "Ange fordonets primära hemmastad";
+                    }
+                    break;
+                default:
+                    errorMessage = "Vänligen välj";
+                    break;
             }
 
-            if (columnName == nameof(NewEndDate) && NewEndDate < NewStartDate)
-            {
-                error = "Slutdatum kan inte vara tidigare än startdatum.";
-            }
-
-            return error;
+            return errorMessage;
         }
+    
         #endregion
 
         #region Clear Fields Method
@@ -380,11 +430,9 @@ namespace TopInsuranceWPF.ViewModels
             Note = string.Empty;
             SelectedCity = null;
             NewStartDate = DateTime.Now;
-            NewEndDate = DateTime.Now.AddDays(365);
+            NewEndDate = DateTime.Now.AddYears(1);
         }
         #endregion
     }
-
-
 
 }
