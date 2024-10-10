@@ -8,8 +8,8 @@ namespace TopInsuranceEntities
 {
     public enum CoverageType
     {
-        Trafik,  
-        Halv,     
-        Hel     
+        Trafik = 1,  
+        Halv = 2,     
+        Hel = 3    
     }
 }

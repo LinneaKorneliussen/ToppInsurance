@@ -39,7 +39,7 @@ namespace TopInsuranceEntities
         {
             switch (deductible)
             {
-                case DeductibleVehicle.OneThousand:
+                case DeductibleVehicle.DV1:
                     switch (coverageType)
                     {
                         case CoverageType.Trafik: return 350; 
@@ -48,7 +48,7 @@ namespace TopInsuranceEntities
                     }
                     break;
 
-                case DeductibleVehicle.TwoThousand:
+                case DeductibleVehicle.DV2:
                     switch (coverageType)
                     {
                         case CoverageType.Trafik: return 300; 
@@ -57,7 +57,7 @@ namespace TopInsuranceEntities
                     }
                     break;
 
-                case DeductibleVehicle.ThreeAndHalfThousand:
+                case DeductibleVehicle.DV3:
                     switch (coverageType)
                     {
                         case CoverageType.Trafik: return 250; 
