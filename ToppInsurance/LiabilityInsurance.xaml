@@ -33,20 +33,12 @@
             </StackPanel>
 
             <StackPanel Grid.Row="1" Orientation="Vertical" Background="White">
-
                 <TextBlock Text="Hämta den företagskund som önskar teckna en ansvarsförsäkring" Margin=" 15 40 400 0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13"/>
-
                 <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="450 -40 40 0" Style="{StaticResource searchTextbox}"/>
-                <Button Content="Sök" Width="50" Margin="730 -40 -40 0" Background="#223A2A" Foreground="White" Command="{Binding FindBcustomerCommand}" 
-                        mah:TextBoxHelper.Watermark="Ange sökord"/>
-
+                <Button Content="Sök" Width="50" Margin="730 -40 -40 0" Background="#223A2A" Foreground="White" Command="{Binding FindBcustomerCommand}"/>
                 <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 -40 90 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
-
             </StackPanel>
-
-
             <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 10 0 10"/>
-
 
             <!-- DataGrid för att visa kund -->
             <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="115" FontWeight="Normal" ItemsSource="{Binding BusinessCustomers}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
@@ -79,7 +71,7 @@
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="78*"/>
+                    <ColumnDefinition Width="156"/>
                     <ColumnDefinition Width="165*"/>
                     <ColumnDefinition Width="182*"/>
                 </Grid.ColumnDefinitions>
@@ -107,20 +99,11 @@
                 Style="{StaticResource ValidationDatePickerStyle}"/>
 
                 <TextBlock Text="Betalningssätt:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <ComboBox x:Name="cbPaymentMethod" 
-          Grid.Row="4" 
-          Grid.Column="1" 
-          Width="300" 
-          Margin="0,4,0,6" 
-          HorizontalAlignment="Center"
-          Background="GhostWhite" 
-          BorderThickness="1" 
-          Style="{StaticResource comboBoxInError}"
-          ItemsSource="{Binding PaymentFormsWithPlaceholder}" 
-          SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
-          Height="20"
-          Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
-          ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
+                <ComboBox x:Name="cbPaymentMethod" Grid.Row="4" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
+                Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
+                ItemsSource="{Binding Paymentforms}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="20"
+                Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
+                ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
                 <TextBlock Text="Försäkringsbelopp:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbBasBelopp" Grid.Row="5" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
@@ -138,7 +121,7 @@
 
                 <TextBlock Text="Noteringar:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <TextBox Grid.Row="7" Grid.Column="1" FontWeight="Normal" Margin="0,4,0,6" Width="300"
-                Text="{Binding Note, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                Text="{Binding Note, UpdateSourceTrigger=PropertyChanged}"
                 mah:TextBoxHelper.Watermark="Valfritt" Background="GhostWhite"/>
             </Grid>
 
@@ -150,6 +133,5 @@
         </StackPanel>
 
     </Grid>
-
 
 </UserControl>

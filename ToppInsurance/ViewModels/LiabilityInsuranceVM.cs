@@ -12,10 +12,11 @@ namespace TopInsuranceWPF.ViewModels
 
     {
         private LiabilityController liabilityController;
+        private BusinessController businessController;
+        private Employee user;
         public IEnumerable<Paymentform> Paymentforms { get; }
         public IEnumerable<DeductibleLiability> Deductibleliabilities { get; }
         public IEnumerable<InsuranceAmount> Insuranceamounts { get; }
-        private Employee user;
 
         public LiabilityInsuranceVM()
         {
@@ -23,20 +24,13 @@ namespace TopInsuranceWPF.ViewModels
             NewEndDate = DateTime.Now.AddYears(1);
             user = UserContext.Instance.LoggedInUser;
             liabilityController = new LiabilityController();
-            PaymentFormsWithPlaceholder = new ObservableCollection<object> { "Vänligen välj" };
-
-            // Hämta enum-värden och lägg till dem i ObservableCollection
-            var paymentForms = Enum.GetValues(typeof(Paymentform)).Cast<Paymentform>();
-            foreach (var form in paymentForms)
-            {
-                PaymentFormsWithPlaceholder.Add(form);
-            }
-            Insuranceamounts = Enum.GetValues(typeof(InsuranceAmount)) as IEnumerable<InsuranceAmount>;
-            Deductibleliabilities = Enum.GetValues(typeof(DeductibleLiability)) as IEnumerable<DeductibleLiability>;
+            businessController = new BusinessController();
+            Paymentforms = Enum.GetValues(typeof(Paymentform)).Cast<Paymentform>();
+            Insuranceamounts = Enum.GetValues(typeof(InsuranceAmount)).Cast<InsuranceAmount>();
+            Deductibleliabilities = Enum.GetValues(typeof(DeductibleLiability)).Cast<DeductibleLiability>();
             FindBcustomerCommand = new RelayCommand(FindCustomer);
             AddLiabilityInsuranceCommand = new RelayCommand(AddLiabilityInsurance);
             ClearCommand = new RelayCommand(ClearFields);
-
         }
 
         #region Properties
@@ -196,20 +190,6 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
-
-        private ObservableCollection<object> _paymentFormsWithPlaceholder;
-        public ObservableCollection<object> PaymentFormsWithPlaceholder
-        {
-            get { return _paymentFormsWithPlaceholder; }
-            set
-            {
-                if (_paymentFormsWithPlaceholder != value)
-                {
-                    _paymentFormsWithPlaceholder = value;
-                    OnPropertyChanged(nameof(PaymentFormsWithPlaceholder));
-                }
-            }
-        }
         #endregion
 
         #region Commands 
@@ -224,7 +204,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
-                var filteredCustomers = liabilityController.SearchBusinessCustomer(SearchText);
+                var filteredCustomers = businessController.SearchBusinessCustomer(SearchText);
                 BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredCustomers);
             }
             else 
@@ -238,23 +218,32 @@ namespace TopInsuranceWPF.ViewModels
         #region Add Liability Insurance Method
         private void AddLiabilityInsurance()
         {
-            string error = this.Error;
-            if (!string.IsNullOrEmpty(error))
+            try
             {
-                MessageBox.Show(error);
-                return;
-            }
+                if (SelectedCustomer == null)
+                {
+                    MessageBox.Show("Vänligen välj en kund från listan.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
-            if (SelectedCustomer != null)
-            {
-                InsuranceType insurance = InsuranceType.Ansvarsförsäkring;
-                liabilityController.AddLiabilityInsurance(SelectedCustomer, NewStartDate, NewEndDate, insurance, SelectedPaymentForm, Note, ContactPerson, ContactPersonPhNo, SelectedDeductible, SelectedAmount, user);
-                    MessageBox.Show($"Ansvarsförsäkring tecknad framgångsfullt {SelectedCustomer.FirstName} {SelectedCustomer.LastName}");
-                    ClearFields();
+                string error = this.Error;
+                if (!string.IsNullOrEmpty(error))
+                {
+                    MessageBox.Show(error, "Varning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                liabilityController.AddLiabilityInsurance(SelectedCustomer, NewStartDate, NewEndDate, InsuranceType.Ansvarsförsäkring, SelectedPaymentForm, Note, ContactPerson, ContactPersonPhNo, SelectedDeductible, SelectedAmount, user);
+                MessageBox.Show($"Ansvarsförsäkring tecknad framgångsfullt {SelectedCustomer.FirstName} {SelectedCustomer.LastName}");
+                ClearFields();
             }
-            else
+            catch (ArgumentException ex) 
             {
-                MessageBox.Show("Ingen kund vald. Vänligen välj en kund för att registrera ansvarsförsäkringen.");
+                MessageBox.Show(ex.Message, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ett oväntat fel inträffade: " + ex.Message, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         #endregion
@@ -320,21 +309,21 @@ namespace TopInsuranceWPF.ViewModels
                     }
                     break;
                 case nameof(SelectedPaymentForm):
-                    if (SelectedPaymentForm.ToString() == "Vänligen välj")
+                    if (SelectedPaymentForm == 0)
                     {
-                        errorMessage = "Betalningsform måste väljas.";
+                        errorMessage = "Vänligen välj betalningsform";
                     }
                     break;
                 case nameof(SelectedDeductible):
-                    if (SelectedDeductible == null)
+                    if (SelectedDeductible == 0)
                     {
-                        errorMessage = "Självrisk måste väljas.";
+                        errorMessage = "Vänligen välj en självrisk";
                     }
                     break;
                 case nameof(SelectedAmount):
-                    if (SelectedAmount == null)
+                    if (SelectedAmount == 0)
                     {
-                        errorMessage = "Försäkringsbelopp måste väljas.";
+                        errorMessage = "Vänligen välj ett försäkringsbelopp";
                     }
                     break;
                 default:
@@ -349,15 +338,16 @@ namespace TopInsuranceWPF.ViewModels
         #region Clear Field Method
         private void ClearFields()
         {
+            SelectedCustomer = null;
+            SelectedAmount = 0;
+            SelectedDeductible = 0;
+            SelectedPaymentForm = 0;
             Note = string.Empty;
             SearchText = string.Empty;
             ContactPerson = string.Empty;
             ContactPersonPhNo = string.Empty;
+            BusinessCustomers.Clear();
         }
         #endregion
-
-
     }
-
-
 }

@@ -250,22 +250,7 @@
             </Style>
 
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
-            <Style x:Key="comboBoxInError" TargetType="{x:Type ComboBox}">
-                <Style.Triggers>
-                    <Trigger Property="Validation.HasError" Value="true">
-                        <Setter Property="ToolTip"
-                         Value="{Binding RelativeSource={x:Static RelativeSource.Self},
-                        Path=(Validation.Errors)/ErrorContent}"/>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
             
-            
-            
-
-
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>
