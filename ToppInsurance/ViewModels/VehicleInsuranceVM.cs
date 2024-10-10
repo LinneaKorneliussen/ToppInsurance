@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 using TopInsuranceBL;
 using TopInsuranceEntities;
@@ -6,29 +8,31 @@ using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
-    class VehicleInsuranceVM : ObservableObject
+    public class VehicleInsuranceVM : ObservableObject, IDataErrorInfo
     {
         private VehicleController vehicleController;
         private CityRiskZoneManager cityRiskZoneManager;
         private Employee user;
 
         public IEnumerable<Paymentform> Paymentforms { get; }
-        public IEnumerable<DeductibleVehicle> DeductibleVehicle { get; }
+        public List<int> DeductibleVehicle { get; }
         public IEnumerable<CoverageType> CoverageType { get; }
 
         public VehicleInsuranceVM()
         {
+            NewStartDate = DateTime.Now;
+            NewEndDate = DateTime.Now.AddYears(1);
             user = UserContext.Instance.LoggedInUser;
             vehicleController = new VehicleController();
             cityRiskZoneManager = new CityRiskZoneManager();
             Cities = new ObservableCollection<string>(cityRiskZoneManager.CityRiskZones.Keys);
 
-            Paymentforms = Enum.GetValues(typeof(Paymentform)) as IEnumerable<Paymentform>;
-            DeductibleVehicle = Enum.GetValues(typeof(DeductibleVehicle)) as IEnumerable<DeductibleVehicle>;
-            CoverageType = Enum.GetValues(typeof(CoverageType)) as IEnumerable<CoverageType>;
+            Paymentforms = Enum.GetValues(typeof(Paymentform)).Cast<Paymentform>();
+            DeductibleVehicle = Enum.GetValues(typeof(DeductibleVehicle)).Cast<DeductibleVehicle>().Select(d => (int)d).ToList();
+            CoverageType = Enum.GetValues(typeof(CoverageType)).Cast<CoverageType>();
             AddVehicleInsuranceCommand = new RelayCommand(AddVehicleInsurance);
             FindBCcustomersCommand = new RelayCommand(FindBCcustomers);
-
+            ClearCommand = new RelayCommand(ClearFields);
         }
 
         #region Properties
@@ -46,16 +50,17 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
-        private BusinessCustomer _selectedBCcustomers;
-        public BusinessCustomer SelectedBCcustomers
+
+        private BusinessCustomer _selectedBCcustomer;
+        public BusinessCustomer SelectedBCcustomer
         {
-            get { return _selectedBCcustomers; }
+            get { return _selectedBCcustomer; }
             set
             {
-                if (_selectedBCcustomers != value)
+                if (_selectedBCcustomer != value)
                 {
-                    _selectedBCcustomers = value;
-                    OnPropertyChanged(nameof(SelectedBCcustomers));
+                    _selectedBCcustomer = value;
+                    OnPropertyChanged(nameof(SelectedBCcustomer));
                 }
             }
         }
@@ -115,8 +120,9 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
-        private DeductibleVehicle _selectedDeductible;
-        public DeductibleVehicle SelectedDeductible
+
+        private int _selectedDeductible;
+        public int SelectedDeductible
         {
             get { return _selectedDeductible; }
             set
@@ -198,6 +204,21 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                if (_errorMessage != value)
+                {
+                    _errorMessage = value;
+                    OnPropertyChanged(nameof(ErrorMessage));
+                }
+            }
+        }
+
         #endregion
 
         #region Observable collection 
@@ -214,6 +235,7 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
+
         private ObservableCollection<string> _cities;
         public ObservableCollection<string> Cities
         {
@@ -232,43 +254,135 @@ namespace TopInsuranceWPF.ViewModels
         #region Commands
         public ICommand AddVehicleInsuranceCommand { get; }
         public ICommand FindBCcustomersCommand { get; }
+        public ICommand ClearCommand { get; }
         #endregion
 
-        #region Add vehicleinsurance Method
+        #region Add Vehicle Insurance Method
         private void AddVehicleInsurance()
         {
-            RiskZone selectedRiskZone = cityRiskZoneManager.GetRiskZoneByCity(SelectedCity);
-
-
-            Vehicle vehicle = new Vehicle(RegistrationNumber, Brand, YearModel);
-
-            if (vehicle != null)
+            try
             {
-                vehicleController.AddVehicleInsurance(SelectedBCcustomers, vehicle, SelectedDeductible, SelectedCoverageType, selectedRiskZone, NewStartDate,
-               NewEndDate, InsuranceType.Fordonsförsäkring, SelectedPaymentForm, Note, user);
+                if (SelectedBCcustomer == null)
+                {
+                    MessageBox.Show("Vänligen välj en kund från listan.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (SelectedPaymentForm == 0)
+                {
+                    MessageBox.Show("Vänligen välj en betalningsform.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (string.IsNullOrEmpty(SelectedCity))
+                {
+                    MessageBox.Show("Vänligen välj en stad.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
+                RiskZone selectedRiskZone = cityRiskZoneManager.GetRiskZoneByCity(SelectedCity);
+
+                if (string.IsNullOrEmpty(Brand) || RegistrationNumber <= 0 || YearModel <= 0)
+                {
+                    MessageBox.Show("Vänligen ange giltiga registreringsnummer, varumärke och årsmodell.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                Vehicle vehicle = new Vehicle(RegistrationNumber, Brand, YearModel);
+
+                DeductibleVehicle deductible = (DeductibleVehicle)SelectedDeductible;
+
+                vehicleController.AddVehicleInsurance(
+                    SelectedBCcustomer, vehicle, deductible, SelectedCoverageType,
+                    selectedRiskZone, NewStartDate, NewEndDate,
+                    InsuranceType.Fordonsförsäkring, SelectedPaymentForm, Note, user);
+
+                MessageBox.Show("Fordonsförsäkringen har lagts till framgångsrikt.", "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
+                ClearFields();
             }
-
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ett oväntat fel inträffade: " + ex.Message, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
-
         #endregion
 
         #region Search business customers
         private void FindBCcustomers()
         {
-            var filteredCustomers = vehicleController.SearchBusinessCustomer(SearchBusinessCustomer);
+            if (SearchBusinessCustomer != null)
+            {
+                var filteredCustomers = vehicleController.SearchBusinessCustomer(SearchBusinessCustomer);
+                BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredCustomers);
+                SearchBusinessCustomer = string.Empty;
+            }
+        }
+        #endregion
 
-            BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredCustomers);
-            SearchBusinessCustomer = string.Empty;
+        #region Validation IDataErrorInfo
+        public string Error
+        {
+            get
+            {
+                string[] properties = { nameof(NewStartDate), nameof(NewEndDate) };
+                foreach (var property in properties)
+                {
+                    string error = this[property];
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        return error;
+                    }
+                }
+                return null;
+            }
         }
 
+        public string this[string columnName]
+        {
+            get
+            {
+                return ValidateField(columnName);
+            }
+        }
+
+        private string ValidateField(string columnName)
+        {
+            string error = string.Empty;
+
+            if (columnName == nameof(NewStartDate) && NewStartDate < DateTime.Today)
+            {
+                error = "Startdatum kan inte vara i det förflutna.";
+            }
+
+            if (columnName == nameof(NewEndDate) && NewEndDate < NewStartDate)
+            {
+                error = "Slutdatum kan inte vara tidigare än startdatum.";
+            }
+
+            return error;
+        }
         #endregion
 
-
-        #region Validation
-
-
+        #region Clear Fields Method
+        private void ClearFields()
+        {
+            SelectedBCcustomer = null;
+            RegistrationNumber = 0;
+            Brand = string.Empty;
+            YearModel = 0;
+            SelectedDeductible = 0;
+            SelectedCoverageType = 0;
+            SelectedPaymentForm = 0;
+            Note = string.Empty;
+            SelectedCity = null;
+            NewStartDate = DateTime.Now;
+            NewEndDate = DateTime.Now.AddDays(365);
+        }
         #endregion
-
     }
+
+
+
 }

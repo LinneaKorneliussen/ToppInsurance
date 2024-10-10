@@ -8,8 +8,8 @@ namespace TopInsuranceEntities
 {
     public enum DeductibleVehicle
     {
-        OneThousand = 1000, 
-        TwoThousand = 2000,
-        ThreeAndHalfThousand = 3500 
+        DV1 = 1000, 
+        DV2 = 2000,
+        DV3 = 3500 
     }
 }
