@@ -129,12 +129,9 @@
                          BorderBrush="Black" FontWeight="Normal" Margin="0,2,50,2" Width="300" Background="GhostWhite"/>
 
                 <!-- Ifyllningsfält för inventarier -->
-                <TextBlock Text="Värde inventarier: " Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,0,8,0" 
+                <TextBlock Text="Välj typ av inventarie: " Grid.Row="9" Grid.Column="1" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,0,8,0" 
                            Visibility="{Binding IsInventorySelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                <TextBox Name="txtVärdeinventarier" Grid.Row="9" Grid.Column="1" Text="{Binding ValueInventory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                         BorderBrush="Black" FontWeight="Normal" Margin="0,2,50,2" Width="300" Background="GhostWhite" 
-                         Visibility="{Binding IsInventorySelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-
+                
 
                 <!-- Lista över inventarier -->
                 <ItemsControl Grid.Column="1" Grid.Row="10" ItemsSource="{Binding Inventories}" 
@@ -143,10 +140,15 @@
                         <DataTemplate>
 
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                                <ComboBox Width="100" Margin="0,0,10,0" SelectedItem="{Binding SelectedOption}" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"
+                           Background="GhostWhite" >
+                                    <ComboBoxItem Content="Option 1" />
+                                    <ComboBoxItem Content="Option 2" />
+                                </ComboBox>
                                 <TextBox Text="{Binding InvValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                 BorderBrush="Black" FontWeight="Normal" Width="215" Background="GhostWhite" Margin="0,0,10,0"/>
+                          BorderBrush="Black" FontWeight="Normal" Width="125" Background="GhostWhite" Margin="0,0,10,0"/>
                                 <Button Content="Ta bort" Command="{Binding DataContext.RemoveInventoryCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"  
-                                 CommandParameter="{Binding}" Background="#223A2A" Foreground="White" Width="75" VerticalAlignment="Center" />
+                         CommandParameter="{Binding AddInventory}" Background="#223A2A" Foreground="White" Width="60" VerticalAlignment="Center" />
 
                             </StackPanel>
                         </DataTemplate>
