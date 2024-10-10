@@ -18,10 +18,10 @@ namespace TopInsuranceWPF.ViewModels
     {
         private SicknessAccidentController sicknessAccidentController;
         private PrivateController privateController;
-        public IEnumerable<Paymentform> Paymentforms { get; }
-        public IEnumerable<AdditionalInsurance> AdditionalInsurances { get; }
         public List<int> baseAmounts;
         private Employee user;
+        public IEnumerable<Paymentform> Paymentforms { get; }
+        public IEnumerable<AdditionalInsurance> AdditionalInsurances { get; }
 
         public SicknessAccidentInsuranceVM()
         {
@@ -38,8 +38,6 @@ namespace TopInsuranceWPF.ViewModels
             AddSicknessAccidentInsuranceCommand = new RelayCommand(AddSicknessAccidentInsurance);
             ClearFieldsCommand = new RelayCommand(ClearFields);
             ClearCommand = new RelayCommand(ClearFields);
-
-
         }
 
         #region Properties
@@ -302,15 +300,31 @@ namespace TopInsuranceWPF.ViewModels
         #region Add Sickness Accident Insurance
         private void AddSicknessAccidentInsurance()
         {
-            if (!ValidateCustomerSelection() || !ValidateInsuranceCategory() || !ValidatePaymentForm() || !ValidateBaseAmount() || !ValidateAdditonalInsurance())
+            if (SelectedCustomer == null)
             {
+                ShowMessage("Vänligen välj en kund innan du lägger till en försäkring.", "Ingen kund vald");
+                return;
+            }
+
+            if (!IsAdultOptionSelected && !IsChildInsuranceSelected)
+            {
+                ShowMessage("Vänligen välj om försäkringen gäller vuxen eller barn.", "Ingen försäkringskategori vald");
+                return;
+            }
+
+            string error = this.Error;
+            if (!string.IsNullOrEmpty(error))
+            {
+                MessageBox.Show(error, "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (IsAdultOptionSelected)
             {
                 AddInsuranceForAdult();
+                ClearFields();
             }
+            
             else if (IsChildInsuranceSelected)
             {
                 if (!ValidateChildInfo())
@@ -318,73 +332,19 @@ namespace TopInsuranceWPF.ViewModels
                     return;
                 }
                 AddInsuranceForChild();
+                ClearFields();
             }
         }
         #endregion
 
-        #region Validation Mathods 
-        private bool ValidateCustomerSelection()
-        {
-            if (SelectedCustomer == null)
-            {
-                ShowMessage("Vänligen välj en kund innan du lägger till en försäkring.", "Ingen kund vald");
-                return false;
-            }
-            return true;
-        }
-
+        #region Validation Methods 
         public bool IsValidPersonalNumber(string personalNumber)
         {
             return Regex.IsMatch(personalNumber, @"^\d{8}-\d{4}$");
         }
 
-        private bool ValidateInsuranceCategory()
-        {
-            if (!IsAdultOptionSelected && !IsChildInsuranceSelected)
-            {
-                ShowMessage("Vänligen välj om försäkringen gäller vuxen eller barn.", "Ingen försäkringskategori vald");
-                return false;
-            }
-            return true;
-        }
-
-        private bool ValidatePaymentForm()
-        {
-            if (SelectedPaymentForm == 0)
-            {
-                ShowMessage("Vänligen välj ett betalningssätt.", "Ingen betalningsmetod vald");
-                return false;
-            }
-            return true;
-        }
-
-        private bool ValidateAdditonalInsurance()
-        {
-            if (SelectedAdditional == 0)
-            {
-                ShowMessage("Vänligen välj ett tilläggsval.", "Inget tilläggsval vald");
-                return false;
-            }
-            return true;
-        }
-
-        private bool ValidateBaseAmount()
-        {
-            if (SelectedBaseAmount <= 0)
-            {
-                ShowMessage("Vänligen välj ett basbelopp.", "Ingen basbelopp vald");
-                return false;
-            }
-            return true;
-        }
-
         private bool ValidateChildInfo()
         {
-            if (string.IsNullOrWhiteSpace(FirstNameChild) || string.IsNullOrWhiteSpace(LastNameChild) || string.IsNullOrWhiteSpace(SSNChild))
-            {
-                ShowMessage("Vänligen fyll i alla fält för barnets information (förnamn, efternamn, personnummer).", "Ofullständig information");
-                return false;
-            }
             if (!IsValidPersonalNumber(SSNChild))
             {
                 ShowMessage("Ogiltigt personnummer. Vänligen kontrollera att personnumret är i formatet YYYYMMDD-XXXX.", "Ogiltigt personnummer");
@@ -397,41 +357,17 @@ namespace TopInsuranceWPF.ViewModels
         #region Add insurance for child or adult Method
         private void AddInsuranceForAdult()
         {
-            sicknessAccidentController.AddSicknessAccidentInsurance(
-                SelectedCustomer,
-                NewStartDate,
-                NewEndDate,
-                InsuranceType.SjukOchOlycksfallsförsäkringVUXEN,
-                SelectedPaymentForm,
-                SelectedBaseAmount,
-                Note,
-                null,
-                null,
-                null,
-                SelectedAdditional,
-                user
+            sicknessAccidentController.AddSicknessAccidentInsurance(SelectedCustomer,NewStartDate,NewEndDate,InsuranceType.SjukOchOlycksfallsförsäkringVUXEN,SelectedPaymentForm,SelectedBaseAmount,
+                Note,null,null,null,SelectedAdditional,user
             );
-
             ShowMessage("Sjuk- och olycksfallsförsäkring för vuxen har lagts till.", "Försäkring tillagd", MessageBoxImage.Information);
         }
 
         private void AddInsuranceForChild()
         {
-            sicknessAccidentController.AddSicknessAccidentInsurance(
-                SelectedCustomer,
-                NewStartDate,
-                NewEndDate,
-                InsuranceType.SjukOchOlycksfallsförsäkringBARN,
-                SelectedPaymentForm,
-                SelectedBaseAmount,
-                Note,
-                FirstNameChild,
-                LastNameChild,
-                SSNChild,
-                SelectedAdditional,
-                user
+            sicknessAccidentController.AddSicknessAccidentInsurance(SelectedCustomer,NewStartDate,NewEndDate,InsuranceType.SjukOchOlycksfallsförsäkringBARN,SelectedPaymentForm,
+                SelectedBaseAmount,Note,FirstNameChild,LastNameChild,SSNChild,SelectedAdditional,user
             );
-
             ShowMessage("Sjuk- och olycksfallsförsäkring för barn har lagts till.", "Försäkring tillagd", MessageBoxImage.Information);
         }
         #endregion
@@ -448,7 +384,10 @@ namespace TopInsuranceWPF.ViewModels
         {
             get
             {
-                string[] properties = { nameof(NewStartDate), nameof(NewEndDate) };
+                string[] properties = IsChildInsuranceSelected
+               ? new string[] { nameof(NewStartDate), nameof(NewEndDate), nameof(SelectedPaymentForm), nameof(SelectedBaseAmount), nameof(SelectedAdditional),
+                    nameof(FirstNameChild), nameof(LastNameChild), nameof(SSNChild) }
+               : new string[] { nameof(NewStartDate), nameof(NewEndDate), nameof(SelectedPaymentForm), nameof(SelectedBaseAmount), nameof(SelectedAdditional) };
                 foreach (var property in properties)
                 {
                     string error = this[property];
@@ -491,6 +430,42 @@ namespace TopInsuranceWPF.ViewModels
                         errorMessage = "Slutdatum kan inte vara före startdatum.";
                     }
                     break;
+                case nameof(SelectedPaymentForm):
+                    if (SelectedPaymentForm == 0)
+                    {
+                        errorMessage = "Vänligen välj ett betalningssätt";
+                    }
+                    break;
+                case nameof(SelectedBaseAmount):
+                    if (SelectedBaseAmount <= 0)
+                    {
+                        errorMessage = "Vänligen välj ett basbelopp";
+                    }
+                    break;
+                case nameof(SelectedAdditional):
+                    if (SelectedAdditional <= 0)
+                    {
+                        errorMessage = "Vänligen välj eventuellt tillval";
+                    }
+                    break;
+                case nameof(FirstNameChild):
+                    if (string.IsNullOrWhiteSpace(FirstNameChild))
+                    {
+                        errorMessage = "Försäkrades förnamn måste anges";
+                    }
+                    break;
+                case nameof(LastNameChild):
+                    if (string.IsNullOrWhiteSpace(LastNameChild))
+                    {
+                        errorMessage = "Försäkrades efternamn måste anges";
+                    }
+                    break;
+                case nameof(SSNChild):
+                    if (string.IsNullOrWhiteSpace(SSNChild))
+                    {
+                        errorMessage = "Försäkrades personnummer måste anges";
+                    }
+                    break;
                 default:
                     errorMessage = "Ogiltigt kolumnnamn.";
                     break;
@@ -498,7 +473,6 @@ namespace TopInsuranceWPF.ViewModels
 
             return errorMessage;
         }
-
         #endregion
 
         #region Clear Command
@@ -508,8 +482,16 @@ namespace TopInsuranceWPF.ViewModels
             IsAdultOptionSelected = false;
             IsChildInsuranceSelected = false; 
             Note = string.Empty;
-        
-
+            PrivateCustomers.Clear();
+            SelectedCustomer = null;
+            NewStartDate = DateTime.Today;
+            NewEndDate = DateTime.Today.AddYears(1);
+            SelectedAdditional = 0;
+            SelectedBaseAmount = 0;
+            SelectedPaymentForm = 0;
+            SSNChild = string.Empty;
+            FirstNameChild = string.Empty;
+            LastNameChild = string.Empty;
         }
         #endregion
 
