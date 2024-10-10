@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using TopInsuranceBL;
 using TopInsuranceEntities;
@@ -6,12 +7,16 @@ using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
-    class RealEstateInsuranceVM : ObservableObject
+    class RealEstateInsuranceVM : ObservableObject /* IDataErrorInfo*/
     {
         private RealEstateController realEstateController;
+        private BusinessController businessController;
+
+        private List<Inventory> inventories;
 
 
         public IEnumerable<Paymentform> Paymentforms { get; }
+        public IEnumerable<InventoryType> InventoryTypes { get; }
 
         private Employee user;
 
@@ -21,11 +26,17 @@ namespace TopInsuranceWPF.ViewModels
             NewEndDate = DateTime.Now.AddYears(1);
             user = UserContext.Instance.LoggedInUser;
             realEstateController = new RealEstateController();
+            businessController = new BusinessController();
+            inventories = new List<Inventory>();
 
             Paymentforms = Enum.GetValues(typeof(Paymentform)) as IEnumerable<Paymentform>;
+            InventoryTypes = Enum.GetValues(typeof(InventoryType)) as IEnumerable<InventoryType>;
 
             Inventories = new ObservableCollection<Inventory>();
-            AddInventoryCommand = new RelayCommand(AddInventory);
+            //AddInventoryCommand = new RelayCommand(AddInventory);
+
+            //FindCustomerCommand = new RelayCommand(FindCustomer);
+            //AddInventoryCommand = new RelayCommand(AddRealEstateInsurance);
 
             RemoveInventoryCommand = new RelayCommand<Inventory>(RemoveInventory);
         }
@@ -129,8 +140,36 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        private string _valueRealEstate;
-        public string ValueRealEstate
+        private string _companyCity;
+        public string CompanyCity
+        {
+            get { return _companyCity; }
+            set
+            {
+                if (_companyCity != value)
+                {
+                    _companyCity = value;
+                    OnPropertyChanged(nameof(CompanyCity));
+                }
+            }
+        }
+
+        private string _companyZipcode;
+        public string CompanyZipcode
+        {
+            get { return _companyZipcode; }
+            set
+            {
+                if (_companyZipcode != value)
+                {
+                    _companyZipcode = value;
+                    OnPropertyChanged(nameof(CompanyZipcode));
+                }
+            }
+        }
+
+        private int _valueRealEstate;
+        public int ValueRealEstate
         {
             get { return _valueRealEstate; }
             set
@@ -143,8 +182,8 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        private string _valueInventory;
-        public string ValueInventory
+        private int _valueInventory;
+        public int ValueInventory
         {
             get { return _valueInventory; }
             set
@@ -172,10 +211,40 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
+        private InventoryType selectedInventoryType;
+        public InventoryType SelectedInventoryType
+        {
+            get { return selectedInventoryType; }
+            set
+            {
+                if (selectedInventoryType != value)
+                {
+                    selectedInventoryType = value;
+                    OnPropertyChanged(nameof(SelectedInventoryType));
+
+                }
+            }
+        }
+
+        private int _inValue;
+        public int Invalue
+        {
+            get { return _inValue; }
+            set
+            {
+                if (_inValue != value)
+                {
+                    _inValue = value;
+                    OnPropertyChanged(nameof(Invalue));
+
+                }
+            }
+        }
+
         #endregion
 
         #region Observable collection 
-       
+
         private ObservableCollection<BusinessCustomer> _businessCustomers;
         public ObservableCollection<BusinessCustomer> BusinessCustomers
         {
@@ -190,7 +259,6 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-      
         private ObservableCollection<Inventory> _inventories;
         public ObservableCollection<Inventory> Inventories
         {
@@ -217,12 +285,28 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
-        #region Inventory methods
-        private void AddInventory()
-        {
-            Inventories.Add(new Inventory(0, 0));
+        #region Find Customer Method
+        //private void FindCustomer()
+        //{
+        //    if (!string.IsNullOrWhiteSpace(SearchText))
+        //    {
+        //        var filteredBusinessCustomers = businessController.SearchBusinessCustomer(SearchText);
+        //        BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+        //        BusinessCustomers = new ObservableCollection<BusinessCustomer>();
+        //    }
+        //}
+        #endregion
 
-        }
+
+        #region Inventory methods
+        //private void AddInventory()
+        //{
+        //    Inventories.Add(new Inventory(SelectedInventoryType, Invalue));
+        //}
 
         private void RemoveInventory(Inventory inventory)
         {
@@ -233,6 +317,65 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
+        #endregion
+
+        #region Validation
+
+        //private string ValidateField(string columnName)
+        //{
+        //    string errorMessage = null;
+
+        //    switch (columnName)
+        //    {
+        //        case nameof(NewStartDate):
+        //            if (NewStartDate < DateTime.Today)
+        //            {
+        //                errorMessage = "Går inte att teckna en försäkring för redan passerade datum";
+        //            }
+        //            break;
+        //        case nameof(NewEndDate):
+        //            if (NewEndDate < DateTime.Today)
+        //            {
+        //                errorMessage = "Går inte att teckna försäkring för redan passerade datum";
+        //            }
+        //            else if (NewEndDate < NewStartDate)
+        //            {
+        //                errorMessage = "Slutdatum kan inte vara före startdatum.";
+        //            }
+        //            break;
+        //        case nameof(SelectedPaymentForm):
+        //            if (SelectedPaymentForm.ToString() == "Vänligen välj")
+        //            {
+        //                errorMessage = "Betalningsform måste väljas.";
+        //            }
+        //            break;
+        //        default:
+        //            errorMessage = "Ogiltigt kolumnnamn.";
+        //            break;
+        //    }
+
+        //    return errorMessage;
+        //}
+        //public string this[string columnName]
+        //{
+        //    get
+        //    {
+        //        return ValidateField(columnName);
+        //    }
+        //}
+
+        //private bool ValidateNumericFields(out int zipcode)
+        //{
+        //    zipcode = 0;
+
+        //    if (!int.TryParse(CompanyZipcode, out zipcode))
+        //    {
+        //        MessageBox.Show("Postnumret måste vara ett giltigt nummer.");
+        //        return false;
+        //    }
+
+        //    return true;
+        //}
         #endregion
 
     }
