@@ -9,7 +9,17 @@ namespace TopInsuranceEntities
     public class Inventory
     {
         public int InventoryId { get; init; }
-        public double InvValue { get; set; }
+
+        private double _invValue;
+        public double InvValue
+        {
+            get { return _invValue; }
+            set
+            {
+                _invValue = value;
+                InvPremium = CalculatePremium();  
+            }
+        }
         public double InvPremium { get; set; }
         public InventoryType InventoryType { get; set; }
 
@@ -21,14 +31,14 @@ namespace TopInsuranceEntities
         {
             InventoryType = type;
             InvValue = invValue;
-            CalculatePremium();
+            InvPremium = CalculatePremium();
         }
 
-        public Inventory() { }
+        public Inventory() {}
 
-        private void CalculatePremium()
+        private double CalculatePremium()
         {
-            InvPremium = InvValue * 0.002;
+            return InvValue * 0.002;
         }
 
     }
