@@ -14,10 +14,12 @@ namespace TopInsuranceEntities
 
         public int? RealEstateInsuranceId { get; set; }
         public RealEstateInsurance RealEstateInsurance { get; set; }
+       
         public Inventory(double invValue, int invPremium)
         {
             InvValue = invValue;
             InvPremium = invPremium;
         }
+
     }
 }
