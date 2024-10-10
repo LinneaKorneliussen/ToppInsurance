@@ -63,53 +63,30 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        public ICommand FindBCcustomersCommand { get; }
         private void FindBCcustomers()
         {
-            List<BusinessCustomer> businessCustomers = businessController.GetAllBusinessCustomers();
+            var filteredBusinessCustomers = businessController.SearchBusinessCustomer(SearchBusinessCustomer);
 
-            if (string.IsNullOrWhiteSpace(SearchBusinessCustomer))
-            {
-                BCcustomers = new ObservableCollection<BusinessCustomer>(businessCustomers);
-            }
-            else
-            {
-                bool isNumber = int.TryParse(SearchBusinessCustomer, out int organizationalNumber);
-
-                var filteredBusinessCustomers = businessCustomers
-                    .Where(c =>
-                        (isNumber && c.Organizationalnumber == organizationalNumber) ||
-                        (!isNumber && c.CompanyName.Contains(SearchBusinessCustomer, StringComparison.OrdinalIgnoreCase))) 
-                    .ToList();
-
-                BCcustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
-            }
-
+            BCcustomers= new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
             SearchBusinessCustomer = string.Empty;
         }
 
-
-        public ICommand FindPcustomersCommand { get; }
         private void FindPcustomers()
         {
-            List<PrivateCustomer> privateCustomers = privateController.GetAllPrivateCustomers();
+            var filteredPrivateCustomers = privateController.SearchPrivateCustomer(SearchPrivateCustomer);
 
-            if (string.IsNullOrWhiteSpace(SearchPrivateCustomer))
-            {
-                Pcustomers = new ObservableCollection<PrivateCustomer>(privateCustomers);
-            }
-            else
-            {
-                var filteredCustomers = privateCustomers
-                    .Where(c => c.FirstName.Contains(SearchPrivateCustomer, StringComparison.OrdinalIgnoreCase) ||
-                                c.LastName.Contains(SearchPrivateCustomer, StringComparison.OrdinalIgnoreCase) ||
-                                c.SSN.Contains(SearchPrivateCustomer, StringComparison.OrdinalIgnoreCase))
-                    .ToList();
-
-                Pcustomers = new ObservableCollection<PrivateCustomer>(filteredCustomers);
-            }
+            Pcustomers = new ObservableCollection<PrivateCustomer>(filteredPrivateCustomers);
             SearchPrivateCustomer = string.Empty;
         }
+
+        #endregion
+
+        #region Commands
+        public ICommand FindBCcustomersCommand { get; }
+        public ICommand FindPcustomersCommand { get; }
+        public ICommand UpdatePcustomersCommand { get; }
+        public ICommand UpdateBCcustomersCommand { get; }
+        public ICommand ClearCommand { get; }
 
         #endregion
 
@@ -137,7 +114,7 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
-        #region Properties update customer
+        #region Properties
 
         private string _newFirstName;
         public string NewFirstName
@@ -267,8 +244,7 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
-        #region Code selected customers
-
+        #region Selected customer code
 
         private PrivateCustomer _selectedPcustomers;
         public PrivateCustomer SelectedPcustomers
@@ -323,8 +299,7 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
-        #region Update private customer Command and Methods
-        public ICommand UpdatePcustomersCommand { get; }
+        #region Update private customer method
         private void UpdatePrivateCustomer()
         {
             if (SelectedPcustomers == null)
@@ -425,8 +400,7 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
-        #region Update Business customer Command and Methods
-        public ICommand UpdateBCcustomersCommand { get; }
+        #region Update Business customer method
         private void UpdateBusinessCustomers()
         {
             if (SelectedBCcustomers == null)
@@ -522,8 +496,7 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
-        #region Clear Command
-        public ICommand ClearCommand { get; }
+        #region Clear fields method
         private void ClearFields()
         {
             NewFirstName = string.Empty;
@@ -538,7 +511,8 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
-        #region Refresh Command 
+        #region Refresh 
+
         private ICommand refreshPrivatecommand;
         public ICommand RefreshPrivateCommand
         {
@@ -550,6 +524,7 @@ namespace TopInsuranceWPF.ViewModels
             List<PrivateCustomer> privateCustomers = privateController.GetAllPrivateCustomers();
             Pcustomers = new ObservableCollection<PrivateCustomer>(privateCustomers);
         }
+
 
         private ICommand refreshBusinesscommand;
         public ICommand RefreshBusinessCommand
@@ -565,7 +540,7 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
-        #region Validation IDataErrorInfo
+        #region Validation
         public string Error => null;
         public string ValidateField(string columnName)
         {

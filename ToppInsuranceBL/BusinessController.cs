@@ -28,6 +28,13 @@ namespace TopInsuranceBL
         }
         #endregion
 
+        #region Search Business Customers Method
+        public List<BusinessCustomer> SearchBusinessCustomer(string searchTerm)
+        {
+            return businessRepository.SearchBusinessCustomer(searchTerm);
+        }
+        #endregion
+
         #region Get all business customers Method
         public List<BusinessCustomer> GetAllBusinessCustomers()
         {

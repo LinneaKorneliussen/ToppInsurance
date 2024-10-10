@@ -35,7 +35,6 @@ namespace TopInsuranceEntities
             double riskFactor = GetRiskFactor(RiskZone);
             return (int)(Premium * riskFactor);
         }
-
         private int GetBasePremium(DeductibleVehicle deductible, CoverageType coverageType)
         {
             switch (deductible)
@@ -74,15 +73,14 @@ namespace TopInsuranceEntities
             throw new ArgumentException("Ogiltig kombination av självrisk och omfattning");
         }
 
-        // Hämtar riskfaktorn baserat på riskzon
         private double GetRiskFactor(RiskZone riskZone)
         {
             switch (riskZone)
             {
-                case RiskZone.Z1: return 1.3; // Högst risk
-                case RiskZone.Z2: return 1.2; // Hög risk
-                case RiskZone.Z3: return 1.1; // Låg risk
-                case RiskZone.Z4: return 1.0; // Lägst risk
+                case RiskZone.Z1: return 1.3; 
+                case RiskZone.Z2: return 1.2; 
+                case RiskZone.Z3: return 1.1; 
+                case RiskZone.Z4: return 1.0; 
                 default:
                     throw new ArgumentException("Ogiltig riskzon");
             }
