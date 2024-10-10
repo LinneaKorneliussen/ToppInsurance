@@ -30,10 +30,10 @@
 
                 <!--RadioButton-->
                 <RadioButton Content="Försäkring för inventarier" Style="{StaticResource RadioButtonStyle}" GroupName="Options" 
-                             Command="{Binding AdultsCommand}" IsChecked="{Binding IsInventorySelected}" Margin=" 55 0 0 0"/>
+                             IsChecked="{Binding IsInventorySelected}" Margin=" 55 0 0 0"/>
 
-                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="450 -40 40 0" Style="{StaticResource searchTextbox}"/>
-                <Button Content="Sök" Width="50" Margin="730 -40 -40 0" Background="#223A2A" Foreground="White" Command="{Binding FindCustomerCommand}"/>
+                <TextBox Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="450 -40 40 0" Style="{StaticResource searchTextbox}"/>
+                <Button Content="Sök" Width="50" Margin="730 -40 -40 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
                 <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 -40 90 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
             </StackPanel>
 
@@ -41,8 +41,8 @@
 
 
             <!-- DataGrid för att visa företagskunder -->
-            <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="115" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" 
-                      SelectedItem="{Binding SelectedBCcustomers, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
+            <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="115" FontWeight="Normal" ItemsSource="{Binding BusinessCustomers}" 
+                      SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Företagsnamn" Binding="{Binding CompanyName}" IsReadOnly="True" Width="auto"/>
                     <DataGridTextColumn Header="Organisations.nr" Binding="{Binding Organizationalnumber}" IsReadOnly="True" Width="auto"/>
@@ -107,31 +107,27 @@
                 <TextBox Grid.Row="4" Grid.Column="1" BorderBrush="Black" FontWeight="Normal" Margin="0,2,50,2" Width="300"
                          Text="{Binding Note}" Background="GhostWhite"/>
 
-                <TextBlock Text="Fastighetsadress: " Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,5,5,0"
-                           Visibility="{Binding IsChildInsuranceSelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                <TextBox Name="txtFastighetsadress" Grid.Row="5" Grid.Column="1" Text="{Binding FirstNameChild, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                <TextBlock Text="Fastighetsadress: " Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,5,5,0"/>
+                <TextBox Name="txtFastighetsadress" Grid.Row="5" Grid.Column="1" Text="{Binding CompanyAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                          BorderBrush="Black" FontWeight="Normal" Margin="0,2,50,2" Width="300" Height="20" Background="GhostWhite"/>
 
-                <TextBlock Text="Postnummer: " Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,5,5,0"
-                           Visibility="{Binding IsChildInsuranceSelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                <TextBox Name="txtPostNummer" Grid.Row="6" Grid.Column="1" Text="{Binding FirstNameChild, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                <TextBlock Text="Postnummer: " Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,5,5,0"  />
+                <TextBox Name="txtPostNummer" Grid.Row="6" Grid.Column="1" Text="{Binding CompanyZipcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                          BorderBrush="Black" FontWeight="Normal" Margin="0,2,50,2" Width="300" Height="20" Background="GhostWhite"/>
 
-                <TextBlock Text="Stad: " Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,5,5,0"
-                           Visibility="{Binding IsChildInsuranceSelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                <TextBox Name="txtStad" Grid.Row="7" Grid.Column="1" Text="{Binding FirstNameChild, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                <TextBlock Text="Stad: " Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,5,5,0"/>
+                <TextBox Name="txtStad" Grid.Row="7" Grid.Column="1" Text="{Binding CompanyCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                          BorderBrush="Black" FontWeight="Normal" Margin="0,2,50,2" Width="300" Height="20" Background="GhostWhite"/>
 
 
-                <TextBlock Text="Värde fastigheter:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,0,8,0" 
-                           Visibility="{Binding IsChildInsuranceSelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                <TextBox Name="txtVärdeFastighet" Grid.Row="8" Grid.Column="1" Text="{Binding LastNameChild, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                <TextBlock Text="Värde fastigheter:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,0,8,0" />
+                <TextBox Name="txtVärdeFastighet" Grid.Row="8" Grid.Column="1" Text="{Binding ValueRealEstate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                          BorderBrush="Black" FontWeight="Normal" Margin="0,2,50,2" Width="300" Background="GhostWhite"/>
 
                 <!-- Ifyllningsfält för inventarier -->
                 <TextBlock Text="Välj typ av inventarie: " Grid.Row="9" Grid.Column="1" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,0,8,0" 
                            Visibility="{Binding IsInventorySelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                
+
 
                 <!-- Lista över inventarier -->
                 <ItemsControl Grid.Column="1" Grid.Row="10" ItemsSource="{Binding Inventories}" 
@@ -140,15 +136,16 @@
                         <DataTemplate>
 
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                                <ComboBox Width="100" Margin="0,0,10,0" SelectedItem="{Binding SelectedOption}" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"
-                           Background="GhostWhite" >
-                                    <ComboBoxItem Content="Option 1" />
-                                    <ComboBoxItem Content="Option 2" />
+                                <ComboBox Width="100" Margin="0,0,10,0" 
+                                          ItemsSource="{Binding DataContext.Types, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                          SelectedItem="{Binding InventoryType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                          ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
+                                          Background="GhostWhite">
                                 </ComboBox>
                                 <TextBox Text="{Binding InvValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                          BorderBrush="Black" FontWeight="Normal" Width="125" Background="GhostWhite" Margin="0,0,10,0"/>
+                                         BorderBrush="Black" FontWeight="Normal" Width="125" Background="GhostWhite" Margin="0,0,10,0"/>
                                 <Button Content="Ta bort" Command="{Binding DataContext.RemoveInventoryCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"  
-                         CommandParameter="{Binding AddInventory}" Background="#223A2A" Foreground="White" Width="60" VerticalAlignment="Center" />
+                                        CommandParameter="{Binding}" Background="#223A2A" Foreground="White" Width="60" VerticalAlignment="Center"/>
 
                             </StackPanel>
                         </DataTemplate>
@@ -156,14 +153,15 @@
                 </ItemsControl>
 
                 <!-- Lägg till fler knapp -->
-                <Button Content="Lägg till" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2" Background="#223A2A" Foreground="White" Command="{Binding AddInventoryCommand}" Visibility="{Binding IsInventorySelected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                <Button Content="Lägg till" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2" Background="#223A2A" Foreground="White" 
+                        Command="{Binding AddInventoryCommand}" Visibility="{Binding IsInventorySelected, Converter={StaticResource BooleanToVisibilityConverter}}"
                     Width="130" HorizontalAlignment="Left" Margin="0,2,0,2" />
 
                 <!-- Buttons -->
                 <Button Content="Återställ fält" Grid.Row="11" Grid.Column="2" HorizontalAlignment="Left" Width="100" Margin='61,82,0,-83' Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
 
                 <Button Content="Spara ändringar" Grid.Row="11" Grid.Column="2" HorizontalAlignment="Right"
-                        Command="{Binding AddSicknessAccidentInsuranceCommand}" Width="150" Margin="0,83,17,-83" Background="#223A2A" Foreground="White"/>
+                        Command="{Binding AddRealEstateInsuranceCommand}" Width="150" Margin="0,83,17,-83" Background="#223A2A" Foreground="White"/>
 
             </Grid>
 
