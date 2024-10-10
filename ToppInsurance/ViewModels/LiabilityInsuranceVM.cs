@@ -23,7 +23,14 @@ namespace TopInsuranceWPF.ViewModels
             NewEndDate = DateTime.Now.AddYears(1);
             user = UserContext.Instance.LoggedInUser;
             liabilityController = new LiabilityController();
-            Paymentforms = Enum.GetValues(typeof(Paymentform)) as IEnumerable<Paymentform>;
+            PaymentFormsWithPlaceholder = new ObservableCollection<object> { "Vänligen välj" };
+
+            // Hämta enum-värden och lägg till dem i ObservableCollection
+            var paymentForms = Enum.GetValues(typeof(Paymentform)).Cast<Paymentform>();
+            foreach (var form in paymentForms)
+            {
+                PaymentFormsWithPlaceholder.Add(form);
+            }
             Insuranceamounts = Enum.GetValues(typeof(InsuranceAmount)) as IEnumerable<InsuranceAmount>;
             Deductibleliabilities = Enum.GetValues(typeof(DeductibleLiability)) as IEnumerable<DeductibleLiability>;
             FindBcustomerCommand = new RelayCommand(FindCustomer);
@@ -189,6 +196,20 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
+
+        private ObservableCollection<object> _paymentFormsWithPlaceholder;
+        public ObservableCollection<object> PaymentFormsWithPlaceholder
+        {
+            get { return _paymentFormsWithPlaceholder; }
+            set
+            {
+                if (_paymentFormsWithPlaceholder != value)
+                {
+                    _paymentFormsWithPlaceholder = value;
+                    OnPropertyChanged(nameof(PaymentFormsWithPlaceholder));
+                }
+            }
+        }
         #endregion
 
         #region Commands 
@@ -201,10 +222,16 @@ namespace TopInsuranceWPF.ViewModels
         #region Find Customer Method
         private void FindCustomer()
         {
-            var filteredCustomers = liabilityController.SearchBusinessCustomer(SearchText);
-
-            BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredCustomers);
-            SearchText = string.Empty;
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                var filteredCustomers = liabilityController.SearchBusinessCustomer(SearchText);
+                BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredCustomers);
+            }
+            else 
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                BusinessCustomers = new ObservableCollection<BusinessCustomer>();
+            }
         }
         #endregion
 
@@ -237,7 +264,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             get
             {
-                string[] properties = { nameof(NewStartDate), nameof(NewEndDate) };
+                string[] properties = { nameof(ContactPerson), nameof(ContactPersonPhNo), nameof(NewStartDate), nameof(NewEndDate), nameof(SelectedPaymentForm), nameof(SelectedAmount), nameof(SelectedDeductible) };
                 foreach (var property in properties)
                 {
                     string error = this[property];
@@ -278,6 +305,36 @@ namespace TopInsuranceWPF.ViewModels
                     else if (NewEndDate < NewStartDate)
                     {
                         errorMessage = "Slutdatum kan inte vara före startdatum.";
+                    }
+                    break;
+                case nameof(ContactPerson):
+                    if (string.IsNullOrWhiteSpace(ContactPerson))
+                    {
+                        errorMessage = "Kontaktperson måste anges";
+                    }
+                    break;
+                case nameof(ContactPersonPhNo):
+                    if (string.IsNullOrWhiteSpace(ContactPersonPhNo))
+                    {
+                        errorMessage = "Telefonnummer till kontaktperson måste anges";
+                    }
+                    break;
+                case nameof(SelectedPaymentForm):
+                    if (SelectedPaymentForm.ToString() == "Vänligen välj")
+                    {
+                        errorMessage = "Betalningsform måste väljas.";
+                    }
+                    break;
+                case nameof(SelectedDeductible):
+                    if (SelectedDeductible == null)
+                    {
+                        errorMessage = "Självrisk måste väljas.";
+                    }
+                    break;
+                case nameof(SelectedAmount):
+                    if (SelectedAmount == null)
+                    {
+                        errorMessage = "Försäkringsbelopp måste väljas.";
                     }
                     break;
                 default:

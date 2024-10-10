@@ -37,7 +37,8 @@
                 <TextBlock Text="Hämta den företagskund som önskar teckna en ansvarsförsäkring" Margin=" 15 40 400 0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13"/>
 
                 <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="450 -40 40 0" Style="{StaticResource searchTextbox}"/>
-                <Button Content="Sök" Width="50" Margin="730 -40 -40 0" Background="#223A2A" Foreground="White" Command="{Binding FindBcustomerCommand}"/>
+                <Button Content="Sök" Width="50" Margin="730 -40 -40 0" Background="#223A2A" Foreground="White" Command="{Binding FindBcustomerCommand}" 
+                        mah:TextBoxHelper.Watermark="Ange sökord"/>
 
                 <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 -40 90 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
 
@@ -51,7 +52,7 @@
             <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="115" FontWeight="Normal" ItemsSource="{Binding BusinessCustomers}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Företag" Binding="{Binding CompanyName}" IsReadOnly="True" Width="auto"/>
-                    <DataGridTextColumn Header="Org.nr" Binding="{Binding Orgnr}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Org.nr" Binding="{Binding Organizationalnumber}" IsReadOnly="True" Width="auto"/>
                     <DataGridTextColumn Header="Tel.nr" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
                     <DataGridTextColumn Header="Adress" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="auto"/>
                     <DataGridTextColumn Header="Postnummer" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="auto"/>
@@ -86,12 +87,12 @@
                 <TextBlock Text="Kontaktperson:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Width="150" Margin="15,4,0,6" HorizontalAlignment="Left"
                 Text="{Binding ContactPerson, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-                Background="GhostWhite"/>
+                Background="GhostWhite" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
                 <TextBlock Text="Kontaktperson tel.nr:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <TextBox Grid.Row="1" Grid.Column="1" Width="150" Margin="15,4,0,6" HorizontalAlignment="Left"
                 Text="{Binding ContactPersonPhNo, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-                Background="GhostWhite"/>
+                Background="GhostWhite" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
                 <TextBlock Text="Startdatum:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <DatePicker x:Name="dpStartdate" Grid.Row="2" Grid.Column="1" Width="150" Margin="15,4,0,6" HorizontalAlignment="Left"
@@ -106,19 +107,34 @@
                 Style="{StaticResource ValidationDatePickerStyle}"/>
 
                 <TextBlock Text="Betalningssätt:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <ComboBox x:Name="cbPaymentMethod" Grid.Row="4" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
-                Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                ItemsSource="{Binding Paymentforms}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay}" Height="20"/>
+                <ComboBox x:Name="cbPaymentMethod" 
+          Grid.Row="4" 
+          Grid.Column="1" 
+          Width="300" 
+          Margin="0,4,0,6" 
+          HorizontalAlignment="Center"
+          Background="GhostWhite" 
+          BorderThickness="1" 
+          Style="{StaticResource comboBoxInError}"
+          ItemsSource="{Binding PaymentFormsWithPlaceholder}" 
+          SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+          Height="20"
+          Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+          ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
                 <TextBlock Text="Försäkringsbelopp:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbBasBelopp" Grid.Row="5" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
                 Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                ItemsSource="{Binding Insuranceamounts}" SelectedItem="{Binding SelectedAmount, Mode=TwoWay}" Height="20"/>
+                ItemsSource="{Binding Insuranceamounts}" SelectedItem="{Binding SelectedAmount, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="20"
+                Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+                ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
                 <TextBlock Text="Självrisk:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbSjälvrisk" Grid.Row="6" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
                 Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                ItemsSource="{Binding Deductibleliabilities}" SelectedItem="{Binding SelectedDeductible, Mode=TwoWay}" Height="20"/>
+                ItemsSource="{Binding Deductibleliabilities}" SelectedItem="{Binding SelectedDeductible, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="20"
+                Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+                ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
                 <TextBlock Text="Noteringar:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <TextBox Grid.Row="7" Grid.Column="1" FontWeight="Normal" Margin="0,4,0,6" Width="300"
