@@ -242,9 +242,7 @@
                 <Style.Triggers>
                     <Trigger Property="IsSelected" Value="True">
                         <Setter Property="Background" Value="#5CD67B" />
-                        <!-- Bakgrundsfärgen på det valda objektet -->
                         <Setter Property="Foreground" Value="White" />
-                        <!-- Textfärgen på det valda objektet -->
                     </Trigger>
                 </Style.Triggers>
             </Style>
