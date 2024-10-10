@@ -11,13 +11,13 @@ using System.Text.RegularExpressions;
 
 namespace TopInsuranceWPF.ViewModels
 {
-    public class RegisterEmployerVM : ObservableObject, IDataErrorInfo
+    public class RegisterEmployeeVM : ObservableObject, IDataErrorInfo
     {
-        private EmployerController employerController;
+        private EmployeeController employerController;
 
-        public RegisterEmployerVM()
+        public RegisterEmployeeVM()
         {
-            employerController = new EmployerController();
+            employerController = new EmployeeController();
 
             AddEmployerCommand = new RelayCommand(AddEmployer);
             Clearfieldscommand = new RelayCommand(ClearFields);
