@@ -102,21 +102,21 @@
                 <ComboBox x:Name="cbPaymentMethod" Grid.Row="4" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
                 Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
                 ItemsSource="{Binding Paymentforms}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="20"
-                Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
+                Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"
                 ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
                 <TextBlock Text="Försäkringsbelopp:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbBasBelopp" Grid.Row="5" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
                 Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
                 ItemsSource="{Binding Insuranceamounts}" SelectedItem="{Binding SelectedAmount, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="20"
-                Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+                Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"
                 ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
                 <TextBlock Text="Självrisk:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbSjälvrisk" Grid.Row="6" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
                 Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
                 ItemsSource="{Binding Deductibleliabilities}" SelectedItem="{Binding SelectedDeductible, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="20"
-                Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
+                Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"
                 ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
                 <TextBlock Text="Noteringar:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
