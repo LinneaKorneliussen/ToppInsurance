@@ -56,5 +56,21 @@ namespace TopInsuranceDL
         }
         #endregion
 
+        #region Search Business Customer Method 
+        public List<BusinessCustomer> SearchBusinessCustomer(string searchTerm)
+        {
+            List<BusinessCustomer> allBusinessCustomers = unitOfWork.BCRepository.GetAll().ToList();
+
+            bool isNumericSearch = int.TryParse(searchTerm, out int searchNumber);
+
+            var matchingCustomers = allBusinessCustomers.Where(c =>
+                c.CompanyName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                (isNumericSearch && c.Organizationalnumber.ToString().Contains(searchTerm))
+            ).ToList();
+
+            return matchingCustomers;
+        }
+        #endregion
+
     }
 }

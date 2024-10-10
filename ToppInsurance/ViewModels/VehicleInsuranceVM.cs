@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TopInsuranceBL;
 using TopInsuranceEntities;
@@ -15,32 +8,46 @@ namespace TopInsuranceWPF.ViewModels
 {
     class VehicleInsuranceVM : ObservableObject
     {
-        private BusinessController businessController;
         private VehicleController vehicleController;
-        public IEnumerable<Paymentform> Paymentforms { get; }
-        public IEnumerable<AdditionalInsurance> AdditionalInsurances { get; }
-        public List<int> baseAmounts;
+        private CityRiskZoneManager cityRiskZoneManager;
         private Employee user;
+
+        public IEnumerable<Paymentform> Paymentforms { get; }
+        public IEnumerable<DeductibleVehicle> DeductibleVehicle { get; }
+        public IEnumerable<CoverageType> CoverageType { get; }
 
         public VehicleInsuranceVM()
         {
             user = UserContext.Instance.LoggedInUser;
             vehicleController = new VehicleController();
+            cityRiskZoneManager = new CityRiskZoneManager();
+            Cities = new ObservableCollection<string>(cityRiskZoneManager.CityRiskZones.Keys);
+
             Paymentforms = Enum.GetValues(typeof(Paymentform)) as IEnumerable<Paymentform>;
-            AdditionalInsurances = Enum.GetValues(typeof(AdditionalInsurance)) as IEnumerable<AdditionalInsurance>;
-            //Deductible = Enum.GetValues(typeof(Deductible)) as IEnumerable<Deductible>;
-            //CoverageType = Enum.GetValues(typeof(CoverageType)) as IEnumerable<CoverageType>;
-            //AddVehicleInsuranceCommand = new RelayCommand(AddVehicleInsurance);
-            businessController = new BusinessController();
-            List<BusinessCustomer> customers = businessController.GetAllBusinessCustomers();
+            DeductibleVehicle = Enum.GetValues(typeof(DeductibleVehicle)) as IEnumerable<DeductibleVehicle>;
+            CoverageType = Enum.GetValues(typeof(CoverageType)) as IEnumerable<CoverageType>;
+            AddVehicleInsuranceCommand = new RelayCommand(AddVehicleInsurance);
             FindBCcustomersCommand = new RelayCommand(FindBCcustomers);
-            BCcustomers = new ObservableCollection<BusinessCustomer>(customers);
 
         }
 
         #region Properties
-        private PrivateCustomer _selectedBCcustomers;
-        public PrivateCustomer SelectedBCcustomers
+
+        private string _searchBusinessCustomer;
+        public string SearchBusinessCustomer
+        {
+            get { return _searchBusinessCustomer; }
+            set
+            {
+                if (_searchBusinessCustomer != value)
+                {
+                    _searchBusinessCustomer = value;
+                    OnPropertyChanged(nameof(SearchBusinessCustomer));
+                }
+            }
+        }
+        private BusinessCustomer _selectedBCcustomers;
+        public BusinessCustomer SelectedBCcustomers
         {
             get { return _selectedBCcustomers; }
             set
@@ -95,34 +102,6 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        private AdditionalInsurance _selectedAdditional;
-        public AdditionalInsurance SelectedAdditional
-        {
-            get { return _selectedAdditional; }
-            set
-            {
-                if (_selectedAdditional != value)
-                {
-                    _selectedAdditional = value;
-                    OnPropertyChanged(nameof(SelectedAdditional));
-                }
-            }
-        }
-
-        private int _selectedBaseAmount;
-        public int SelectedBaseAmount
-        {
-            get { return _selectedBaseAmount; }
-            set
-            {
-                if (_selectedBaseAmount != value)
-                {
-                    _selectedBaseAmount = value;
-                    OnPropertyChanged(nameof(SelectedBaseAmount));
-                }
-            }
-        }
-
         private string _note;
         public string Note
         {
@@ -136,9 +115,50 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
+        private DeductibleVehicle _selectedDeductible;
+        public DeductibleVehicle SelectedDeductible
+        {
+            get { return _selectedDeductible; }
+            set
+            {
+                if (_selectedDeductible != value)
+                {
+                    _selectedDeductible = value;
+                    OnPropertyChanged(nameof(SelectedDeductible));
+                }
+            }
+        }
 
-        private string _registrationNumber;
-        public string RegistrationNumber
+        private CoverageType _selectedCoverageType;
+        public CoverageType SelectedCoverageType
+        {
+            get { return _selectedCoverageType; }
+            set
+            {
+                if (_selectedCoverageType != value)
+                {
+                    _selectedCoverageType = value;
+                    OnPropertyChanged(nameof(SelectedCoverageType));
+                }
+            }
+        }
+
+        private string _selectedCity;
+        public string SelectedCity
+        {
+            get { return _selectedCity; }
+            set
+            {
+                if (_selectedCity != value)
+                {
+                    _selectedCity = value;
+                    OnPropertyChanged(nameof(SelectedCity));
+                }
+            }
+        }
+
+        private int _registrationNumber;
+        public int RegistrationNumber
         {
             get { return _registrationNumber; }
             set
@@ -165,8 +185,8 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        private string _yearModel;
-        public string YearModel
+        private int _yearModel;
+        public int YearModel
         {
             get { return _yearModel; }
             set
@@ -178,50 +198,9 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
-
-        //private Deductible _selectedDeductible;
-        //public Deductible SelectedDeductible
-        //{
-        //    get { return _selectedDeductible; }
-        //    set
-        //    {
-        //        if (_selectedDeductible != value)
-        //        {
-        //            _selectedDeductible = value;
-        //            OnPropertyChanged(nameof(SelectedDeductible));
-        //        }
-        //    }
-        //}
-
-        //private CoverageType _selectedCoverageType;
-        //public CoverageType SelectedCoverageType
-        //{
-        //    get { return _selectedCoverageType; }
-        //    set
-        //    {
-        //        if (_selectedCoverageType != value)
-        //        {
-        //            _selectedCoverageType = value;
-        //            OnPropertyChanged(nameof(SelectedCoverageType));
-        //        }
-        //    }
-        //}
         #endregion
 
         #region Observable collection 
-        private ObservableCollection<int> _currentBaseAmounts;
-        public ObservableCollection<int> CurrentBaseAmounts
-        {
-            get { return _currentBaseAmounts; }
-            set
-            {
-                if (_currentBaseAmounts != value)
-                {
-                    _currentBaseAmounts = value;
-                    OnPropertyChanged(nameof(CurrentBaseAmounts));
-                }
-            }
-        }
         private ObservableCollection<BusinessCustomer> _businessCustomers;
         public ObservableCollection<BusinessCustomer> BusinessCustomers
         {
@@ -235,6 +214,19 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
+        private ObservableCollection<string> _cities;
+        public ObservableCollection<string> Cities
+        {
+            get { return _cities; }
+            set
+            {
+                if (_cities != value)
+                {
+                    _cities = value;
+                    OnPropertyChanged(nameof(Cities));
+                }
+            }
+        }
         #endregion
 
         #region Commands
@@ -243,73 +235,39 @@ namespace TopInsuranceWPF.ViewModels
         #endregion
 
         #region Add vehicleinsurance Method
-        //private void AddVehicleInsurance()
-        //{
-           
-        //}
+        private void AddVehicleInsurance()
+        {
+            RiskZone selectedRiskZone = cityRiskZoneManager.GetRiskZoneByCity(SelectedCity);
+
+
+            Vehicle vehicle = new Vehicle(RegistrationNumber, Brand, YearModel);
+
+            if (vehicle != null)
+            {
+                vehicleController.AddVehicleInsurance(SelectedBCcustomers, vehicle, SelectedDeductible, SelectedCoverageType, selectedRiskZone, NewStartDate,
+               NewEndDate, InsuranceType.Fordonsförsäkring, SelectedPaymentForm, Note, user);
+
+            }
+
+        }
 
         #endregion
 
         #region Search business customers
-
-        private string _searchBusinessCustomer;
-        public string SearchBusinessCustomer
-        {
-            get { return _searchBusinessCustomer; }
-            set
-            {
-                if (_searchBusinessCustomer != value)
-                {
-                    _searchBusinessCustomer = value;
-                    OnPropertyChanged(nameof(SearchBusinessCustomer));
-                }
-            }
-        }
-
-
         private void FindBCcustomers()
         {
-            List<BusinessCustomer> businessCustomers = businessController.GetAllBusinessCustomers();
+            var filteredCustomers = vehicleController.SearchBusinessCustomer(SearchBusinessCustomer);
 
-            if (string.IsNullOrWhiteSpace(SearchBusinessCustomer))
-            {
-                BCcustomers = new ObservableCollection<BusinessCustomer>(businessCustomers);
-            }
-            else
-            {
-                bool isNumber = int.TryParse(SearchBusinessCustomer, out int organizationalNumber);
-
-                var filteredBusinessCustomers = businessCustomers
-                    .Where(c =>
-                        (isNumber && c.Organizationalnumber == organizationalNumber) ||
-                        (!isNumber && c.CompanyName.Contains(SearchBusinessCustomer, StringComparison.OrdinalIgnoreCase)))
-                    .ToList();
-
-                BCcustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
-            }
-
+            BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredCustomers);
             SearchBusinessCustomer = string.Empty;
         }
 
         #endregion
 
-        #region Get all business customers
-        private ObservableCollection<BusinessCustomer> _BCcustomers;
-        public ObservableCollection<BusinessCustomer> BCcustomers
-        {
-            get { return _BCcustomers; }
-            set
-            {
-                _BCcustomers = value;
-                OnPropertyChanged(nameof(BCcustomers));
-            }
-        }
-
-        #endregion
 
         #region Validation
 
-        
+
         #endregion
 
     }

@@ -18,6 +18,7 @@ namespace TopInsuranceWPF.ViewModels
             privateController = new PrivateController();
             AddPrivateCustomerCommand = new RelayCommand(AddPrivateCustomer);
             ClearFieldsCommand = new RelayCommand(ClearFields);
+            RefreshPrivateCommand = new RelayCommand(RefreshPrivateCustomer);
             List<PrivateCustomer> customers = privateController.GetAllPrivateCustomers();
             PCustomers = new ObservableCollection<PrivateCustomer>(customers);
         }
@@ -171,6 +172,7 @@ namespace TopInsuranceWPF.ViewModels
         #region Commands
         public ICommand AddPrivateCustomerCommand { get; }
         public ICommand ClearFieldsCommand { get; }
+        public ICommand RefreshPrivateCommand { get; }
         #endregion
 
         #region Add private customer Method
@@ -233,6 +235,14 @@ namespace TopInsuranceWPF.ViewModels
         }
 
 
+        #endregion
+
+        #region Refresh Private Customers Method 
+        private void RefreshPrivateCustomer()
+        {
+            List<PrivateCustomer> privateCustomers = privateController.GetAllPrivateCustomers();
+            PCustomers = new ObservableCollection<PrivateCustomer>(privateCustomers);
+        }
         #endregion
 
         #region Validation IDataErrorInfo

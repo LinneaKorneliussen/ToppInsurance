@@ -20,6 +20,7 @@ namespace TopInsuranceWPF.ViewModels
             businessController = new BusinessController();
             AddBusinessCustomerCommand = new RelayCommand(AddBusinessCustomer);
             ClearFieldsCommand = new RelayCommand(ClearFields);
+            RefreshBusinessCommand = new RelayCommand(RefreshBusinessCustomer);
             List<BusinessCustomer> customers = businessController.GetAllBusinessCustomers();
             BCcustomers = new ObservableCollection<BusinessCustomer>(customers);
         }
@@ -185,6 +186,7 @@ namespace TopInsuranceWPF.ViewModels
         #region Commands
         public ICommand AddBusinessCustomerCommand { get; }
         public ICommand ClearFieldsCommand { get; }
+        public ICommand RefreshBusinessCommand { get; }
         #endregion
 
         #region Add Business Customer Methods
@@ -245,6 +247,14 @@ namespace TopInsuranceWPF.ViewModels
                             $"Organisationsnummer: {orgNumber}\n" +
                             $"Landkod: {countrycode}\n" +
                             $"Tack för att du registrerade en ny företagskund!");
+        }
+        #endregion
+
+        #region Refresh Business Customer Method 
+        private void RefreshBusinessCustomer()
+        {
+            List<BusinessCustomer> businessCustomers = businessController.GetAllBusinessCustomers();
+            BCcustomers = new ObservableCollection<BusinessCustomer>(businessCustomers);
         }
         #endregion
 
@@ -350,19 +360,20 @@ namespace TopInsuranceWPF.ViewModels
                 MessageBox.Show("Postnumret måste vara ett giltigt nummer.");
                 return false;
             }
-            if (!int.TryParse(NewOrganizationalnumber, out orgNumber))
-            {
-                MessageBox.Show("Org.nr måste vara ett giltigt nummer.");
-                return false;
-            }
             if (!int.TryParse(NewCountryCode, out countrycode))
             {
                 MessageBox.Show("Landskoden måste vara ett giltigt nummer.");
                 return false;
             }
+            if (!int.TryParse(NewOrganizationalnumber, out orgNumber))
+            {
+                MessageBox.Show("Organisationsnumret är inte i korrekt format, vänligen ange 10 siffror (XXXXXXXXXX).");
+                return false;
+            }
 
             return true;
         }
+
         public bool IsValidPhoneNumber(string phoneNumber)
         {
             string pattern = @"^\d{3}-\d{7}$";

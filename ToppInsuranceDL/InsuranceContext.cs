@@ -252,35 +252,69 @@ namespace TopInsuranceDL
             //vehicleInsurance2.Vehicle = vehicle2;
             //vehicleInsurance3.Vehicle = vehicle3;
 
+            //// Skapa fastighetsförsäkringar för varje kund
+            //RealEstateInsurance realEstateInsuranceOlof = new RealEstateInsurance(businessCustomerOlof,
+            //    new DateTime(2024, 1, 1),
+            //    new DateTime(2025, 1, 1),
+            //    InsuranceType.FastighetsOchInventarieförsäkring,
+            //    Paymentform.År,
+            //    "Olofs fastighetsförsäkring",
+            //    "Huvudgatan 1",
+            //    12345,
+            //    "Stockholm",
+            //    4500000,
+            //    birgitta);
 
-            //// Real Estate Insurance for business customers 
             //RealEstateInsurance realEstateInsuranceSven = new RealEstateInsurance(businessCustomerSven,
             //    new DateTime(2024, 1, 1),
             //    new DateTime(2025, 1, 1),
             //    InsuranceType.FastighetsOchInventarieförsäkring,
             //    Paymentform.År,
-            //    1500,
-            //    2000000,
-            //    Status.Aktiv,
-            //    "Svens fastighetsförsäkring",
-            //    "Ica vägen 6, Borås",
-            //    3500000,
-            //    1800);
+            //    "Kalle's fastighetsförsäkring",
+            //    "Bygggatan 12",
+            //    98765,
+            //    "Göteborg",
+            //    2700000,
+            //    birgitta);
 
+            //RealEstateInsurance realEstateInsuranceOlof2 = new RealEstateInsurance(businessCustomerOlof,
+            //    new DateTime(2024, 1, 1),
+            //    new DateTime(2025, 1, 1),
+            //    InsuranceType.FastighetsOchInventarieförsäkring,
+            //    Paymentform.År,
+            //    "Linas fastighetsförsäkring",
+            //    "Cafévägen 3",
+            //    45678,
+            //    "Malmö",
+            //    3200000,
+            //    birgitta);
+
+            //// Lägg till fastighetsförsäkringar till listan
+            //RealEstateInsurances.Add(realEstateInsuranceOlof);
             //RealEstateInsurances.Add(realEstateInsuranceSven);
+            //RealEstateInsurances.Add(realEstateInsuranceOlof2);
 
-            //// Inventory for real estate insurance 
-            //Inventory inventorySven1 = new Inventory(50000, 200);
-            //Inventory inventorySven2 = new Inventory(60000, 300);
+            //Inventory inventoryOlof1 = new Inventory(100000);
+            //Inventory inventoryOlof2 = new Inventory(150000);
+            //realEstateInsuranceOlof.Inventories.Add(inventoryOlof1);
+            //realEstateInsuranceOlof.Inventories.Add(inventoryOlof2);
+            //inventoryOlof1.RealEstateInsurance = realEstateInsuranceOlof;
+            //inventoryOlof2.RealEstateInsurance = realEstateInsuranceOlof;
 
-            //Inventories.Add(inventorySven1);
-            //Inventories.Add(inventorySven2);
-
+            //Inventory inventorySven1 = new Inventory(200000);
+            //Inventory inventorySven2 = new Inventory(300000);
             //realEstateInsuranceSven.Inventories.Add(inventorySven1);
             //realEstateInsuranceSven.Inventories.Add(inventorySven2);
-
             //inventorySven1.RealEstateInsurance = realEstateInsuranceSven;
             //inventorySven2.RealEstateInsurance = realEstateInsuranceSven;
+
+         
+            //Inventory inventory1 = new Inventory(80000);
+            //Inventory inventory2 = new Inventory(120000);
+            //realEstateInsuranceOlof2.Inventories.Add(inventory1);
+            //realEstateInsuranceOlof2.Inventories.Add(inventory2);
+            //inventory1.RealEstateInsurance = realEstateInsuranceOlof2;
+            //inventory2.RealEstateInsurance = realEstateInsuranceOlof2;
             //#endregion
 
 

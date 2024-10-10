@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
         mc:Ignorable="d"
+        xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
         Background="White" Height="750" Width="900">
 
     <UserControl.DataContext>
@@ -104,14 +105,31 @@
                     <Label Content="Kundregister" FontWeight="Bold" FontSize="14"/>
                     <ScrollViewer VerticalScrollBarVisibility="Visible"
                                   HorizontalScrollBarVisibility="Visible">
-                        <DataGrid x:Name="dataGridCustomers" AutoGenerateColumns="True" Height="150" Width="850" 
-                                  ItemsSource="{Binding BCcustomers}" BorderBrush="gray" BorderThickness="5"/>
+                        
+                        <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="150" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" RowStyle="{StaticResource DataGridRowStyle}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding PersonId, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                                <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                                <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                                <DataGridTextColumn Header="TelefonNr" Binding="{Binding Phonenumber, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                                <DataGridTextColumn Header="E-mail" Binding="{Binding Emailaddress, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                                <DataGridTextColumn Header="Företagsnamn" Binding="{Binding CompanyName, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                                <DataGridTextColumn Header="OrganisationsNr" Binding="{Binding Organizationalnumber, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                                <DataGridTextColumn Header="Landskod" Binding="{Binding CountryCode, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </ScrollViewer>
                 </StackPanel>
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                     <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" 
                             Foreground="White" Command="{Binding ClearFieldsCommand}"/>
+                    <Button Width="150" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding RefreshBusinessCommand}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <material:PackIconMaterial Kind="Update" Width="14" Height="14" Foreground="White" />
+                            <TextBlock Text="UPPDATERA SIDAN" Margin="3,0,0,0" VerticalAlignment="Center" FontSize="10"/>
+                        </StackPanel>
+                    </Button>
                     <Button Content="Registrera kund" Width="150" Margin="5" Background="#223A2A" 
                             Foreground="White" Command="{Binding AddBusinessCustomerCommand}"/>
                 </StackPanel>

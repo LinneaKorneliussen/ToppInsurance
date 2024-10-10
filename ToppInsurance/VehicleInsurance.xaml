@@ -48,7 +48,7 @@
             <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 10 0 10"/>
 
             <!-- DataGrid för att visa företagskunder -->
-            <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="115" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectedBCcustomers, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
+            <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="115" FontWeight="Normal" ItemsSource="{Binding BusinessCustomers}" SelectedItem="{Binding SelectedBCcustomers, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Företagsnamn" Binding="{Binding CompanyName}" IsReadOnly="True" Width="auto"/>
                     <DataGridTextColumn Header="Organisations.nr" Binding="{Binding Organizationalnumber}" IsReadOnly="True" Width="auto"/>
@@ -102,23 +102,17 @@
                    SelectedDate="{Binding NewEndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                    Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"/>
 
-
                 <TextBlock Text="Betalningssätt:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbPaymentMethod" Grid.Row="3" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
                    Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
                    ItemsSource="{Binding Paymentforms}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay}" Grid.Column="1" Height="20"/>
 
-                <TextBlock Text="Basbelopp:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <ComboBox x:Name="cbBasBelopp" Grid.Row="4" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
-                   Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                   ItemsSource="{Binding CurrentBaseAmounts}" SelectedItem="{Binding SelectedBaseAmount, Mode=TwoWay}" Height="20"/>
-
-                <TextBlock Text="Noteringar:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <TextBox Name="txtNotes" Grid.Row="5" Grid.Column="1" BorderBrush="Black" FontWeight="Normal"  Margin="-0,4,0,6" Width="300" Text="{Binding Note}"/>
+                <TextBlock Text="Noteringar:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
+                <TextBox Name="txtNotes" Grid.Row="4" Grid.Column="1" BorderBrush="Black" FontWeight="Normal"  Margin="-0,4,0,6" Width="300" Text="{Binding Note}"/>
 
                 <TextBlock Text="Registreringsnummer:" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <TextBox Name="txtRegNumber" Grid.Row="1" Grid.Column="2" BorderBrush="Black" FontWeight="Normal"  Margin="100,4,0,6" Width="220"
-                         Text="{Binding RegisterNumber}"/>
+                         Text="{Binding RegistrationNumber}"/>
 
                 <TextBlock Text="Bilmärke:" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <TextBox Name="txtBrand" Grid.Row="2" Grid.Column="2" BorderBrush="Black" FontWeight="Normal"  Margin="100,4,0,6" Width="220"
@@ -128,16 +122,21 @@
                 <TextBox Name="txtYearModel" Grid.Row="3" Grid.Column="2" BorderBrush="Black" FontWeight="Normal"  Margin="100,4,0,6" Width="220"
                          Text="{Binding YearModel}"/>
 
-
-                <TextBlock Text="Självrisk:" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <ComboBox x:Name="cDeductible" Grid.Row="4" Width="220" Margin="100,4,0,6" HorizontalAlignment="Center"
+                <TextBlock Text="Stad:" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
+                <ComboBox x:Name="cbCity" Grid.Row="4" Width="220" Margin="100,4,0,6" HorizontalAlignment="Center"
                           Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                          ItemsSource="{Binding Deductible}" SelectedItem="{Binding SelectedDeductible, Mode=TwoWay}" Grid.Column="2" Height="20"/>
+                          ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity, Mode=TwoWay}" Grid.Column="2" Height="20"/>
 
-                <TextBlock Text="Trafikförsäkring:" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <ComboBox x:Name="cbTraficInsurance" Grid.Row="5" Width="220" Margin="100,4,0,6" HorizontalAlignment="Center"
+
+                <TextBlock Text="Självrisk:" Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
+                <ComboBox x:Name="cbDeductible" Grid.Row="5" Width="220" Margin="100,4,0,6" HorizontalAlignment="Center"
                           Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                          ItemsSource="{Binding TraficInsuranceOptions}" SelectedItem="{Binding SelectedTraficInsurance, Mode=TwoWay}"  Grid.Column="2" Height="20"/>
+                          ItemsSource="{Binding DeductibleVehicle}" SelectedItem="{Binding SelectedDeductible, Mode=TwoWay}" Grid.Column="2" Height="20"/>
+
+                <TextBlock Text="Trafikförsäkring:" Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
+                <ComboBox x:Name="cbTraficInsurance" Grid.Row="6" Width="220" Margin="100,4,0,6" HorizontalAlignment="Center"
+                          Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
+                          ItemsSource="{Binding CoverageType}" SelectedItem="{Binding SelectedCoverageType, Mode=TwoWay}"  Grid.Column="2" Height="20"/>
 
 
 

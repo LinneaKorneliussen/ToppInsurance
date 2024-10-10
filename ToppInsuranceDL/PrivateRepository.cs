@@ -50,5 +50,21 @@ namespace TopInsuranceDL
             }
         }
         #endregion
+
+        #region Search Private Customer Method 
+        public List<PrivateCustomer> SearchPrivateCustomer(string searchTerm)
+        {
+            List<PrivateCustomer> allPrivateCustomers = unitOfWork.PCRepository.GetAll().ToList();
+
+            bool isNumericSearch = int.TryParse(searchTerm, out int searchNumber);
+            var matchingCustomers = allPrivateCustomers.Where(c =>
+                (c.FirstName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                c.LastName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ||
+                (isNumericSearch && c.SSN.ToString().Contains(searchTerm))
+            ).ToList();
+
+            return matchingCustomers;
+        }
+        #endregion
     }
 }
