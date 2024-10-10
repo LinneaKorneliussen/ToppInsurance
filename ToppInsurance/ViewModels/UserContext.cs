@@ -30,11 +30,6 @@ namespace TopInsuranceWPF.ViewModels
         {
             LoggedInUser = user;
         }
-
-        public void Logout()
-        {
-            LoggedInUser = null;
-        }
     }
 
 }

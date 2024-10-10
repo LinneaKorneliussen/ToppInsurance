@@ -4,13 +4,13 @@ using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
-    public class EmployerController
+    public class EmployeeController
     {
-        private EmployerRepository employerRepository;
+        private EmployeeRepository employerRepository;
 
-        public EmployerController()
+        public EmployeeController()
         {
-            employerRepository = new EmployerRepository();
+            employerRepository = new EmployeeRepository();
         }
 
         #region Register new employer method

@@ -9,7 +9,7 @@
         Background="White" Height="650" Width="900">
     
     <UserControl.DataContext>
-        <vm:RegisterEmployerVM/>
+        <vm:RegisterEmployeeVM/>
     </UserControl.DataContext>
 
     <Grid>
