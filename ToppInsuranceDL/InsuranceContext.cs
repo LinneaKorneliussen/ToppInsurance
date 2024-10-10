@@ -21,7 +21,7 @@ namespace TopInsuranceDL
 
         public InsuranceContext()
         {
-            //ResetSeed();
+           // ResetSeed();
         }
 
         #region OnConfiguring 
@@ -39,7 +39,7 @@ namespace TopInsuranceDL
         #region OnModelCreating 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>().ToTable("Employees");
+            modelBuilder.Entity<Employee>().ToTable("Employee");
             modelBuilder.Entity<Employee>().HasIndex(e => e.AgencyNumber).IsUnique();
 
             modelBuilder.Entity<PrivateCustomer>().ToTable("PrivateCustomer");
@@ -294,7 +294,7 @@ namespace TopInsuranceDL
             //RealEstateInsurances.Add(realEstateInsuranceSven);
             //RealEstateInsurances.Add(realEstateInsuranceOlof2);
 
-            //Inventory inventoryOlof1 = new Inventory(InventoryType.Anläggningsinventarier,100000);
+            //Inventory inventoryOlof1 = new Inventory(InventoryType.Anläggningsinventarier, 100000);
             //Inventory inventoryOlof2 = new Inventory(InventoryType.Anläggningsinventarier, 150000);
             //realEstateInsuranceOlof.Inventories.Add(inventoryOlof1);
             //realEstateInsuranceOlof.Inventories.Add(inventoryOlof2);
@@ -309,7 +309,7 @@ namespace TopInsuranceDL
             //inventorySven2.RealEstateInsurance = realEstateInsuranceSven;
 
 
-            //Inventory inventory1 = new Inventory(InventoryType.Anläggningsinventarier,80000);
+            //Inventory inventory1 = new Inventory(InventoryType.Anläggningsinventarier, 80000);
             //Inventory inventory2 = new Inventory(InventoryType.Förbrukningsinventarier, 120000);
             //realEstateInsuranceOlof2.Inventories.Add(inventory1);
             //realEstateInsuranceOlof2.Inventories.Add(inventory2);

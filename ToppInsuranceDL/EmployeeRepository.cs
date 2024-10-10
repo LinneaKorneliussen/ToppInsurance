@@ -8,10 +8,10 @@ using TopInsuranceEntities;
 
 namespace TopInsuranceDL
 {
-    public class EmployerRepository
+    public class EmployeeRepository
     {
         private UnitOfWork unitOfWork;
-        public EmployerRepository()
+        public EmployeeRepository()
         {
             unitOfWork = UnitOfWork.GetInstance();
         }
