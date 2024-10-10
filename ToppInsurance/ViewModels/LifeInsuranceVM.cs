@@ -14,8 +14,8 @@ namespace TopInsuranceWPF.ViewModels
     {
         private LifeInsuranceController lifeInsuranceController;
         private PrivateController privateController;
-        public IEnumerable<Paymentform> Paymentforms {  get; }
         private Employee user;
+        public IEnumerable<Paymentform> Paymentforms {  get; }
 
         public LifeInsuranceVM()
         {
@@ -25,8 +25,8 @@ namespace TopInsuranceWPF.ViewModels
             lifeInsuranceController = new LifeInsuranceController();
             privateController = new PrivateController();
             List<int> baseamounts = lifeInsuranceController.GetBaseAmounts();
-            BaseAmount = new ObservableCollection<int>(baseamounts); 
-            Paymentforms = Enum.GetValues(typeof(Paymentform)) as IEnumerable<Paymentform>;
+            BaseAmount = new ObservableCollection<int>(baseamounts);
+            Paymentforms = Enum.GetValues(typeof(Paymentform)).Cast<Paymentform>();
             FindCustomerCommand = new RelayCommand(FindCustomer);
             AddLifeInsuranceCommand = new RelayCommand(AddLifeInsurance);
             ClearCommand = new RelayCommand(ClearFields);
@@ -191,43 +191,26 @@ namespace TopInsuranceWPF.ViewModels
         #region Add life Insurance Method
         private void AddLifeInsurance()
         {
+            if (SelectedCustomer == null)
+            {
+                MessageBox.Show("Vänligen välj en kund från listan.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             string error = this.Error;
             if (!string.IsNullOrEmpty(error))
             {
-                MessageBox.Show(error);
+                MessageBox.Show(error, "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            if (lifeInsuranceController.CustomerHasInsurance(SelectedCustomer))
+            {
+                MessageBox.Show($"Kunden {SelectedCustomer.FirstName} {SelectedCustomer.LastName} har redan en livförsäkring.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            if (SelectedCustomer != null)
-            {
-                if (SelectedPaymentForm == 0)
-                {
-                    MessageBox.Show("Vänligen välj en betalningsform.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-                if (SelectedBaseAmount <= 0)
-                {
-                    MessageBox.Show("Vänligen välj ett basbelopp.", "Ingen basbelopp vald", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-                if (!lifeInsuranceController.CustomerHasInsurance(SelectedCustomer))
-                {
-                    InsuranceType insurance = InsuranceType.Livförsäkring;
-
-                    lifeInsuranceController.AddLifeInsurance(SelectedCustomer, NewStartDate, NewEndDate,
-                                                             insurance, SelectedPaymentForm, SelectedBaseAmount, Note, user);
-                    MessageBox.Show($"Du har registrerat en livförsäkring för {SelectedCustomer.FirstName} {SelectedCustomer.LastName}");
-                    ClearFields();
-                }
-                else
-                {
-                    MessageBox.Show($"Kunden {SelectedCustomer.FirstName} {SelectedCustomer.LastName} har redan en livförsäkring.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Ingen kund vald. Vänligen välj en kund för att registrera livförsäkringen.");
-            }
+            lifeInsuranceController.AddLifeInsurance(SelectedCustomer, NewStartDate, NewEndDate, InsuranceType.Livförsäkring, SelectedPaymentForm, SelectedBaseAmount, Note, user);
+            MessageBox.Show($"Du har registrerat en livförsäkring för {SelectedCustomer.FirstName} {SelectedCustomer.LastName}.", "Toppenbra!", MessageBoxButton.OK, MessageBoxImage.Information);
+            ClearFields();
         }
         #endregion
 
@@ -236,7 +219,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             get
             {
-                string[] properties = { nameof(NewStartDate), nameof(NewEndDate) };
+                string[] properties = { nameof(NewStartDate), nameof(NewEndDate), nameof(SelectedPaymentForm), nameof(SelectedBaseAmount) };
                 foreach (var property in properties)
                 {
                     string error = this[property];
@@ -279,6 +262,18 @@ namespace TopInsuranceWPF.ViewModels
                         errorMessage = "Slutdatum kan inte vara före startdatum.";
                     }
                     break;
+                case nameof(SelectedPaymentForm):
+                    if (SelectedPaymentForm == 0)
+                    {
+                        errorMessage = "Vänligen välj betalningsform";
+                    }
+                    break;
+                case nameof(SelectedBaseAmount):
+                    if(SelectedBaseAmount <= 0) 
+                    {
+                        errorMessage = "Vänligen välj ett basbelopp";
+                    }
+                    break;
                 default:
                     errorMessage = "Ogiltigt kolumnnamn.";
                     break;
@@ -291,10 +286,16 @@ namespace TopInsuranceWPF.ViewModels
         #region Clear Field Method
         private void ClearFields()
         {
+            SelectedCustomer = null;
+            SearchText = string.Empty;
+            NewStartDate = DateTime.Today;
+            NewEndDate = DateTime.Today.AddYears(1);
+            SelectedBaseAmount = 0;
+            SelectedPaymentForm = 0;
             Note = string.Empty;
-            SearchText = string.Empty ;
+            SearchText = string.Empty;
+            PrivateCustomers.Clear();
         }
         #endregion
-
     }
 }

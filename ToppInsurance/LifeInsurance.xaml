@@ -97,20 +97,20 @@
                 <TextBlock Text="Betalningssätt:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbPaymentMethod" Grid.Row="3" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
                      Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                     ItemsSource="{Binding Paymentforms}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay}" Grid.Column="1" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"/>
+                     ItemsSource="{Binding Paymentforms}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                     Grid.Column="1" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"
+                     Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
                 <TextBlock Text="Basbelopp:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <ComboBox x:Name="cbBasBelopp" Grid.Row="4" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
                      Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
-                     ItemsSource="{Binding BaseAmount}" SelectedItem="{Binding SelectedBaseAmount, Mode=TwoWay}" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"/>
+                     ItemsSource="{Binding BaseAmount}" SelectedItem="{Binding SelectedBaseAmount, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"
+                     Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
                 <TextBlock Text="Noteringar:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <TextBox Grid.Row="6" Grid.Column="1" BorderBrush="DarkSlateGray" FontWeight="Normal"  Margin="-0,4,0,6" Width="300" 
-                         Text="{Binding Note, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                <TextBox Grid.Row="6" Grid.Column="1" FontWeight="Normal"  Margin="-0,4,0,6" Width="300" 
+                         Text="{Binding Note, UpdateSourceTrigger=PropertyChanged}"
                          mah:TextBoxHelper.Watermark="Valfritt" Background="GhostWhite"/>
-
-
-                <!-- Buttons -->
             </Grid>
 
             <StackPanel Grid.Row="9" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Width="270" Margin="10 -19 10 10">

@@ -5,6 +5,7 @@ using TopInsuranceEntities;
 using TopInsuranceBL;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace TopInsuranceWPF.ViewModels
 {
@@ -173,6 +174,20 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                if (_errorMessage != value)
+                {
+                    _errorMessage = value;
+                    OnPropertyChanged(nameof(ErrorMessage));
+                }
+            }
+        }
         #endregion
 
         #region Observable Collection 
@@ -233,13 +248,19 @@ namespace TopInsuranceWPF.ViewModels
                     return;
                 }
 
+                if (!IsValidPhoneNumber(ContactPersonPhNo))
+                {
+                    MessageBox.Show("Felaktigt format på telefonnummer!","Varning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
                 liabilityController.AddLiabilityInsurance(SelectedCustomer, NewStartDate, NewEndDate, InsuranceType.Ansvarsförsäkring, SelectedPaymentForm, Note, ContactPerson, ContactPersonPhNo, SelectedDeductible, SelectedAmount, user);
                 MessageBox.Show($"Ansvarsförsäkring tecknad framgångsfullt {SelectedCustomer.FirstName} {SelectedCustomer.LastName}");
                 ClearFields();
             }
             catch (ArgumentException ex) 
             {
-                MessageBox.Show(ex.Message, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Varning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             catch (Exception ex)
             {
@@ -253,7 +274,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             get
             {
-                string[] properties = { nameof(ContactPerson), nameof(ContactPersonPhNo), nameof(NewStartDate), nameof(NewEndDate), nameof(SelectedPaymentForm), nameof(SelectedAmount), nameof(SelectedDeductible) };
+                string[] properties = { nameof(ContactPerson), nameof(ContactPersonPhNo), nameof(NewStartDate), nameof(NewEndDate), nameof(SelectedPaymentForm)};
                 foreach (var property in properties)
                 {
                     string error = this[property];
@@ -311,27 +332,21 @@ namespace TopInsuranceWPF.ViewModels
                 case nameof(SelectedPaymentForm):
                     if (SelectedPaymentForm == 0)
                     {
-                        errorMessage = "Vänligen välj betalningsform";
-                    }
-                    break;
-                case nameof(SelectedDeductible):
-                    if (SelectedDeductible == 0)
-                    {
-                        errorMessage = "Vänligen välj en självrisk";
-                    }
-                    break;
-                case nameof(SelectedAmount):
-                    if (SelectedAmount == 0)
-                    {
-                        errorMessage = "Vänligen välj ett försäkringsbelopp";
+                        errorMessage = "Vänligen välj ett betalningssätt";
                     }
                     break;
                 default:
-                    errorMessage = "Ogiltigt kolumnnamn.";
+                    errorMessage = "Vänligen välj";
                     break;
             }
 
             return errorMessage;
+        }
+
+        public bool IsValidPhoneNumber(string phoneNumber)
+        {
+            string pattern = @"^\d{3}-\d{7}$";
+            return Regex.IsMatch(phoneNumber, pattern);
         }
         #endregion
 
@@ -344,6 +359,8 @@ namespace TopInsuranceWPF.ViewModels
             SelectedPaymentForm = 0;
             Note = string.Empty;
             SearchText = string.Empty;
+            NewStartDate = DateTime.Today;  
+            NewEndDate = DateTime.Today.AddYears(1);
             ContactPerson = string.Empty;
             ContactPersonPhNo = string.Empty;
             BusinessCustomers.Clear();
