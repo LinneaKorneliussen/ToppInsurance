@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TopInsuranceBL;
 using TopInsuranceEntities;
 using TopInsuranceWPF.Commands;
 
@@ -7,12 +8,14 @@ namespace TopInsuranceWPF.ViewModels
 {
     public class CommissionVM : ObservableObject
     {
+        private CommissionController commissionController;
+        private EmployeeController employeeController;
         public CommissionVM()
         {
-            //commissionController = new CommissionController();
-            //FindEmployeeCommand = new RelayCommand(FindEmployee);
-
-
+            commissionController = new CommissionController();
+            employeeController = new EmployeeController();
+            FindEmployeeCommand = new RelayCommand(FindEmployee);
+            AddCommissionCommand = new RelayCommand(AddCommission);
         }
 
         #region Properties
@@ -29,6 +32,32 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
+        private DateTime _newStartDate;
+        public DateTime NewStartDate
+        {
+            get { return _newStartDate; }
+            set
+            {
+                if (_newStartDate != value)
+                {
+                    _newStartDate = value;
+                    OnPropertyChanged(nameof(NewStartDate));
+                }
+            }
+        }
+        private DateTime _newEndDate;
+        public DateTime NewEndDate
+        {
+            get { return _newEndDate; }
+            set
+            {
+                if (_newEndDate != value)
+                {
+                    _newEndDate = value;
+                    OnPropertyChanged(nameof(NewEndDate));
+                }
+            }
+        }
 
         private Employee _selectedEmployee;
         public Employee SelectedEmployee
@@ -40,7 +69,6 @@ namespace TopInsuranceWPF.ViewModels
                 {
                     _selectedEmployee = value;
                     OnPropertyChanged(nameof(SelectedEmployee));
-                    //LoadSalesDataForEmployee();
                 }
             }
         }
@@ -64,18 +92,30 @@ namespace TopInsuranceWPF.ViewModels
 
         #region Commands
         public ICommand FindEmployeeCommand { get; }
+        public ICommand AddCommissionCommand { get; }
         #endregion
 
         #region Find Employee Method
-        //private void FindEmployee()
-        //{
-        //    if (!string.IsNullOrEmpty(SearchEmployee))
-        //    {
-        //        var filteredEmployees = commissionController.GetSalespersonsByLastNameOrAgencyNumber(SearchEmployee);
-        //        Employees = new ObservableCollection<Employee>(filteredEmployees);
-        //        SearchEmployee = string.Empty;
-        //    }
-        //}
+        private void FindEmployee()
+        {
+            if (!string.IsNullOrEmpty(SearchEmployee))
+            {
+                var filteredEmployees = employeeController.GetSalespersonsByLastNameOrAgencyNumber(SearchEmployee);
+                Employees = new ObservableCollection<Employee>(filteredEmployees);
+                SearchEmployee = string.Empty;
+            }
+        }
         #endregion
+
+        #region Add Comission for employee 
+        private void AddCommission()
+        {
+            commissionController.CalculateAndCreateCommission(SelectedEmployee, NewStartDate, NewEndDate);
+        }
+
+
+        #endregion
+
+
     }
 }
