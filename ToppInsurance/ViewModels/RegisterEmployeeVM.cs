@@ -188,7 +188,12 @@ namespace TopInsuranceWPF.ViewModels
             }
             if (!IsValidPersonalNumber(NewSSN))
             {
-                MessageBox.Show("Felformat på personummret!");
+                MessageBox.Show("Felformat på personummret, skriv i formatet (YYYYMMDD-XXXX)!");
+                return;
+            }
+            if (!employerController.SSNUnique(NewSSN))
+            {
+                MessageBox.Show("Personen finns redan registrerad");
                 return;
             }
             if (!ValidateNumericFields(out int zipcode))
@@ -200,7 +205,7 @@ namespace TopInsuranceWPF.ViewModels
             EmployeeRole defaultRole = EmployeeRole.Säljare;
 
 
-            employerController.AddEmployer(NewFirstName, NewLastName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, defaultRole, NewPassword);
+            employerController.AddEmployee(NewFirstName, NewLastName, NewSSN, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, defaultRole, NewPassword);
 
             MessageBox.Show($"Säljaren har registrerats korrekt!\n\n" +
                              $"Förnamn: {NewFirstName}\n" +

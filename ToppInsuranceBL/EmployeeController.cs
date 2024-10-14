@@ -13,12 +13,17 @@ namespace TopInsuranceBL
             employeeRepository = new EmployeeRepository();
         }
 
-        #region Register new employer method
-        public void AddEmployer(string firstName, string lastName, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
+        #region SSN unique Method
+        public bool SSNUnique(string ssn)
         {
-            Employee newEmployer = new Employee(firstName, lastName, phoneNumber, emailAddress, address, zipCode, city, employeeRole, password);
+            return employeeRepository.SSNUnique(ssn);
+        }
+        #endregion
 
-            employeeRepository.AddEmployee(firstName, lastName, phoneNumber, emailAddress, address, zipCode, city, employeeRole, password);
+        #region Register new employer method
+        public void AddEmployee(string firstName, string lastName, string ssn, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
+        {
+            employeeRepository.AddEmployee(firstName, lastName, ssn, phoneNumber, emailAddress, address, zipCode, city, employeeRole, password);
         }
         #endregion
 
