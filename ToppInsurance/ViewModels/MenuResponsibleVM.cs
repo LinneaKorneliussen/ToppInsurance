@@ -148,7 +148,7 @@ namespace TopInsuranceWPF.ViewModels
 
         private void RegisterEmployerBTN()
         {
-            CurrentViewModel = new RegisterEmployer();
+            CurrentViewModel = new RegisterEmployee();
         }
 
         private void ShowStatisticsBTN()
