@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using TopInsuranceBL;
@@ -7,7 +8,7 @@ using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
-    public class RealEstateInsuranceVM : ObservableObject
+    public class RealEstateInsuranceVM : ObservableObject, IDataErrorInfo
     {
         private RealEstateController realEstateController;
         private BusinessController businessController;
@@ -32,6 +33,8 @@ namespace TopInsuranceWPF.ViewModels
             AddInventoryCommand = new RelayCommand(AddInventory);
             RemoveInventoryCommand = new RelayCommand<Inventory>(RemoveInventory);
             AddRealEstateInsuranceCommand = new RelayCommand(AddRealEstateInsurance);
+            ClearCommand = new RelayCommand(ClearFields);
+
         }
 
         #region Properties
@@ -226,18 +229,28 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand AddInventoryCommand { get; }
         public ICommand RemoveInventoryCommand { get; }
         public ICommand AddRealEstateInsuranceCommand { get; }
+        public ICommand ToggleInventorySelectionCommand { get; }
+
+        public ICommand ClearCommand { get; }
+
         #endregion
 
-        #region Search business customers
+        #region Find business customers
         private void FindBCcustomers()
         {
-            if (SearchBusinessCustomer != null)
+            if (!string.IsNullOrWhiteSpace(SearchBusinessCustomer))
             {
                 var filteredCustomers = businessController.SearchBusinessCustomer(SearchBusinessCustomer);
                 BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredCustomers);
                 SearchBusinessCustomer = string.Empty;
             }
+            else
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                BusinessCustomers = new ObservableCollection<BusinessCustomer>();
+            }
         }
+
         #endregion
 
         #region Methods for Inventory
@@ -262,19 +275,60 @@ namespace TopInsuranceWPF.ViewModels
         {
             if (SelectedCustomer == null)
             {
-                MessageBox.Show("Vänligen välj en kund.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Vänligen välj en kund från listan. ", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
+            string error = this.Error;
             if (ValueRealEstate <= 0)
             {
                 MessageBox.Show("Vänligen ange ett giltigt värde för fastigheten.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            if (!Inventories.Any())
+            if (SelectedPaymentForm == 0)
             {
-                MessageBox.Show("Vänligen lägg till minst en inventarie.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Vänligen välj ett betalningssätt.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (IsInventorySelected)
+            {
+                if (!Inventories.Any())
+                {
+                    MessageBox.Show("Vänligen lägg till minst en inventarie.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Validera att varje inventarie har en typ
+                foreach (var inventory in Inventories)
+                {
+                    if (inventory.InventoryType == 0)
+                    {
+                        MessageBox.Show("Vänligen ange en giltig inventarietyp för alla inventarier.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    if (inventory.InvValue <= 0)
+                    {
+                        MessageBox.Show("Vänligen ange ett giltigt värde för inventarier.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+            }
+            if (string.IsNullOrWhiteSpace(CompanyAddress))
+            {
+                MessageBox.Show("Vänligen ange företagsadress. ", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(CompanyZipcode))
+            {
+                MessageBox.Show("Vänligen ange ett postnummer.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(CompanyCity))
+            {
+                MessageBox.Show("Vänligen ange stad. ", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -302,6 +356,112 @@ namespace TopInsuranceWPF.ViewModels
                 MessageBox.Show($"Ett fel uppstod vid tillägg av försäkringen: {ex.Message}", "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        #endregion
+
+        #region Validation IDataErrorInfo
+        public string Error
+        {
+            get
+            {
+                string[] properties = { nameof(NewStartDate), nameof(NewEndDate), nameof(SelectedPaymentForm), nameof(CompanyAddress), nameof(CompanyZipcode), nameof(CompanyCity), nameof(ValueRealEstate)};
+                foreach (var property in properties)
+                {
+                    string error = this[property];
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        return error;
+                    }
+                }
+                return null;
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                return ValidateField(columnName);
+            }
+        }
+
+        private string ValidateField(string columnName)
+        {
+            string errorMessage = null;
+
+            switch (columnName)
+            {
+                case nameof(NewStartDate):
+                    if (NewStartDate < DateTime.Today)
+                    {
+                        errorMessage = "Går inte att teckna en försäkring för redan passerade datum";
+                    }
+                    break;
+                case nameof(NewEndDate):
+                    if (NewEndDate < DateTime.Today)
+                    {
+                        errorMessage = "Går inte att teckna försäkring för redan passerade datum";
+                    }
+                    else if (NewEndDate < NewStartDate)
+                    {
+                        errorMessage = "Slutdatum kan inte vara före startdatum.";
+                    }
+                    break;
+                case nameof(SelectedPaymentForm):
+                    if (SelectedPaymentForm == 0)
+                    {
+                        errorMessage = "Vänligen välj ett betalningssätt";
+                    }
+                    break;
+                case nameof(CompanyAddress):
+                    if (string.IsNullOrWhiteSpace(CompanyAddress))
+                    {
+                        errorMessage = "Företagsadress måste anges";
+                    }
+                    break;
+                case nameof(CompanyZipcode):
+                    if (string.IsNullOrWhiteSpace(CompanyZipcode))
+                    {
+                        errorMessage = "Postnummer måste anges";
+                    }
+                    break;
+                case nameof(CompanyCity):
+                    if (string.IsNullOrWhiteSpace(CompanyCity))
+                    {
+                        errorMessage = "Stad måste anges"; 
+                    }
+                    break;
+                case nameof(ValueRealEstate):
+                    if (ValueRealEstate == 0)
+                    {
+                        errorMessage = "Värde fastigheter måste anges";
+                    }
+                    break;
+                default:
+                    errorMessage = "Vänligen välj";
+                    break;
+            }
+
+            return errorMessage;
+        }
+
+        #region Clear Field Method
+        private void ClearFields()
+        {
+            //IsInventorySelected = false;
+            SelectedCustomer = null;
+            SearchBusinessCustomer = null;
+            ValueRealEstate = 0;
+            SelectedPaymentForm = 0;
+            Note = string.Empty;
+            CompanyAddress = string.Empty;
+            NewStartDate = DateTime.Today;
+            NewEndDate = DateTime.Today.AddYears(1);
+            CompanyZipcode = string.Empty;
+            CompanyCity = string.Empty;
+            BusinessCustomers.Clear();
+        }
+        #endregion
 
         #endregion
     }
