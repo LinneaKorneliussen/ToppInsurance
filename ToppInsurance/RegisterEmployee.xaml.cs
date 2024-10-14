@@ -4,11 +4,11 @@
 namespace TopInsuranceWPF
 {
     /// <summary>
-    /// Interaction logic for RegisterEmployer.xaml
+    /// Interaction logic for RegisterEmployee.xaml
     /// </summary>
-    public partial class RegisterEmployer : UserControl
+    public partial class RegisterEmployee : UserControl
     {
-        public RegisterEmployer()
+        public RegisterEmployee()
         {
             InitializeComponent();
         }
