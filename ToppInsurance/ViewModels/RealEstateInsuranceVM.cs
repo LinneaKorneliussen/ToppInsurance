@@ -350,11 +350,15 @@ namespace TopInsuranceWPF.ViewModels
                 );
 
                 MessageBox.Show("Fastighetsförsäkring har lagts till.", "Framgång", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                ClearFields();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ett fel uppstod vid tillägg av försäkringen: {ex.Message}", "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            
         }
 
         #endregion
@@ -448,7 +452,7 @@ namespace TopInsuranceWPF.ViewModels
         #region Clear Field Method
         private void ClearFields()
         {
-            //IsInventorySelected = false;
+            IsInventorySelected = false;
             SelectedCustomer = null;
             SearchBusinessCustomer = null;
             ValueRealEstate = 0;

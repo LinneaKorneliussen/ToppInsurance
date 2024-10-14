@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:local="clr-namespace:TopInsuranceWPF"
         xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
         mc:Ignorable="d"
         Background="White" Height="790" Width="900">
@@ -83,42 +82,42 @@
 
                         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 15 0 0" VerticalAlignment="Center">
                             <TextBlock Text="Förnamn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewFirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewFirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Efternamn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewLastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewLastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Telefonnummer:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewPhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewPhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="E-postadress:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewEmailadress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewEmailadress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Adress:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Postnummer:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewZipcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewZipcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="7" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Stad:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="8" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Jobbnummer:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewWorkPhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewWorkPhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <!-- Buttons -->
@@ -214,42 +213,42 @@
 
                         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 15 0 0" VerticalAlignment="Center">
                             <TextBlock Text="Förnamn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewFirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewFirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Efternamn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewLastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewLastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Telefonnummer:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewPhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewPhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="E-postadress:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewEmailadress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewEmailadress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Adress:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Postnummer:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewZipcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewZipcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="7" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Stad:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="8" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Företagsnamn:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                            <TextBox Width="300" Text="{Binding NewCompanyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal"/>
+                            <TextBox Width="300" Text="{Binding NewCompanyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
                         <!-- Buttons -->
