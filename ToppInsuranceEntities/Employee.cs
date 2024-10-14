@@ -13,12 +13,13 @@ namespace TopInsuranceEntities
         public string PasswordHash { get; private set; }
         public string AgencyNumber { get; private set; }
 
-        private static List<string> generatedAgencyNumbers = new List<string>();
-        public ICollection<LifeInsurance> lifeInsurances { get; set; } = new List<LifeInsurance>();
-        public ICollection<SicknessAccidentInsurance> accidentInsurances { get; set; } = new List<SicknessAccidentInsurance>();
-        public ICollection<LiabilityInsurance> liabilityInsurances { get; set; } = new List<LiabilityInsurance>();
-        public ICollection<VehicleInsurance> vehicleInsurances { get; set; } = new List<VehicleInsurance>();
-        public ICollection<RealEstateInsurance> realEstateInsurances { get; set; } = new List<RealEstateInsurance>();
+        private static List<string> GeneratedAgencyNumbers = new List<string>();
+        public ICollection<LifeInsurance> LifeInsurances { get; set; } = new List<LifeInsurance>();
+        public ICollection<SicknessAccidentInsurance> AccidentInsurances { get; set; } = new List<SicknessAccidentInsurance>();
+        public ICollection<LiabilityInsurance> LiabilityInsurances { get; set; } = new List<LiabilityInsurance>();
+        public ICollection<VehicleInsurance> VehicleInsurances { get; set; } = new List<VehicleInsurance>();
+        public ICollection<RealEstateInsurance> RealEstateInsurances { get; set; } = new List<RealEstateInsurance>();
+        public ICollection<Comission> Comissions { get; set; } = new List<Comission>();
 
 
         public Employee(string firstName, string lastName, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
@@ -41,9 +42,9 @@ namespace TopInsuranceEntities
             {
                 newNumber = random.Next(1000, 9999).ToString(); 
             }
-            while (generatedAgencyNumbers.Contains(newNumber));
+            while (GeneratedAgencyNumbers.Contains(newNumber));
 
-            generatedAgencyNumbers.Add(newNumber);
+            GeneratedAgencyNumbers.Add(newNumber);
             return newNumber;
         }
 

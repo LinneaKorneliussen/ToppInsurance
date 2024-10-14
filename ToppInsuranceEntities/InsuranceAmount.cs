@@ -8,8 +8,8 @@ namespace TopInsuranceEntities
 {
     public enum InsuranceAmount
     {
-        ThreeMillion = 3,
-        FiveMillion = 5,
-        TenMillion = 10
+        Tre_miljoner = 3,
+        Fem_miljoner= 5,
+        Tio_miljoner = 10
     }
 }

@@ -18,7 +18,7 @@ namespace TopInsuranceDL
 
         #region Add Real Estate Insurance Method
         public void AddRealEstateInsurance(BusinessCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type,
-            Paymentform paymentform, string note, string realEstateAddress, int zipcode, string city, int realEstateValue,
+            Paymentform paymentform, string note, string realEstateAddress, int zipcode, string city, double realEstateValue,
             List<Inventory> inventories, Employee user)
         {
             RealEstateInsurance realEstateInsurance = new RealEstateInsurance(customer, startDate, endDate, type,

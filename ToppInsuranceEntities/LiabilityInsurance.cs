@@ -31,7 +31,7 @@ namespace TopInsuranceEntities
         {
             switch (InsuranceAmount)
             {
-                case InsuranceAmount.ThreeMillion:
+                case InsuranceAmount.Tre_miljoner:
                     switch (Deductible)
                     {
                         case DeductibleLiability.EttPrisbasbelopp: return 500;
@@ -41,7 +41,7 @@ namespace TopInsuranceEntities
                     }
                     break;
 
-                case InsuranceAmount.FiveMillion:
+                case InsuranceAmount.Fem_miljoner:
                     switch (Deductible)
                     {
                         case DeductibleLiability.EttPrisbasbelopp: return 900;
@@ -51,7 +51,7 @@ namespace TopInsuranceEntities
                     }
                     break;
 
-                case InsuranceAmount.TenMillion:
+                case InsuranceAmount.Tio_miljoner:
                     switch (Deductible)
                     {
                         case DeductibleLiability.EttPrisbasbelopp: return 1400;
@@ -67,9 +67,5 @@ namespace TopInsuranceEntities
 
             throw new ArgumentException("Ogiltig kombination av försäkringsbelopp och självrisk");
         }
-
-
-
     }
-
 }

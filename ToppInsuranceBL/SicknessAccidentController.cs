@@ -33,7 +33,7 @@ namespace TopInsuranceBL
 
         #region Add Sickness and Accident Insurance Method for private customer
         public void AddSicknessAccidentInsurance(PrivateCustomer customer, DateTime startDate, DateTime endDate,
-            InsuranceType insuranceType, Paymentform paymentform, int baseAmount, string note,
+            InsuranceType insuranceType, Paymentform paymentform, double baseAmount, string note,
             string? insuranceFirstName, string? insuranceLastName, string? insuranceSSN,
             AdditionalInsurance additionalInsurance, Employee user)
         {

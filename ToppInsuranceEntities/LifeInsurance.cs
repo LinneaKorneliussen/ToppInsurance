@@ -8,7 +8,7 @@ namespace TopInsuranceEntities
 {
     public class LifeInsurance : Insurance
     {
-        public int BaseAmount { get; set; }
+        public double BaseAmount { get; set; }
         public int PrivateCustomerId { get; set; }
         public PrivateCustomer PrivateCustomer { get; private set; }
         public LifeInsurance(PrivateCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type, 
@@ -24,7 +24,7 @@ namespace TopInsuranceEntities
 
         private void CalculatePremium()
         {
-            Premium = (int)(BaseAmount * 0.0005);
+            Premium = BaseAmount * 0.0005;
         }
     }
 }

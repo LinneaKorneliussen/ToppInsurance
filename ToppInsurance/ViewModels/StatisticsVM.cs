@@ -13,6 +13,7 @@ namespace TopInsuranceWPF.ViewModels
     public class StatisticsVM : ObservableObject
     {
         private StatisticsController statisticsController;
+        private EmployeeController employeeController;
         public SeriesCollection BarPrivateSeriesCollection { get; set; }
         public SeriesCollection BarBusinessSeriesCollection { get; set; }
         public SeriesCollection LinePrivateSeriesCollection { get; set; }
@@ -23,6 +24,7 @@ namespace TopInsuranceWPF.ViewModels
         public StatisticsVM()
         {
             statisticsController = new StatisticsController();
+            employeeController = new EmployeeController();
             FindEmployeeCommand = new RelayCommand(FindEmployee);
 
             BarPrivateSeriesCollection = new SeriesCollection();
@@ -90,7 +92,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             if (!string.IsNullOrEmpty(SearchEmployee))
             {
-                var filteredEmployees = statisticsController.GetSalespersonsByLastNameOrAgencyNumber(SearchEmployee);
+                var filteredEmployees = employeeController.GetSalespersonsByLastNameOrAgencyNumber(SearchEmployee);
                 Employees = new ObservableCollection<Employee>(filteredEmployees);
                 SearchEmployee = string.Empty;
             }

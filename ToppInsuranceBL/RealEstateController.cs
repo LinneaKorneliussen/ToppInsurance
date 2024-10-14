@@ -19,7 +19,7 @@ namespace TopInsuranceBL
 
         #region Add real estate insurance Method 
         public void AddRealEstateInsurance(BusinessCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type,
-            Paymentform paymentform, string note, string realEstateAddress, int zipcode, string city, int realEstateValue, List<Inventory> inventories, Employee user)
+            Paymentform paymentform, string note, string realEstateAddress, int zipcode, string city, double realEstateValue, List<Inventory> inventories, Employee user)
         {
             realEstateRepository.AddRealEstateInsurance(customer, startDate, endDate, type, paymentform, note, realEstateAddress, zipcode, city, realEstateValue, inventories, user);
         }

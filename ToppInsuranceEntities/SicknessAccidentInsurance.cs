@@ -8,7 +8,7 @@ namespace TopInsuranceEntities
 {
     public class SicknessAccidentInsurance : Insurance
     {
-        public int BaseAmount { get; set; }
+        public double BaseAmount { get; set; }
         public string? InsuranceFirstName { get; set; }
         public string? InsuranceLastName { get; set; }
         public string? InsuranceSSN { get; set; }
@@ -18,7 +18,7 @@ namespace TopInsuranceEntities
 
         public SicknessAccidentInsurance(PrivateCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type,
             Paymentform paymentform, string note, string? insuranceFirstName, string? insuranceLastName, string? 
-            insuranceSSN, AdditionalInsurance additionalInsurance, int baseAmount, Employee user)
+            insuranceSSN, AdditionalInsurance additionalInsurance, double baseAmount, Employee user)
         : base(startDate, endDate, type, paymentform, note, user)
         {
             PrivateCustomer = customer;
@@ -34,20 +34,20 @@ namespace TopInsuranceEntities
 
         private void CalculatePremium()
         {
-            Premium = (int)(BaseAmount * 0.0005);
+            Premium = BaseAmount * 0.0005;
 
             if (AdditionalInsurance == AdditionalInsurance.InvaliditetVidOlycksfall)
             {
-                Premium += (int)(BaseAmount * 0.0003);
+                Premium += BaseAmount * 0.0003;
             }
             if (AdditionalInsurance == AdditionalInsurance.ErsättningVidLångvarigSjukskrivning)
             {
-                Premium += (int)(BaseAmount * 0.0005);
+                Premium += BaseAmount * 0.0005;
             }
             if (AdditionalInsurance == AdditionalInsurance.Båda)
             {
-                Premium += (int)(BaseAmount * 0.0003);
-                Premium += (int)(BaseAmount * 0.0005);
+                Premium += BaseAmount * 0.0003;
+                Premium += BaseAmount * 0.0005;
             }
 
         }
