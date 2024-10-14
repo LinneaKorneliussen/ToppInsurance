@@ -29,11 +29,11 @@ namespace TopInsuranceEntities
 
         public VehicleInsurance() { }
 
-        public int CalculateMonthlyPremium()
+        public double CalculateMonthlyPremium()
         {
             Premium = GetBasePremium(DeductibleVehicle, CoverageType);
             double riskFactor = GetRiskFactor(RiskZone);
-            return (int)(Premium * riskFactor);
+            return Premium * riskFactor;
         }
         private int GetBasePremium(DeductibleVehicle deductible, CoverageType coverageType)
         {

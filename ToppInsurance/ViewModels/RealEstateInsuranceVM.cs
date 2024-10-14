@@ -150,8 +150,8 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        private int _valueRealEstate;
-        public int ValueRealEstate
+        private double _valueRealEstate;
+        public double ValueRealEstate
         {
             get { return _valueRealEstate; }
             set
@@ -300,7 +300,6 @@ namespace TopInsuranceWPF.ViewModels
                     return;
                 }
 
-                // Validera att varje inventarie har en typ
                 foreach (var inventory in Inventories)
                 {
                     if (inventory.InventoryType == 0)

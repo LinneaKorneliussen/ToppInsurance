@@ -16,17 +16,31 @@ namespace TopInsuranceDL
             unitOfWork = UnitOfWork.GetInstance();
         }
 
-        #region Register new employer method
-        public void AddEmployer(string firstName, string lastName, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
+        #region Register new employee method
+        public void AddEmployee(string firstName, string lastName, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
         {
             Employee employee = new Employee(firstName, lastName, phoneNumber, emailAddress, address, zipCode, city, employeeRole, password);
             unitOfWork.EmployeeRepository.Add(employee);
             unitOfWork.Save();
         }
         #endregion
-        public List<Employee> GetAllEmployers()
+
+        #region Get all employees Method
+        public List<Employee> GetAllEmployees()
         {
             return unitOfWork.EmployeeRepository.GetAll().ToList();
         }
+        #endregion
+
+        #region Get Salesperson by Last Name or Agency Number
+        public List<Employee> GetSalespersonsByLastNameOrAgencyNumber(string searchText)
+        {
+            return unitOfWork.EmployeeRepository.GetAll()
+                .Where(e => e.EmployeeRole == EmployeeRole.Säljare &&
+                           (e.LastName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                            e.AgencyNumber.Equals(searchText, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+        }
+        #endregion
     }
 }

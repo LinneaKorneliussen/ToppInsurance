@@ -56,17 +56,15 @@ namespace TopInsuranceDL
 
         #region Add Sickness and Accident Insurance Method for Private Customer
         public void AddSicknessAccidentInsurance(PrivateCustomer customer, DateTime startDate, DateTime endDate,
-            InsuranceType insuranceType, Paymentform paymentform, int baseAmount, string note,
+            InsuranceType insuranceType, Paymentform paymentform, double baseAmount, string note,
             string? insuranceFirstName, string? insuranceLastName, string? insuranceSSN,
             AdditionalInsurance additionalInsurance, Employee user)
         {
-            // Skapa den nya sjuk- och olycksfallsförsäkringen
             SicknessAccidentInsurance sicknessInsurance = new SicknessAccidentInsurance(
                 customer, startDate, endDate,
                 insuranceType, paymentform, note, insuranceFirstName,
                 insuranceLastName, insuranceSSN, additionalInsurance, baseAmount, user);
 
-            // Lägg till försäkringen i databasen
             unitOfWork.SicknessAccidentInsuranceRepository.Add(sicknessInsurance);
             unitOfWork.Save();
         }

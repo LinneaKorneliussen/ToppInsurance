@@ -16,7 +16,7 @@ namespace TopInsuranceEntities
         public BusinessCustomer BusinessCustomer { get; private set; }
         public ICollection<Inventory> Inventories { get; private set; } = new List<Inventory>();
         public RealEstateInsurance(BusinessCustomer customer, DateTime startDate, DateTime endDate, InsuranceType type, 
-            Paymentform paymentform, string note, string realEstateAddress, int zipCode, string city, int realEstateValue, Employee user) : 
+            Paymentform paymentform, string note, string realEstateAddress, int zipCode, string city, double realEstateValue, Employee user) : 
             base(startDate, endDate, type, paymentform, note, user)
         {
             BusinessCustomer = customer;
@@ -24,7 +24,7 @@ namespace TopInsuranceEntities
             RealEstateValue = realEstateValue;
             RealEstateZipCode = zipCode;
             RealEstateCity = city;
-            Premium = (int)Math.Round(CalculateRealEstatePremium());
+            Premium = CalculateRealEstatePremium();
         }
 
         public RealEstateInsurance() {}

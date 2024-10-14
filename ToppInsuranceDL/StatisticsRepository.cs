@@ -16,17 +16,6 @@ namespace TopInsuranceDL
             unitOfWork = UnitOfWork.GetInstance();
         }
 
-        #region Get Salesperson by Last Name or Agency Number
-        public List<Employee> GetSalespersonsByLastNameOrAgencyNumber(string searchText)
-        {
-            return unitOfWork.EmployeeRepository.GetAll()
-                .Where(e => e.EmployeeRole == EmployeeRole.Säljare &&
-                           (e.LastName.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                            e.AgencyNumber.Equals(searchText, StringComparison.OrdinalIgnoreCase)))
-                .ToList();
-        }
-        #endregion
-
         #region Get Sales Data For Employee Method
         public (Dictionary<string, List<int>> PrivateSalesData, Dictionary<string, List<int>> BusinessSalesData) GetSalesDataForEmployee(Employee employee)
         {

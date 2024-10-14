@@ -18,6 +18,7 @@ namespace TopInsuranceDL
         public DbSet<SicknessAccidentInsurance> SicknessAccidentInsurances { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
+        public DbSet<Comission> Comissions { get; set; }
 
         public InsuranceContext()
         {
@@ -45,15 +46,15 @@ namespace TopInsuranceDL
             modelBuilder.Entity<PrivateCustomer>().ToTable("PrivateCustomer");
             modelBuilder.Entity<PrivateCustomer>().HasIndex(p => p.SSN).IsUnique();
 
-            modelBuilder.Entity<LifeInsurance>().HasOne(e => e.Employee).WithMany(l => l.lifeInsurances).HasForeignKey(l => l.EmployeeId);
-            modelBuilder.Entity<SicknessAccidentInsurance>().HasOne(e => e.Employee).WithMany(s => s.accidentInsurances).HasForeignKey(s => s.EmployeeId);
+            modelBuilder.Entity<LifeInsurance>().HasOne(e => e.Employee).WithMany(l => l.LifeInsurances).HasForeignKey(l => l.EmployeeId);
+            modelBuilder.Entity<SicknessAccidentInsurance>().HasOne(e => e.Employee).WithMany(s => s.AccidentInsurances).HasForeignKey(s => s.EmployeeId);
 
             modelBuilder.Entity<BusinessCustomer>().ToTable("BusinessCustomer");
             modelBuilder.Entity<BusinessCustomer>().HasIndex(b => b.Organizationalnumber).IsUnique();
 
-            modelBuilder.Entity<LiabilityInsurance>().HasOne(e => e.Employee).WithMany(b => b.liabilityInsurances).HasForeignKey(b => b.EmployeeId);
-            modelBuilder.Entity<VehicleInsurance>().HasOne(e => e.Employee).WithMany(v => v.vehicleInsurances).HasForeignKey(v => v.EmployeeId);
-            modelBuilder.Entity<RealEstateInsurance>().HasOne(e => e.Employee).WithMany(r => r.realEstateInsurances).HasForeignKey(r => r.EmployeeId);
+            modelBuilder.Entity<LiabilityInsurance>().HasOne(e => e.Employee).WithMany(b => b.LiabilityInsurances).HasForeignKey(b => b.EmployeeId);
+            modelBuilder.Entity<VehicleInsurance>().HasOne(e => e.Employee).WithMany(v => v.VehicleInsurances).HasForeignKey(v => v.EmployeeId);
+            modelBuilder.Entity<RealEstateInsurance>().HasOne(e => e.Employee).WithMany(r => r.RealEstateInsurances).HasForeignKey(r => r.EmployeeId);
 
             modelBuilder.Entity<LiabilityInsurance>().ToTable("LiabilityInsurance");
             modelBuilder.Entity<BusinessCustomer>().HasMany(b => b.BusinessInsurances).WithOne(b => b.BusinessCustomer).HasForeignKey(b => b.BusinessCustomerId);
@@ -72,7 +73,7 @@ namespace TopInsuranceDL
             modelBuilder.Entity<SicknessAccidentInsurance>().ToTable("SicknessAccidentInsurance");
             modelBuilder.Entity<PrivateCustomer>().HasMany(p => p.SicknessAndAccidentInsurances).WithOne(s => s.PrivateCustomer).HasForeignKey(s => s.PrivateCustomerId);
 
-
+            modelBuilder.Entity<Employee>().HasMany(c => c.Comissions).WithOne(e => e.Employee).HasForeignKey(e => e.EmployeeId);
 
         }
         #endregion
@@ -195,7 +196,7 @@ namespace TopInsuranceDL
             //    "Erik kontakt",
             //    "072-9867234",
             //    DeductibleLiability.HalvtPrisbasbelopp,
-            //    InsuranceAmount.ThreeMillion,
+            //    InsuranceAmount.Tre_miljoner,
             //    birgitta);
 
             //LiabilityInsurance businessInsuranceOlof = new LiabilityInsurance(
@@ -208,8 +209,8 @@ namespace TopInsuranceDL
             //    "Lenas kontakt",
             //    "072-9867964",
             //    DeductibleLiability.TreFjärdedelsPrisbasbelopp,
-            //    InsuranceAmount.FiveMillion,
-            //    birgitta);
+            //    InsuranceAmount.Fem_miljoner,
+            //    linnea);
 
             //LiabilityInsurances.Add(businessInsuranceSven);
             //LiabilityInsurances.Add(businessInsuranceOlof);
@@ -232,7 +233,7 @@ namespace TopInsuranceDL
             //VehicleInsurance vehicleInsurance2 = new VehicleInsurance(businessCustomerOlof, vehicle2,
             //    DeductibleVehicle.DV2, CoverageType.Hel, RiskZone.Z1,
             //    new DateTime(2024, 1, 1), new DateTime(2025, 1, 1),
-            //    InsuranceType.Fordonsförsäkring, Paymentform.År, "Scania försäkring", mikael);
+            //    InsuranceType.Fordonsförsäkring, Paymentform.År, "Scania försäkring", linnea);
 
             //VehicleInsurance vehicleInsurance3 = new VehicleInsurance(businessCustomerOlof, vehicle3,
             //    DeductibleVehicle.DV3, CoverageType.Halv, RiskZone.Z3,
@@ -263,7 +264,7 @@ namespace TopInsuranceDL
             //    12345,
             //    "Stockholm",
             //    4500000,
-            //    birgitta);
+            //    linnea);
 
             //RealEstateInsurance realEstateInsuranceSven = new RealEstateInsurance(businessCustomerSven,
             //    new DateTime(2024, 1, 1),
@@ -316,7 +317,6 @@ namespace TopInsuranceDL
             //inventory1.RealEstateInsurance = realEstateInsuranceOlof2;
             //inventory2.RealEstateInsurance = realEstateInsuranceOlof2;
             //#endregion
-
 
             SaveChanges();
         }

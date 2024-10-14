@@ -11,7 +11,7 @@ namespace TopInsuranceEntities
         public DateTime EndDate { get; set; }
         public InsuranceType Type { get; set; }
         public Paymentform Paymentform { get; set; }
-        public int Premium {  get; set; }
+        public double Premium {  get; set; }
         public Status Status { get; set; }
         public string? Note { get; set; }
         public int EmployeeId { get; set; }  

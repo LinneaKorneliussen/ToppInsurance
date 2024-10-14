@@ -111,8 +111,8 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        private int _selectedBaseAmount;
-        public int SelectedBaseAmount
+        private double _selectedBaseAmount;
+        public double SelectedBaseAmount
         {
             get { return _selectedBaseAmount; }
             set
