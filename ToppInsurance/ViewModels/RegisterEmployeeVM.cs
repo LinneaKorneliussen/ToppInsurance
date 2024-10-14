@@ -21,23 +21,12 @@ namespace TopInsuranceWPF.ViewModels
 
             AddEmployerCommand = new RelayCommand(AddEmployer);
             Clearfieldscommand = new RelayCommand(ClearFields);
-            RefreshCommand = new RelayCommand(RefreshSalesPerson);
+            Refreshcommand = new RelayCommand(RefreshSalesPerson);
 
             List<Employee> employees = employerController.GetAllEmployers();
             Employers = new ObservableCollection<Employee>(employees);
         }
-
-        private ICommand refreshcommand;
-        public ICommand RefreshCommand
-        {
-            get { return refreshcommand; }
-            set { refreshcommand = value; }
-        }
-        private void RefreshSalesPerson()
-        {
-            List<Employee> salesPersons = employerController.GetAllEmployers();
-            Employers = new ObservableCollection<Employee>(salesPersons);
-        }
+  
 
         #region Properties
 
@@ -51,7 +40,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newFirstName != value)
                 {
                     _newFirstName = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(NewFirstName));
                 }
             }
         }
@@ -64,7 +53,20 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newLastName != value)
                 {
                     _newLastName = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(NewLastName));
+                }
+            }
+        }
+        private string _newSSN;
+        public string NewSSN
+        {
+            get { return _newSSN; }
+            set
+            {
+                if (_newSSN != value)
+                {
+                    _newSSN = value;
+                    OnPropertyChanged(nameof(NewSSN));
                 }
             }
         }
@@ -78,7 +80,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newPhoneNumber != value)
                 {
                     _newPhoneNumber = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(NewPhoneNumber));
                 }
             }
         }
@@ -92,7 +94,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newEmailAddress != value)
                 {
                     _newEmailAddress = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(NewEmailAddress));
                 }
             }
         }
@@ -106,7 +108,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newAddress != value)
                 {
                     _newAddress = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(NewAddress));
                 }
             }
         }
@@ -120,7 +122,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newZipcode != value)
                 {
                     _newZipcode = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(NewZipcode));
                 }
             }
         }
@@ -134,7 +136,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newCity != value)
                 {
                     _newCity = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(NewCity));
                 }
             }
         }
@@ -148,7 +150,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_newPassword != value)
                 {
                     _newPassword = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(NewPassword));
                 }
             }
         }
@@ -179,9 +181,14 @@ namespace TopInsuranceWPF.ViewModels
                 MessageBox.Show(error);
                 return;
             }
-            if (!IsValidPhoneNumber(NewPhoneNumber) || !IsValidPhoneNumber(NewPhoneNumber))
+            if (!IsValidPhoneNumber(NewPhoneNumber))
             {
                 MessageBox.Show("Felformat på telefonnummer!");
+                return;
+            }
+            if (!IsValidPersonalNumber(NewSSN))
+            {
+                MessageBox.Show("Felformat på personummret!");
                 return;
             }
             if (!ValidateNumericFields(out int zipcode))
@@ -222,6 +229,16 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
+        #region Refresh sales person 
+        public ICommand Refreshcommand { get; }
+      
+        private void RefreshSalesPerson()
+        {
+            List<Employee> salesPersons = employerController.GetAllEmployers();
+            Employers = new ObservableCollection<Employee>(salesPersons);
+        }
+        #endregion
+
         #region Clear fields Command and Method
         public ICommand Clearfieldscommand { get; }
         private void ClearFields()
@@ -244,7 +261,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             get
             {
-                string[] properties = { nameof(NewFirstName), nameof(NewLastName), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity), nameof(NewPassword) };
+                string[] properties = { nameof(NewFirstName), nameof(NewLastName), nameof(NewSSN), nameof(NewPhoneNumber), nameof(NewEmailAddress), nameof(NewAddress), nameof(NewZipcode), nameof(NewCity), nameof(NewPassword) };
                 foreach (var property in properties)
                 {
                     string error = this[property];
@@ -281,6 +298,12 @@ namespace TopInsuranceWPF.ViewModels
                     if (string.IsNullOrWhiteSpace(NewLastName))
                     {
                         errorMessage = "Efternamn är obligatoriskt.";
+                    }
+                    break;
+                case nameof(NewSSN):
+                    if (string.IsNullOrWhiteSpace(NewLastName))
+                    {
+                        errorMessage = "Personnummer är obligatoriskt.";
                     }
                     break;
                 case nameof(NewPhoneNumber):
@@ -339,13 +362,16 @@ namespace TopInsuranceWPF.ViewModels
 
             return true;
         }
-
-
         public bool IsValidPhoneNumber(string phoneNumber)
         {
             string pattern = @"^\d{3}-\d{7}$";
             return Regex.IsMatch(phoneNumber, pattern);
         }
+        public bool IsValidPersonalNumber(string personalNumber)
+        {
+            return Regex.IsMatch(personalNumber, @"^\d{8}-\d{4}$");
+        }
+
         #endregion
 
     }
