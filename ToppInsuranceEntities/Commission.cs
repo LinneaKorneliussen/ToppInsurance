@@ -6,24 +6,22 @@ using System.Threading.Tasks;
 
 namespace TopInsuranceEntities
 {
-    public class Comission
+    public class Commission
     {
-        public int ComissionId { get; init; }
+        public int CommissionId { get; init; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public double TotalComission { get; set; }
+        public double TotalCommission { get; set; }
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
 
-        public Comission(DateTime startDate, DateTime endDate, Employee employee )
+        public Commission(DateTime startDate, DateTime endDate, Employee employee)
         {
             StartDate = startDate;
             EndDate = endDate;
+            Employee = employee;
         }
 
-        public Comission()
-        {
-            
-        }
+        public Commission() {}
     }
 }

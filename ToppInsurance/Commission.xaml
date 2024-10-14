@@ -86,7 +86,7 @@
 
         <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Width="270" Margin="10 165 5 0">
             <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
-            <Button Content="Spara ändringar" Command="{Binding GenerateCommissionCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
+            <Button Content="Spara ändringar" Command="{Binding AddCommissionCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
         </StackPanel>
 
     </Grid>

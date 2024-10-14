@@ -18,7 +18,7 @@ namespace TopInsuranceDL
         public DbSet<SicknessAccidentInsurance> SicknessAccidentInsurances { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
-        public DbSet<Comission> Comissions { get; set; }
+        public DbSet<Commission> Commissions { get; set; }
 
         public InsuranceContext()
         {
@@ -42,38 +42,38 @@ namespace TopInsuranceDL
         {
             modelBuilder.Entity<Employee>().ToTable("Employee");
             modelBuilder.Entity<Employee>().HasIndex(e => e.AgencyNumber).IsUnique();
+            modelBuilder.Entity<Employee>().HasIndex(e => e.SSN).IsUnique();
 
             modelBuilder.Entity<PrivateCustomer>().ToTable("PrivateCustomer");
             modelBuilder.Entity<PrivateCustomer>().HasIndex(p => p.SSN).IsUnique();
 
-            modelBuilder.Entity<LifeInsurance>().HasOne(e => e.Employee).WithMany(l => l.LifeInsurances).HasForeignKey(l => l.EmployeeId);
-            modelBuilder.Entity<SicknessAccidentInsurance>().HasOne(e => e.Employee).WithMany(s => s.AccidentInsurances).HasForeignKey(s => s.EmployeeId);
-
             modelBuilder.Entity<BusinessCustomer>().ToTable("BusinessCustomer");
             modelBuilder.Entity<BusinessCustomer>().HasIndex(b => b.Organizationalnumber).IsUnique();
 
-            modelBuilder.Entity<LiabilityInsurance>().HasOne(e => e.Employee).WithMany(b => b.LiabilityInsurances).HasForeignKey(b => b.EmployeeId);
-            modelBuilder.Entity<VehicleInsurance>().HasOne(e => e.Employee).WithMany(v => v.VehicleInsurances).HasForeignKey(v => v.EmployeeId);
-            modelBuilder.Entity<RealEstateInsurance>().HasOne(e => e.Employee).WithMany(r => r.RealEstateInsurances).HasForeignKey(r => r.EmployeeId);
+            modelBuilder.Entity<LifeInsurance>().ToTable("LifeInsurance");
+            modelBuilder.Entity<LifeInsurance>().HasOne(e => e.Employee).WithMany(l => l.LifeInsurances).HasForeignKey(l => l.EmployeeId);
+            modelBuilder.Entity<PrivateCustomer>().HasOne(p => p.LifeInsurance).WithOne(l => l.PrivateCustomer).HasForeignKey<LifeInsurance>(l => l.PrivateCustomerId);
+
+            modelBuilder.Entity<SicknessAccidentInsurance>().ToTable("SicknessAccidentInsurance");
+            modelBuilder.Entity<SicknessAccidentInsurance>().HasOne(e => e.Employee).WithMany(s => s.AccidentInsurances).HasForeignKey(s => s.EmployeeId);
+            modelBuilder.Entity<PrivateCustomer>().HasMany(p => p.SicknessAndAccidentInsurances).WithOne(s => s.PrivateCustomer).HasForeignKey(s => s.PrivateCustomerId);
 
             modelBuilder.Entity<LiabilityInsurance>().ToTable("LiabilityInsurance");
+            modelBuilder.Entity<LiabilityInsurance>().HasOne(e => e.Employee).WithMany(b => b.LiabilityInsurances).HasForeignKey(b => b.EmployeeId);
             modelBuilder.Entity<BusinessCustomer>().HasMany(b => b.BusinessInsurances).WithOne(b => b.BusinessCustomer).HasForeignKey(b => b.BusinessCustomerId);
 
             modelBuilder.Entity<VehicleInsurance>().ToTable("VehicleInsurance");
+            modelBuilder.Entity<VehicleInsurance>().HasOne(e => e.Employee).WithMany(v => v.VehicleInsurances).HasForeignKey(v => v.EmployeeId);
             modelBuilder.Entity<BusinessCustomer>().HasMany(b => b.VehicleInsurances).WithOne(v => v.BusinessCustomer).HasForeignKey(v => v.BusinessCustomerId);
             modelBuilder.Entity<VehicleInsurance>().HasOne(i => i.Vehicle).WithOne(v => v.VehicleInsurance).HasForeignKey<Vehicle>(v => v.VehicleInsuranceId);
 
             modelBuilder.Entity<RealEstateInsurance>().ToTable("RealEstateInsurance");
+            modelBuilder.Entity<RealEstateInsurance>().HasOne(e => e.Employee).WithMany(r => r.RealEstateInsurances).HasForeignKey(r => r.EmployeeId);
             modelBuilder.Entity<BusinessCustomer>().HasMany(b => b.RealEstateInsurances).WithOne(r => r.BusinessCustomer).HasForeignKey(r => r.BusinessCustomerId);
             modelBuilder.Entity<RealEstateInsurance>().HasMany(i => i.Inventories).WithOne(r => r.RealEstateInsurance).HasForeignKey(r => r.RealEstateInsuranceId);
 
-            modelBuilder.Entity<LifeInsurance>().ToTable("LifeInsurance");
-            modelBuilder.Entity<PrivateCustomer>().HasOne(p => p.LifeInsurance).WithOne(l => l.PrivateCustomer).HasForeignKey<LifeInsurance>(l => l.PrivateCustomerId);
+            modelBuilder.Entity<Commission>().HasOne(e => e.Employee).WithMany(c => c.Commissions).HasForeignKey(c => c.EmployeeId);
 
-            modelBuilder.Entity<SicknessAccidentInsurance>().ToTable("SicknessAccidentInsurance");
-            modelBuilder.Entity<PrivateCustomer>().HasMany(p => p.SicknessAndAccidentInsurances).WithOne(s => s.PrivateCustomer).HasForeignKey(s => s.PrivateCustomerId);
-
-            modelBuilder.Entity<Employee>().HasMany(c => c.Comissions).WithOne(e => e.Employee).HasForeignKey(e => e.EmployeeId);
 
         }
         #endregion
@@ -98,8 +98,6 @@ namespace TopInsuranceDL
             //Employee sten = new Employee("Sten", "Hård", "19800101-0001", "070-7121001", "Stenhård@toppförsäkringar.com", "Strandvägen 10", 50550, "Stockholm", EmployeeRole.VD, "Lösenord");
             //Employee annSofie = new Employee("Ann-Sofie", "Larsson", "19930218-1112", "073-5296398", "Annsofielarsson@toppförsäkringar.com", "Senapsgatan 154", 50539, "Borås", EmployeeRole.Ekonomiassistent, "Annsofie");
             //Employee iren = new Employee("Iren", "Panik", "19781230-1234", "073-1142646", "Irenpanik@toppförsäkringar.com", "Öresjövägen 29", 51821, "Borås", EmployeeRole.Försäljningschef, "Irenpanik");
-
-
 
             //// Lägga till anställda i listan
             //Employees.Add(linnea);
