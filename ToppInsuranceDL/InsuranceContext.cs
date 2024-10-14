@@ -21,7 +21,7 @@ namespace TopInsuranceDL
 
         public InsuranceContext()
         {
-           // ResetSeed();
+           //ResetSeed();
         }
 
         #region OnConfiguring 
@@ -125,8 +125,8 @@ namespace TopInsuranceDL
 
             //// Life Insurance for private customers 
             //LifeInsurance lifeInsuranceJeanette = new LifeInsurance(pcJeanette, new DateTime(2024, 2, 11), new DateTime(2025, 1, 1), InsuranceType.Livförsäkring, Paymentform.Månad, "Jeanette's life insurance note", 550000, linnea);
-            //LifeInsurance lifeInsuranceErik = new LifeInsurance(pcErik, new DateTime(2024, 10, 4), new DateTime(2025, 1, 1), InsuranceType.Livförsäkring, Paymentform.Månad, "Erik's life insurance note", 450000, linda);
-            //LifeInsurance lifeInsuranceAnna = new LifeInsurance(pcAnna, new DateTime(2024, 2, 4), new DateTime(2024, 8, 1), InsuranceType.Livförsäkring, Paymentform.Månad, "Annas life insurance note", 450000, karin);
+            //LifeInsurance lifeInsuranceErik = new LifeInsurance(pcErik, new DateTime(2024, 10, 4), new DateTime(2025, 1, 1), InsuranceType.Livförsäkring, Paymentform.Månad, "Erik's life insurance note", 450000, linnea);
+            //LifeInsurance lifeInsuranceAnna = new LifeInsurance(pcAnna, new DateTime(2024, 8, 4), new DateTime(2025, 8, 1), InsuranceType.Livförsäkring, Paymentform.Månad, "Annas life insurance note", 450000, linnea);
 
             //LifeInsurances.Add(lifeInsuranceJeanette);
             //LifeInsurances.Add(lifeInsuranceErik);
@@ -134,7 +134,7 @@ namespace TopInsuranceDL
 
             //// Sickness and accident Insurance for private customers
             //SicknessAccidentInsurance sicknessAndAccidentInsuranceJeanette = new SicknessAccidentInsurance(pcJeanette,
-            // new DateTime(2024, 1, 1),
+            // new DateTime(2024, 7, 1),
             // new DateTime(2025, 1, 1),
             // InsuranceType.SjukOchOlycksfallsförsäkringBARN,
             // Paymentform.År,
@@ -147,7 +147,7 @@ namespace TopInsuranceDL
             // linnea);
 
             //SicknessAccidentInsurance sicknessAndAccidentInsuranceErik = new SicknessAccidentInsurance(pcErik,
-            //    new DateTime(2024, 1, 1),
+            //    new DateTime(2024, 8, 1),
             //    new DateTime(2025, 1, 1),
             //    InsuranceType.SjukOchOlycksfallsförsäkringVUXEN,
             //    Paymentform.Månad,
@@ -187,7 +187,7 @@ namespace TopInsuranceDL
             //// Business Insurance for business customers 
             //LiabilityInsurance businessInsuranceSven = new LiabilityInsurance(
             //    businessCustomerSven,
-            //    new DateTime(2024, 1, 1),
+            //    new DateTime(2024, 10, 1),
             //    new DateTime(2025, 1, 1),
             //    InsuranceType.Ansvarsförsäkring,
             //    Paymentform.Månad,
@@ -200,7 +200,7 @@ namespace TopInsuranceDL
 
             //LiabilityInsurance businessInsuranceOlof = new LiabilityInsurance(
             //    businessCustomerOlof,
-            //    new DateTime(2024, 4, 12),
+            //    new DateTime(2024, 8, 12),
             //    new DateTime(2025, 1, 1),
             //    InsuranceType.Ansvarsförsäkring,
             //    Paymentform.Månad,
@@ -226,7 +226,7 @@ namespace TopInsuranceDL
             //// Skapa fordonförsäkringar för affärsförsäkring
             //VehicleInsurance vehicleInsurance1 = new VehicleInsurance(businessCustomerSven, vehicle1,
             //    DeductibleVehicle.DV1, CoverageType.Trafik, RiskZone.Z2,
-            //    new DateTime(2024, 1, 1), new DateTime(2025, 1, 1),
+            //    new DateTime(2024, 6, 1), new DateTime(2025, 1, 1),
             //    InsuranceType.Fordonsförsäkring, Paymentform.År, "Volvo försäkring", birgitta);
 
             //VehicleInsurance vehicleInsurance2 = new VehicleInsurance(businessCustomerOlof, vehicle2,
@@ -236,7 +236,7 @@ namespace TopInsuranceDL
 
             //VehicleInsurance vehicleInsurance3 = new VehicleInsurance(businessCustomerOlof, vehicle3,
             //    DeductibleVehicle.DV3, CoverageType.Halv, RiskZone.Z3,
-            //    new DateTime(2024, 1, 1), new DateTime(2025, 1, 1),
+            //    new DateTime(2024, 10, 1), new DateTime(2025, 1, 1),
             //    InsuranceType.Fordonsförsäkring, Paymentform.År, "Mercedes försäkring", malin);
 
 
@@ -254,7 +254,7 @@ namespace TopInsuranceDL
 
             //// Skapa fastighetsförsäkringar för varje kund
             //RealEstateInsurance realEstateInsuranceOlof = new RealEstateInsurance(businessCustomerOlof,
-            //    new DateTime(2024, 1, 1),
+            //    new DateTime(2024, 8, 1),
             //    new DateTime(2025, 1, 1),
             //    InsuranceType.FastighetsOchInventarieförsäkring,
             //    Paymentform.År,
@@ -278,7 +278,7 @@ namespace TopInsuranceDL
             //    birgitta);
 
             //RealEstateInsurance realEstateInsuranceOlof2 = new RealEstateInsurance(businessCustomerOlof,
-            //    new DateTime(2024, 1, 1),
+            //    new DateTime(2024, 7, 1),
             //    new DateTime(2025, 1, 1),
             //    InsuranceType.FastighetsOchInventarieförsäkring,
             //    Paymentform.År,

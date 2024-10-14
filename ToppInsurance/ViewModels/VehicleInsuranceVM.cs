@@ -22,8 +22,8 @@ namespace TopInsuranceWPF.ViewModels
 
         public VehicleInsuranceVM()
         {
-            NewStartDate = DateTime.Now;
-            NewEndDate = DateTime.Now.AddYears(1);
+            NewStartDate = DateTime.Today;
+            NewEndDate = DateTime.Today.AddYears(1);
             user = UserContext.Instance.LoggedInUser;
             vehicleController = new VehicleController();
             businessController = new BusinessController();

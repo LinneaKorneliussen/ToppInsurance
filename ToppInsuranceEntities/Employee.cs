@@ -14,11 +14,11 @@ namespace TopInsuranceEntities
         public string AgencyNumber { get; private set; }
 
         private static List<string> generatedAgencyNumbers = new List<string>();
-        public ICollection<LifeInsurance> lifeInsurances { get; set; }
-        public ICollection<SicknessAccidentInsurance> accidentInsurances { get; set; }
-        public ICollection<LiabilityInsurance> liabilityInsurances { get; set; }
-        public ICollection<VehicleInsurance> vehicleInsurances{ get; set; }
-        public ICollection<RealEstateInsurance> realEstateInsurances { get; set; }
+        public ICollection<LifeInsurance> lifeInsurances { get; set; } = new List<LifeInsurance>();
+        public ICollection<SicknessAccidentInsurance> accidentInsurances { get; set; } = new List<SicknessAccidentInsurance>();
+        public ICollection<LiabilityInsurance> liabilityInsurances { get; set; } = new List<LiabilityInsurance>();
+        public ICollection<VehicleInsurance> vehicleInsurances { get; set; } = new List<VehicleInsurance>();
+        public ICollection<RealEstateInsurance> realEstateInsurances { get; set; } = new List<RealEstateInsurance>();
 
 
         public Employee(string firstName, string lastName, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
