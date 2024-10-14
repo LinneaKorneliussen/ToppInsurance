@@ -67,12 +67,19 @@ namespace TopInsuranceWPF.ViewModels
 
                     case EmployeeRole.Försäljningschef:
                     case EmployeeRole.VD:
-                    case EmployeeRole.Ekonomiassistent:
                     case EmployeeRole.Försäljningsassistent:
                         MenuWindowRP menuRP = new MenuWindowRP();
                         MenuResponsibleVM menuResponsible = new MenuResponsibleVM(user);
                         menuRP.DataContext = menuResponsible;
                         menuRP.ShowDialog();
+                        ClearFields();
+                        break;
+
+                    case EmployeeRole.Ekonomiassistent:
+                        MenuWindowEA menuEA = new MenuWindowEA();
+                        MenuEconomicAssistantVM menuEconomicAssistant = new MenuEconomicAssistantVM(user);
+                        menuEA.DataContext = menuEconomicAssistant;
+                        menuEA.ShowDialog();
                         ClearFields();
                         break;
 
