@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="TopInsuranceWPF.Commission"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
+             xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             Background="White" Height="700" Width="800">
+
+    <UserControl.DataContext>
+        <vm:CommissionVM/>
+    </UserControl.DataContext>
+
+    <Grid Margin="0 0 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+
+        </Grid.RowDefinitions>
+        <StackPanel Background="White" Width="850" Height="500">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="15,20,0,0" Background="#EDEDED">
+                <material:PackIconMaterial Kind="Percent" Width="30" Height="30" Foreground="#223A2A" Margin="0,0,10,0"/>
+                <TextBlock Text="Provision" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" VerticalAlignment="Center" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top" Background="White" Margin="15,20,0,0">
+                <TextBlock Text="Hämta den säljare som du önskar skapa provisionsbesked för" Margin="0 0 0 0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" VerticalAlignment="Center" />
+                <TextBox Text="{Binding SearchEmployee, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="50,0,0,0" Style="{StaticResource searchTextbox}" />
+                <Button Content="Sök" Width="50" Height="30" Margin="15,0,0,0" Background="#223A2A" Foreground="White" Command="{Binding FindEmployeeCommand}" />
+                <material:PackIconMaterial Kind="Magnify" 
+                                 Width="15" 
+                                 Height="15" 
+                                 VerticalAlignment="Center" 
+                                 Margin="-100,0,0,0" 
+                                 Foreground="#223A2A" />
+            </StackPanel>
+            <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="15 10 60 10"/>
+
+            <!-- DataGrid för att visa kund -->
+            <DataGrid Margin="15 0 60 0" Name="businessDataGrid" AutoGenerateColumns="False" Height="200" FontWeight="Normal" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Företag" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Org.nr" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Tel.nr" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Adress" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Height="40">
+                <TextBlock Text="Fyll i provisionsperiod (till-från):" Grid.Row="3" FontSize="20" FontWeight="Bold" Margin="15,10,0,10"/>
+            </StackPanel>
+
+            <Grid Margin="0" Height="190">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="156"/>
+                    <ColumnDefinition Width="165*"/>
+                    <ColumnDefinition Width="182*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Startdatum:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="15,0,5,0" Height="16"/>
+                <DatePicker x:Name="dpStartdate" Grid.Row="2" Grid.Column="1" Width="150" Height="35" Margin="0,10,0,6" HorizontalAlignment="Left"
+            SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+            Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
+            Style="{StaticResource ValidationDatePickerStyle}"/>
+
+                <TextBlock Text="Slutdatum:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="15,0,5,0" Height="16"/>
+                <DatePicker x:Name="dpEnddate" Grid.Row="3" Grid.Column="1" Width="150" Height="35" Margin="0,4,0,6" HorizontalAlignment="Left"
+            SelectedDate="{Binding NewEndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+            Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
+            Style="{StaticResource ValidationDatePickerStyle}"/>
+            </Grid>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Width="270" Margin="10 165 5 0">
+            <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
+            <Button Content="Spara ändringar" Command="{Binding GenerateCommissionCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

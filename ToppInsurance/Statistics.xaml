@@ -4,7 +4,7 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
              xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             Background="White" Height="450" Width="800">
+             Background="White" Height="700" Width="800">
 
     <UserControl.DataContext>
         <vm:StatisticsVM/>
@@ -18,13 +18,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="15,20,0,0">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="15,20,0,0" Background="#EDEDED">
             <material:PackIconMaterial Kind="ChartLine" Width="30" Height="30" Foreground="#223A2A" Margin="0,0,10,0"/>
-            <TextBlock Text="Statistik" 
-                       FontWeight="Bold" 
-                       Foreground="#2F4F4F" 
-                       FontSize="16" 
-                       VerticalAlignment="Center" />
+            <TextBlock Text="Statistik" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" VerticalAlignment="Center" />
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top" Background="White" Margin="15,20,0,0">
@@ -35,7 +31,7 @@
                        VerticalAlignment="Center" />
             <TextBox Text="{Binding SearchEmployee, UpdateSourceTrigger=PropertyChanged}" 
                      Width="300" 
-                     Margin="15,0,0,0" 
+                     Margin="100,0,0,0" 
                      Style="{StaticResource searchTextbox}" />
             <Button Content="Sök" 
                     Width="50" 
@@ -47,9 +43,10 @@
                                          Width="15" 
                                          Height="15" 
                                          VerticalAlignment="Center" 
-                                         Margin="5,0,0,0" 
+                                         Margin="-100,0,0,0" 
                                          Foreground="#223A2A" />
         </StackPanel>
+        
 
         <ListView Grid.Row="2" 
                   ItemsSource="{Binding Employees}" 
