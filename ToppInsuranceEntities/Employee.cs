@@ -9,6 +9,7 @@ namespace TopInsuranceEntities
 {
     public class Employee : Person
     {
+        public string SSN { get; set; }
         public EmployeeRole EmployeeRole { get; set; }
         public string PasswordHash { get; private set; }
         public string AgencyNumber { get; private set; }
@@ -22,9 +23,10 @@ namespace TopInsuranceEntities
         public ICollection<Comission> Comissions { get; set; } = new List<Comission>();
 
 
-        public Employee(string firstName, string lastName, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
+        public Employee(string firstName, string lastName, string ssn, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
             : base(firstName, lastName, phoneNumber, emailAddress, address, zipCode, city)
         {
+            SSN = ssn;
             EmployeeRole = employeeRole;
             PasswordHash = HashFunction(password);
             AgencyNumber = GenerateUniqueAgencyNumber();

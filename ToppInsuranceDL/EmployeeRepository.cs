@@ -16,10 +16,18 @@ namespace TopInsuranceDL
             unitOfWork = UnitOfWork.GetInstance();
         }
 
-        #region Register new employee method
-        public void AddEmployee(string firstName, string lastName, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
+        #region SSN unique check Method
+        public bool SSNUnique(string ssn)
         {
-            Employee employee = new Employee(firstName, lastName, phoneNumber, emailAddress, address, zipCode, city, employeeRole, password);
+            bool isUnique = !unitOfWork.EmployeeRepository.Any(p => p.SSN == ssn);
+            return isUnique;
+        }
+        #endregion
+
+        #region Register new employee method
+        public void AddEmployee(string firstName, string lastName, string ssn, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
+        {
+            Employee employee = new Employee(firstName, lastName, ssn, phoneNumber, emailAddress, address, zipCode, city, employeeRole, password);
             unitOfWork.EmployeeRepository.Add(employee);
             unitOfWork.Save();
         }

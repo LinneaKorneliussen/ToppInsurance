@@ -84,20 +84,22 @@ namespace TopInsuranceDL
             //Database.EnsureDeleted();
             //Database.EnsureCreated();
 
-            //// Skapa anställda som objekt
-            //Employee linnea = new Employee("Linnea", "Korneliussen", "072-2136462", "Linnea@hotmail.com", "Västanvindsgatan 6", 41717, "Göteborg", EmployeeRole.Säljare, "Hej123");
-            //Employee irene = new Employee("Irene", "Johansson", "098-7653872", "IreneJohansson@toppförsäkringar.com", "Stengatan 5", 93874, "Oslo", EmployeeRole.Säljare, "Irene");
-            //Employee karin = new Employee("Karin", "Sundberg", "098-7453882", "Karin.sundberg@toppförsäkringar.com", "Lagercrantz plats 9", 50431, "Borås", EmployeeRole.Försäljningsassistent, "Kakan");
-            //Employee vigo = new Employee("Vigo", "Persson", "078-7345382", "Vigge@toppförsäkringar.com", "Odengatan 23", 50620, "Borås", EmployeeRole.Säljare, "Viggo");
-            //Employee birgitta = new Employee("Birgitta", "Frisk", "070-0958328", "Birgittafrisk@toppförsäkringar.com", "Druveforsvägen 11A", 50420, "Borås", EmployeeRole.Säljare, "Birgitta");
-            //Employee boris = new Employee("Boris", "Alm", "073-86745933", "Borisalm@toppförsäkringar.com", "Göteborgsvägen 2", 51820, "Borås", EmployeeRole.Säljare, "Boris");
-            //Employee linda = new Employee("Linda", "Jonsson", "070-7575411", "Lindajonsson@toppförsäkringar.com", "Salmeniigatan 3", 50325, "Borås", EmployeeRole.Säljare, "Linda");
-            //Employee malin = new Employee("Malin", "Nilsdotter", "076-5176729", "Malinnilsdotter@toppförsäkringar.com", "Körsbärsvägen 16", 53212, "Borås", EmployeeRole.Säljare, "Malin");
-            //Employee mikael = new Employee("Mikael", "Lund", "078-7238382", "Mikaellund@toppförsäkringar.com", "Roseniigatan 13", 50421, "Borås", EmployeeRole.Säljare, "Micke");
-            //Employee patrik = new Employee("Patrik", "Hedman", "070-7124386", "Patrikhedman@toppförsäkringar.com", "Makgrillsgatan 83", 51820, "Borås", EmployeeRole.Säljare, "Patrik");
-            //Employee sten = new Employee("Sten", "Hård", "070-7121001", "Stenhård@toppförsäkringar.com", "Strandvägen 10", 50550, "Stockholm", EmployeeRole.VD, "Lösenord");
-            //Employee annSofie = new Employee("Ann-Sofie", "Larsson", "073-5296398", "Annsofielarsson@toppförsäkringar.com", "Senapsgatan 154", 50539, "Borås", EmployeeRole.Ekonomiassistent, "Annsofie");
-            //Employee iren = new Employee("Iren", "Panik", "073-1142646", "Irenpanik@toppförsäkringar.com", "Öresjövägen 29", 51821, "Borås", EmployeeRole.Försäljningschef, "Irenpanik");
+            //// Skapa anställda som objekt med unika personnummer och telefonnummer
+            //Employee linnea = new Employee("Linnea", "Korneliussen", "19940518-6464", "072-2136462", "Linnea@hotmail.com", "Västanvindsgatan 6", 41717, "Göteborg", EmployeeRole.Säljare, "Hej123");
+            //Employee irene = new Employee("Irene", "Johansson", "19840525-1111", "073-7653872", "IreneJohansson@toppförsäkringar.com", "Stengatan 5", 93874, "Oslo", EmployeeRole.Säljare, "Irene");
+            //Employee karin = new Employee("Karin", "Sundberg", "19900515-2222", "070-7453882", "Karin.sundberg@toppförsäkringar.com", "Lagercrantz plats 9", 50431, "Borås", EmployeeRole.Försäljningsassistent, "Kakan");
+            //Employee vigo = new Employee("Vigo", "Persson", "19920312-3333", "076-7345382", "Vigge@toppförsäkringar.com", "Odengatan 23", 50620, "Borås", EmployeeRole.Säljare, "Viggo");
+            //Employee birgitta = new Employee("Birgitta", "Frisk", "19880620-4444", "070-0958328", "Birgittafrisk@toppförsäkringar.com", "Druveforsvägen 11A", 50420, "Borås", EmployeeRole.Säljare, "Birgitta");
+            //Employee boris = new Employee("Boris", "Alm", "19830101-5555", "073-8674593", "Borisalm@toppförsäkringar.com", "Göteborgsvägen 2", 51820, "Borås", EmployeeRole.Säljare, "Boris");
+            //Employee linda = new Employee("Linda", "Jonsson", "19930415-6666", "070-7575411", "Lindajonsson@toppförsäkringar.com", "Salmeniigatan 3", 50325, "Borås", EmployeeRole.Säljare, "Linda");
+            //Employee malin = new Employee("Malin", "Nilsdotter", "19871212-7777", "076-5176729", "Malinnilsdotter@toppförsäkringar.com", "Körsbärsvägen 16", 53212, "Borås", EmployeeRole.Säljare, "Malin");
+            //Employee mikael = new Employee("Mikael", "Lund", "19900110-8888", "078-7238382", "Mikaellund@toppförsäkringar.com", "Roseniigatan 13", 50421, "Borås", EmployeeRole.Säljare, "Micke");
+            //Employee patrik = new Employee("Patrik", "Hedman", "19850222-9999", "070-7124386", "Patrikhedman@toppförsäkringar.com", "Makgrillsgatan 83", 51820, "Borås", EmployeeRole.Säljare, "Patrik");
+            //Employee sten = new Employee("Sten", "Hård", "19800101-0001", "070-7121001", "Stenhård@toppförsäkringar.com", "Strandvägen 10", 50550, "Stockholm", EmployeeRole.VD, "Lösenord");
+            //Employee annSofie = new Employee("Ann-Sofie", "Larsson", "19930218-1112", "073-5296398", "Annsofielarsson@toppförsäkringar.com", "Senapsgatan 154", 50539, "Borås", EmployeeRole.Ekonomiassistent, "Annsofie");
+            //Employee iren = new Employee("Iren", "Panik", "19781230-1234", "073-1142646", "Irenpanik@toppförsäkringar.com", "Öresjövägen 29", 51821, "Borås", EmployeeRole.Försäljningschef, "Irenpanik");
+
+
 
             //// Lägga till anställda i listan
             //Employees.Add(linnea);
