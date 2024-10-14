@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
              xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              Background="White" Height="800" Width="1000">
 
@@ -88,13 +89,13 @@
                 <DatePicker x:Name="dpStartdate" Grid.Row="1" Grid.Column="1" Width="150" Margin="0,2,0,2" HorizontalAlignment="Left"
                             SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                             Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
-                            Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"/>
+                            Style="{StaticResource ValidationDatePickerStyle}"/>
 
                 <TextBlock Text="Slutdatum:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,5,5,0" Height="16"/>
                 <DatePicker x:Name="dpEnddate" Grid.Row="2" Grid.Column="1" Width="150" Margin="0,2,0,2" HorizontalAlignment="Left"
                             SelectedDate="{Binding NewEndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                             Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
-                            Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"/>
+                            Style="{StaticResource ValidationDatePickerStyle}"/>
 
                 <TextBlock Text="Betalningsperiod:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,5,5,0" Height="16"/>
                 <ComboBox x:Name="cbPaymentMethod" Grid.Row="3" Width="300" Margin="0,2,50,2" HorizontalAlignment="Center"
@@ -104,25 +105,29 @@
                           ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"/>
 
                 <TextBlock Text="Noteringar:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,5,5,0" Height="16"/>
-                <TextBox Grid.Row="4" Grid.Column="1" BorderBrush="Black" FontWeight="Normal" Margin="0,2,50,2" Width="300"
-                         Text="{Binding Note}" Background="GhostWhite"/>
+                <TextBox Grid.Row="4" Grid.Column="1" FontWeight="Normal" Margin="0,2,50,2" Width="300"
+                         Text="{Binding Note}" Background="GhostWhite" mah:TextBoxHelper.Watermark="Valfritt" />
 
                 <TextBlock Text="Fastighetsadress: " Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,5,5,0"/>
-                <TextBox Name="txtFastighetsadress" Grid.Row="5" Grid.Column="1" Text="{Binding CompanyAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
-                         BorderBrush="Black" FontWeight="Normal" Margin="0,2,50,2" Width="300" Height="20" Background="GhostWhite"/>
+                <TextBox Name="txtFastighetsadress" Grid.Row="5" Grid.Column="1" Text="{Binding CompanyAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                         Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"
+                         FontWeight="Normal" Margin="0,2,50,2" Width="300" Height="20" Background="GhostWhite"/>
 
                 <TextBlock Text="Postnummer: " Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,5,5,0"  />
-                <TextBox Name="txtPostNummer" Grid.Row="6" Grid.Column="1" Text="{Binding CompanyZipcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
-                         BorderBrush="Black" FontWeight="Normal" Margin="0,2,50,2" Width="300" Height="20" Background="GhostWhite"/>
+                <TextBox Name="txtPostNummer" Grid.Row="6" Grid.Column="1" Text="{Binding CompanyZipcode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                         Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"
+                         FontWeight="Normal" Margin="0,2,50,2" Width="300" Height="20" Background="GhostWhite"/>
 
                 <TextBlock Text="Stad: " Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,5,5,0"/>
-                <TextBox Name="txtStad" Grid.Row="7" Grid.Column="1" Text="{Binding CompanyCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
-                         BorderBrush="Black" FontWeight="Normal" Margin="0,2,50,2" Width="300" Height="20" Background="GhostWhite"/>
+                <TextBox Name="txtStad" Grid.Row="7" Grid.Column="1" Text="{Binding CompanyCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                         Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"
+                         FontWeight="Normal" Margin="0,2,50,2" Width="300" Height="20" Background="GhostWhite"/>
 
 
                 <TextBlock Text="Värde fastigheter:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,0,8,0" />
-                <TextBox Name="txtVärdeFastighet" Grid.Row="8" Grid.Column="1" Text="{Binding ValueRealEstate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
-                         BorderBrush="Black" FontWeight="Normal" Margin="0,2,50,2" Width="300" Background="GhostWhite"/>
+                <TextBox Name="txtVärdeFastighet" Grid.Row="8" Grid.Column="1" Text="{Binding ValueRealEstate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                         Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"
+                         FontWeight="Normal" Margin="0,2,50,2" Width="300" Background="GhostWhite"/>
 
                 <!-- Ifyllningsfält för inventarier -->
                 <TextBlock Text="Välj typ av inventarie: " Grid.Row="9" Grid.Column="1" FontWeight="Normal" VerticalAlignment="Center" Height="16" Margin="0,0,8,0" 
