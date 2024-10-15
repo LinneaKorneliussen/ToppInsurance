@@ -1,5 +1,6 @@
 ﻿using TopInsuranceEntities;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace TopInsuranceDL
 {
@@ -67,7 +68,7 @@ namespace TopInsuranceDL
             unitOfWork.CommissionRepository.Add(commission);
             unitOfWork.Save();
 
-            SaveComissionToJson(commission); 
+            SaveCommissionToJson(commission); 
 
             return commission;
         }
@@ -78,9 +79,22 @@ namespace TopInsuranceDL
         }
         #endregion
 
-        public void SaveComissionToJson(Commission commission)
+        public void SaveCommissionToJson(Commission commission)
         {
-            var comissionData = new
+            string filePath = "commissionReport.json";
+            List<dynamic> commissionsList = new List<dynamic>();
+
+            if (File.Exists(filePath))
+            {
+                string existingJson = File.ReadAllText(filePath);
+
+                if (!string.IsNullOrEmpty(existingJson))
+                {
+                    commissionsList = JsonConvert.DeserializeObject<List<dynamic>>(existingJson) ?? new List<dynamic>();
+                }
+            }
+
+            var commissionData = new
             {
                 AgencyNumber = commission.Employee.AgencyNumber,
                 SSN = commission.Employee.SSN,
@@ -88,18 +102,18 @@ namespace TopInsuranceDL
                 LastName = commission.Employee.LastName,
                 StartDate = commission.StartDate,
                 EndDate = commission.EndDate,
-                TotalComission = commission.TotalCommission
+                TotalCommission = commission.TotalCommission
             };
 
-            string json = JsonConvert.SerializeObject(comissionData, Newtonsoft.Json.Formatting.Indented);
+            commissionsList.Add(commissionData);
 
-            string filePath = "commissionReport.json"; 
+            string json = JsonConvert.SerializeObject(commissionsList, Newtonsoft.Json.Formatting.Indented);
             File.WriteAllText(filePath, json);
         }
 
-        public List<dynamic> LoadComissionsFromJson()
+        public List<dynamic> LoadCommissionsFromJson()
         {
-            string filePath = "comissionReport.json"; 
+            string filePath = "commissionReport.json";
 
             if (!File.Exists(filePath))
             {
@@ -108,9 +122,11 @@ namespace TopInsuranceDL
 
             string json = File.ReadAllText(filePath);
 
-            var comissionDataList = JsonConvert.DeserializeObject<List<dynamic>>(json);
+            var commissionDataList = JsonConvert.DeserializeObject<List<dynamic>>(json);
 
-            return comissionDataList;
+            return commissionDataList ?? new List<dynamic>(); 
         }
+
+
     }
 }

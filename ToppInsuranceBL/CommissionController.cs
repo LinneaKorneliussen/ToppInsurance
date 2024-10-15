@@ -11,17 +11,17 @@ namespace TopInsuranceBL
 {
     public class CommissionController
     {
-        private CommissionRepository comissionRepository;
+        private CommissionRepository commissionRepository;
 
         public CommissionController()
         {
-            comissionRepository = new CommissionRepository();
+            commissionRepository = new CommissionRepository();
         }
 
         #region Calculate and create commission Method
         public Commission CalculateAndCreateCommission(Employee employee, DateTime startDate, DateTime endDate)
         {
-            return comissionRepository.CalculateAndCreateCommission(employee, startDate, endDate);
+            return commissionRepository.CalculateAndCreateCommission(employee, startDate, endDate);
         }
         #endregion
     }
