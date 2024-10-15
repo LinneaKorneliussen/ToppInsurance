@@ -18,14 +18,14 @@ namespace TopInsuranceBL
         }
 
         #region Get Base Amounts Adult Method
-        public List<int> GetBaseAmountsAdult()
+        public List<double> GetBaseAmountsAdult()
         {
             return sicknessAccidentRepository.GetBaseAmountsAdults();
         }
         #endregion
 
         #region Get Base Amounts Child Method
-        public List<int> GetBaseAmountsChild()
+        public List<double> GetBaseAmountsChild()
         {
             return sicknessAccidentRepository.GetBaseAmountsChild();
         }

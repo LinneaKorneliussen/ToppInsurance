@@ -10,14 +10,14 @@ namespace TopInsuranceDL
     public class SicknessAccidentRepository
     {
         private UnitOfWork unitOfWork;
-        private List<int> baseAmountsAdult;
-        private List<int> baseAmountsChild;
+        private List<double> baseAmountsAdult;
+        private List<double> baseAmountsChild;
 
         public SicknessAccidentRepository()
         {
             unitOfWork = UnitOfWork.GetInstance();
-            baseAmountsAdult = new List<int> { 300000, 400000, 500000 };
-            baseAmountsChild = new List<int> { 700000, 900000, 1100000, 1300000 };
+            baseAmountsAdult = new List<double> { 300000, 400000, 500000 };
+            baseAmountsChild = new List<double> { 700000, 900000, 1100000, 1300000 };
             UpdateBaseAmounts();
         }
 
@@ -41,14 +41,14 @@ namespace TopInsuranceDL
         #endregion
 
         #region Get Base Amounts Adults Method
-        public List<int> GetBaseAmountsAdults()
+        public List<double> GetBaseAmountsAdults()
         {
             return baseAmountsAdult;
         }
         #endregion
 
         #region Get Base Amounts Child Method
-        public List<int> GetBaseAmountsChild()
+        public List<double> GetBaseAmountsChild()
         {
             return baseAmountsChild;
         }

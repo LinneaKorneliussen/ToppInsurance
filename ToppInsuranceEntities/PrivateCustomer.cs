@@ -10,7 +10,6 @@ namespace TopInsuranceEntities
 {
     public class PrivateCustomer : Person
     {
-        [Required]
         public string SSN { get; set; }
         public string WorkPhonenumber { get; set; }
 

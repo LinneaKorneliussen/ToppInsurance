@@ -18,7 +18,7 @@ namespace TopInsuranceWPF.ViewModels
     {
         private SicknessAccidentController sicknessAccidentController;
         private PrivateController privateController;
-        public List<int> baseAmounts;
+        public List<double> baseAmounts;
         private Employee user;
         public IEnumerable<Paymentform> Paymentforms { get; }
         public IEnumerable<AdditionalInsurance> AdditionalInsurances { get; }
@@ -228,8 +228,8 @@ namespace TopInsuranceWPF.ViewModels
         #endregion
 
         #region Observable collection 
-        private ObservableCollection<int> _currentBaseAmounts;
-        public ObservableCollection<int> CurrentBaseAmounts
+        private ObservableCollection<double> _currentBaseAmounts;
+        public ObservableCollection<double> CurrentBaseAmounts
         {
             get { return _currentBaseAmounts; }
             set
@@ -268,13 +268,13 @@ namespace TopInsuranceWPF.ViewModels
         private void ChildCommand()
         {
             baseAmounts = sicknessAccidentController.GetBaseAmountsChild();
-            CurrentBaseAmounts = new ObservableCollection<int>(baseAmounts);
+            CurrentBaseAmounts = new ObservableCollection<double>(baseAmounts);
 
         }
         private void AdultCommand()
         {
             baseAmounts = sicknessAccidentController.GetBaseAmountsAdult();
-            CurrentBaseAmounts = new ObservableCollection<int>(baseAmounts);
+            CurrentBaseAmounts = new ObservableCollection<double>(baseAmounts);
         }
         #endregion
 
