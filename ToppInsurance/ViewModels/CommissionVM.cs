@@ -20,6 +20,7 @@ namespace TopInsuranceWPF.ViewModels
             employeeController = new EmployeeController();
             FindEmployeeCommand = new RelayCommand(FindEmployee);
             AddCommissionCommand = new RelayCommand(AddCommission);
+            RefreshCommand = new RelayCommand(Refresh);
             LoadCommissions();
         }
 
@@ -106,6 +107,16 @@ namespace TopInsuranceWPF.ViewModels
                     OnPropertyChanged(nameof(LoadedCommissions));
                 }
             }
+        }
+        #endregion
+
+        #region Refresh sales person 
+        public ICommand RefreshCommand { get; }
+
+        private void Refresh()
+        {
+            List<Employee> salesPersons = employeeController.GetAllEmployers();
+            Employees = new ObservableCollection<Employee>(salesPersons);
         }
         #endregion
 

@@ -13,18 +13,18 @@ namespace TopInsuranceWPF.ViewModels
 {
     public class RegisterEmployeeVM : ObservableObject, IDataErrorInfo
     {
-        private EmployeeController employerController;
+        private EmployeeController employeeController;
 
         public RegisterEmployeeVM()
         {
-            employerController = new EmployeeController();
+            employeeController = new EmployeeController();
 
-            AddEmployerCommand = new RelayCommand(AddEmployer);
+            AddEmployeeCommand = new RelayCommand(AddEmployee);
             Clearfieldscommand = new RelayCommand(ClearFields);
             Refreshcommand = new RelayCommand(RefreshSalesPerson);
 
-            List<Employee> employees = employerController.GetAllEmployers();
-            Employers = new ObservableCollection<Employee>(employees);
+            List<Employee> employees = employeeController.GetAllEmployers();
+            Employees = new ObservableCollection<Employee>(employees);
         }
   
 
@@ -157,22 +157,22 @@ namespace TopInsuranceWPF.ViewModels
         #endregion
 
         #region Observable employers
-        private ObservableCollection<Employee> _employers;
-        public ObservableCollection<Employee> Employers
+        private ObservableCollection<Employee> _employees;
+        public ObservableCollection<Employee> Employees
         {
-            get { return _employers; }
+            get { return _employees; }
             set
             {
-                _employers = value;
+                _employees = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
-        #region Add empoloyee command and Method
-        public ICommand AddEmployerCommand { get; }
+        #region Add employee command and Method
+        public ICommand AddEmployeeCommand { get; }
 
-        private void AddEmployer()
+        private void AddEmployee()
         {
 
             string error = this.Error;
@@ -191,7 +191,7 @@ namespace TopInsuranceWPF.ViewModels
                 MessageBox.Show("Felformat på personummret, skriv i formatet (YYYYMMDD-XXXX)!");
                 return;
             }
-            if (!employerController.SSNUnique(NewSSN))
+            if (!employeeController.SSNUnique(NewSSN))
             {
                 MessageBox.Show("Personen finns redan registrerad");
                 return;
@@ -205,7 +205,7 @@ namespace TopInsuranceWPF.ViewModels
             EmployeeRole defaultRole = EmployeeRole.Säljare;
 
 
-            employerController.AddEmployee(NewFirstName, NewLastName, NewSSN, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, defaultRole, NewPassword);
+            employeeController.AddEmployee(NewFirstName, NewLastName, NewSSN, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, defaultRole, NewPassword);
 
             MessageBox.Show($"Säljaren har registrerats korrekt!\n\n" +
                              $"Förnamn: {NewFirstName}\n" +
@@ -217,7 +217,7 @@ namespace TopInsuranceWPF.ViewModels
                              $"Stad: {NewCity}\n");
 
 
-            Employers.Add(new Employee
+            Employees.Add(new Employee
             {
                 FirstName = NewFirstName,
                 LastName = NewLastName,
@@ -239,8 +239,8 @@ namespace TopInsuranceWPF.ViewModels
       
         private void RefreshSalesPerson()
         {
-            List<Employee> salesPersons = employerController.GetAllEmployers();
-            Employers = new ObservableCollection<Employee>(salesPersons);
+            List<Employee> salesPersons = employeeController.GetAllEmployers();
+            Employees = new ObservableCollection<Employee>(salesPersons);
         }
         #endregion
 
