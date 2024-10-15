@@ -43,13 +43,15 @@
             <!-- DataGrid för att visa kund -->
             <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="115" FontWeight="Normal" ItemsSource="{Binding BusinessCustomers}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Företag" Binding="{Binding CompanyName}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Företagsnamn" Binding="{Binding CompanyName}" IsReadOnly="True" Width="auto"/>
                     <DataGridTextColumn Header="Org.nr" Binding="{Binding Organizationalnumber}" IsReadOnly="True" Width="auto"/>
-                    <DataGridTextColumn Header="Tel.nr" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
-                    <DataGridTextColumn Header="Adress" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="auto"/>
-                    <DataGridTextColumn Header="Postnummer" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="auto"/>
-                    <DataGridTextColumn Header="Stad" Binding="{Binding Address}" IsReadOnly="True" Width="auto"/>
-                    <DataGridTextColumn Header="Kontaktperson" Binding="{Binding Zipcode}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Tel.nr" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="E-mail" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="PostNr" Binding="{Binding Zipcode}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
                 </DataGrid.Columns>
             </DataGrid>
 
