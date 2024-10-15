@@ -137,6 +137,14 @@
                                     <TextBlock Text="Ändra kunduppgifter" />
                                 </StackPanel>
                             </Button>
+
+                            <Button Style="{StaticResource menuButton}" Command="{Binding CustomerProspectCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <material:PackIconMaterial Kind="AccountMultiple" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Kundprospekt" />
+                                </StackPanel>
+                            </Button>
+                            
                         </StackPanel>
 
                         <Button Style="{StaticResource menuButton}" Command="{Binding LogOffCommand}" 

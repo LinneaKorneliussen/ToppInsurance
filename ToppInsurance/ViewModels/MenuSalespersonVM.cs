@@ -31,6 +31,8 @@ namespace TopInsuranceWPF.ViewModels
             VehicleInsuranceCommand = new RelayCommand (VehicleInsuranceBTN);
             RealEstateInsuranceCommand = new RelayCommand(RealEstateInsuranceBTN);
             EditCustomerCommand = new RelayCommand(EditCustomerBTN);
+            CustomerProspectCommand = new RelayCommand(ShowCustomerProspectBTN);
+
             LogOffCommand = new RelayCommand(LogOffBTN);
         }
         public MenuSalespersonVM() { }
@@ -99,6 +101,7 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand VehicleInsuranceCommand { get; }
         public ICommand RealEstateInsuranceCommand { get; }
         public ICommand EditCustomerCommand { get; }
+        public ICommand CustomerProspectCommand { get; }
         public ICommand LogOffCommand { get; }
         #endregion
 
@@ -146,7 +149,10 @@ namespace TopInsuranceWPF.ViewModels
         {
             CurrentViewModel = new EditCustomer();
         }
-
+        private void ShowCustomerProspectBTN()
+        {
+            CurrentViewModel = new CustomerProspect();
+        }
         private void LogOffBTN()
         {
             Window currentWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
