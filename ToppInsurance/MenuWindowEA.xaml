@@ -6,6 +6,7 @@
         xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen" WindowState="Maximized"
         Title="MenuWindowEA" Height="450" Width="800">
     
     <Window.DataContext>
@@ -31,11 +32,11 @@
                             </Ellipse>
                         </Border>
 
-                        <TextBlock Text="{Binding UserFirstName}" Foreground="White" FontSize="20" FontWeight="SemiBold" DockPanel.Dock="Top" Margin="5 25 0 10" TextAlignment="Center"/>
-                        <TextBlock Text="{Binding UserLastName}" Foreground="White" FontSize="20" FontWeight="SemiBold" DockPanel.Dock="Top" Margin="5 25 0 10" TextAlignment="Center"/>
-                        <TextBlock Text="{Binding UserRole}" Foreground="White" FontSize="14" FontWeight="SemiBold" DockPanel.Dock="Top" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding UserFirstName}" Foreground="White" FontSize="20" FontWeight="SemiBold" DockPanel.Dock="Top" Margin="2 5 0 10" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding UserLastName}" Foreground="White" FontSize="20" FontWeight="SemiBold" DockPanel.Dock="Top" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding UserRole}" Foreground="White" FontSize="14" FontWeight="SemiBold" Margin="0 15 0 0" DockPanel.Dock="Top" TextAlignment="Center"/>
 
-                        <Separator Margin="25" Background="White" DockPanel.Dock="Top" Height="0.8"/>
+                        <Separator Margin="15" Background="White" DockPanel.Dock="Top" Height="0.8"/>
 
                         <StackPanel DockPanel.Dock="Top">
                             <Button Style="{StaticResource menuButton}" Command="{Binding HomePageCommand}">
@@ -54,7 +55,7 @@
 
                             <Button Style="{StaticResource menuButton}" Command="{Binding ShowCommissionCommand}">
                                 <StackPanel Orientation="Horizontal">
-                                    <material:PackIconMaterial Kind="ChartBar" Style="{StaticResource menuButtonIcon}"/>
+                                    <material:PackIconMaterial Kind="Percent" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Provision" />
                                 </StackPanel>
                             </Button>
