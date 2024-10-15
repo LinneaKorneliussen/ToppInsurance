@@ -14,7 +14,7 @@ namespace TopInsuranceDL
         }
 
         #region Calculate and create commission Method
-        public Commission CalculateAndCreateCommission(Employee employee, DateTime startDate, DateTime endDate)
+        public (Commission, string) CalculateAndCreateCommission(Employee employee, DateTime startDate, DateTime endDate)
         {
             double totalPremium = 0;
 
@@ -25,37 +25,42 @@ namespace TopInsuranceDL
 
             if (existingCommission != null)
             {
-                return existingCommission;
+                return (null, "En provision för denna period existerar redan.");
             }
 
-            var activeLifeInsurances = employee.LifeInsurances
-                .Where(l => l.StartDate >= startDate && l.StartDate <= endDate && l.Status == Status.Aktiv && l.EmployeeId == employee.PersonId)
-                .Select(l => l.Premium);
+            var activeLifeInsurances = unitOfWork.LifeInsuranceRepository.GetAll()
+                .Where(l => l.EmployeeId == employee.PersonId &&
+                l.StartDate <= endDate && l.Status == Status.Aktiv);
 
-            var activeAccidentInsurances = employee.AccidentInsurances
-                .Where(a => a.StartDate >= startDate && a.StartDate <= endDate && a.Status == Status.Aktiv && a.EmployeeId == employee.PersonId)
-                .Select(a => a.Premium);
+            var activeAccidentInsurances = unitOfWork.SicknessAccidentInsuranceRepository.GetAll()
+                .Where(a => a.EmployeeId == employee.PersonId &&
+                a.StartDate <= endDate && a.Status == Status.Aktiv);
 
-            var activeLiabilityInsurances = employee.LiabilityInsurances
-                .Where(l => l.StartDate >= startDate && l.StartDate <= endDate && l.Status == Status.Aktiv && l.EmployeeId == employee.PersonId)
-                .Select(l => l.Premium);
+            var activeLiabilityInsurances = unitOfWork.LiabilityInsuranceRepository.GetAll()
+                .Where(l => l.EmployeeId == employee.PersonId &&
+                l.StartDate <= endDate && l.Status == Status.Aktiv);
 
-            var activeVehicleInsurances = employee.VehicleInsurances
-                .Where(v => v.StartDate >= startDate && v.StartDate <= endDate && v.Status == Status.Aktiv && v.EmployeeId == employee.PersonId)
-                .Select(v => v.Premium);
+            var activeVehicleInsurances = unitOfWork.VehicleInsuranceRepository.GetAll()
+                .Where(v => v.EmployeeId == employee.PersonId &&
+                v.StartDate <= endDate && v.Status == Status.Aktiv);
 
-            var realEstateInsurances = employee.RealEstateInsurances
-                .Where(re => re.StartDate >= startDate && re.StartDate <= endDate && re.Status == Status.Aktiv && re.EmployeeId == employee.PersonId);
+            totalPremium += activeLifeInsurances.Sum(l => l.Premium);
+            totalPremium += activeAccidentInsurances.Sum(a => a.Premium);
+            totalPremium += activeLiabilityInsurances.Sum(l => l.Premium);
+            totalPremium += activeVehicleInsurances.Sum(v => v.Premium);
 
-            totalPremium += activeLifeInsurances.Sum();
-            totalPremium += activeAccidentInsurances.Sum();
-            totalPremium += activeLiabilityInsurances.Sum();
-            totalPremium += activeVehicleInsurances.Sum();
+            var realEstateInsurances = unitOfWork.RealEstateInsuranceRepository.GetAll()
+                .Where(re => re.EmployeeId == employee.PersonId &&
+                             re.StartDate <= endDate && re.Status == Status.Aktiv)
+                .ToList();  
 
             foreach (var realEstateInsurance in realEstateInsurances)
             {
+                var inventories = unitOfWork.InventoryRepository.GetAll()
+                    .Where(inv => inv.RealEstateInsuranceId == realEstateInsurance.InsuranceId);
+
                 totalPremium += realEstateInsurance.Premium;
-                totalPremium += realEstateInsurance.Inventories.Sum(inv => inv.InvPremium);
+                totalPremium += inventories.Sum(inv => inv.InvPremium);
             }
 
             double commissionAmount = CalculateCommission(totalPremium);
@@ -68,9 +73,9 @@ namespace TopInsuranceDL
             unitOfWork.CommissionRepository.Add(commission);
             unitOfWork.Save();
 
-            SaveCommissionToJson(commission); 
+            SaveCommissionToJson(commission);
 
-            return commission;
+            return (commission, null);
         }
 
         public double CalculateCommission(double totalPremium)
@@ -79,6 +84,7 @@ namespace TopInsuranceDL
         }
         #endregion
 
+        #region Save Commission to Json Method
         public void SaveCommissionToJson(Commission commission)
         {
             string filePath = "commissionReport.json";
@@ -110,7 +116,9 @@ namespace TopInsuranceDL
             string json = JsonConvert.SerializeObject(commissionsList, Newtonsoft.Json.Formatting.Indented);
             File.WriteAllText(filePath, json);
         }
+        #endregion
 
+        #region Load Commission From Json Method
         public List<dynamic> LoadCommissionsFromJson()
         {
             string filePath = "commissionReport.json";
@@ -126,7 +134,7 @@ namespace TopInsuranceDL
 
             return commissionDataList ?? new List<dynamic>(); 
         }
-
+        #endregion
 
     }
 }

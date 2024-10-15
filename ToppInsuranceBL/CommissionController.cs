@@ -19,9 +19,16 @@ namespace TopInsuranceBL
         }
 
         #region Calculate and create commission Method
-        public Commission CalculateAndCreateCommission(Employee employee, DateTime startDate, DateTime endDate)
+        public (Commission, string) CalculateAndCreateCommission(Employee employee, DateTime startDate, DateTime endDate)
         {
             return commissionRepository.CalculateAndCreateCommission(employee, startDate, endDate);
+        }
+        #endregion
+
+        #region Load Commissions from JSON Method
+        public List<dynamic> LoadCommissionsFromJson()
+        {
+            return commissionRepository.LoadCommissionsFromJson();
         }
         #endregion
     }
