@@ -63,10 +63,13 @@
                 </StackPanel>
 
                 <!-- Log in button -->
-                <Button Content="Logga in" Width="150" Height="40" 
-                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                        Background="#223A2A" Foreground="White" FontWeight="Bold"
-                        Margin="0,20,0,0" Command="{Binding LoginCommand}"/>
+                <Button Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#223A2A" Foreground="White" FontWeight="Bold"
+                        Margin="0,20,0,0" Command="{Binding LoginCommand}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Logga in" VerticalAlignment="Center" />
+                        <iconPacks:PackIconMaterial Kind="LoginVariant" Width="12" Height="12" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
             </StackPanel>
         </Border>
     </Grid>
