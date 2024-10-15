@@ -66,5 +66,40 @@ namespace TopInsuranceDL
             return matchingCustomers;
         }
         #endregion
+
+        #region Get Private Customer Prospect Method 
+        public List<PrivateCustomer> GetCustomerProspects()
+        {
+            List<PrivateCustomer> customerProspects = new List<PrivateCustomer>();
+            var businessCustomers = unitOfWork.PCRepository.GetAll();
+
+            var activeLifeInsurances = unitOfWork.LifeInsuranceRepository.GetAll()
+                .Where(l => l.Status == Status.Aktiv)
+                .ToList();
+
+            var activeSicknessAccidentInsurances = unitOfWork.SicknessAccidentInsuranceRepository.GetAll()
+                .Where(s => s.Status == Status.Aktiv)
+                .ToList();
+
+            foreach (var customer in businessCustomers)
+            {
+                int totalInsuranceCount = 0;
+
+                totalInsuranceCount += activeLifeInsurances
+                    .Count(l => l.PrivateCustomerId == customer.PersonId);
+
+                totalInsuranceCount += activeSicknessAccidentInsurances
+                    .Count(s => s.PrivateCustomerId == customer.PersonId);
+
+                if (totalInsuranceCount <= 1)
+                {
+                    customerProspects.Add(customer);
+                }
+            }
+
+            return customerProspects;
+        }
+        #endregion
+
     }
 }
