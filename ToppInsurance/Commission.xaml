@@ -3,26 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
              xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             Background="White" Height="700" Width="800">
+             Background="White" Height="750" Width="800">
 
     <UserControl.DataContext>
         <vm:CommissionVM/>
     </UserControl.DataContext>
 
-    <Grid Margin="0 0 0 0">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
 
         </Grid.RowDefinitions>
-        <StackPanel Background="White" Width="850" Height="500">
-            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="15,20,0,0" Background="#EDEDED">
+        <StackPanel Background="White">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="15,20,15,10" Background="#EDEDED">
                 <material:PackIconMaterial Kind="Percent" Width="30" Height="30" Foreground="#223A2A" Margin="0,0,10,0"/>
                 <TextBlock Text="Provision" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" VerticalAlignment="Center" />
             </StackPanel>
@@ -38,15 +33,18 @@
                                  Margin="-100,0,0,0" 
                                  Foreground="#223A2A" />
             </StackPanel>
-            <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="15 10 60 10"/>
 
-            <!-- DataGrid för att visa kund -->
-            <DataGrid Margin="15 0 60 0" Name="businessDataGrid" AutoGenerateColumns="False" Height="200" FontWeight="Normal" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
+
+            <DataGrid Margin="10 15 10 10" Name="businessDataGrid" AutoGenerateColumns="False" Height="100" FontWeight="Normal" 
+                      ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"  
+                      RowStyle="{StaticResource DataGridRowStyle}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Företag" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
-                    <DataGridTextColumn Header="Org.nr" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
-                    <DataGridTextColumn Header="Tel.nr" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
-                    <DataGridTextColumn Header="Adress" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Agenturnr" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Personnummer" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Telefonr" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="auto"/>
+                    <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
                 </DataGrid.Columns>
             </DataGrid>
 
@@ -54,7 +52,7 @@
                 <TextBlock Text="Fyll i provisionsperiod (till-från):" Grid.Row="3" FontSize="20" FontWeight="Bold" Margin="15,10,0,10"/>
             </StackPanel>
 
-            <Grid Margin="0" Height="190">
+            <Grid Margin="0" Height="120">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -71,23 +69,38 @@
 
                 <TextBlock Text="Startdatum:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="15,0,5,0" Height="16"/>
                 <DatePicker x:Name="dpStartdate" Grid.Row="2" Grid.Column="1" Width="150" Height="35" Margin="0,10,0,6" HorizontalAlignment="Left"
-            SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-            Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
-            Style="{StaticResource ValidationDatePickerStyle}"/>
+                            SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                            Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
+                            Style="{StaticResource ValidationDatePickerStyle}"/>
 
                 <TextBlock Text="Slutdatum:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="15,0,5,0" Height="16"/>
                 <DatePicker x:Name="dpEnddate" Grid.Row="3" Grid.Column="1" Width="150" Height="35" Margin="0,4,0,6" HorizontalAlignment="Left"
-            SelectedDate="{Binding NewEndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-            Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
-            Style="{StaticResource ValidationDatePickerStyle}"/>
+                            SelectedDate="{Binding NewEndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                            Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
+                            Style="{StaticResource ValidationDatePickerStyle}"/>
             </Grid>
 
-        </StackPanel>
+            <TextBlock Text="Tidigare provisioner för anställd" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" HorizontalAlignment="Center" />
+            <Grid Grid.Row="1" Background="LightGray" Margin="10,10 10,10">
+                <DataGrid Margin="10,10 10,10" Name="commissionDataGrid" AutoGenerateColumns="False" Height="200" FontWeight="Normal" 
+                          ItemsSource="{Binding ComissionData}" RowStyle="{StaticResource DataGridRowStyle}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Agenturnr" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
+                        <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
+                        <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
+                        <DataGridTextColumn Header="Personnummer" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
+                        <DataGridTextColumn Header="Startdatum" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="auto"/>
+                        <DataGridTextColumn Header="Slutdatum" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
+                        <DataGridTextColumn Header="Provisonsbelopp" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
 
-        <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Width="270" Margin="10 165 5 0">
-            <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
-            <Button Content="Spara ändringar" Command="{Binding AddCommissionCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
-        </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,10, 10">
+                <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
+                <Button Content="Spara ändringar" Command="{Binding AddCommissionCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
+            </StackPanel>
 
+        </StackPanel>
     </Grid>
 </UserControl>
