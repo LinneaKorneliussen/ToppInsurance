@@ -334,7 +334,7 @@ namespace TopInsuranceWPF.ViewModels
             get
             {
                 string[] properties = { nameof(NewStartDate), nameof(NewEndDate), nameof(SelectedPaymentForm), nameof(RegistrationNumber),
-                    nameof(Brand), nameof(YearModel), nameof(SelectedCity)  };
+                    nameof(Brand), nameof(YearModel), nameof(SelectedCity), nameof(SelectedDeductible), nameof(SelectedCoverageType)};
                 foreach (var property in properties)
                 {
                     string error = this[property];
@@ -405,6 +405,18 @@ namespace TopInsuranceWPF.ViewModels
                     if (string.IsNullOrWhiteSpace(SelectedCity))
                     {
                         errorMessage = "Ange fordonets primära hemmastad";
+                    }
+                    break;
+                case nameof(SelectedDeductible):
+                    if (SelectedDeductible == 0)
+                    {
+                        errorMessage = "Vänligen välj en självrisk";
+                    }
+                    break;
+                case nameof(SelectedCoverageType):
+                    if (SelectedCoverageType == 0)
+                    {
+                        errorMessage = "Vänligen välj en trafikförsäkring";
                     }
                     break;
                 default:

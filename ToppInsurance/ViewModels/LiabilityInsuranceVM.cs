@@ -274,7 +274,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             get
             {
-                string[] properties = { nameof(ContactPerson), nameof(ContactPersonPhNo), nameof(NewStartDate), nameof(NewEndDate), nameof(SelectedPaymentForm)};
+                string[] properties = { nameof(ContactPerson), nameof(ContactPersonPhNo), nameof(NewStartDate), nameof(NewEndDate), nameof(SelectedPaymentForm) };
                 foreach (var property in properties)
                 {
                     string error = this[property];
@@ -333,6 +333,18 @@ namespace TopInsuranceWPF.ViewModels
                     if (SelectedPaymentForm == 0)
                     {
                         errorMessage = "Vänligen välj ett betalningssätt";
+                    }
+                    break;
+                case nameof(SelectedAmount):
+                    if (SelectedAmount == 0)
+                    {
+                        errorMessage = "Vänligen välj ett försäkringsbelopp";
+                    }
+                    break;
+                case nameof(SelectedDeductible):
+                    if (SelectedDeductible == 0)
+                    {
+                        errorMessage = "Vänligen välj en självrisk";
                     }
                     break;
                 default:
