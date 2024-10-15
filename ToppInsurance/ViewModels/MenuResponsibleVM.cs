@@ -29,7 +29,8 @@ namespace TopInsuranceWPF.ViewModels
             EditCustomerCommand = new RelayCommand(EditCustomerBTN);
             RegisterEmployerCommand = new RelayCommand(RegisterEmployerBTN);
             ShowStatisticsCommand = new RelayCommand(ShowStatisticsBTN);
-            
+            CustomerProspectCommand = new RelayCommand(ShowCustomerProspectBTN);
+
             LogOffCommand = new RelayCommand(LogOffBTN);
         }
         public MenuResponsibleVM() { }
@@ -99,6 +100,7 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand EditCustomerCommand { get; }
         public ICommand ShowStatisticsCommand { get; }
         public ICommand RegisterEmployerCommand { get; }
+        public ICommand CustomerProspectCommand { get; }
         public ICommand LogOffCommand { get; }
         #endregion
 
@@ -154,6 +156,10 @@ namespace TopInsuranceWPF.ViewModels
         private void ShowStatisticsBTN()
         {
             CurrentViewModel = new Statistics();
+        }
+        private void ShowCustomerProspectBTN()
+        {
+            CurrentViewModel = new CustomerProspect();
         }
 
         private void LogOffBTN()
