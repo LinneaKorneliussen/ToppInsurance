@@ -107,7 +107,7 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
-        #region Add Comission for employee 
+        #region Add Commission for employee 
         private void AddCommission()
         {
             commissionController.CalculateAndCreateCommission(SelectedEmployee, NewStartDate, NewEndDate);
