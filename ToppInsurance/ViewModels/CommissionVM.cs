@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -19,6 +20,7 @@ namespace TopInsuranceWPF.ViewModels
             employeeController = new EmployeeController();
             FindEmployeeCommand = new RelayCommand(FindEmployee);
             AddCommissionCommand = new RelayCommand(AddCommission);
+            LoadCommissions();
         }
 
         #region Properties
@@ -91,6 +93,20 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
+
+        private ObservableCollection<dynamic> _loadedCommissions;
+        public ObservableCollection<dynamic> LoadedCommissions
+        {
+            get { return _loadedCommissions; }
+            set
+            {
+                if (_loadedCommissions != value)
+                {
+                    _loadedCommissions = value;
+                    OnPropertyChanged(nameof(LoadedCommissions));
+                }
+            }
+        }
         #endregion
 
         #region Commands
@@ -120,11 +136,37 @@ namespace TopInsuranceWPF.ViewModels
             if (!string.IsNullOrEmpty(Error))
             {
                 MessageBox.Show(Error, "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var (commission, errorMessage) = commissionController.CalculateAndCreateCommission(SelectedEmployee, NewStartDate, NewEndDate);
+
+            if (errorMessage != null)
+            {
+                MessageBox.Show(errorMessage, "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Error);
                 return; 
             }
 
-            commissionController.CalculateAndCreateCommission(SelectedEmployee, NewStartDate, NewEndDate);
-            MessageBox.Show("Kommissionen har lagts till framgångsrikt.", "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (commission != null)
+            {
+                MessageBox.Show("Kommissionen har lagts till framgångsrikt.", "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        #endregion
+
+        #region Load Commission data Method
+        public void LoadCommissions()
+        {
+            try
+            {
+                var commissionDataList = commissionController.LoadCommissionsFromJson();
+                LoadedCommissions = new ObservableCollection<dynamic>(commissionDataList);
+            }
+            catch (FileNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         #endregion
 
@@ -186,7 +228,5 @@ namespace TopInsuranceWPF.ViewModels
             return errorMessage;
         }
         #endregion
-
-
     }
 }

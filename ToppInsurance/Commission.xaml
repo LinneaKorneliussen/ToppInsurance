@@ -83,15 +83,15 @@
             <TextBlock Text="Tidigare provisioner för anställd" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" HorizontalAlignment="Center" />
             <Grid Grid.Row="1" Background="LightGray" Margin="10,10 10,10">
                 <DataGrid Margin="10,10 10,10" Name="commissionDataGrid" AutoGenerateColumns="False" Height="200" FontWeight="Normal" 
-                          ItemsSource="{Binding ComissionData}" RowStyle="{StaticResource DataGridRowStyle}">
+                          ItemsSource="{Binding LoadedCommissions}" RowStyle="{StaticResource DataGridRowStyle}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Agenturnr" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
                         <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
                         <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
                         <DataGridTextColumn Header="Personnummer" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
-                        <DataGridTextColumn Header="Startdatum" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="auto"/>
-                        <DataGridTextColumn Header="Slutdatum" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
-                        <DataGridTextColumn Header="Provisonsbelopp" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
+                        <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate, StringFormat=\{0:yyyy-MM-dd\}}" IsReadOnly="True" Width="auto"/>
+                        <DataGridTextColumn Header="Slutdatum" Binding="{Binding EndDate, StringFormat=\{0:yyyy-MM-dd\}}" IsReadOnly="True" Width="auto"/>
+                        <DataGridTextColumn Header="Provisonsbelopp" Binding="{Binding TotalCommission, StringFormat=\{0:F2\}}" IsReadOnly="True" Width="auto"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
