@@ -1,4 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Input;
 using TopInsuranceBL;
 using TopInsuranceEntities;
@@ -6,7 +9,7 @@ using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
-    public class CommissionVM : ObservableObject
+    public class CommissionVM : ObservableObject, IDataErrorInfo
     {
         private CommissionController commissionController;
         private EmployeeController employeeController;
@@ -98,11 +101,15 @@ namespace TopInsuranceWPF.ViewModels
         #region Find Employee Method
         private void FindEmployee()
         {
-            if (!string.IsNullOrEmpty(SearchEmployee))
+            if (!string.IsNullOrWhiteSpace(SearchEmployee))
             {
                 var filteredEmployees = employeeController.GetSalespersonsByLastNameOrAgencyNumber(SearchEmployee);
                 Employees = new ObservableCollection<Employee>(filteredEmployees);
                 SearchEmployee = string.Empty;
+            }
+            else
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
         #endregion
@@ -110,10 +117,74 @@ namespace TopInsuranceWPF.ViewModels
         #region Add Commission for employee 
         private void AddCommission()
         {
+            if (!string.IsNullOrEmpty(Error))
+            {
+                MessageBox.Show(Error, "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; 
+            }
+
             commissionController.CalculateAndCreateCommission(SelectedEmployee, NewStartDate, NewEndDate);
+            MessageBox.Show("Kommissionen har lagts till framgångsrikt.", "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        #endregion
+
+        #region Validation IDataErrorInfo
+        public string Error
+        {
+            get
+            {
+                string[] properties = { nameof(SelectedEmployee), nameof(NewStartDate), nameof(NewEndDate) };
+                foreach (var property in properties)
+                {
+                    string error = this[property];
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        return error;
+                    }
+                }
+                return null;
+            }
         }
 
+        public string this[string columnName]
+        {
+            get
+            {
+                return ValidateField(columnName);
+            }
+        }
 
+        private string ValidateField(string columnName)
+        {
+            string errorMessage = null;
+
+            switch (columnName)
+            {
+                case nameof(SelectedEmployee):
+                    if (SelectedEmployee == null)
+                    {
+                        errorMessage = "Vänligen välj en kund från listan";
+                    }
+                    break;
+                case nameof(NewStartDate):
+                    if (NewStartDate == DateTime.MinValue)
+                    {
+                        errorMessage = "Vänligen välj ett startdatum";
+                    }
+                    break;
+                case nameof(NewEndDate):
+                    if (NewEndDate == DateTime.MinValue)
+                    {
+                        errorMessage = "Vänligen välj ett slutdatum";
+                    }
+                    break;
+                default:
+                    errorMessage = "Vänligen välj";
+                    break;
+            }
+
+            return errorMessage;
+        }
         #endregion
 
 
