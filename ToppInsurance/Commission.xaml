@@ -98,6 +98,12 @@
 
             <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,10, 10">
                 <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
+                <Button Width="120" Height="30" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding RefreshCommand}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <material:PackIconMaterial Kind="Update" Width="14" Height="14" Foreground="White" />
+                        <TextBlock Text="UPPDATERA SIDAN" Margin="3,0,0,0" VerticalAlignment="Center" FontSize="10"/>
+                    </StackPanel>
+                </Button>
                 <Button Content="Spara ändringar" Command="{Binding AddCommissionCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
             </StackPanel>
 
