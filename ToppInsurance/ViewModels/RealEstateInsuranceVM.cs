@@ -240,7 +240,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             if (!string.IsNullOrWhiteSpace(SearchBusinessCustomer))
             {
-                var filteredCustomers = businessController.SearchBusinessCustomer(SearchBusinessCustomer);
+                var filteredCustomers = businessController.SearchBusinessCustomers(SearchBusinessCustomer);
                 BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredCustomers);
                 SearchBusinessCustomer = string.Empty;
             }

@@ -51,8 +51,8 @@ namespace TopInsuranceDL
         }
         #endregion
 
-        #region Search Private Customer Method 
-        public List<PrivateCustomer> SearchPrivateCustomer(string searchTerm)
+        #region Search Private Customers Method 
+        public List<PrivateCustomer> SearchPrivateCustomers(string searchTerm)
         {
             List<PrivateCustomer> allPrivateCustomers = unitOfWork.PCRepository.GetAll().ToList();
 
@@ -68,10 +68,10 @@ namespace TopInsuranceDL
         #endregion
 
         #region Get Private Customer Prospect Method 
-        public List<PrivateCustomer> GetCustomerProspects()
+        public List<PrivateCustomer> GetPrivateCustomerProspects()
         {
-            List<PrivateCustomer> customerProspects = new List<PrivateCustomer>();
-            var businessCustomers = unitOfWork.PCRepository.GetAll();
+            List<PrivateCustomer> privateProspects = new List<PrivateCustomer>();
+            var privateCustomers = unitOfWork.PCRepository.GetAll();
 
             var activeLifeInsurances = unitOfWork.LifeInsuranceRepository.GetAll()
                 .Where(l => l.Status == Status.Aktiv)
@@ -81,7 +81,7 @@ namespace TopInsuranceDL
                 .Where(s => s.Status == Status.Aktiv)
                 .ToList();
 
-            foreach (var customer in businessCustomers)
+            foreach (var customer in privateCustomers)
             {
                 int totalInsuranceCount = 0;
 
@@ -93,11 +93,11 @@ namespace TopInsuranceDL
 
                 if (totalInsuranceCount <= 1)
                 {
-                    customerProspects.Add(customer);
+                    privateProspects.Add(customer);
                 }
             }
 
-            return customerProspects;
+            return privateProspects;
         }
         #endregion
 
