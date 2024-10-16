@@ -34,9 +34,9 @@ namespace TopInsuranceDL
         #endregion
 
         #region Get all employees Method
-        public List<Employee> GetAllEmployees()
+        public List<Employee> GetAllSalesEmployees()
         {
-            return unitOfWork.EmployeeRepository.GetAll().ToList();
+            return unitOfWork.EmployeeRepository.GetAll().Where(e => e.EmployeeRole == EmployeeRole.Säljare).ToList();
         }
         #endregion
 

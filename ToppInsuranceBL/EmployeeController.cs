@@ -28,11 +28,9 @@ namespace TopInsuranceBL
         #endregion
 
         #region Get all employers customers Method
-        public List<Employee> GetAllEmployers()
+        public List<Employee> GetAllSalesEmployees()
         {
-            return employeeRepository.GetAllEmployees()
-                             .Where(e => e.EmployeeRole == EmployeeRole.Säljare)
-                             .ToList();
+            return employeeRepository.GetAllSalesEmployees();
         }
         #endregion
 

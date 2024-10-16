@@ -23,7 +23,7 @@ namespace TopInsuranceWPF.ViewModels
             Clearfieldscommand = new RelayCommand(ClearFields);
             Refreshcommand = new RelayCommand(RefreshSalesPerson);
 
-            List<Employee> employees = employeeController.GetAllEmployers();
+            List<Employee> employees = employeeController.GetAllSalesEmployees();
             Employees = new ObservableCollection<Employee>(employees);
         }
   
@@ -239,7 +239,7 @@ namespace TopInsuranceWPF.ViewModels
       
         private void RefreshSalesPerson()
         {
-            List<Employee> salesPersons = employeeController.GetAllEmployers();
+            List<Employee> salesPersons = employeeController.GetAllSalesEmployees();
             Employees = new ObservableCollection<Employee>(salesPersons);
         }
         #endregion
