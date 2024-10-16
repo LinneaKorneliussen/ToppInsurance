@@ -6,7 +6,7 @@
         xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
         mc:Ignorable="d"
-        Background="White" Height="790" Width="900">
+        Background="White" Height="820" Width="900">
 
     <UserControl.DataContext>
         <vm:EditCustomerVM/>
@@ -14,10 +14,6 @@
 
 
     <Grid Margin="25,20,25,20">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="69*"/>
-            <ColumnDefinition Width="101*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -28,7 +24,12 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <TabControl Name="MyTabControl" Grid.ColumnSpan="2">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Background="#EDEDED">
+            <material:PackIconMaterial Kind="AccountEdit" Width="30" Height="30" Foreground="#223A2A" Margin="0,0,10,0"/>
+            <TextBlock Text="Ändra kunduppgifter" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" VerticalAlignment="Center" />
+        </StackPanel>
+
+        <TabControl Grid.Row="1" Name="MyTabControl" Grid.ColumnSpan="2">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
                     <Setter Property="Background" Value="AliceBlue"/>

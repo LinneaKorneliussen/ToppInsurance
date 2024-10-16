@@ -175,7 +175,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
-                var filteredCustomers = privateController.SearchPrivateCustomer(SearchText);
+                var filteredCustomers = privateController.SearchPrivateCustomers(SearchText);
 
                 PrivateCustomers = new ObservableCollection<PrivateCustomer>(filteredCustomers);
                 SearchText = string.Empty; 
