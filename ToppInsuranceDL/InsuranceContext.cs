@@ -19,10 +19,11 @@ namespace TopInsuranceDL
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<Commission> Commissions { get; set; }
+        public DbSet<ProspectInformation> ProspectInformations { get; set; }
 
         public InsuranceContext()
         {
-           //ResetSeed();
+            //ResetSeed();
         }
 
         #region OnConfiguring 
@@ -130,6 +131,26 @@ namespace TopInsuranceDL
                 .HasOne(c => c.Employee) // En Commission har en Employee
                 .WithMany(e => e.Commissions) // En Employee kan ha många Commissions
                 .HasForeignKey(c => c.EmployeeId); // EmployeeId är främmande nyckel
+
+            // Prospectinformation Configuration
+            modelBuilder.Entity<ProspectInformation>()
+                .HasOne(p => p.Employee) // En prospectinformation har en Employee
+                .WithMany(e => e.ProspectInformationList) // En Employee kan ha många noteringar
+                .HasForeignKey(p => p.EmployeeId); // EmployeeId är främmande nyckel
+
+            // Prospectinformation Configuration
+            modelBuilder.Entity<ProspectInformation>()
+                .HasOne(p => p.PrivateCustomer) // En prospectinformation har en privatkund
+                .WithMany(pc => pc.ProspectInformationList) // En privatkund kan ha många noteringar
+                .HasForeignKey(p => p.PrivateCustomerId) // En privatkund är en främmande nyckel
+                .IsRequired(false);
+
+            // Prospectinformation Configuration
+            modelBuilder.Entity<ProspectInformation>()
+                .HasOne(p => p.BusinessCustomer) // En prospectinformation har en företagskund
+                .WithMany(bc => bc.ProspectInformationList) // En företagskund kan ha många noteringar
+                .HasForeignKey(p => p.BusinessCustomerId) // En företagskund är en främmande nyckel
+                .IsRequired(false);
         }
 
         #endregion
@@ -373,6 +394,41 @@ namespace TopInsuranceDL
             //inventory1.RealEstateInsurance = realEstateInsuranceOlof2;
             //inventory2.RealEstateInsurance = realEstateInsuranceOlof2;
             //#endregion
+
+            //#region Prospect Information Test Data
+
+            //// Skapa några exempel på prospect information för privata kunder och affärskunder
+            //ProspectInformation prospectInfo1 = new ProspectInformation(
+            //    "Jeanette är intresserad av livförsäkring.", // Notering
+            //    linnea, // Anställd som hanterar prospektet
+            //    pcJeanette, // Privat kund (kan vara null för företagskunder)
+            //    null); // Ingen företagskund, eftersom detta gäller en privat kund
+
+            //ProspectInformation prospectInfo2 = new ProspectInformation(
+            //    "Erik är intresserad av en kombination av liv- och sjukförsäkring.",
+            //    boris,
+            //    pcErik,
+            //    null);
+
+            //ProspectInformation prospectInfo3 = new ProspectInformation(
+            //    "Olof från Persson Bygg vill utöka sitt ansvarsskydd.",
+            //    birgitta,
+            //    null,
+            //    businessCustomerOlof); // Företagskund, ingen privatkund
+
+            //ProspectInformation prospectInfo4 = new ProspectInformation(
+            //    "Sven från Ica Banken är intresserad av fastighetsförsäkring.",
+            //    linnea,
+            //    null,
+            //    businessCustomerSven);
+
+            //// Lägg till prospect information till listan eller databasen
+            //ProspectInformations.Add(prospectInfo1);
+            //ProspectInformations.Add(prospectInfo2);
+            //ProspectInformations.Add(prospectInfo3);
+            //ProspectInformations.Add(prospectInfo4);
+            //#endregion
+
 
             //SaveChanges();
         }
