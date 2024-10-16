@@ -20,7 +20,7 @@ namespace TopInsuranceWPF.ViewModels
             employeeController = new EmployeeController();
             FindEmployeeCommand = new RelayCommand(FindEmployee);
             AddCommissionCommand = new RelayCommand(AddCommission);
-            RefreshCommand = new RelayCommand(Refresh);
+            RefreshCommand = new RelayCommand(RefreshCommissionData);
             LoadCommissions();
         }
 
@@ -110,19 +110,10 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
-        #region Refresh sales person 
-        public ICommand RefreshCommand { get; }
-
-        private void Refresh()
-        {
-            List<Employee> salesPersons = employeeController.GetAllEmployers();
-            Employees = new ObservableCollection<Employee>(salesPersons);
-        }
-        #endregion
-
         #region Commands
         public ICommand FindEmployeeCommand { get; }
         public ICommand AddCommissionCommand { get; }
+        public ICommand RefreshCommand { get; }
         #endregion
 
         #region Find Employee Method
@@ -169,15 +160,16 @@ namespace TopInsuranceWPF.ViewModels
         #region Load Commission data Method
         public void LoadCommissions()
         {
-            try
-            {
-                var commissionDataList = commissionController.LoadCommissionsFromJson();
-                LoadedCommissions = new ObservableCollection<dynamic>(commissionDataList);
-            }
-            catch (FileNotFoundException ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            var commissionDataList = commissionController.LoadCommissionsFromJson();
+            LoadedCommissions = new ObservableCollection<dynamic>(commissionDataList);
+        }
+        #endregion
+
+        #region Refresh sales person 
+        private void RefreshCommissionData()
+        {
+            var commissionDataList = commissionController.LoadCommissionsFromJson();
+            LoadedCommissions = new ObservableCollection<dynamic>(commissionDataList);
         }
         #endregion
 
