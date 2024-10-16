@@ -65,7 +65,7 @@ namespace TopInsuranceWPF.ViewModels
 
         private void FindBCcustomers()
         {
-            var filteredBusinessCustomers = businessController.SearchBusinessCustomer(SearchBusinessCustomer);
+            var filteredBusinessCustomers = businessController.SearchBusinessCustomers(SearchBusinessCustomer);
 
             BCcustomers= new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
             SearchBusinessCustomer = string.Empty;
@@ -73,7 +73,7 @@ namespace TopInsuranceWPF.ViewModels
 
         private void FindPcustomers()
         {
-            var filteredPrivateCustomers = privateController.SearchPrivateCustomer(SearchPrivateCustomer);
+            var filteredPrivateCustomers = privateController.SearchPrivateCustomers(SearchPrivateCustomer);
 
             Pcustomers = new ObservableCollection<PrivateCustomer>(filteredPrivateCustomers);
             SearchPrivateCustomer = string.Empty;
