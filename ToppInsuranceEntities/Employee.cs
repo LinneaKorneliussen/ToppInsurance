@@ -21,6 +21,7 @@ namespace TopInsuranceEntities
         public ICollection<VehicleInsurance> VehicleInsurances { get; set; } = new List<VehicleInsurance>();
         public ICollection<RealEstateInsurance> RealEstateInsurances { get; set; } = new List<RealEstateInsurance>();
         public ICollection<Commission> Commissions { get; set; } = new List<Commission>();
+        public ICollection<ProspectInformation> ProspectInformationList { get; set; } = new List<ProspectInformation>();
 
 
         public Employee(string firstName, string lastName, string ssn, string phoneNumber, string emailAddress, string address, int zipCode, string city, EmployeeRole employeeRole, string password)
