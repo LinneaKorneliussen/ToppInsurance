@@ -70,7 +70,7 @@
                             <TextBlock Text="Fyll i eventuell notering" FontSize="20" FontWeight="Bold" Margin="0 10"/>
                             <StackPanel Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                                 <TextBlock Text="Noteringar:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                                <TextBox Width="300" Text="{Binding NewLastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
+                                <TextBox Width="300" Text="{Binding Note, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                             </StackPanel>
                         </StackPanel>
 
@@ -82,16 +82,16 @@
                         </Grid>
                     </Grid>
 
-                    <DataGrid Name="NotesPCDataGrid" AutoGenerateColumns="False" Height="150" Width="900" FontWeight="Normal" ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectPrivateCustomer, Mode=TwoWay}"  
+                    <DataGrid Name="NotesPCDataGrid" AutoGenerateColumns="False" Height="150" Width="900" FontWeight="Normal" ItemsSource="{Binding ProspectInformationList}" SelectedItem="{Binding SelectPrivateCustomer, Mode=TwoWay}"  
                               RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="PersonNR" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Förnamn" Binding="{Binding UserFirstName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Kontaktdatum" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Noteringar" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Säljare f.namn" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Säljare e.namn" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Noteringar" Binding="{Binding Note}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Säljare f.namn" Binding="{Binding EmployeeId}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Säljare e.namn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="AgenturNR" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
 
                         </DataGrid.Columns>
@@ -107,7 +107,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Content="Spara ändringar" Command="{Binding UpdatePcustomersCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
+                        <Button Content="Spara ändringar" Command="{Binding AddPCNoteCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
                     </StackPanel>
 
                 </StackPanel>
@@ -172,7 +172,7 @@
                             <TextBlock Text="Fyll i eventuell notering" FontSize="20" FontWeight="Bold" Margin="0 10"/>
                             <StackPanel Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                                 <TextBlock Text="Noteringar:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
-                                <TextBox Width="300" Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
+                                <TextBox Width="300" Text="{Binding Note, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                             </StackPanel>
                         </StackPanel>
 
@@ -191,7 +191,7 @@
                             <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Kontaktdatum" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Noteringar" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Noteringar" Binding="{Binding Note}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Säljare f.namn" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Säljare e.namn" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="AgenturNR" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
@@ -208,7 +208,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Content="Spara ändringar" Command="{Binding UpdatePcustomersCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
+                        <Button Content="Spara ändringar" Command="{Binding AddBCNoteCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
                     </StackPanel>
 
                 </StackPanel>
