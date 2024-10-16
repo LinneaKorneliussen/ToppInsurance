@@ -29,9 +29,9 @@ namespace TopInsuranceBL
         #endregion
 
         #region Search Business Customers Method
-        public List<BusinessCustomer> SearchBusinessCustomer(string searchTerm)
+        public List<BusinessCustomer> SearchBusinessCustomers(string searchTerm)
         {
-            return businessRepository.SearchBusinessCustomer(searchTerm);
+            return businessRepository.SearchBusinessCustomers(searchTerm);
         }
         #endregion
 
@@ -47,6 +47,13 @@ namespace TopInsuranceBL
         public void UpdateBusinessCustomers(BusinessCustomer businessCustomersToUpdate)
         {
             businessRepository.UpdateBusinessCustomers(businessCustomersToUpdate);
+        }
+        #endregion
+
+        #region Get Private Customer prospect
+        public List<BusinessCustomer> GetBusinessCustomerProspects()
+        {
+            return businessRepository.GetBusinessCustomerProspects();
         }
         #endregion
 

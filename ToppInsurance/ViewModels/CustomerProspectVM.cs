@@ -25,9 +25,60 @@ namespace TopInsuranceWPF.ViewModels
             businessController = new BusinessController();
             privateController = new PrivateController();
 
+            FindPcustomersCommand = new RelayCommand(FindPcustomers);
+            FindBCcustomersCommand = new RelayCommand(FindBCcustomers);
+
             FindPrivatCustomerProspect();
+            FindBusinessCustomerProspect();
 
         }
+
+        #region Search
+        private string _searchBusinessCustomer;
+        public string SearchBusinessCustomer
+        {
+            get { return _searchBusinessCustomer; }
+            set
+            {
+                if (_searchBusinessCustomer != value)
+                {
+                    _searchBusinessCustomer = value;
+                    OnPropertyChanged(nameof(SearchBusinessCustomer));
+                }
+            }
+        }
+
+        private string _searchPrivateCustomer;
+        public string SearchPrivateCustomer
+        {
+            get { return _searchPrivateCustomer; }
+            set
+            {
+                if (_searchPrivateCustomer != value)
+                {
+                    _searchPrivateCustomer = value;
+                    OnPropertyChanged(nameof(SearchPrivateCustomer));
+                }
+            }
+        }
+
+        private void FindBCcustomers()
+        {
+            var filteredBusinessCustomers = businessController.SearchBusinessCustomers(SearchBusinessCustomer);
+
+            BCcustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
+            SearchBusinessCustomer = string.Empty;
+        }
+
+        private void FindPcustomers()
+        {
+            var filteredPrivateCustomers = privateController.SearchPrivateCustomers(SearchPrivateCustomer);
+
+            Pcustomers = new ObservableCollection<PrivateCustomer>(filteredPrivateCustomers);
+            SearchPrivateCustomer = string.Empty;
+        }
+
+        #endregion
 
         #region Properties
 
@@ -116,17 +167,25 @@ namespace TopInsuranceWPF.ViewModels
         #region Find method 
         private void FindPrivatCustomerProspect()
         {
-            var prospects = privateController.GetCustomerProspects();
-            Pcustomers = new ObservableCollection<PrivateCustomer>(prospects);
+            var privateProspects = privateController.GetPrivateCustomerProspects();
+            Pcustomers = new ObservableCollection<PrivateCustomer>(privateProspects);
+        }
+
+        private void FindBusinessCustomerProspect()
+        {
+            var businessProspects = businessController.GetBusinessCustomerProspects();
+            BCcustomers = new ObservableCollection<BusinessCustomer>(businessProspects);
         }
 
         #endregion
 
         #region Commands
         public ICommand ClearCommand { get; }
+        public ICommand FindBCcustomersCommand { get; }
+        public ICommand FindPcustomersCommand { get; }
 
         #endregion
 
-       
+
     }
 }

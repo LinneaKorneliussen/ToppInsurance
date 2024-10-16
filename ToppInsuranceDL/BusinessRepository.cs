@@ -56,8 +56,8 @@ namespace TopInsuranceDL
         }
         #endregion
 
-        #region Search Business Customer Method 
-        public List<BusinessCustomer> SearchBusinessCustomer(string searchTerm)
+        #region Search Business Customers Method 
+        public List<BusinessCustomer> SearchBusinessCustomers(string searchTerm)
         {
             List<BusinessCustomer> allBusinessCustomers = unitOfWork.BCRepository.GetAll().ToList();
 
@@ -72,5 +72,48 @@ namespace TopInsuranceDL
         }
         #endregion
 
+        #region Get Private Customer Prospect Method 
+        public List<BusinessCustomer> GetBusinessCustomerProspects()
+        {
+            List<BusinessCustomer> businessProspects = new List<BusinessCustomer>();
+            var businessCustomers = unitOfWork.BCRepository.GetAll();
+
+            var activeLiabilityInsurance = unitOfWork.LiabilityInsuranceRepository.GetAll()
+                .Where(l => l.Status == Status.Aktiv)
+                .ToList();
+
+            var activeVehicleInsurance = unitOfWork.VehicleInsuranceRepository.GetAll()
+                .Where(s => s.Status == Status.Aktiv)
+                .ToList();
+
+            var activeRealEstateInsurance = unitOfWork.RealEstateInsuranceRepository.GetAll()
+                .Where(s => s.Status == Status.Aktiv)
+                .ToList();
+
+            foreach (var customer in businessCustomers)
+            {
+                int totalInsuranceCount = 0;
+
+                totalInsuranceCount += activeLiabilityInsurance
+                    .Count(l => l.BusinessCustomerId == customer.PersonId);
+
+                totalInsuranceCount += activeVehicleInsurance
+                    .Count(s => s.BusinessCustomerId == customer.PersonId);
+
+                totalInsuranceCount += activeRealEstateInsurance
+                    .Count(s => s.BusinessCustomerId == customer.PersonId);
+
+
+                if (totalInsuranceCount <= 1)
+                {
+                    businessProspects.Add(customer);
+                }
+            }
+
+            return businessProspects;
+        }
+        #endregion
+
+    
     }
 }
