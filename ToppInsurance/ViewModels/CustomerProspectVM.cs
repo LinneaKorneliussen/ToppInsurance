@@ -16,22 +16,177 @@ namespace TopInsuranceWPF.ViewModels
     {
         private BusinessController businessController;
         private PrivateController privateController;
+        private ProspectController prospectController;
+        private Employee employee;
 
         public ObservableCollection<Insurance> ActiveInsurances { get; set; }
+        public ICollection<ProspectInformation> ProspectInformationList { get; set; }
 
         public CustomerProspectVM()
         {
-            NewStartDate = DateTime.Now;
+            
+            employee = UserContext.Instance.LoggedInUser;
             businessController = new BusinessController();
             privateController = new PrivateController();
+            prospectController = new ProspectController();
 
+            
             FindPcustomersCommand = new RelayCommand(FindPcustomers);
             FindBCcustomersCommand = new RelayCommand(FindBCcustomers);
+            AddPCNoteCommand = new RelayCommand(AddPCNote);
+            AddBCNoteCommand = new RelayCommand(AddBCNote);
 
             FindPrivatCustomerProspect();
             FindBusinessCustomerProspect();
 
         }
+
+        #region Properties for inlogged user
+
+        private string userFirstName;
+        public string UserFirstName
+        {
+            get { return userFirstName; }
+            set
+            {
+                userFirstName = value;
+                OnPropertyChanged(nameof(UserFirstName));
+                OnPropertyChanged(nameof(UserInfo));
+            }
+        }
+        private string userLastName;
+        public string UserLastName
+        {
+            get { return userLastName; }
+            set
+            {
+                userLastName = value;
+                OnPropertyChanged(nameof(UserLastName));
+                OnPropertyChanged(nameof(UserInfo));
+            }
+        }
+
+        private int agencyNumber;
+        public int AgencyNumber
+        {
+            get { return agencyNumber; }
+            set
+            {
+                agencyNumber = value;
+                OnPropertyChanged(nameof(AgencyNumber));
+            }
+        }
+
+        public string UserInfo
+        {
+            get { return $"{UserFirstName} {UserLastName}"; }
+        }
+        #endregion
+
+        #region Properties
+
+        private BusinessCustomer? _selectBusinessCustomer;
+        public BusinessCustomer? SelectBusinessCustomer
+        {
+            get { return _selectBusinessCustomer; }
+            set
+            {
+                if (_selectBusinessCustomer != value)
+                {
+                    _selectBusinessCustomer = value;
+                    OnPropertyChanged(nameof(SelectBusinessCustomer));
+                }
+            }
+        }
+
+        private PrivateCustomer? _selectPrivateCustomer;
+        public PrivateCustomer? SelectPrivateCustomer
+        {
+            get { return _selectPrivateCustomer; }
+            set
+            {
+                if (_selectPrivateCustomer != value)
+                {
+                    _selectPrivateCustomer = value;
+                    OnPropertyChanged(nameof(SelectPrivateCustomer));
+                }
+            }
+        }
+
+        private string _note;
+        public string Note
+        {
+            get { return _note; }
+            set
+            {
+                if (_note != value)
+                {
+                    _note = value;
+                    OnPropertyChanged(nameof(Note));
+                }
+            }
+        }
+        #endregion
+
+        #region Add note method
+        private void AddPCNote()
+        {
+            try
+            {
+                if (SelectPrivateCustomer == null)
+                {
+                    MessageBox.Show("Vänligen välj en kund från listan.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(Note))
+                {
+                    MessageBox.Show("Noteringen får inte vara tom.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                prospectController.AddPCNote(Note, employee, SelectPrivateCustomer, null); 
+                MessageBox.Show("Notering lagd framgångsrikt.");
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Varning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett oväntat fel inträffade: {ex.Message}\nStack Trace: {ex.StackTrace}", "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void AddBCNote()
+        {
+            try
+            {
+                if (SelectBusinessCustomer == null)
+                {
+                    MessageBox.Show("Vänligen välj en företagskund från listan.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(Note))
+                {
+                    MessageBox.Show("Noteringen får inte vara tom.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                prospectController.AddBCNote(Note, employee, null, SelectBusinessCustomer); 
+                MessageBox.Show("Notering lagd framgångsrikt.");
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Varning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett oväntat fel inträffade: {ex.Message}\nStack Trace: {ex.StackTrace}", "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        #endregion
 
         #region Search
         private string _searchBusinessCustomer;
@@ -80,66 +235,6 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
-        #region Properties
-
-        private BusinessCustomer _selectBusinessCustomer;
-        public BusinessCustomer SelectBusinessCustomer
-        {
-            get { return _selectBusinessCustomer; }
-            set
-            {
-                if (_selectBusinessCustomer != value)
-                {
-                    _selectBusinessCustomer = value;
-                    OnPropertyChanged(nameof(SelectBusinessCustomer));
-                }
-            }
-        }
-
-
-        private PrivateCustomer _selectPrivateCustomer;
-        public PrivateCustomer SelectPrivateCustomer
-        {
-            get { return _selectPrivateCustomer; }
-            set
-            {
-                if (_selectPrivateCustomer != value)
-                {
-                    _selectPrivateCustomer = value;
-                    OnPropertyChanged(nameof(SelectPrivateCustomer));
-                }
-            }
-        }
-
-        private DateTime _newStartDate;
-        public DateTime NewStartDate
-        {
-            get { return _newStartDate; }
-            set
-            {
-                if (_newStartDate != value)
-                {
-                    _newStartDate = value;
-                    OnPropertyChanged(nameof(NewStartDate));
-                }
-            }
-        }
-
-        private string _outcome;
-        public string Outcome
-        {
-            get { return _outcome; }
-            set
-            {
-                if (_outcome != value)
-                {
-                    _outcome = value;
-                    OnPropertyChanged(nameof(Outcome));
-                }
-            }
-        }
-        #endregion
-
         #region Get all business and private customers
         private ObservableCollection<BusinessCustomer> _BCcustomers;
         public ObservableCollection<BusinessCustomer> BCcustomers
@@ -183,6 +278,8 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand ClearCommand { get; }
         public ICommand FindBCcustomersCommand { get; }
         public ICommand FindPcustomersCommand { get; }
+        public ICommand AddPCNoteCommand { get; }
+        public ICommand AddBCNoteCommand { get; }
 
         #endregion
 
