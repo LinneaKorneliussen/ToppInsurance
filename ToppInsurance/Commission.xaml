@@ -81,7 +81,7 @@
             </Grid>
 
             <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                <TextBlock Text="Genererade provisionsunderlag för:" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" />
+                <TextBlock Text="Välj period för att visa genererade provisionsunderlag:" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" />
                 <ComboBox x:Name="cbMonths" Width="120" Height="22" Background="GhostWhite" BorderThickness="1" Margin="5,0,0,0" ItemsSource="{Binding AvailableMonthsYears}"
                           SelectedItem="{Binding SelectedMonthYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}" 
                           ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}" />
