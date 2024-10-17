@@ -22,9 +22,13 @@ namespace TopInsuranceEntities
         {
             SSN = ssn;
             WorkPhonenumber = workPhonenumber;
+            ProspectInformationList = new List<ProspectInformation>();
         }
 
-        public PrivateCustomer() { }
+        public PrivateCustomer() 
+        {
+            ProspectInformationList = new List<ProspectInformation>();
+        }
     }
 
 

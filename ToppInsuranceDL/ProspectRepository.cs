@@ -17,7 +17,6 @@ namespace TopInsuranceDL
             unitOfWork = UnitOfWork.GetInstance();
         }
 
-
         #region Add note
         public void AddPCNote(string note, Employee employee, PrivateCustomer? privateCustomer, BusinessCustomer? businessCustomer)
         {
@@ -61,5 +60,25 @@ namespace TopInsuranceDL
         }
 
         #endregion
+
+        #region Get business Customer with notes
+        public List<ProspectInformation> BusinessCustomerProspect(BusinessCustomer customer)
+        {
+            return unitOfWork.ProspectRepository.GetAll()
+            .Where(bc => bc.BusinessCustomerId == customer.PersonId).ToList();
+        }
+
+        #endregion
+
+        #region Get private Customer with notes
+
+        public List<ProspectInformation> PrivateCustomerProspect(PrivateCustomer customer)
+        {
+            return unitOfWork.ProspectRepository.GetAll()
+            .Where(pc => pc.PrivateCustomerId == customer.PersonId).ToList();
+        }
+
+        #endregion
+
     }
 }
