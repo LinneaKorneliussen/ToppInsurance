@@ -4,11 +4,13 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
              xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             Background="White" Height="700" Width="800">
+             Background="White" Height="720" Width="1200">
 
     <UserControl.DataContext>
         <vm:StatisticsVM/>
     </UserControl.DataContext>
+
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -18,7 +20,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="15,20,0,0" Background="#EDEDED">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="20,20,20,0" Background="#EDEDED">
             <material:PackIconMaterial Kind="ChartLine" Width="30" Height="30" Foreground="#223A2A" Margin="0,0,10,0"/>
             <TextBlock Text="Statistik" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" VerticalAlignment="Center" />
         </StackPanel>
@@ -29,10 +31,8 @@
                        Foreground="#2F4F4F" 
                        FontSize="13" 
                        VerticalAlignment="Center" />
-            <TextBox Text="{Binding SearchEmployee, UpdateSourceTrigger=PropertyChanged}" 
-                     Width="300" 
-                     Margin="100,0,0,0" 
-                     Style="{StaticResource searchTextbox}" />
+            <TextBox Text="{Binding SearchEmployee, UpdateSourceTrigger=PropertyChanged}"  Width="300" 
+                     Margin="100,0,0,0"  Style="{StaticResource searchTextbox}" />
             <Button Content="Sök" 
                     Width="50" 
                     Margin="15,0,0,0" 
@@ -64,7 +64,7 @@
             </ListView.View>
         </ListView>
 
-        <TabControl Grid.Row="3" Margin="15,0,15,0" Style="{StaticResource StatisticsTabControlStyle}">
+        <TabControl Grid.Row="3" Margin="15,15,15,15" Style="{StaticResource StatisticsTabControlStyle}">
             <TabItem Header="Privatkund Stapeldiagram" Style="{StaticResource StatisticsTabItemStyle}">
                 <Grid>
                     <lvc:CartesianChart Series="{Binding BarPrivateSeriesCollection}" 
@@ -74,7 +74,6 @@
                         </lvc:CartesianChart.AxisX>
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Antal sålda försäkringar" 
-                                       LabelFormatter="{Binding Formatter}" 
                                        MinValue="0" />
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
@@ -90,7 +89,6 @@
                         </lvc:CartesianChart.AxisX>
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Antal sålda försäkringar" 
-                                       LabelFormatter="{Binding Formatter}" 
                                        MinValue="0" />
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
@@ -106,7 +104,6 @@
                         </lvc:CartesianChart.AxisX>
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Antal sålda försäkringar" 
-                                       LabelFormatter="{Binding Formatter}" 
                                        MinValue="0" />
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
@@ -121,11 +118,67 @@
                             <lvc:Axis Title="Månader" Labels="{Binding Labels}"/>
                         </lvc:CartesianChart.AxisX>
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="Antal sålda försäkringar" 
-                                       LabelFormatter="{Binding Formatter}" 
+                            <lvc:Axis Title="Antal sålda försäkringar"
                                        MinValue="0" />
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
+                </Grid>
+            </TabItem>
+            
+            <TabItem Header="Försäljningsstatistik" Style="{StaticResource StatisticsTabItemStyle}" Height="22" Margin="0,0,2,0" VerticalAlignment="Top">
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Text="Statistik för samtliga säljare" FontWeight="Bold" Margin="10"
+                                   Foreground="#2F4F4F" FontSize="17" HorizontalAlignment="Center"/>
+
+                        <TextBlock Text="Ange år för att hämta statistik:" FontWeight="Bold" Margin="20,0,20,5"
+                                   Foreground="#2F4F4F" FontSize="10" HorizontalAlignment="Left"/>
+                        <ComboBox Name="YearComboBox" ItemsSource="{Binding AvailableYears}" 
+                                  SelectedItem="{Binding SelectedYear, Mode=TwoWay}" Width="140" Margin="20,0,20,0" 
+                                  HorizontalAlignment="Left" 
+                                  Style="{DynamicResource MahApps.Styles.Control.WindowCommands}" 
+                                  Foreground="Black"/>
+            
+                        <DataGrid Name="commissionDataGrid" AutoGenerateColumns="False" Height="150" FontWeight="Normal"
+                                  ItemsSource="{Binding EmployeeSalesData}" 
+                                  IsReadOnly="True" Margin="10,10,10,10" SelectedItem="{Binding SelectedEmployeeSummary}"
+                                  RowStyle="{StaticResource DataGridRowStyle}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Agenturnr" Binding="{Binding Employee.AgencyNumber}" />
+                                <DataGridTextColumn Header="Förnamn" Binding="{Binding Employee.FirstName}" />
+                                <DataGridTextColumn Header="Efternamn" Binding="{Binding Employee.LastName}" />
+                                <DataGridTextColumn Header="år" Binding="{Binding Year}"/>
+                                <DataGridTextColumn Header="Totala Försäljning" Binding="{Binding TotalSales}" />
+                                <DataGridTextColumn Header="Medel per Månad" Binding="{Binding AveragePerMonth}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+
+                        <DataGrid Name="salesDetailsDataGrid" AutoGenerateColumns="False"
+                                   Height="200" FontWeight="Normal" Margin="10,10,10,10"
+                                  ItemsSource="{Binding SelectedEmployeeSummary.MonthlySalesByType}"
+                                  RowStyle="{StaticResource DataGridRowStyle}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Försäkringstyp" Binding="{Binding Key}"/>
+                                <DataGridTextColumn Header="Jan" Binding="{Binding Value[0]}" />
+                                <DataGridTextColumn Header="Feb" Binding="{Binding Value[1]}" />
+                                <DataGridTextColumn Header="Mar" Binding="{Binding Value[2]}" />
+                                <DataGridTextColumn Header="Apr" Binding="{Binding Value[3]}" />
+                                <DataGridTextColumn Header="Maj" Binding="{Binding Value[4]}" />
+                                <DataGridTextColumn Header="Jun" Binding="{Binding Value[5]}" />
+                                <DataGridTextColumn Header="Jul" Binding="{Binding Value[6]}" />
+                                <DataGridTextColumn Header="Aug" Binding="{Binding Value[7]}" />
+                                <DataGridTextColumn Header="Sep" Binding="{Binding Value[8]}" />
+                                <DataGridTextColumn Header="Okt" Binding="{Binding Value[9]}" />
+                                <DataGridTextColumn Header="Nov" Binding="{Binding Value[10]}" />
+                                <DataGridTextColumn Header="Dec" Binding="{Binding Value[11]}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <Button Background="Gray" Width="100" Command="{Binding SaveToExcelCommand}" Content="Save to Excel"/>
+
+
+                    </StackPanel>
                 </Grid>
             </TabItem>
         </TabControl>
