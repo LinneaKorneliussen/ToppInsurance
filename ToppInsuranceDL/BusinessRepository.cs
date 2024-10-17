@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TopInsuranceEntities;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace TopInsuranceDL
@@ -72,11 +73,11 @@ namespace TopInsuranceDL
         }
         #endregion
 
-        #region Get Private Customer Prospect Method 
+        #region Get Business Customer with only one insurance Method 
         public List<BusinessCustomer> GetBusinessCustomerProspects()
         {
             List<BusinessCustomer> businessProspects = new List<BusinessCustomer>();
-            var businessCustomers = unitOfWork.BCRepository.GetAll();
+            var businessCustomers = unitOfWork.BCRepository.GetAll().ToList();
 
             var activeLiabilityInsurance = unitOfWork.LiabilityInsuranceRepository.GetAll()
                 .Where(l => l.Status == Status.Aktiv)
@@ -114,6 +115,6 @@ namespace TopInsuranceDL
         }
         #endregion
 
-    
+
     }
 }

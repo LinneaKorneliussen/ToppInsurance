@@ -65,18 +65,42 @@ namespace TopInsuranceWPF.ViewModels
 
         private void FindBCcustomers()
         {
+            if (string.IsNullOrWhiteSpace(SearchBusinessCustomer))
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             var filteredBusinessCustomers = businessController.SearchBusinessCustomers(SearchBusinessCustomer);
 
-            BCcustomers= new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
-            SearchBusinessCustomer = string.Empty;
+            if (filteredBusinessCustomers == null || !filteredBusinessCustomers.Any())
+            {
+                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                BCcustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
+            }
         }
 
         private void FindPcustomers()
         {
+            if (string.IsNullOrWhiteSpace(SearchPrivateCustomer))
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             var filteredPrivateCustomers = privateController.SearchPrivateCustomers(SearchPrivateCustomer);
 
-            Pcustomers = new ObservableCollection<PrivateCustomer>(filteredPrivateCustomers);
-            SearchPrivateCustomer = string.Empty;
+            if (filteredPrivateCustomers == null || !filteredPrivateCustomers.Any())
+            {
+                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                Pcustomers = new ObservableCollection<PrivateCustomer>(filteredPrivateCustomers);
+            }
         }
 
         #endregion
