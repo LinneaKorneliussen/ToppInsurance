@@ -22,7 +22,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Border Grid.Column="0" Background="#223A2A" CornerRadius="0 30 0 0">
+                <Border Grid.Column="0" Background="#223A2A">
                     <DockPanel>
                         <Border Width="80" Height="80" Padding="3" Background="#223A2A" CornerRadius="100" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="20 -30 0 0">
                             <Ellipse>
