@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -14,14 +15,26 @@ namespace TopInsuranceWPF.ViewModels
     {
         private CommissionController commissionController;
         private EmployeeController employeeController;
+        public List<string> AvailableMonthsYears { get; }
         public CommissionVM()
         {
+            var currentDate = DateTime.Now;
+            NewStartDate = new DateTime(currentDate.Year, currentDate.Month, 1).AddMonths(-1);
+            NewEndDate = new DateTime(currentDate.Year, currentDate.Month, 1).AddDays(-1);
             commissionController = new CommissionController();
             employeeController = new EmployeeController();
             FindEmployeeCommand = new RelayCommand(FindEmployee);
             AddCommissionCommand = new RelayCommand(AddCommission);
             RefreshCommand = new RelayCommand(RefreshCommissionData);
-            LoadCommissions();
+            int currentYear = DateTime.Now.Year;
+            AvailableMonthsYears = Enumerable.Range(0, 9)
+                .Select(offset =>
+                {
+                    int month = (9 + offset) % 12; 
+                    int year = currentYear + (9 + offset) / 12; 
+                    return $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month == 0 ? 12 : month)} {year}";
+                })
+                .ToList();
         }
 
         #region Properties
@@ -75,6 +88,21 @@ namespace TopInsuranceWPF.ViewModels
                 {
                     _selectedEmployee = value;
                     OnPropertyChanged(nameof(SelectedEmployee));
+                }
+            }
+        }
+
+        private string _selectedMonthYear;
+        public string SelectedMonthYear
+        {
+            get { return _selectedMonthYear; }
+            set
+            {
+                if (_selectedMonthYear != value) 
+                {
+                    _selectedMonthYear = value;
+                    OnPropertyChanged(nameof(SelectedMonthYear));
+                    LoadCommissions();
                 }
             }
         }
@@ -151,7 +179,7 @@ namespace TopInsuranceWPF.ViewModels
 
             if (commission != null)
             {
-                MessageBox.Show("Kommissionen har lagts till framgångsrikt.", "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Provisionsunderlaget har lagts till framgångsrikt.", "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -161,7 +189,27 @@ namespace TopInsuranceWPF.ViewModels
         public void LoadCommissions()
         {
             var commissionDataList = commissionController.LoadCommissionsFromJson();
-            LoadedCommissions = new ObservableCollection<dynamic>(commissionDataList);
+            if (SelectedMonthYear != null)
+            {
+                var parts = SelectedMonthYear.Split(' ');
+                if (parts.Length == 2 && int.TryParse(parts[1], out int year))
+                {
+                    int month = DateTime.ParseExact(parts[0], "MMMM", CultureInfo.CurrentCulture).Month;
+                    DateTime startDate = new DateTime(year, month, 1);
+                    DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+                    var filteredCommissions = commissionDataList
+                        .Where(c => DateTime.TryParse(c.StartDate.ToString(), out DateTime commissionStartDate) &&
+                                     commissionStartDate >= startDate &&
+                                     commissionStartDate <= endDate)
+                        .ToList();
+
+                    LoadedCommissions = new ObservableCollection<dynamic>(filteredCommissions);
+                }
+            }
+            else
+            {
+                LoadedCommissions = new ObservableCollection<dynamic>(commissionDataList);
+            }
         }
         #endregion
 
@@ -202,25 +250,28 @@ namespace TopInsuranceWPF.ViewModels
         private string ValidateField(string columnName)
         {
             string errorMessage = null;
+            var currentDate = DateTime.Now;
+            var previousMonthStartDate = new DateTime(currentDate.Year, currentDate.Month, 1).AddMonths(-1);
+            var previousMonthEndDate = new DateTime(currentDate.Year, currentDate.Month, 1).AddDays(-1);
 
             switch (columnName)
             {
                 case nameof(SelectedEmployee):
                     if (SelectedEmployee == null)
                     {
-                        errorMessage = "Vänligen välj en kund från listan";
+                        errorMessage = "Vänligen välj en säljare från listan";
                     }
                     break;
                 case nameof(NewStartDate):
-                    if (NewStartDate == DateTime.MinValue)
+                    if (NewStartDate != previousMonthStartDate)
                     {
-                        errorMessage = "Vänligen välj ett startdatum";
+                        errorMessage = "Provisionsunderlag kan endast genereras från förgående månads första dag";
                     }
                     break;
                 case nameof(NewEndDate):
-                    if (NewEndDate == DateTime.MinValue)
+                    if (NewEndDate != previousMonthEndDate)
                     {
-                        errorMessage = "Vänligen välj ett slutdatum";
+                        errorMessage = "Provisionsunderlag kan endast generas till föregående månads sista dag";
                     }
                     break;
                 default:
