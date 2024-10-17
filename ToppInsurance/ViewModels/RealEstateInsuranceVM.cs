@@ -238,18 +238,26 @@ namespace TopInsuranceWPF.ViewModels
         #region Find business customers
         private void FindBCcustomers()
         {
-            if (!string.IsNullOrWhiteSpace(SearchBusinessCustomer))
+            if (string.IsNullOrWhiteSpace(SearchBusinessCustomer))
             {
-                var filteredCustomers = businessController.SearchBusinessCustomers(SearchBusinessCustomer);
-                BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredCustomers);
-                SearchBusinessCustomer = string.Empty;
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var filteredBusinessCustomers = businessController.SearchBusinessCustomers(SearchBusinessCustomer);
+
+            if (filteredBusinessCustomers == null || !filteredBusinessCustomers.Any())
+            {
+                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                BusinessCustomers = new ObservableCollection<BusinessCustomer>();
             }
             else
             {
-                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                BusinessCustomers = new ObservableCollection<BusinessCustomer>();
+                BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
             }
+
         }
+
 
         #endregion
 
@@ -462,7 +470,6 @@ namespace TopInsuranceWPF.ViewModels
             NewEndDate = DateTime.Today.AddYears(1);
             CompanyZipcode = string.Empty;
             CompanyCity = string.Empty;
-            BusinessCustomers.Clear();
         }
         #endregion
 

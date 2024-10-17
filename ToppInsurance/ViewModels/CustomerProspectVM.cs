@@ -45,191 +45,6 @@ namespace TopInsuranceWPF.ViewModels
 
         }
 
-        #region Properties for inlogged user
-
-        private string userFirstName;
-        public string UserFirstName
-        {
-            get { return userFirstName; }
-            set
-            {
-                userFirstName = value;
-                OnPropertyChanged(nameof(UserFirstName));
-                OnPropertyChanged(nameof(UserInfo));
-            }
-        }
-        private string userLastName;
-        public string UserLastName
-        {
-            get { return userLastName; }
-            set
-            {
-                userLastName = value;
-                OnPropertyChanged(nameof(UserLastName));
-                OnPropertyChanged(nameof(UserInfo));
-            }
-        }
-
-        private int agencyNumber;
-        public int AgencyNumber
-        {
-            get { return agencyNumber; }
-            set
-            {
-                agencyNumber = value;
-                OnPropertyChanged(nameof(AgencyNumber));
-            }
-        }
-
-        public string UserInfo
-        {
-            get { return $"{UserFirstName} {UserLastName}"; }
-        }
-        #endregion
-
-        #region Properties for selected customer
-
-        private BusinessCustomer _selectBusinessCustomer;
-        public BusinessCustomer SelectBusinessCustomer
-        {
-            get { return _selectBusinessCustomer; }
-            set
-            {
-                if (_selectBusinessCustomer != value)
-                {
-                    _selectBusinessCustomer = value;
-                    OnPropertyChanged(nameof(SelectBusinessCustomer));
-
-                    if (_selectBusinessCustomer != null)
-                    {
-                        BusinessCustomerProspect();
-                    }
-                }
-
-            }
-        }
-
-        private PrivateCustomer _selectPrivateCustomer;
-        public PrivateCustomer SelectPrivateCustomer
-        {
-            get { return _selectPrivateCustomer; }
-            set
-            {
-                if (_selectPrivateCustomer != value)
-                {
-                    _selectPrivateCustomer = value;
-                    OnPropertyChanged(nameof(SelectPrivateCustomer));
-
-                    if (_selectPrivateCustomer != null)
-                    {
-                        PrivateCustomerProspect();
-                    }
-                }
-            }
-        }
-
-        private string _note;
-        public string Note
-        {
-            get { return _note; }
-            set
-            {
-                if (_note != value)
-                {
-                    _note = value;
-                    OnPropertyChanged(nameof(Note));
-                }
-            }
-        }
-        #endregion
-
-        #region Load notes method
-
-        public void PrivateCustomerProspect()
-        {
-            var privateProspects = prospectController.PrivateCustomerProspect(SelectPrivateCustomer);
-            ProspectInformtionP = new ObservableCollection<ProspectInformation>(privateProspects);
-        }
-
-        public void BusinessCustomerProspect()
-        {
-            var businessProspects = prospectController.BusinessCustomerProspect(SelectBusinessCustomer);
-            ProspectInformtionB = new ObservableCollection<ProspectInformation>(businessProspects);
-        }
-
-        #endregion
-
-        #region Add note method
-        private void AddPCNote()
-        {
-            try
-            {
-                if (SelectPrivateCustomer == null)
-                {
-                    MessageBox.Show("Vänligen välj en kund från listan.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(Note))
-                {
-                    MessageBox.Show("Noteringen får inte vara tom.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                prospectController.AddPCNote(Note, employee, SelectPrivateCustomer, null);
-                PrivateCustomerProspect();
-                ClearFields();
-                MessageBox.Show($"Notering lagd framgångsrikt för {SelectPrivateCustomer.FirstName} {SelectPrivateCustomer.LastName}.");
-
-               
-            }
-
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message, "Varning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ett oväntat fel inträffade: {ex.Message}\nStack Trace: {ex.StackTrace}", "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void AddBCNote()
-        {
-            try
-            {
-                if (SelectBusinessCustomer == null)
-                {
-                    MessageBox.Show("Vänligen välj en företagskund från listan.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(Note))
-                {
-                    MessageBox.Show("Noteringen får inte vara tom.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                prospectController.AddBCNote(Note, employee, null, SelectBusinessCustomer);
-
-                BusinessCustomerProspect();
-                ClearFields();
-
-                MessageBox.Show($"Notering lagd framgångsrikt för {SelectBusinessCustomer.FirstName} {SelectBusinessCustomer.LastName}." );
-
-
-            }
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message, "Varning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ett oväntat fel inträffade: {ex.Message}\nStack Trace: {ex.StackTrace}", "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-        #endregion
-
         #region Search
         private string _searchBusinessCustomer;
         public string SearchBusinessCustomer
@@ -301,25 +116,84 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
-        #region Get all business and private customers
-        private ObservableCollection<BusinessCustomer> _BCcustomers;
-        public ObservableCollection<BusinessCustomer> BCcustomers
+        #region Note property
+        private string _note;
+        public string Note
         {
-            get { return _BCcustomers; }
+            get { return _note; }
             set
             {
-                _BCcustomers = value;
+                if (_note != value)
+                {
+                    _note = value;
+                    OnPropertyChanged(nameof(Note));
+                }
+            }
+        }
+        #endregion
+
+        #region Properties for selected customer
+
+        private BusinessCustomer _selectBusinessCustomer;
+        public BusinessCustomer SelectBusinessCustomer
+        {
+            get { return _selectBusinessCustomer; }
+            set
+            {
+                if (_selectBusinessCustomer != value)
+                {
+                    _selectBusinessCustomer = value;
+                    OnPropertyChanged(nameof(SelectBusinessCustomer));
+
+                    if (_selectBusinessCustomer != null)
+                    {
+                        BusinessCustomerProspect();
+                    }
+                }
+
+            }
+        }
+
+        private PrivateCustomer _selectPrivateCustomer;
+        public PrivateCustomer SelectPrivateCustomer
+        {
+            get { return _selectPrivateCustomer; }
+            set
+            {
+                if (_selectPrivateCustomer != value)
+                {
+                    _selectPrivateCustomer = value;
+                    OnPropertyChanged(nameof(SelectPrivateCustomer));
+
+                    if (_selectPrivateCustomer != null)
+                    {
+                        PrivateCustomerProspect();
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region Observable Collections 
+        private ObservableCollection<BusinessCustomer> _bccustomers;
+        public ObservableCollection<BusinessCustomer> BCcustomers
+        {
+            get { return _bccustomers; }
+            set
+            {
+                _bccustomers = value;
                 OnPropertyChanged(nameof(BCcustomers));
             }
         }
 
-        private ObservableCollection<PrivateCustomer> _Pcustomers;
+        private ObservableCollection<PrivateCustomer> _pcustomers;
         public ObservableCollection<PrivateCustomer> Pcustomers
         {
-            get { return _Pcustomers; }
+            get { return _pcustomers; }
             set
             {
-                _Pcustomers = value;
+                _pcustomers = value;
                 OnPropertyChanged(nameof(Pcustomers));
             }
         }
@@ -347,7 +221,16 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
 
-        #region Find method 
+        #region Commands
+        public ICommand ClearCommand { get; }
+        public ICommand FindBCcustomersCommand { get; }
+        public ICommand FindPcustomersCommand { get; }
+        public ICommand AddPCNoteCommand { get; }
+        public ICommand AddBCNoteCommand { get; }
+
+        #endregion
+
+        #region Find customers Methods
         private void FindPrivatCustomerProspect()
         {
             var privateProspects = privateController.GetPrivateCustomerProspects();
@@ -362,21 +245,99 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
-        #region Commands
-        public ICommand ClearCommand { get; }
-        public ICommand FindBCcustomersCommand { get; }
-        public ICommand FindPcustomersCommand { get; }
-        public ICommand AddPCNoteCommand { get; }
-        public ICommand AddBCNoteCommand { get; }
+        #region Add note Methods
+        private void AddPCNote()
+        {
+            try
+            {
+                if (SelectPrivateCustomer == null)
+                {
+                    MessageBox.Show("Vänligen välj en kund från listan.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(Note))
+                {
+                    MessageBox.Show("Noteringen får inte vara tom.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                prospectController.AddPCNote(Note, employee, SelectPrivateCustomer, null);
+                PrivateCustomerProspect();
+                ClearFields();
+                MessageBox.Show($"Notering lagd framgångsrikt för {SelectPrivateCustomer.FirstName} {SelectPrivateCustomer.LastName}.");
+
+               
+            }
+
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Varning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett oväntat fel inträffade: {ex.Message}\nStack Trace: {ex.StackTrace}", "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void AddBCNote()
+        {
+            try
+            {
+                if (SelectBusinessCustomer == null)
+                {
+                    MessageBox.Show("Vänligen välj en företagskund från listan.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(Note))
+                {
+                    MessageBox.Show("Noteringen får inte vara tom.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                prospectController.AddBCNote(Note, employee, null, SelectBusinessCustomer);
+
+                BusinessCustomerProspect();
+                ClearFields();
+
+                MessageBox.Show($"Notering lagd framgångsrikt för {SelectBusinessCustomer.FirstName} {SelectBusinessCustomer.LastName}." );
+
+
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Varning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ett oväntat fel inträffade: {ex.Message}\nStack Trace: {ex.StackTrace}", "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        #endregion
+
+        #region Load notes method
+        public void PrivateCustomerProspect()
+        {
+            var privateProspects = prospectController.PrivateCustomerProspect(SelectPrivateCustomer);
+            ProspectInformtionP = new ObservableCollection<ProspectInformation>(privateProspects);
+        }
+
+        public void BusinessCustomerProspect()
+        {
+            var businessProspects = prospectController.BusinessCustomerProspect(SelectBusinessCustomer);
+            ProspectInformtionB = new ObservableCollection<ProspectInformation>(businessProspects);
+        }
 
         #endregion
 
+        #region Clear fields method
         private void ClearFields()
         {
             Note = string.Empty;
 
         }
-
+        #endregion
 
     }
 }

@@ -173,23 +173,29 @@ namespace TopInsuranceWPF.ViewModels
         #region Find Customer Method
         private void FindCustomer()
         {
-            if (!string.IsNullOrWhiteSpace(SearchText))
+            if (string.IsNullOrWhiteSpace(SearchText))
             {
-                var filteredCustomers = privateController.SearchPrivateCustomers(SearchText);
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
-                PrivateCustomers = new ObservableCollection<PrivateCustomer>(filteredCustomers);
-                SearchText = string.Empty; 
+            var filteredPrivateCustomers = privateController.SearchPrivateCustomers(SearchText);
+
+            if (filteredPrivateCustomers == null || !filteredPrivateCustomers.Any())
+            {
+                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
-                PrivateCustomers = new ObservableCollection<PrivateCustomer>();
+                PrivateCustomers = new ObservableCollection<PrivateCustomer>(filteredPrivateCustomers);
             }
-        }
-        #endregion
 
-        #region Add life Insurance Method
-        private void AddLifeInsurance()
+        }
+        
+#endregion
+
+#region Add life Insurance Method
+private void AddLifeInsurance()
         {
             if (SelectedCustomer == null)
             {
@@ -294,7 +300,6 @@ namespace TopInsuranceWPF.ViewModels
             SelectedPaymentForm = 0;
             Note = string.Empty;
             SearchText = string.Empty;
-            PrivateCustomers.Clear();
         }
         #endregion
     }

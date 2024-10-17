@@ -29,7 +29,7 @@ namespace TopInsuranceWPF.ViewModels
             Paymentforms = Enum.GetValues(typeof(Paymentform)).Cast<Paymentform>();
             Insuranceamounts = Enum.GetValues(typeof(InsuranceAmount)).Cast<InsuranceAmount>();
             Deductibleliabilities = Enum.GetValues(typeof(DeductibleLiability)).Cast<DeductibleLiability>();
-            FindBcustomerCommand = new RelayCommand(FindCustomer);
+            FindBcustomerCommand = new RelayCommand(FindBCcustomers);
             AddLiabilityInsuranceCommand = new RelayCommand(AddLiabilityInsurance);
             ClearCommand = new RelayCommand(ClearFields);
         }
@@ -215,18 +215,26 @@ namespace TopInsuranceWPF.ViewModels
         #endregion
 
         #region Find Customer Method
-        private void FindCustomer()
+        private void FindBCcustomers()
         {
-            if (!string.IsNullOrWhiteSpace(SearchText))
-            {
-                var filteredCustomers = businessController.SearchBusinessCustomers(SearchText);
-                BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredCustomers);
-            }
-            else 
+            if (string.IsNullOrWhiteSpace(SearchText))
             {
                 MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var filteredBusinessCustomers = businessController.SearchBusinessCustomers(SearchText);
+
+            if (filteredBusinessCustomers == null || !filteredBusinessCustomers.Any())
+            {
+                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 BusinessCustomers = new ObservableCollection<BusinessCustomer>();
             }
+            else
+            {
+                BusinessCustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
+            }
+
         }
         #endregion
 
@@ -375,7 +383,6 @@ namespace TopInsuranceWPF.ViewModels
             NewEndDate = DateTime.Today.AddYears(1);
             ContactPerson = string.Empty;
             ContactPersonPhNo = string.Empty;
-            BusinessCustomers.Clear();
         }
         #endregion
     }
