@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClosedXML.Excel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,20 @@ namespace TopInsuranceBL
         public (Dictionary<string, List<int>> PrivateSalesData, Dictionary<string, List<int>> BusinessSalesData) GetSalesDataForEmployee(Employee employee)
         {
             return statisticsRepository.GetSalesDataForEmployee(employee);
+        }
+        #endregion
+
+        #region Get Sales Data For All Employees
+        public List<EmployeeSalesSummary> GetSalesDataForAllEmployees(int selectedYear)
+        {   
+            return statisticsRepository.GetSalesDataForAllEmployees(selectedYear);
+        }
+        #endregion
+
+        #region Save Sales Data To Excel
+        public void SaveSalesDataToExcel(int selectedYear)
+        {
+            statisticsRepository.SaveSalesDataToExcel(selectedYear);
         }
         #endregion
     }
