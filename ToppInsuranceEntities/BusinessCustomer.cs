@@ -25,9 +25,15 @@ namespace TopInsuranceEntities
             CompanyName = companyName;
             Organizationalnumber = organizationalNumber;
             CountryCode = countryCode;
+            ProspectInformationList = new List<ProspectInformation>(); 
+
         }
 
-        public BusinessCustomer() { }
+        public BusinessCustomer() 
+        {
+            ProspectInformationList = new List<ProspectInformation>();
+
+        }
 
     }
 }

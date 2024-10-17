@@ -39,9 +39,15 @@
             <TabItem Header="Privatkunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
                 <StackPanel Background="White" Width="900" Height="650">
 
+                    <Grid Grid.Column="1" Width="500" HorizontalAlignment="Right" Margin="20">
+                        <TextBox Text="{Binding SearchPrivateCustomer, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="5 -20 0 0" Style="{StaticResource searchTextbox}"/>
+                        <Button Content="Sök" Width="50" Height="30" Margin="340 -20 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindPcustomersCommand}"/>
+                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 -20 140 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
+                    </Grid>
+                    
                     <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
 
-                    <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="250" Width="900" FontWeight="Normal" ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectPrivateCustomer, Mode=TwoWay}"  
+                    <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="200" Width="900" FontWeight="Normal" ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectPrivateCustomer, Mode=TwoWay}"  
                               RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="PersonNR" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
@@ -52,9 +58,6 @@
                             <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="PostNR" Binding="{Binding Zipcode}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="AgenturNR" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
-                            <!--<DataGridTextColumn Header="JobbNR" Binding="{Binding WorkPhonenumber}" IsReadOnly="True" Width="auto"/>-->
-                         
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -74,32 +77,26 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <!-- Sök kod i kolumn 1 -->
-                        <Grid Grid.Column="1" Width="500" HorizontalAlignment="Right" Margin="20">
-                            <TextBox Text="{Binding SearchPrivateCustomer, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="5 35 0 0" Style="{StaticResource searchTextbox}"/>
-                            <Button Content="Sök" Width="50" Height="30" Margin="320 35 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindPcustomersCommand}"/>
-                            <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 35 140 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
-                        </Grid>
+                       
+                        
                     </Grid>
 
-                    <DataGrid Name="NotesPCDataGrid" AutoGenerateColumns="False" Height="150" Width="900" FontWeight="Normal" ItemsSource="{Binding ProspectInformationList}" SelectedItem="{Binding SelectPrivateCustomer, Mode=TwoWay}"  
+                    <DataGrid Name="NotesPCDataGrid" AutoGenerateColumns="False" Height="200" Width="900" FontWeight="Normal" ItemsSource="{Binding ProspectInformtionP}"  
                               RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="PersonNR" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Förnamn" Binding="{Binding UserFirstName}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Kontaktdatum" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Förnamn" Binding="{Binding PrivateCustomer.FirstName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Efternamn" Binding="{Binding PrivateCustomer.LastName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Kontaktdatum" Binding="{Binding SigningDate, StringFormat=dd/MM/yyyy}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Noteringar" Binding="{Binding Note}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Säljare f.namn" Binding="{Binding EmployeeId}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Säljare e.namn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="AgenturNR" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
-
+                            <DataGridTextColumn Header="Säljare f.namn" Binding="{Binding Employee.FirstName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Säljare e.namn" Binding="{Binding Employee.LastName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="AgenturNR" Binding="{Binding Employee.AgencyNumber}" IsReadOnly="True" Width="auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
 
                     <!-- Buttons -->
-                    <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 80 0 0">
+                    <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 30 0 0">
                         <Button Width="120" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <material:PackIconMaterial Kind="Restore" Width="14" Height="14" Foreground="White" />
@@ -141,9 +138,15 @@
             <TabItem Header="Företagskunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
                 <StackPanel Background="White" Width="900" Height="650">
 
+                    <Grid Grid.Column="1" Width="500" HorizontalAlignment="Right" Margin="20">
+                        <TextBox Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="5 -20 0 0" Style="{StaticResource searchTextbox}"/>
+                        <Button Content="Sök" Width="50" Height="30" Margin="340 -20 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
+                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 -20 140 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
+                    </Grid>
+
                     <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
 
-                    <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="250" Width="900" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectBusinessCustomer, Mode=TwoWay}"  
+                    <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="200" Width="900" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectBusinessCustomer, Mode=TwoWay}"  
                   RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Org.Nr" Binding="{Binding Organizationalnumber}" IsReadOnly="True" Width="auto"/>
@@ -154,9 +157,6 @@
                             <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="PostNR" Binding="{Binding Zipcode}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="AgenturNR" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
-                            <!--<DataGridTextColumn Header="JobbNR" Binding="{Binding WorkPhonenumber}" IsReadOnly="True" Width="auto"/>-->
-
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -176,31 +176,23 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <!-- Sök kod i kolumn 1 -->
-                        <Grid Grid.Column="1" Width="500" HorizontalAlignment="Right" Margin="20">
-                            <TextBox Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="5 35 0 0" Style="{StaticResource searchTextbox}"/>
-                            <Button Content="Sök" Width="50" Height="30" Margin="320 35 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
-                            <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 35 140 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
-                        </Grid>
                     </Grid>
 
-                    <DataGrid Name="NotesBCDataGrid" AutoGenerateColumns="False" Height="150" Width="900" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectBusinessCustomer, Mode=TwoWay}"  
+                    <DataGrid Name="NotesBCDataGrid" AutoGenerateColumns="False" Height="200" Width="900" FontWeight="Normal" ItemsSource="{Binding ProspectInformtionB}"  
                   RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Företagsnamn" Binding="{Binding CompanyName}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Kontaktdatum" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Företagsnamn" Binding="{Binding BusinessCustomer.CompanyName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Kontaktdatum" Binding="{Binding SigningDate, StringFormat=dd/MM/yyyy}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Noteringar" Binding="{Binding Note}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Säljare f.namn" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Säljare e.namn" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="AgenturNR" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Säljare f.namn" Binding="{Binding Employee.FirstName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Säljare e.namn" Binding="{Binding Employee.LastName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="AgenturNR" Binding="{Binding Employee.AgencyNumber}" IsReadOnly="True" Width="auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
 
                     <!-- Buttons -->
-                    <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 80 0 0">
+                    <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 30 0 0">
                         <Button Width="120" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <material:PackIconMaterial Kind="Restore" Width="14" Height="14" Foreground="White" />

@@ -50,7 +50,7 @@ namespace TopInsuranceBL
         }
         #endregion
 
-        #region Get Private Customer prospect
+        #region Get Business Customer prospect
         public List<BusinessCustomer> GetBusinessCustomerProspects()
         {
             return businessRepository.GetBusinessCustomerProspects();
