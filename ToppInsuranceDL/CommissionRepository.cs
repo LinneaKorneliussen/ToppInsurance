@@ -1,6 +1,7 @@
 ﻿using TopInsuranceEntities;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace TopInsuranceDL
 {
@@ -20,29 +21,37 @@ namespace TopInsuranceDL
 
             var existingCommission = unitOfWork.CommissionRepository.GetAll()
                 .FirstOrDefault(c => c.EmployeeId == employee.PersonId &&
-                                     c.StartDate >= startDate &&
-                                     c.EndDate <= endDate);
+                                     c.StartDate == startDate &&
+                                     c.EndDate == endDate);
 
             if (existingCommission != null)
             {
-                return (null, "En provision för denna period existerar redan.");
+                return (null, "Provisionsunderlag för säljaren under denna period existerar redan.");
             }
 
             var activeLifeInsurances = unitOfWork.LifeInsuranceRepository.GetAll()
                 .Where(l => l.EmployeeId == employee.PersonId &&
-                l.StartDate <= endDate && l.Status == Status.Aktiv);
+                            l.StartDate >= startDate && 
+                            l.StartDate <= endDate &&   
+                            l.Status == Status.Aktiv);
 
             var activeAccidentInsurances = unitOfWork.SicknessAccidentInsuranceRepository.GetAll()
                 .Where(a => a.EmployeeId == employee.PersonId &&
-                a.StartDate <= endDate && a.Status == Status.Aktiv);
+                            a.StartDate >= startDate &&
+                            a.StartDate <= endDate &&
+                            a.Status == Status.Aktiv);
 
             var activeLiabilityInsurances = unitOfWork.LiabilityInsuranceRepository.GetAll()
                 .Where(l => l.EmployeeId == employee.PersonId &&
-                l.StartDate <= endDate && l.Status == Status.Aktiv);
+                            l.StartDate >= startDate &&
+                            l.StartDate <= endDate &&
+                            l.Status == Status.Aktiv);
 
             var activeVehicleInsurances = unitOfWork.VehicleInsuranceRepository.GetAll()
                 .Where(v => v.EmployeeId == employee.PersonId &&
-                v.StartDate <= endDate && v.Status == Status.Aktiv);
+                            v.StartDate >= startDate &&
+                            v.StartDate <= endDate &&
+                            v.Status == Status.Aktiv);
 
             totalPremium += activeLifeInsurances.Sum(l => l.Premium);
             totalPremium += activeAccidentInsurances.Sum(a => a.Premium);
@@ -51,8 +60,10 @@ namespace TopInsuranceDL
 
             var realEstateInsurances = unitOfWork.RealEstateInsuranceRepository.GetAll()
                 .Where(re => re.EmployeeId == employee.PersonId &&
-                             re.StartDate <= endDate && re.Status == Status.Aktiv)
-                .ToList();  
+                             re.StartDate >= startDate &&
+                             re.StartDate <= endDate &&
+                             re.Status == Status.Aktiv)
+                .ToList();
 
             foreach (var realEstateInsurance in realEstateInsurances)
             {
@@ -64,17 +75,16 @@ namespace TopInsuranceDL
             }
 
             double commissionAmount = CalculateCommission(totalPremium);
+            int commissionAsInt = (int)Math.Round(commissionAmount);
 
             Commission commission = new Commission(startDate, endDate, employee)
             {
-                TotalCommission = commissionAmount
+                TotalCommission = commissionAsInt
             };
 
             unitOfWork.CommissionRepository.Add(commission);
             unitOfWork.Save();
-
             SaveCommissionToJson(commission);
-
             return (commission, null);
         }
 
@@ -125,15 +135,22 @@ namespace TopInsuranceDL
 
             if (!File.Exists(filePath))
             {
-                throw new FileNotFoundException($"The file {filePath} was not found.");
+                File.WriteAllText(filePath, JsonConvert.SerializeObject(new List<dynamic>(), Formatting.Indented));
             }
 
             string json = File.ReadAllText(filePath);
 
-            var commissionDataList = JsonConvert.DeserializeObject<List<dynamic>>(json);
-
-            return commissionDataList ?? new List<dynamic>(); 
+            try
+            {
+                var commissionDataList = JsonConvert.DeserializeObject<List<dynamic>>(json);
+                return commissionDataList ?? new List<dynamic>();
+            }
+            catch (JsonException jsonEx)
+            {
+                throw new InvalidOperationException("Fel vid deserialisering av JSON-innehållet.", jsonEx);
+            }
         }
+
         #endregion
 
     }
