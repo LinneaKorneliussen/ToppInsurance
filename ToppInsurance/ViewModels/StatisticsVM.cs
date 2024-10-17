@@ -31,7 +31,6 @@ namespace TopInsuranceWPF.ViewModels
             BarBusinessSeriesCollection = new SeriesCollection();
             LinePrivateSeriesCollection = new SeriesCollection();
             LineBusinessSeriesCollection = new SeriesCollection();
-
             Labels = GetLastFiveMonths();
         }
 
@@ -73,6 +72,17 @@ namespace TopInsuranceWPF.ViewModels
             {
                 _selectedEmployeeSummary = value;
                 OnPropertyChanged(nameof(SelectedEmployeeSummary));
+            }
+        }
+
+        private int _selectedTabIndex;
+        public int SelectedTabIndex
+        {
+            get => _selectedTabIndex;
+            set
+            {
+                _selectedTabIndex = value;
+                OnPropertyChanged(nameof(SelectedTabIndex));
             }
         }
 
