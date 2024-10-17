@@ -55,7 +55,7 @@
 
                             <Button Style="{StaticResource menuButton}" Command="{Binding ShowCommissionCommand}">
                                 <StackPanel Orientation="Horizontal">
-                                    <material:PackIconMaterial Kind="Percent" Style="{StaticResource menuButtonIcon}"/>
+                                    <material:PackIconMaterial Kind="ChartBoxPlusOutline" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Provision" />
                                 </StackPanel>
                             </Button>

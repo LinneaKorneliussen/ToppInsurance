@@ -18,14 +18,14 @@
         </Grid.RowDefinitions>
         <StackPanel Background="White">
             <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="15,20,15,10" Background="#EDEDED">
-                <material:PackIconMaterial Kind="Percent" Width="30" Height="30" Foreground="#223A2A" Margin="0,0,10,0"/>
+                <material:PackIconMaterial Kind="ChartBoxPlusOutline" Width="25" Height="25" Foreground="#223A2A" Margin="0,0,10,0"/>
                 <TextBlock Text="Provision" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" VerticalAlignment="Center" />
             </StackPanel>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top" Background="White" Margin="15,20,0,0">
-                <TextBlock Text="Hämta den säljare som du önskar skapa provisionsbesked för" Margin="0 0 0 0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" VerticalAlignment="Center" />
-                <TextBox Text="{Binding SearchEmployee, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="50,0,0,0" Style="{StaticResource searchTextbox}" />
-                <Button Content="Sök" Width="50" Height="30" Margin="15,0,0,0" Background="#223A2A" Foreground="White" Command="{Binding FindEmployeeCommand}" />
+                <TextBlock Text="Hämta den säljare som du önskar skapa provisionsunderlag för" Margin="0 0 0 0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" VerticalAlignment="Center" />
+                <TextBox Text="{Binding SearchEmployee, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="40,0,0,0" Style="{StaticResource searchTextbox}" />
+                <Button Content="Sök" Width="50" Height="30" Margin="5,0,0,0" Background="#223A2A" Foreground="White" Command="{Binding FindEmployeeCommand}" />
                 <material:PackIconMaterial Kind="Magnify" 
                                  Width="15" 
                                  Height="15" 
@@ -80,7 +80,12 @@
                             Style="{StaticResource ValidationDatePickerStyle}"/>
             </Grid>
 
-            <TextBlock Text="Tidigare provisioner för anställd" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" HorizontalAlignment="Center" />
+            <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                <TextBlock Text="Genererade provisionsunderlag för:" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" />
+                <ComboBox x:Name="cbMonths" Width="120" Height="22" Background="GhostWhite" BorderThickness="1" Margin="5,0,0,0" ItemsSource="{Binding AvailableMonthsYears}"
+                          SelectedItem="{Binding SelectedMonthYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}" 
+                          ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}" />
+            </StackPanel>
             <Grid Grid.Row="1" Background="LightGray" Margin="10,10 10,10">
                 <DataGrid Margin="10,10 10,10" Name="commissionDataGrid" AutoGenerateColumns="False" Height="200" FontWeight="Normal" 
                           ItemsSource="{Binding LoadedCommissions}" RowStyle="{StaticResource DataGridRowStyle}">
