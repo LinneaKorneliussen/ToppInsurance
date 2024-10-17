@@ -62,80 +62,6 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
-
-        private void FindBCcustomers()
-        {
-            if (string.IsNullOrWhiteSpace(SearchBusinessCustomer))
-            {
-                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            var filteredBusinessCustomers = businessController.SearchBusinessCustomers(SearchBusinessCustomer);
-
-            if (filteredBusinessCustomers == null || !filteredBusinessCustomers.Any())
-            {
-                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                BCcustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
-            }
-        }
-
-        private void FindPcustomers()
-        {
-            if (string.IsNullOrWhiteSpace(SearchPrivateCustomer))
-            {
-                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            var filteredPrivateCustomers = privateController.SearchPrivateCustomers(SearchPrivateCustomer);
-
-            if (filteredPrivateCustomers == null || !filteredPrivateCustomers.Any())
-            {
-                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                Pcustomers = new ObservableCollection<PrivateCustomer>(filteredPrivateCustomers);
-            }
-        }
-
-        #endregion
-
-        #region Commands
-        public ICommand FindBCcustomersCommand { get; }
-        public ICommand FindPcustomersCommand { get; }
-        public ICommand UpdatePcustomersCommand { get; }
-        public ICommand UpdateBCcustomersCommand { get; }
-        public ICommand ClearCommand { get; }
-
-        #endregion
-
-        #region Get all business and private customers
-        private ObservableCollection<BusinessCustomer> _BCcustomers;
-        public ObservableCollection<BusinessCustomer> BCcustomers
-        {
-            get { return _BCcustomers; }
-            set
-            {
-                _BCcustomers = value;
-                OnPropertyChanged(nameof(BCcustomers));
-            }
-        }
-
-        private ObservableCollection<PrivateCustomer> _Pcustomers;
-        public ObservableCollection<PrivateCustomer> Pcustomers
-        {
-            get { return _Pcustomers; }
-            set
-            {
-                _Pcustomers = value;
-                OnPropertyChanged(nameof(Pcustomers));
-            }
-        }
         #endregion
 
         #region Properties
@@ -268,7 +194,7 @@ namespace TopInsuranceWPF.ViewModels
 
         #endregion
 
-        #region Selected customer code
+        #region Properties for selected customer
 
         private PrivateCustomer _selectedPcustomers;
         public PrivateCustomer SelectedPcustomers
@@ -319,6 +245,81 @@ namespace TopInsuranceWPF.ViewModels
                         NewCompanyName = _selectedBCcustomers.CompanyName;
                     }
                 }
+            }
+        }
+        #endregion
+
+        #region Observable Collection
+        private ObservableCollection<BusinessCustomer> _BCcustomers;
+        public ObservableCollection<BusinessCustomer> BCcustomers
+        {
+            get { return _BCcustomers; }
+            set
+            {
+                _BCcustomers = value;
+                OnPropertyChanged(nameof(BCcustomers));
+            }
+        }
+
+        private ObservableCollection<PrivateCustomer> _Pcustomers;
+        public ObservableCollection<PrivateCustomer> Pcustomers
+        {
+            get { return _Pcustomers; }
+            set
+            {
+                _Pcustomers = value;
+                OnPropertyChanged(nameof(Pcustomers));
+            }
+        }
+        #endregion
+
+        #region Commands
+        public ICommand FindBCcustomersCommand { get; }
+        public ICommand FindPcustomersCommand { get; }
+        public ICommand UpdatePcustomersCommand { get; }
+        public ICommand UpdateBCcustomersCommand { get; }
+        public ICommand ClearCommand { get; }
+
+        #endregion
+
+        #region Find customer Methods
+        private void FindBCcustomers()
+        {
+            if (string.IsNullOrWhiteSpace(SearchBusinessCustomer))
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var filteredBusinessCustomers = businessController.SearchBusinessCustomers(SearchBusinessCustomer);
+
+            if (filteredBusinessCustomers == null || !filteredBusinessCustomers.Any())
+            {
+                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                BCcustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
+            }
+        }
+
+        private void FindPcustomers()
+        {
+            if (string.IsNullOrWhiteSpace(SearchPrivateCustomer))
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var filteredPrivateCustomers = privateController.SearchPrivateCustomers(SearchPrivateCustomer);
+
+            if (filteredPrivateCustomers == null || !filteredPrivateCustomers.Any())
+            {
+                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                Pcustomers = new ObservableCollection<PrivateCustomer>(filteredPrivateCustomers);
             }
         }
         #endregion
@@ -394,18 +395,17 @@ namespace TopInsuranceWPF.ViewModels
 
             if (!string.IsNullOrWhiteSpace(NewWorkPhoneNumber))
             {
-                if (IsValidPhoneNumber(NewWorkPhoneNumber))
+                if (IsValidWorkPhoneNumber(NewWorkPhoneNumber))
                 {
                     SelectedPcustomers.WorkPhonenumber = NewWorkPhoneNumber;
                 }
                 else
                 {
-                    MessageBox.Show("Ogiltigt jobbtelefonnummer. Vänligen ange ett telefonnummer i formatet XXX-XXXXXXX.");
+                    MessageBox.Show("Ogiltigt jobbtelefonnummer. Vänligen ange ett telefonnummer i formatet XX-XXXXX eller XXX-XXXXX.");
                     return;
                 }
             }
 
-            // Spara alla ändringar
             privateController.UpdatePrivateCustomer(SelectedPcustomers);
             ClearFields();
 
@@ -419,8 +419,6 @@ namespace TopInsuranceWPF.ViewModels
                 $"Stad: {SelectedPcustomers.City}\n" +
                 $"Jobbnummer: {SelectedPcustomers.WorkPhonenumber}");
         }
-
-
 
         #endregion
 
@@ -578,12 +576,6 @@ namespace TopInsuranceWPF.ViewModels
                         errorMessage = "Formatet ska vara 'XXX-XXXXXXX'.";
                     }
                     break;
-                //case nameof(NewWorkPhoneNumber):
-                //    if (!string.IsNullOrWhiteSpace(NewWorkPhoneNumber) && !IsValidPhoneNumber(NewWorkPhoneNumber))
-                //    {
-                //        errorMessage = "Formatet ska vara 'XXX-XXXXXXX'.";
-                //    }
-                //    break;
             }
 
             return errorMessage;
@@ -598,6 +590,12 @@ namespace TopInsuranceWPF.ViewModels
         private bool ValidateZipcode(string zipcode)
         {
             return int.TryParse(zipcode, out _);
+        }
+
+        public bool IsValidWorkPhoneNumber(string phoneNumber)
+        {
+            string pattern = @"^\d{2,3}-\d{5,}$";
+            return Regex.IsMatch(phoneNumber, pattern);
         }
 
         public string this[string columnName]

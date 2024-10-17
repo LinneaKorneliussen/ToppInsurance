@@ -159,16 +159,16 @@
                 </ItemsControl>
 
                 <!-- Lägg till fler knapp -->
-                <Button Content="Lägg till" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2" Background="#223A2A" Foreground="White" 
+                <Button Content="Lägg till" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Background="#223A2A" Foreground="White" 
                         Command="{Binding AddInventoryCommand}" Visibility="{Binding IsInventorySelected, Converter={StaticResource BooleanToVisibilityConverter}}"
-                    Width="130" HorizontalAlignment="Left" Margin="0,2,0,2" />
+                    Width="130" HorizontalAlignment="Left" Margin="170 5 0 0" />
 
                 <!-- Buttons -->
-                <Button Content="Återställ fält" Grid.Row="11" Grid.Column="2" HorizontalAlignment="Left" Width="100"
-                        Margin='61,82,0,-83' Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
+                <Button Content="Återställ fält" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Left" Width="100"
+                        Height="20" Margin="90 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
 
-                <Button Content="Spara ändringar" Grid.Row="11" Grid.Column="2" HorizontalAlignment="Right"
-                        Command="{Binding AddRealEstateInsuranceCommand}" Width="150" Margin="0,83,17,-83" 
+                <Button Content="Spara ändringar" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Right"
+                        Command="{Binding AddRealEstateInsuranceCommand}" Height="20" Width="120" Margin="60 0 0 0" 
                         Background="#223A2A" Foreground="White"/>
 
             </Grid>
