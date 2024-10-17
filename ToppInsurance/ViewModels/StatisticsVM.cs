@@ -2,7 +2,7 @@
 using LiveCharts.Wpf;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using TopInsuranceBL;
 using TopInsuranceEntities;
@@ -19,21 +19,19 @@ namespace TopInsuranceWPF.ViewModels
         public SeriesCollection LinePrivateSeriesCollection { get; set; }
         public SeriesCollection LineBusinessSeriesCollection { get; set; }
         public string[] Labels { get; set; }
-        public Func<double, string> Formatter { get; set; }
 
         public StatisticsVM()
         {
             statisticsController = new StatisticsController();
             employeeController = new EmployeeController();
             FindEmployeeCommand = new RelayCommand(FindEmployee);
+            SaveToExcelCommand = new RelayCommand(SaveToExcel);
 
             BarPrivateSeriesCollection = new SeriesCollection();
             BarBusinessSeriesCollection = new SeriesCollection();
             LinePrivateSeriesCollection = new SeriesCollection();
             LineBusinessSeriesCollection = new SeriesCollection();
-
             Labels = GetLastFiveMonths();
-            Formatter = value => ((int)value).ToString();
         }
 
         #region Properties
@@ -65,6 +63,44 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
+
+        private EmployeeSalesSummary _selectedEmployeeSummary;
+        public EmployeeSalesSummary SelectedEmployeeSummary
+        {
+            get => _selectedEmployeeSummary;
+            set
+            {
+                _selectedEmployeeSummary = value;
+                OnPropertyChanged(nameof(SelectedEmployeeSummary));
+            }
+        }
+
+        private int _selectedTabIndex;
+        public int SelectedTabIndex
+        {
+            get => _selectedTabIndex;
+            set
+            {
+                _selectedTabIndex = value;
+                OnPropertyChanged(nameof(SelectedTabIndex));
+            }
+        }
+
+        private int _selectedYear;
+        public int SelectedYear
+        {
+            get { return _selectedYear; }
+            set
+            {
+                if (_selectedYear != value)
+                {
+                    _selectedYear = value;
+                    OnPropertyChanged(nameof(SelectedYear));
+                    LoadSalesData(SelectedYear);
+                }
+            }
+        }
+        public List<int> AvailableYears { get; } = Enumerable.Range(DateTime.Now.Year - 5, 6).ToList();
         #endregion
 
         #region Observable collections
@@ -81,10 +117,26 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
+
+        private ObservableCollection<EmployeeSalesSummary> _employeesSalesData;
+        public ObservableCollection<EmployeeSalesSummary> EmployeeSalesData
+        {
+            get { return _employeesSalesData; }
+            set
+            {
+                if (_employeesSalesData != value)
+                {
+                    _employeesSalesData = value;
+                    OnPropertyChanged(nameof(EmployeeSalesData));
+                }
+            }
+        }
         #endregion
 
         #region Commands
         public ICommand FindEmployeeCommand { get; }
+        public ICommand LoadSalesDataCommand { get; }
+        public ICommand SaveToExcelCommand { get; }
         #endregion
 
         #region Find Employee Method
@@ -162,5 +214,41 @@ namespace TopInsuranceWPF.ViewModels
             return months;
         }
         #endregion
+
+        #region Load Sales Data for Selected Year Method
+        public void LoadSalesData(int selectedYear)
+        {
+            var salesData = statisticsController.GetSalesDataForAllEmployees(selectedYear);
+            EmployeeSalesData = new ObservableCollection<EmployeeSalesSummary>(salesData);
+        }
+        #endregion
+
+        #region Save To Excel Method
+        private void SaveToExcel()
+        {
+            if (SelectedYear > 0)
+            {
+                MessageBoxResult result = MessageBox.Show($"Är du säker på att du vill exportera försäljningsdata till Excel för året {SelectedYear}?",
+                                                          "Bekräfta Export",
+                                                          MessageBoxButton.OKCancel,
+                                                          MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    statisticsController.SaveSalesDataToExcel(SelectedYear);
+                    MessageBox.Show("Excel-exporten har initierats för året: " + SelectedYear);
+                }
+                else
+                {
+                    MessageBox.Show("Exporten avbröts.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vänligen välj ett giltigt år.");
+            }
+        }
+        #endregion
+
     }
 }
