@@ -30,7 +30,7 @@
 
                 <Grid Grid.Row="1" Margin="15" Background="White">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
@@ -59,7 +59,7 @@
                              Text="{Binding NewLastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
                              Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
-                    <TextBlock Text="Telefonnummer:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBlock Text="Telefonnummer (07x-xxxxxxx):" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
                     <TextBox x:Name="txtPhoneNumber" Grid.Row="2" Grid.Column="1" Margin="5" Width="450" HorizontalAlignment="Left"
                              Text="{Binding NewPhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                              Background="GhostWhite" mah:TextBoxHelper.Watermark="070-xxxxxxx" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}" />
@@ -89,7 +89,7 @@
                              Text="{Binding NewCompanyName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                              Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
-                    <TextBlock Text="Organisationsnummer:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBlock Text="Organisationsnummer (10 siffror):" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
                     <TextBox x:Name="txtOrgNumber" Grid.Row="8" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
                              Text="{Binding NewOrganizationalnumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                              Background="GhostWhite" BorderThickness="1" mah:TextBoxHelper.Watermark="xxxxxxxx" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>

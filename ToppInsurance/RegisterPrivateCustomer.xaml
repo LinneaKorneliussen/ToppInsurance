@@ -38,7 +38,7 @@
                 <!-- Form Section -->
                 <Grid Grid.Row="1" Margin="5" Background="White">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
@@ -67,7 +67,7 @@
                              Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
                     <!-- Phone Number -->
-                    <TextBlock Text="Telefonnummer:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBlock Text="Telefonnummer (07x-xxxxxxx):" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
                     <TextBox x:Name="txtPhoneNumber" Grid.Row="2" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
                              Text="{Binding NewPhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                              Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}" mah:TextBoxHelper.Watermark="070-xxxxxxx" />
@@ -97,7 +97,7 @@
                              Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
                     <!-- SSN (Personnummer with DatePicker) -->
-                    <TextBlock Text="Personnummer:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+                    <TextBlock Text="Personnummer (yyyymmdd-xxxx):" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
                     <TextBox x:Name="dpSSN" Grid.Row="7" Grid.Column="1" Width="450" Margin="5" HorizontalAlignment="Left"
                                 Text="{Binding NewSSN, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                                 Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}" mah:TextBoxHelper.Watermark="yyyymmdd-xxxx"/>

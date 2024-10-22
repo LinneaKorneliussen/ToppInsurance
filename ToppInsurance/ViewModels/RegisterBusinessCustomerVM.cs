@@ -197,7 +197,7 @@ namespace TopInsuranceWPF.ViewModels
                 return;
             }
 
-            if (!ValidateNumericFields(out int orgNumber, out int zipcode, out int countrycode))
+            if (!ValidateNumericFields(out int orgNumber, out int parsedZipcode, out int countrycode))
             {
                 return;
             }
@@ -212,8 +212,8 @@ namespace TopInsuranceWPF.ViewModels
                 return;
             }
 
-            businessController.CreateNewBusinessCustomer(NewFirstName, NewLastName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
-            ShowMessage(NewFirstName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewCompanyName, orgNumber, countrycode);
+            businessController.CreateNewBusinessCustomer(NewFirstName, NewLastName, NewPhoneNumber, NewEmailAddress, NewAddress, parsedZipcode, NewCity, NewCompanyName, orgNumber, countrycode);
+            ShowMessage(NewFirstName, NewPhoneNumber, NewEmailAddress, NewAddress, parsedZipcode, NewCity, NewCompanyName, orgNumber, countrycode);
 
             BCcustomers.Add(new BusinessCustomer
             {
@@ -222,7 +222,7 @@ namespace TopInsuranceWPF.ViewModels
                 Phonenumber = NewPhoneNumber,
                 Emailaddress = NewEmailAddress,
                 Address = NewAddress,
-                Zipcode = zipcode,
+                Zipcode = parsedZipcode,
                 City = NewCity,
                 CompanyName = NewCompanyName,
                 Organizationalnumber = orgNumber,
@@ -349,30 +349,38 @@ namespace TopInsuranceWPF.ViewModels
             return true;
         }
 
-        private bool ValidateNumericFields(out int orgNumber, out int zipcode, out int countrycode)
+        private bool ValidateNumericFields(out int orgNumber, out int parsedZipcode, out int countrycode)
         {
             orgNumber = 0;
-            zipcode = 0;
             countrycode = 0;
+            parsedZipcode = 0;
 
-            if (!int.TryParse(NewZipcode, out zipcode))
-            {
-                MessageBox.Show("Postnumret måste vara ett giltigt nummer.");
-                return false;
-            }
             if (!int.TryParse(NewCountryCode, out countrycode))
             {
                 MessageBox.Show("Landskoden måste vara ett giltigt nummer.");
                 return false;
             }
+
+            string zipcodePattern = @"^\d{3}\s?\d{2}$"; 
+            if (!Regex.IsMatch(NewZipcode, zipcodePattern))
+            {
+                MessageBox.Show("Postnumret måste vara i formatet 'xxxxx' eller 'xxx xx'.");
+                return false;
+            }
+
+            parsedZipcode = int.Parse(NewZipcode.Replace(" ", ""));
+
+
             if (!int.TryParse(NewOrganizationalnumber, out orgNumber))
             {
                 MessageBox.Show("Organisationsnumret är inte i korrekt format, vänligen ange 10 siffror (XXXXXXXXXX).");
                 return false;
             }
 
+            
             return true;
         }
+
 
         public bool IsValidPhoneNumber(string phoneNumber)
         {
