@@ -184,14 +184,15 @@ namespace TopInsuranceWPF.ViewModels
                 MessageBox.Show(error);
                 return;
             }
-            if (!ValidateNumericFields(out int zipcode))
+            if (!ValidateZipcode(out int parsedZipcode))
             {
                 return;
             }
             if (!IsValidPersonalNumber(NewSSN))
             {
-                MessageBox.Show("Felformat på personummret!");
-                return;
+                MessageBox.Show("Felformat på postnummer!\n" +
+                   "Postnummer ska följa formatet: 'xxx xx' eller 'xxxxx'");
+                return; ;
             }
             if(!IsValidPhoneNumber(NewPhoneNumber) || !IsValidPhoneNumber(NewWorkPhoneNumber))
             {
@@ -205,7 +206,7 @@ namespace TopInsuranceWPF.ViewModels
             }
 
             
-            privateController.CreateNewPrivateCustomer(NewFirstName, NewLastName, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, NewSSN, NewWorkPhoneNumber);
+            privateController.CreateNewPrivateCustomer(NewFirstName, NewLastName, NewPhoneNumber, NewEmailAddress, NewAddress, parsedZipcode, NewCity, NewSSN, NewWorkPhoneNumber);
 
             
             MessageBox.Show($"Kunden har registrerats framgångsrikt!\n\n" +
@@ -225,7 +226,7 @@ namespace TopInsuranceWPF.ViewModels
                 Phonenumber = NewPhoneNumber,
                 Emailaddress = NewEmailAddress,
                 Address = NewAddress,
-                Zipcode = zipcode,
+                Zipcode = parsedZipcode,
                 City = NewCity,
                 SSN = NewSSN,
                 WorkPhonenumber = NewWorkPhoneNumber
@@ -339,17 +340,21 @@ namespace TopInsuranceWPF.ViewModels
             return errorMessage;
         }
 
-        private bool ValidateNumericFields(out int zipcode)
+        private bool ValidateZipcode(out int parsedZipcode)
         {
-            zipcode = 0;
+            parsedZipcode = 0;
 
-            if (!int.TryParse(NewZipcode, out zipcode))
+            string zipcodePattern = @"^\d{3}\s?\d{2}$";
+            if (!Regex.IsMatch(NewZipcode, zipcodePattern))
             {
-                MessageBox.Show("Postnumret måste vara ett giltigt nummer.");
+                MessageBox.Show("Postnumret måste vara i formatet 'xxxxx' eller 'xxx xx'.");
                 return false;
             }
 
+            parsedZipcode = int.Parse(NewZipcode.Replace(" ", ""));
+
             return true;
+
         }
 
         public bool IsValidPersonalNumber(string personalNumber)
