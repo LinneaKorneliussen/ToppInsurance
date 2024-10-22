@@ -60,6 +60,13 @@
                                 </StackPanel>
                             </Button>
 
+                            <Button Style="{StaticResource menuButton}" Command="{Binding ShowInvoiceCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <material:PackIconMaterial Kind="InvoiceTextPlus" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Fakturering" />
+                                </StackPanel>
+                            </Button>
+
                         </StackPanel>
 
                         <Button Style="{StaticResource menuButton}" Command="{Binding LogOffCommand}" 

@@ -21,6 +21,8 @@ namespace TopInsuranceWPF.ViewModels
             HomePageCommand = new RelayCommand(ShowHomePage);
             ShowStatisticsCommand = new RelayCommand(ShowStatisticsBTN);
             ShowCommissionCommand = new RelayCommand(ShowCommissionBTN);
+            ShowInvoiceCommand = new RelayCommand(ShowInvoiceBTN);
+
 
             LogOffCommand = new RelayCommand(LogOffBTN);
         }
@@ -83,6 +85,7 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand HomePageCommand { get; }
         public ICommand ShowStatisticsCommand { get; }
         public ICommand ShowCommissionCommand { get; }
+        public ICommand ShowInvoiceCommand { get; }
         public ICommand LogOffCommand { get; }
         #endregion
 
@@ -100,6 +103,11 @@ namespace TopInsuranceWPF.ViewModels
         private void ShowCommissionBTN()
         {
             CurrentViewModel = new Commission();
+        }
+
+        private void ShowInvoiceBTN()
+        {
+            CurrentViewModel = new Invoice();
         }
 
         private void LogOffBTN()
