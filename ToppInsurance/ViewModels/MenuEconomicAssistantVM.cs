@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows;
 using TopInsuranceEntities;
 using TopInsuranceWPF.Commands;
@@ -22,7 +17,7 @@ namespace TopInsuranceWPF.ViewModels
             ShowStatisticsCommand = new RelayCommand(ShowStatisticsBTN);
             ShowCommissionCommand = new RelayCommand(ShowCommissionBTN);
             ShowInvoiceCommand = new RelayCommand(ShowInvoiceBTN);
-
+            InsuranceOverviewCommand = new RelayCommand(ShowInsuranceOverviewBTN);
 
             LogOffCommand = new RelayCommand(LogOffBTN);
         }
@@ -85,6 +80,8 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand HomePageCommand { get; }
         public ICommand ShowStatisticsCommand { get; }
         public ICommand ShowCommissionCommand { get; }
+        public ICommand ShowInvoiceCommand { get; }
+        public ICommand InsuranceOverviewCommand { get; }
         public ICommand LogOffCommand { get; }
         #endregion
 
