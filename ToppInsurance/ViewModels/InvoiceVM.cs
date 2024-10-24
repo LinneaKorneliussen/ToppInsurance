@@ -32,7 +32,8 @@ namespace TopInsuranceWPF.ViewModels
 
             FindPcustomersCommand = new RelayCommand(FindPcustomers);
             FindBCcustomersCommand = new RelayCommand(FindBCcustomers);
-            AddInvoiceCommand = new RelayCommand(AddInvoice);
+            AddPrivateInvoiceCommand = new RelayCommand(AddPrivateInvoice);
+            AddBusinessInvoiceCommand = new RelayCommand(AddBusinessInvoice);
             BCcustomers = new ObservableCollection<BusinessCustomer>(customers);
             Pcustomers = new ObservableCollection<PrivateCustomer>(privateCustomers);
 
@@ -128,18 +129,26 @@ namespace TopInsuranceWPF.ViewModels
         #endregion
 
         #region Add Invoice method 
-        private void AddInvoice()
+        private void AddPrivateInvoice()
         {
 
-            //// Kontrollera om det finns några valideringsfel
-            //if (!string.IsNullOrEmpty(Error))
-            //{
-            //    MessageBox.Show(Error, "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    return;
-            //}
-
-            // Försök att skapa fakturan genom att använda InvoiceController
             var resultMessage = invoiceController.CalculateCreatePrivateInvoiceDocuments(SelectPrivateCustomer, NewInvoiceDate);
+
+            // Kontrollera om det returnerades ett felmeddelande eller om fakturan skapades framgångsrikt
+            if (resultMessage.Contains("Inga fakturor"))
+            {
+                MessageBox.Show(resultMessage, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                MessageBox.Show(resultMessage, "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void AddBusinessInvoice()
+        {
+
+            var resultMessage = invoiceController.CalculateCreateBusinessInvoiceDocuments(SelectBusinessCustomer, NewInvoiceDate);
 
             // Kontrollera om det returnerades ett felmeddelande eller om fakturan skapades framgångsrikt
             if (resultMessage.Contains("Inga fakturor"))
@@ -246,7 +255,8 @@ namespace TopInsuranceWPF.ViewModels
         #region Commands
         public ICommand FindBCcustomersCommand { get; }
         public ICommand FindPcustomersCommand { get; }
-        public ICommand AddInvoiceCommand { get; }
+        public ICommand AddPrivateInvoiceCommand { get; }
+        public ICommand AddBusinessInvoiceCommand { get; }
         public ICommand ClearCommand { get; }
         #endregion
 
