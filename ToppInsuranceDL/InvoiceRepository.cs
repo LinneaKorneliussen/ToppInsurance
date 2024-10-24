@@ -61,16 +61,16 @@ namespace TopInsuranceDL
                 switch (insurance.Paymentform)
                 {
                     case Paymentform.Månad:
-                        totalAmount += insurance.Premium; // Lägg till månadspriem
+                        totalAmount += insurance.Premium; 
                         break;
                     case Paymentform.Kvartal:
-                        totalAmount += insurance.Premium * 3; // Lägg till kvartalspremie
+                        totalAmount += insurance.Premium * 3; 
                         break;
                     case Paymentform.Halvår:
-                        totalAmount += insurance.Premium * 6; // Lägg till halvårspremie
+                        totalAmount += insurance.Premium * 6; 
                         break;
                     case Paymentform.År:
-                        totalAmount += insurance.Premium * 12; // Lägg till årspremie
+                        totalAmount += insurance.Premium * 12; 
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(insurance.Paymentform), "Ogiltig betalningsform.");
@@ -80,27 +80,98 @@ namespace TopInsuranceDL
             return new PrivateInvoice
             {
                 PrivateCustomer = customer,
-                InvoiceTotalAmount = totalAmount, // Använd det beräknade totalbeloppet
+                InvoiceTotalAmount = totalAmount, 
                 InvoiceDate = DateTime.Now,
             };
         }
 
-        private double CalculateInvoiceAmount(double premium, Paymentform paymentForm)
+        //Företagskunder
+
+        public string CalculateCreateBusinessInvoiceDocuments(BusinessCustomer customer, DateTime invoiceDate)
         {
-            switch (paymentForm)
+            double totalAmount = 0;
+
+            var expiringVehicleInsurances = unitOfWork.VehicleInsuranceRepository.GetAll()
+                .Where(i => i.BusinessCustomer == customer && i.EndDate >= invoiceDate && i.Status == Status.Aktiv)
+                .ToList();
+
+            var expiringLiabilityInsurances = unitOfWork.LiabilityInsuranceRepository.GetAll()
+                .Where(i => i.BusinessCustomer == customer && i.EndDate >= invoiceDate && i.Status == Status.Aktiv)
+                .ToList();
+
+            var expiringRealEstateInsurances = unitOfWork.RealEstateInsuranceRepository.GetAll()
+                .Where(i => i.BusinessCustomer == customer && i.EndDate >= invoiceDate && i.Status == Status.Aktiv)
+                .ToList();
+
+            var allActiveInsurances = expiringVehicleInsurances.Cast<Insurance>()
+                .Concat(expiringLiabilityInsurances)
+                .Concat(expiringRealEstateInsurances)
+                .ToList();
+
+            if (!allActiveInsurances.Any())
             {
-                case Paymentform.Månad:
-                    return premium;
-                case Paymentform.Kvartal:
-                    return premium * 3;
-                case Paymentform.Halvår:
-                    return premium * 6;
-                case Paymentform.År:
-                    return premium * 12;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(paymentForm), "Ogiltig betalningsform.");
+                return "Inga fakturor att skapa för denna företagskund.";
             }
+  
+            var businessInvoice = CreateBusinessInvoice(customer, allActiveInsurances, invoiceDate);
+          
+            SaveInvoicesToJson(new List<Invoice> { businessInvoice });
+            unitOfWork.Save();
+
+            return $"Fakturaunderlag skapat för {invoiceDate.ToShortDateString()} med totalt belopp: {businessInvoice.InvoiceTotalAmount} SEK.";
         }
+
+        private BusinessInvoice CreateBusinessInvoice(BusinessCustomer customer, List<Insurance> insurances, DateTime invoiceDate)
+        {
+
+            double totalAmount = 0;
+
+            foreach (var insurance in insurances)
+            {
+                // Kontrollera betalningsform och summera premien korrekt
+                switch (insurance.Paymentform)
+                {
+                    case Paymentform.Månad:
+                        totalAmount += insurance.Premium;
+                        break;
+                    case Paymentform.Kvartal:
+                        totalAmount += insurance.Premium * 3;
+                        break;
+                    case Paymentform.Halvår:
+                        totalAmount += insurance.Premium * 6;
+                        break;
+                    case Paymentform.År:
+                        totalAmount += insurance.Premium * 12;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(insurance.Paymentform), "Ogiltig betalningsform.");
+                }
+            }
+
+            return new BusinessInvoice
+            {
+                BusinessCustomer = customer,
+                InvoiceTotalAmount = totalAmount, // Använd det beräknade totalbeloppet
+                InvoiceDate = invoiceDate // Använd det angivna fakturadatumet
+            };
+        }
+
+        //private double CalculateInvoiceAmount(double premium, Paymentform paymentForm)
+        //{
+        //    switch (paymentForm)
+        //    {
+        //        case Paymentform.Månad:
+        //            return premium;
+        //        case Paymentform.Kvartal:
+        //            return premium * 3;
+        //        case Paymentform.Halvår:
+        //            return premium * 6;
+        //        case Paymentform.År:
+        //            return premium * 12;
+        //        default:
+        //            throw new ArgumentOutOfRangeException(nameof(paymentForm), "Ogiltig betalningsform.");
+        //    }
+        //}
 
         #region Save Invoices to JSON
         public void SaveInvoicesToJson(List<Invoice> invoices)
