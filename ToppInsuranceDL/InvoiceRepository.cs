@@ -17,117 +17,90 @@ namespace TopInsuranceDL
         }
 
         #region Calculate and create Invoice documents
-        public string CalculateCreateInvoiceDocuments(DateTime invoiceDate)
+
+        public string CalculateCreatePrivateInvoiceDocuments(PrivateCustomer customer, DateTime invoiceDate)
         {
             double totalAmount = 0;
 
             var expiringLifeInsurances = unitOfWork.LifeInsuranceRepository.GetAll()
-                .Where(i => i.EndDate == invoiceDate && i.Status == Status.Aktiv)
+                .Where(i => i.PrivateCustomer == customer && i.EndDate >= invoiceDate && i.Status == Status.Aktiv)
                 .ToList();
 
             var expiringSicknessAccidentInsurances = unitOfWork.SicknessAccidentInsuranceRepository.GetAll()
-                .Where(i => i.EndDate == invoiceDate && i.Status == Status.Aktiv)
+                .Where(i => i.PrivateCustomer == customer && i.EndDate >= invoiceDate && i.Status == Status.Aktiv)
                 .ToList();
 
-            var expiringLiabilityInsurances = unitOfWork.LiabilityInsuranceRepository.GetAll()
-                .Where(i => i.EndDate == invoiceDate && i.Status == Status.Aktiv)
+            var allActiveInsurances = expiringLifeInsurances.Cast<Insurance>()
+                .Concat(expiringSicknessAccidentInsurances)
                 .ToList();
 
-            var expiringVehicleInsurances = unitOfWork.VehicleInsuranceRepository.GetAll()
-                .Where(i => i.EndDate == invoiceDate && i.Status == Status.Aktiv)
-                .ToList();
-
-            var expiringRealEstateInsurances = unitOfWork.RealEstateInsuranceRepository.GetAll()
-                .Where(i => i.EndDate == invoiceDate && i.Status == Status.Aktiv)
-                .ToList();
-
-            var privateInsurancesGrouped = new List<IGrouping<PrivateCustomer, Insurance>>();
-
-            privateInsurancesGrouped.AddRange(expiringLifeInsurances
-                .OfType<LifeInsurance>()
-                .GroupBy(i => i.PrivateCustomer)
-                .Cast<IGrouping<PrivateCustomer, Insurance>>() 
-            );
-
-            privateInsurancesGrouped.AddRange(expiringSicknessAccidentInsurances
-                .OfType<SicknessAccidentInsurance>()
-                .GroupBy(i => i.PrivateCustomer)
-                .Cast<IGrouping<PrivateCustomer, Insurance>>() 
-            );
-
-            var businessInsurancesGrouped = new List<IGrouping<BusinessCustomer, Insurance>>();
-
-            businessInsurancesGrouped.AddRange(expiringLiabilityInsurances
-                .OfType<LiabilityInsurance>()
-                .GroupBy(i => i.BusinessCustomer)
-                .Cast<IGrouping<BusinessCustomer, Insurance>>() 
-            );
-
-            businessInsurancesGrouped.AddRange(expiringVehicleInsurances
-                .OfType<VehicleInsurance>()
-                .GroupBy(i => i.BusinessCustomer)
-                .Cast<IGrouping<BusinessCustomer, Insurance>>() 
-            );
-
-            businessInsurancesGrouped.AddRange(expiringRealEstateInsurances
-                .OfType<RealEstateInsurance>()
-                .GroupBy(i => i.BusinessCustomer)
-                .Cast<IGrouping<BusinessCustomer, Insurance>>()
-            );
-
-
-            if (!privateInsurancesGrouped.Any() && !businessInsurancesGrouped.Any())
+            if (!allActiveInsurances.Any())
             {
-                return "Inga fakturor att skapa för detta datum.";
+                return "Inga fakturor att skapa för denna privatkund.";
             }
 
-            var invoices = new List<Invoice>();
+            var privateInvoice = CreatePrivateInvoice(customer, allActiveInsurances, invoiceDate);
 
-            foreach (var insuranceGroup in privateInsurancesGrouped)
-            {
-                var privateInvoice = CreatePrivateInvoice(insuranceGroup.Key, insuranceGroup.ToList());
-                invoices.Add(privateInvoice);
-                totalAmount += privateInvoice.InvoiceTotalAmount;
-            }
-
-            foreach (var insuranceGroup in businessInsurancesGrouped)
-            {
-                var businessInvoice = CreateBusinessInvoice(insuranceGroup.Key, insuranceGroup.ToList());
-                invoices.Add(businessInvoice);
-                totalAmount += businessInvoice.InvoiceTotalAmount;
-            }
-
-            SaveInvoicesToJson(invoices);
+            SaveInvoicesToJson(new List<Invoice> { privateInvoice });
             unitOfWork.Save();
 
-            return $"Fakturaunderlag skapat för {invoiceDate.ToShortDateString()} med totalt belopp: {totalAmount} SEK.";
+            return $"Fakturaunderlag skapat för {invoiceDate.ToShortDateString()} med totalt belopp: {privateInvoice.InvoiceTotalAmount} SEK.";
         }
+
         #endregion
 
-        private PrivateInvoice CreatePrivateInvoice(PrivateCustomer customer, List<Insurance> insurances)
+        private PrivateInvoice CreatePrivateInvoice(PrivateCustomer customer, List<Insurance> insurances, DateTime invoiceDate)
         {
-            double totalAmount = insurances.Sum(i => i.Premium);
+            // Variabel för att hålla den totala fakturabeloppet
+            double totalAmount = 0;
+
+            // Loopar igenom alla försäkringar och beräknar totalbeloppet
+            foreach (var insurance in insurances)
+            {
+                // Kontrollera betalningsform och summera premien korrekt
+                switch (insurance.Paymentform)
+                {
+                    case Paymentform.Månad:
+                        totalAmount += insurance.Premium; // Lägg till månadspriem
+                        break;
+                    case Paymentform.Kvartal:
+                        totalAmount += insurance.Premium * 3; // Lägg till kvartalspremie
+                        break;
+                    case Paymentform.Halvår:
+                        totalAmount += insurance.Premium * 6; // Lägg till halvårspremie
+                        break;
+                    case Paymentform.År:
+                        totalAmount += insurance.Premium * 12; // Lägg till årspremie
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(insurance.Paymentform), "Ogiltig betalningsform.");
+                }
+            }
 
             return new PrivateInvoice
             {
                 PrivateCustomer = customer,
-                InvoiceTotalAmount = totalAmount,
-                InvoiceDate = DateTime.Now, 
+                InvoiceTotalAmount = totalAmount, // Använd det beräknade totalbeloppet
+                InvoiceDate = DateTime.Now,
             };
         }
 
-        private BusinessInvoice CreateBusinessInvoice(BusinessCustomer businessCustomer, List<Insurance> insurances)
+        private double CalculateInvoiceAmount(double premium, Paymentform paymentForm)
         {
-            double totalAmount = insurances.Sum(i => i.Premium);
-
-            return new BusinessInvoice
+            switch (paymentForm)
             {
-                BusinessCustomer = businessCustomer,
-                InvoiceTotalAmount = totalAmount,
-                InvoiceDate = DateTime.Now, 
-            };
+                case Paymentform.Månad:
+                    return premium;
+                case Paymentform.Kvartal:
+                    return premium * 3;
+                case Paymentform.Halvår:
+                    return premium * 6;
+                case Paymentform.År:
+                    return premium * 12;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(paymentForm), "Ogiltig betalningsform.");
+            }
         }
-
 
         #region Save Invoices to JSON
         public void SaveInvoicesToJson(List<Invoice> invoices)
@@ -172,7 +145,7 @@ namespace TopInsuranceDL
                 }
                 else
                 {
-                    continue; 
+                    continue;
                 }
 
                 invoicesList.Add(invoiceData);
@@ -207,6 +180,5 @@ namespace TopInsuranceDL
         }
 
         #endregion
-
     }
 }

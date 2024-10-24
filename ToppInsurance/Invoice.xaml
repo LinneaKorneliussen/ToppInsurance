@@ -39,15 +39,15 @@
                     <!-- Filter Textbox -->
                     <Grid Width="500" HorizontalAlignment="Right" Margin="0 0 -30 10">
                         <TextBlock Text="Hämta privatkund som du önskar skapa faktureringsunderlag för" Margin="-374,12,374,0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" VerticalAlignment="Top" />
-                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
-                        <Button Content="Sök" Width="50" Margin="290 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
+                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchPrivateCustomer, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
+                        <Button Content="Sök" Width="50" Margin="290 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindPcustomersCommand}"/>
                         <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 160 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
                     </Grid>
                     <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
 
 
                     <!-- DataGrid för att visa privatkunder -->
-                    <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="200" Margin="10" FontWeight="Normal" ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectedPcustomers, Mode=TwoWay}" 
+                    <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="200" Margin="10" FontWeight="Normal" ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectPrivateCustomer, Mode=TwoWay}" 
                               RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
@@ -74,23 +74,21 @@
                         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Startdaum:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <DatePicker x:Name="dpStartdate" Grid.Row="2" Grid.Column="1" Width="150" Height="35" Margin="0,10,0,6" HorizontalAlignment="Left" 
-                                        SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                        SelectedDate="{Binding NewInvoiceDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                                         Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
                                         Style="{StaticResource ValidationDatePickerStyle}"/>
                         </StackPanel>
 
                         <Grid Grid.Row="3" Margin="10,10 10,10">
                             <DataGrid Margin="10,10 10,10" Name="invoicePDataGrid" AutoGenerateColumns="False" Height="120" FontWeight="Normal" 
-                                      ItemsSource="{Binding LoadedCommissions}" RowStyle="{StaticResource DataGridRowStyle}">
+                                      ItemsSource="{Binding LoadedInvoices}" RowStyle="{StaticResource DataGridRowStyle}">
                                 <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Personnr" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
                                     <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
                                     <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Personnr" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Adress" Binding="{Binding Adress}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Postnr" Binding="{Binding Adress}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Försäkringar" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Total premie" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
+                                    <DataGridTextColumn Header="Total premie" Binding="{Binding TotalAmount}" IsReadOnly="True" Width="auto"/>
+                                    <!--<DataGridTextColumn Header="Total premie" Binding="{Binding C}" IsReadOnly="True" Width="auto"/>
+                                    <DataGridTextColumn Header="Total premie" Binding="{Binding Paymentform}" IsReadOnly="True" Width="auto"/>-->
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
@@ -105,7 +103,7 @@
                             </StackPanel>
                         </Button>
                         
-                        <Button Content="Spara" Command="{Binding UpdatePcustomersCommand}" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                        <Button Content="Spara" Command="{Binding AddInvoiceCommand}" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
                     </StackPanel>
                 </StackPanel>
             </TabItem>
@@ -136,7 +134,7 @@
                     <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
 
                     <!-- DataGrid för att visa företagskunder -->
-                    <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="200" Margin="10" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectedBCcustomers, Mode=TwoWay}" 
+                    <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="200" Margin="10" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectBusinessCustomer, Mode=TwoWay}" 
                            RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
@@ -162,7 +160,7 @@
                         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 5" VerticalAlignment="Center">
                             <TextBlock Text="Startdaum:" Width="120" VerticalAlignment="Center" FontWeight="Normal"/>
                             <DatePicker x:Name="dpdate" Grid.Row="2" Grid.Column="1" Width="150" Height="35" Margin="0,10,0,6" HorizontalAlignment="Left" 
-                                        SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                        SelectedDate="{Binding NewInvoiceDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                                         Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
                                         Style="{StaticResource ValidationDatePickerStyle}"/>
                         </StackPanel>
