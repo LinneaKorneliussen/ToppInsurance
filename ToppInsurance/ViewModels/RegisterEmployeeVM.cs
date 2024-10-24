@@ -181,6 +181,10 @@ namespace TopInsuranceWPF.ViewModels
                 MessageBox.Show(error);
                 return;
             }
+            if (!ValidateZipcode(out int parsedZipcode))
+            {
+                return;
+            }
             if (!IsValidPhoneNumber(NewPhoneNumber))
             {
                 MessageBox.Show("Felformat på telefonnummer!");
@@ -196,16 +200,13 @@ namespace TopInsuranceWPF.ViewModels
                 MessageBox.Show("Personen finns redan registrerad");
                 return;
             }
-            if (!ValidateNumericFields(out int zipcode))
-            {
-                return;
-            }
+            
 
 
             EmployeeRole defaultRole = EmployeeRole.Säljare;
 
 
-            employeeController.AddEmployee(NewFirstName, NewLastName, NewSSN, NewPhoneNumber, NewEmailAddress, NewAddress, zipcode, NewCity, defaultRole, NewPassword);
+            employeeController.AddEmployee(NewFirstName, NewLastName, NewSSN, NewPhoneNumber, NewEmailAddress, NewAddress, parsedZipcode, NewCity, defaultRole, NewPassword);
 
             MessageBox.Show($"Säljaren har registrerats korrekt!\n\n" +
                              $"Förnamn: {NewFirstName}\n" +
@@ -224,7 +225,7 @@ namespace TopInsuranceWPF.ViewModels
                 Phonenumber = NewPhoneNumber,
                 Emailaddress = NewEmailAddress,
                 Address = NewAddress,
-                Zipcode = zipcode,
+                Zipcode = parsedZipcode,
                 City = NewCity,
             });
 
@@ -250,6 +251,7 @@ namespace TopInsuranceWPF.ViewModels
         {
             NewFirstName = string.Empty;
             NewLastName = string.Empty;
+            NewSSN = string.Empty;
             NewPhoneNumber = string.Empty;
             NewEmailAddress = string.Empty;
             NewAddress = string.Empty;
@@ -355,17 +357,21 @@ namespace TopInsuranceWPF.ViewModels
             return errorMessage;
         }
 
-        private bool ValidateNumericFields(out int zipcode)
+        private bool ValidateZipcode(out int parsedZipcode)
         {
-            zipcode = 0;
+            parsedZipcode = 0;
 
-            if (!int.TryParse(NewZipcode, out zipcode))
+            string zipcodePattern = @"^\d{3}\s?\d{2}$";
+            if (!Regex.IsMatch(NewZipcode, zipcodePattern))
             {
-                MessageBox.Show("Postnumret måste vara ett giltigt nummer.");
+                MessageBox.Show("Postnumret måste vara i formatet 'xxxxx' eller 'xxx xx'.");
                 return false;
             }
 
+            parsedZipcode = int.Parse(NewZipcode.Replace(" ", ""));
+
             return true;
+
         }
         public bool IsValidPhoneNumber(string phoneNumber)
         {
