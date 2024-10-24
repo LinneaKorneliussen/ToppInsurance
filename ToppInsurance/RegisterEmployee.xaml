@@ -106,8 +106,7 @@
                 <StackPanel Grid.Row="2">
                     <Label Content="Kundregister" FontWeight="Bold" FontSize="14" />
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="100"
-                  ItemsSource="{Binding Employers}" >
+                        <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="100" ItemsSource="{Binding Employees}" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Agenturnummer" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="120"/>
                                 <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="120"/>
@@ -137,7 +136,7 @@
                             <TextBlock Text="UPPDATERA SIDAN" Margin="3,0,0,0" VerticalAlignment="Center" FontSize="10"/>
                         </StackPanel>
                     </Button>
-                    <Button Content="Registrera säljare" Width="120" Height="30" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding AddEmployerCommand}"/>
+                    <Button Content="Registrera säljare" Width="120" Height="30" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding AddEmployeeCommand}"/>
                 </StackPanel>
             </Grid>
         </DockPanel>

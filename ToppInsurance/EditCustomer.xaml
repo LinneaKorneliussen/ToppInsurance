@@ -38,7 +38,7 @@
 
 
 
-            <TabItem Header="Privatkunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
+            <TabItem Header="Privatkunder" Style="{StaticResource TabItemStyle}">
                 <StackPanel Background="White">
 
                     <!-- Filter Textbox -->
@@ -169,7 +169,7 @@
 
 
 
-            <TabItem Header="Företagskunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
+            <TabItem Header="Företagskunder" Style="{StaticResource TabItemStyle}">
                 <StackPanel Background="White" Width="900">
 
                     <!-- Filter Textbox -->

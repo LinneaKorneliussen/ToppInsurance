@@ -139,29 +139,24 @@
                 <Setter Property="Background" Value="White"/>
                 <Setter Property="Padding" Value="15,10"/>
                 <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Bold"/>
 
                 <!-- Template (Layout för TabItem) -->
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TabItem">
                             <Grid>
-                                <!-- Layouten för varje flik -->
                                 <Border x:Name="TabItemBorder"
                                 Background="{TemplateBinding Background}"
                                 BorderThickness="0,0,0,3" 
                                 BorderBrush="Transparent"
                                 Padding="{TemplateBinding Padding}">
-
-                                    <!-- ContentPresenter för flikens innehåll -->
                                     <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                             </Grid>
-
-                            <!-- Triggers för olika tillstånd -->
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter TargetName="TabItemBorder" Property="BorderBrush" Value="#223A2A"/>
-                                    <!---Lilla linjen under privat - och företagskunder som visar på vilken man tryckt på-->
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
