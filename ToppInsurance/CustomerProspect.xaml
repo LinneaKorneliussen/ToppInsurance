@@ -36,7 +36,7 @@
             </TabControl.Resources>
 
 
-            <TabItem Header="Privatkunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
+            <TabItem Header="Privatkunder" Style="{StaticResource TabItemStyle}">
                 <StackPanel Background="White" Width="900" Height="650">
 
                     <Grid Grid.Column="1" Width="500" HorizontalAlignment="Right" Margin="20">
@@ -135,7 +135,7 @@
 
 
 
-            <TabItem Header="Företagskunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
+            <TabItem Header="Företagskunder" Style="{StaticResource TabItemStyle}">
                 <StackPanel Background="White" Width="900" Height="650">
 
                     <Grid Grid.Column="1" Width="500" HorizontalAlignment="Right" Margin="20">

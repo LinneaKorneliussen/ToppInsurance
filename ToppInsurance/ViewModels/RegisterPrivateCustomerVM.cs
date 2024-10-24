@@ -188,12 +188,6 @@ namespace TopInsuranceWPF.ViewModels
             {
                 return;
             }
-            if (!IsValidPersonalNumber(NewSSN))
-            {
-                MessageBox.Show("Felformat på postnummer!\n" +
-                   "Postnummer ska följa formatet: 'xxx xx' eller 'xxxxx'");
-                return; ;
-            }
             if(!IsValidPhoneNumber(NewPhoneNumber) || !IsValidPhoneNumber(NewWorkPhoneNumber))
             {
                 MessageBox.Show("Felformat på telefonnummer!");
