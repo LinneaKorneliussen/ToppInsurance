@@ -1,0 +1,219 @@
+﻿<UserControl x:Class="TopInsuranceWPF.InsuranceOverview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
+        mc:Ignorable="d"
+        Height="900" Width="1200" Background="White">
+    
+    <UserControl.DataContext>
+        <vm:InsuranceOverviewVM/>
+    </UserControl.DataContext>
+
+    <Grid Margin="20,20,20,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Background="#EDEDED">
+            <material:PackIconMaterial Kind="AccountFileText" Width="30" Height="50" Foreground="#223A2A" Margin="0,0,10,0"/>
+            <TextBlock Text="Visa försäkringsöversikt" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" VerticalAlignment="Center" />
+        </StackPanel>
+
+        <TabControl Grid.Row="1" Name="MyTabControl" Grid.ColumnSpan="2">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Background" Value="AliceBlue"/>
+                </Style>
+            </TabControl.Resources>
+
+            <TabItem Header="Privatkunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
+                <StackPanel Background="White">
+
+                    <Grid Width="500" HorizontalAlignment="Right" Margin="0 0 20 10">
+                        <TextBox Text="{Binding SearchPrivateCustomer, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="5 0 100 0" Style="{StaticResource searchTextbox}"/>
+                        <Button Content="Sök" Width="50" Margin="290 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindPcustomersCommand}"/>
+                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 160 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
+                    </Grid>
+
+                    <TextBlock Text="Vänligen välj en kund från listan för att se försäkringsöversikt" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" Margin="10,10,10,0" />
+                    <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="120" FontWeight="Normal" Margin="10,10,10,10" Background="LightGray"
+                              ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectedPcustomers, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="TelefonNr" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="E-mail" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="PostNr" Binding="{Binding Zipcode}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Jobbnummer" Binding="{Binding WorkPhonenumber}" IsReadOnly="True" Width="auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Margin="5">
+                        <TextBlock Text="Livförsäkring" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" Margin="10" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="ID:" FontWeight="Bold" Foreground="#2F4F4F" Margin="5" />
+                            <TextBlock Text="{Binding LifeInsurance.InsuranceId}" Grid.Column="1" Margin="5" />
+
+                            <TextBlock Text="Förnamn:" FontWeight="Bold" Foreground="#2F4F4F" Margin="5" Grid.Row="1"/>
+                            <TextBlock Text="{Binding LifeInsurance.PrivateCustomer.FirstName}" Grid.Column="1" Grid.Row="1" Margin="5" />
+
+                            <TextBlock Text="Efternamn:" FontWeight="Bold" Foreground="#2F4F4F" Margin="5" Grid.Row="2"/>
+                            <TextBlock Text="{Binding LifeInsurance.PrivateCustomer.LastName}" Grid.Column="1" Grid.Row="2" Margin="5" />
+
+                            <TextBlock Text="Startdatum:" FontWeight="Bold" Foreground="#2F4F4F" Margin="5" Grid.Row="3"/>
+                            <TextBlock Text="{Binding LifeInsurance.StartDate}" Grid.Column="1" Grid.Row="3" Margin="5" />
+
+                            <TextBlock Text="Slutdatum:" FontWeight="Bold" Foreground="#2F4F4F" Margin="5" Grid.Row="4"/>
+                            <TextBlock Text="{Binding LifeInsurance.EndDate}" Grid.Column="1" Grid.Row="4" Margin="5" />
+
+                            <TextBlock Text="Premium:" FontWeight="Bold" Foreground="#2F4F4F" Margin="5" Grid.Row="5"/>
+                            <TextBlock Text="{Binding LifeInsurance.Premium}" Grid.Column="1" Grid.Row="5" Margin="5" />
+
+                            <TextBlock Text="Status:" FontWeight="Bold" Foreground="#2F4F4F" Margin="5" Grid.Row="6"/>
+                            <TextBlock Text="{Binding LifeInsurance.Status}" Grid.Column="1" Grid.Row="6" Margin="5" />
+                        </Grid>
+                    </StackPanel>
+
+
+                    <TextBlock Text="Sjuk- och olyckfallsförsäkringar" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" Margin="10,10,10,0" />
+                    <DataGrid Name="SicknessInsurance" AutoGenerateColumns="False" Height="120" FontWeight="Normal" Margin="10,10,10,10" BorderBrush="#2F4F4F" BorderThickness="2"
+                              ItemsSource="{Binding SicknessInsurances}" RowStyle="{StaticResource DataGridRowStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding InsuranceId}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Förnamn" Binding="{Binding PrivateCustomer.FirstName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Efternamn" Binding="{Binding PrivateCustomer.LastName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Slutdatum" Binding="{Binding EndDate}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Betalningssätt" Binding="{Binding Paymentform}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Tillval" Binding="{Binding AdditionalInsurance}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Premium" Binding="{Binding Premium}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" IsReadOnly="True" Width="auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Button Width="120" Margin="20,20,20,20" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <material:PackIconMaterial Kind="Restore" Width="14" Height="14" Foreground="White" />
+                            <TextBlock Text="ÅTERSTÄLL FÄLT" Margin="3,0,0,0" VerticalAlignment="Center" FontSize="10"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </TabItem>
+
+
+
+            <TabItem Header="Företagskunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
+                <StackPanel Background="White">
+
+                    <Grid Width="500" HorizontalAlignment="Right" Margin="0 0 20 10">
+                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
+                        <Button Content="Sök" Width="50" Margin="290 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
+                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 160 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
+                    </Grid>
+                    <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
+
+                    <TextBlock Text="Vänligen välj en kund från listan för att se försäkringsöversikt" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" Margin="10,10,10,0" />
+                    <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="120" FontWeight="Normal" Margin="10,10,10,10" Background="LightGray"
+                              ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectedBCcustomer, Mode=TwoWay}" 
+                           RowStyle="{StaticResource DataGridRowStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                            <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                            <DataGridTextColumn Header="TelefonNr" Binding="{Binding Phonenumber, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                            <DataGridTextColumn Header="E-mail" Binding="{Binding Emailaddress, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                            <DataGridTextColumn Header="Företagsnamn" Binding="{Binding CompanyName, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                            <DataGridTextColumn Header="OrganisationsNr" Binding="{Binding Organizationalnumber, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <TextBlock Text="Ansvarsförsäkringar" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" Margin="10,10,10,0" />
+                    <DataGrid Name="LiabilityInsurnace" AutoGenerateColumns="False" Height="120" FontWeight="Normal" Margin="10,10,10,10" BorderBrush="#2F4F4F" BorderThickness="2"
+                              ItemsSource="{Binding LiabilityInsurances}" RowStyle="{StaticResource DataGridRowStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding InsuranceId}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Förnamn" Binding="{Binding BusinessCustomer.FirstName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Efternamn" Binding="{Binding BusinessCustomer.LastName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Slutdatum" Binding="{Binding EndDate}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Betalningssätt" Binding="{Binding Paymentform}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Premium" Binding="{Binding Premium}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Kontaktperson" Binding="{Binding ContactPerson}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Kontaktperson tel" Binding="{Binding ContactPhNo}" IsReadOnly="True" Width="auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <TextBlock Text="Fordonsförsäkringar" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" Margin="10,10,10,0" />
+                    <DataGrid Name="vehicleInsurance" AutoGenerateColumns="False" Height="120" FontWeight="Normal" Margin="10,10,10,10" BorderBrush="#2F4F4F" BorderThickness="2"
+                              ItemsSource="{Binding VehicleInsurances}" RowStyle="{StaticResource DataGridRowStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding InsuranceId}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Förnamn" Binding="{Binding BusinessCustomer.FirstName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Efternamn" Binding="{Binding BusinessCustomer.LastName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Slutdatum" Binding="{Binding EndDate}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Betalningssätt" Binding="{Binding Paymentform}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Premium" Binding="{Binding Premium}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Fordons ID" Binding="{Binding Car.VehicleId}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Reg.nr" Binding="{Binding Car.RegistrationNumber}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Bilmärke" Binding="{Binding Car.Brand}" IsReadOnly="True" Width="auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+
+                    <TextBlock Text="Fastighetsförsäkringar" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" Margin="10,10,10,0" />
+                    <DataGrid Name="realEstateInsurance" AutoGenerateColumns="False" Height="120" FontWeight="Normal" Margin="10,10,10,10" BorderBrush="#2F4F4F" BorderThickness="2"
+                              ItemsSource="{Binding RealEstateInsurances}" RowStyle="{StaticResource DataGridRowStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding InsuranceId}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Förnamn" Binding="{Binding BusinessCustomer.FirstName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Efternamn" Binding="{Binding BusinessCustomer.LastName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Slutdatum" Binding="{Binding EndDate}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Betalningssätt" Binding="{Binding Paymentform}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Premium" Binding="{Binding Premium}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Fastighets adress" Binding="{Binding RealEstateAddress}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Postnr" Binding="{Binding RealEstateZipCode}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Stad" Binding="{Binding RealEstateCity}" IsReadOnly="True" Width="auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Button Width="120" Margin="10,10,10,10" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <material:PackIconMaterial Kind="Restore" Width="14" Height="14" Foreground="White" />
+                            <TextBlock Text="ÅTERSTÄLL FÄLT" Margin="3,0,0,0" VerticalAlignment="Center" FontSize="10"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

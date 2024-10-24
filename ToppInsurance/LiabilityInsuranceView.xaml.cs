@@ -15,9 +15,9 @@ using System.Windows.Shapes;
 
 namespace TopInsuranceWPF
 {
-    public partial class LiabilityInsurance : UserControl
+    public partial class LiabilityInsuranceView : UserControl
     {
-        public LiabilityInsurance()
+        public LiabilityInsuranceView()
         {
             InitializeComponent();
         }

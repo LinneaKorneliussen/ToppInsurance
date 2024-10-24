@@ -66,6 +66,15 @@ namespace TopInsuranceDL
         }
 
         /// <summary>
+        /// Returns all entities of type T from the database as IQueryable.
+        /// </summary>
+        /// <returns>IQueryable<T></returns>
+        public IQueryable<T> GetAllQueryable()
+        {
+            return dbSet; // Returnerar IQueryable<T>
+        }
+
+        /// <summary>
         /// Returns a queryable collection of entities of type T
         /// </summary>
         /// <returns></returns>

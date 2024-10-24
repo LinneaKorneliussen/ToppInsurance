@@ -11,7 +11,8 @@ namespace TopInsuranceEntities
         public DeductibleVehicle DeductibleVehicle { get; set; }
         public CoverageType CoverageType { get; set; }
         public RiskZone RiskZone { get; set; }
-        public Vehicle Vehicle { get; set; }
+        public int VehicleId { get; set; }
+        public Vehicle Car { get; private set; }
         public int BusinessCustomerId { get; set; }
         public BusinessCustomer BusinessCustomer { get; private set; }
 
@@ -20,7 +21,7 @@ namespace TopInsuranceEntities
             base(startDate, endDate, type, paymentform, note, user)
         {
             BusinessCustomer = customer;
-            Vehicle = car;
+            Car = car;
             DeductibleVehicle = deductible;
             CoverageType = coverageType;
             RiskZone = riskZone;

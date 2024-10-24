@@ -85,7 +85,6 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand HomePageCommand { get; }
         public ICommand ShowStatisticsCommand { get; }
         public ICommand ShowCommissionCommand { get; }
-        public ICommand ShowInvoiceCommand { get; }
         public ICommand LogOffCommand { get; }
         #endregion
 
@@ -103,6 +102,10 @@ namespace TopInsuranceWPF.ViewModels
         private void ShowCommissionBTN()
         {
             CurrentViewModel = new Commission();
+        }
+        private void ShowInsuranceOverviewBTN()
+        {
+            CurrentViewModel = new InsuranceOverview();
         }
 
         private void ShowInvoiceBTN()
