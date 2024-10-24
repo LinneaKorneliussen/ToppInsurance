@@ -18,10 +18,15 @@ namespace TopInsuranceBL
         }
 
         #region Calculate and create Invoice documents Method
-        public string CalculateCreateInvoiceDocuments(DateTime invoiceDate)
+        public string CalculateCreatePrivateInvoiceDocuments(PrivateCustomer customer, DateTime invoiceDate)
         {
-            return invoiceRepository.CalculateCreateInvoiceDocuments(invoiceDate);
+            return invoiceRepository.CalculateCreatePrivateInvoiceDocuments(customer, invoiceDate);
         }
+
+        //public string CalculateCreateBusinessInvoiceDocuments(BusinessCustomer businessCustomer, DateTime invoiceDate)
+        //{
+        //    return invoiceRepository.CalculateCreateBusinessInvoiceDocuments(businessCustomer, invoiceDate);
+        //}
         #endregion
 
         #region Load Commissions from JSON Method
