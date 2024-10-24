@@ -103,7 +103,7 @@
                             </StackPanel>
                         </Button>
                         
-                        <Button Content="Spara" Command="{Binding AddInvoiceCommand}" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                        <Button Content="Spara" Command="{Binding AddPrivateInvoiceCommand}" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
                     </StackPanel>
                 </StackPanel>
             </TabItem>
@@ -167,7 +167,7 @@
                         
                         <Grid Grid.Row="3" Margin="10,10 10,10">
                             <DataGrid Margin="10,10 10,10" Name="invoiceDataGrid" AutoGenerateColumns="False" Height="120" FontWeight="Normal"
-                                      ItemsSource="{Binding LoadedCommissions}" RowStyle="{StaticResource DataGridRowStyle}">
+                                      ItemsSource="{Binding LoadedInvoices}" RowStyle="{StaticResource DataGridRowStyle}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Företagsnamn" Binding="{Binding Companyname}" IsReadOnly="True" Width="auto"/>
                                     <DataGridTextColumn Header="Orgnr" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
@@ -190,7 +190,7 @@
                                 <TextBlock Text="ÅTERSTÄLL FÄLT" Margin="3,0,0,0" VerticalAlignment="Center" FontSize="10"/>
                             </StackPanel>
                         </Button>
-                        <Button Content="Spara" Command="{Binding UpdateBCcustomersCommand}" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                        <Button Content="Spara" Command="{Binding AddBusinessInvoiceCommand}" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
                     </StackPanel>
 
                 </StackPanel>

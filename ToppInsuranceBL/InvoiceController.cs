@@ -23,10 +23,10 @@ namespace TopInsuranceBL
             return invoiceRepository.CalculateCreatePrivateInvoiceDocuments(customer, invoiceDate);
         }
 
-        //public string CalculateCreateBusinessInvoiceDocuments(BusinessCustomer businessCustomer, DateTime invoiceDate)
-        //{
-        //    return invoiceRepository.CalculateCreateBusinessInvoiceDocuments(businessCustomer, invoiceDate);
-        //}
+        public string CalculateCreateBusinessInvoiceDocuments(BusinessCustomer businessCustomer, DateTime invoiceDate)
+        {
+            return invoiceRepository.CalculateCreateBusinessInvoiceDocuments(businessCustomer, invoiceDate);
+        }
         #endregion
 
         #region Load Commissions from JSON Method
