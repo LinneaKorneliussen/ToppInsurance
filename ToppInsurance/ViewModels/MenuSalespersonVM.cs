@@ -32,6 +32,7 @@ namespace TopInsuranceWPF.ViewModels
             RealEstateInsuranceCommand = new RelayCommand(RealEstateInsuranceBTN);
             EditCustomerCommand = new RelayCommand(EditCustomerBTN);
             CustomerProspectCommand = new RelayCommand(ShowCustomerProspectBTN);
+            InsuranceOverviewCommand = new RelayCommand(ShowInsuranceOverviewBTN);
 
             LogOffCommand = new RelayCommand(LogOffBTN);
         }
@@ -102,6 +103,7 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand RealEstateInsuranceCommand { get; }
         public ICommand EditCustomerCommand { get; }
         public ICommand CustomerProspectCommand { get; }
+        public ICommand InsuranceOverviewCommand { get; }
         public ICommand LogOffCommand { get; }
         #endregion
 
@@ -122,27 +124,27 @@ namespace TopInsuranceWPF.ViewModels
 
         private void LifeInsuranceBTN()
         {
-            CurrentViewModel = new LifeInsurance();
+            CurrentViewModel = new LifeInsuranceView();
         }
 
         private void SicknessAccidentBTN()
         {
-            CurrentViewModel = new SicknessAccident();  
+            CurrentViewModel = new SicknessAccidentView();  
         }
 
         private void LiabilityInsuranceBTN() 
         {
-            CurrentViewModel = new LiabilityInsurance();
+            CurrentViewModel = new LiabilityInsuranceView();
         }
 
         private void VehicleInsuranceBTN() 
         {
-            CurrentViewModel = new VehicleInsurance();
+            CurrentViewModel = new VehicleInsuranceView();
         }
 
         private void RealEstateInsuranceBTN() 
         {
-            CurrentViewModel= new RealEstateInsurance();    
+            CurrentViewModel= new RealEstateInsuranceView();    
         }
 
         private void EditCustomerBTN()
@@ -152,6 +154,10 @@ namespace TopInsuranceWPF.ViewModels
         private void ShowCustomerProspectBTN()
         {
             CurrentViewModel = new CustomerProspect();
+        }
+        private void ShowInsuranceOverviewBTN()
+        {
+            CurrentViewModel = new InsuranceOverview();
         }
         private void LogOffBTN()
         {

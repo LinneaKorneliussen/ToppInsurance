@@ -10,18 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
-namespace TopInsuranceWPF.ViewModels
+namespace TopInsuranceWPF
 {
     /// <summary>
-    /// Interaction logic for NewPrivateInsurance.xaml
+    /// Interaction logic for InsuranceOverview.xaml
     /// </summary>
-    public partial class LifeInsurance : UserControl
+    public partial class InsuranceOverview : UserControl
     {
-        public LifeInsurance()
+        public InsuranceOverview()
         {
             InitializeComponent();
         }

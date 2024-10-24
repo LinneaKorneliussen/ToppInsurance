@@ -145,7 +145,13 @@
                                     <TextBlock Text="Kundprospekt" />
                                 </StackPanel>
                             </Button>
-                            
+
+                            <Button Style="{StaticResource menuButton}" Command="{Binding InsuranceOverviewCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <material:PackIconMaterial Kind="NoteMultiple" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Försäkringsöversikt" />
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
 
                         <Button Style="{StaticResource menuButton}" Command="{Binding LogOffCommand}" 

@@ -12,8 +12,6 @@ namespace TopInsuranceEntities
         public string RegistrationNumber { get; set; }
         public string Brand { get; set; }
         public int Year { get; set; }
-
-        public int VehicleInsuranceId { get; set; }
         public VehicleInsurance VehicleInsurance { get; set; }
 
         public Vehicle(string registrationNumber, string brand, int year)

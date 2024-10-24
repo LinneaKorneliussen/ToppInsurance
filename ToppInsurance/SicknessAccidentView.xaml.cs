@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace TopInsuranceWPF
 {
     /// <summary>
-    /// Interaction logic for RealEstateInsurance.xaml
+    /// Interaction logic for SicknessAccidentView.xaml
     /// </summary>
-    public partial class RealEstateInsurance : UserControl
+    public partial class SicknessAccidentView : UserControl
     {
-        public RealEstateInsurance()
+        public SicknessAccidentView()
         {
             InitializeComponent();
         }
