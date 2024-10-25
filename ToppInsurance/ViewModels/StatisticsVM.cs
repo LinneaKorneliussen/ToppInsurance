@@ -36,7 +36,7 @@ namespace TopInsuranceWPF.ViewModels
 
         #region Properties
         private string _searchEmployee;
-        public string SearchEmployee
+        public string SearchEmployees
         {
             get { return _searchEmployee; }
             set
@@ -44,7 +44,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_searchEmployee != value)
                 {
                     _searchEmployee = value;
-                    OnPropertyChanged(nameof(SearchEmployee));
+                    OnPropertyChanged(nameof(SearchEmployees));
                 }
             }
         }
@@ -142,11 +142,11 @@ namespace TopInsuranceWPF.ViewModels
         #region Find Employee Method
         private void FindEmployee()
         {
-            if (!string.IsNullOrEmpty(SearchEmployee))
+            if (!string.IsNullOrEmpty(SearchEmployees))
             {
-                var filteredEmployees = employeeController.GetSalespersonsByLastNameOrAgencyNumber(SearchEmployee);
+                var filteredEmployees = employeeController.GetSalesEmployees(SearchEmployees);
                 Employees = new ObservableCollection<Employee>(filteredEmployees);
-                SearchEmployee = string.Empty;
+                SearchEmployees = string.Empty;
             }
         }
         #endregion

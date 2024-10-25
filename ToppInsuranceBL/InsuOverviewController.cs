@@ -19,30 +19,30 @@ namespace TopInsuranceBL
 
 
         #region Get all insurances for priavte customer Methods
-        public LifeInsurance GetLifeInsurance(PrivateCustomer customer)
+        public LifeInsurance GetLifeInsurance(PrivateCustomer privateCustomer)
         {
-            return insuOverviewRepository.GetLifeInsurance(customer);
+            return insuOverviewRepository.GetLifeInsurance(privateCustomer);
         }
 
-        public List<SicknessAccidentInsurance> GetAllSicknessInsurances(PrivateCustomer customer)
+        public List<SicknessAccidentInsurance> GetAllSicknessInsurances(PrivateCustomer privateCustomer)
         {
-            return insuOverviewRepository.GetAllSicknessInsurances(customer);
+            return insuOverviewRepository.GetAllSicknessInsurances(privateCustomer);
         }
         #endregion
 
         #region Get all insurances for business customer Methods
-        public List<LiabilityInsurance> GetAllLiabilityInsurances(BusinessCustomer customer)
+        public List<LiabilityInsurance> GetAllLiabilityInsurances(BusinessCustomer businessCustomer)
         {
-            return insuOverviewRepository.GetAllLiabilityInsurances(customer);
+            return insuOverviewRepository.GetAllLiabilityInsurances(businessCustomer);
         }
 
-        public List<VehicleInsurance> GetAllVehicleInsurances(BusinessCustomer customer)
+        public List<VehicleInsurance> GetAllVehicleInsurances(BusinessCustomer businessCustomer)
         {
-            return insuOverviewRepository.GetAllVehicleInsurances(customer);
+            return insuOverviewRepository.GetAllVehicleInsurances(businessCustomer);
         }
-        public List<RealEstateInsurance> GetAllRealEstateInsurances(BusinessCustomer customer)
+        public List<RealEstateInsurance> GetAllRealEstateInsurances(BusinessCustomer businessCustomer)
         {
-            return insuOverviewRepository.GetAllRealEstateInsurances(customer);
+            return insuOverviewRepository.GetAllRealEstateInsurances(businessCustomer);
         }
 
         #endregion

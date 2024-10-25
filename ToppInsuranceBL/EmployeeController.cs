@@ -27,7 +27,7 @@ namespace TopInsuranceBL
         }
         #endregion
 
-        #region Get all employers customers Method
+        #region Get all employees Method
         public List<Employee> GetAllSalesEmployees()
         {
             return employeeRepository.GetAllSalesEmployees();
@@ -35,9 +35,9 @@ namespace TopInsuranceBL
         #endregion
 
         #region Get Salesperson by Last Name or Agency Number
-        public List<Employee> GetSalespersonsByLastNameOrAgencyNumber(string searchText)
+        public List<Employee> GetSalesEmployees(string searchEmployees)
         {
-            return employeeRepository.GetSalespersonsByLastNameOrAgencyNumber(searchText);
+            return employeeRepository.GetSalesEmployees(searchEmployees);
         }
         #endregion
     }
