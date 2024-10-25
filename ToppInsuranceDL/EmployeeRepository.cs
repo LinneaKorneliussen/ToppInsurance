@@ -41,7 +41,7 @@ namespace TopInsuranceDL
         #endregion
 
         #region Get Salesperson by Last Name or Agency Number
-        public List<Employee> GetSalespersonsByLastNameOrAgencyNumber(string searchText)
+        public List<Employee> GetSalesEmployees(string searchText)
         {
             return unitOfWork.EmployeeRepository.GetAll()
                 .Where(e => e.EmployeeRole == EmployeeRole.Säljare &&

@@ -25,9 +25,9 @@ namespace TopInsuranceBL
         #endregion
 
         #region Search Private Customers Method
-        public List<PrivateCustomer> SearchPrivateCustomers(string searchTerm)
+        public List<PrivateCustomer> SearchPrivateCustomers(string searchPrivateCustomers)
         {
-            return privateRepository.SearchPrivateCustomers(searchTerm);
+            return privateRepository.SearchPrivateCustomers(searchPrivateCustomers);
         }
         #endregion
 

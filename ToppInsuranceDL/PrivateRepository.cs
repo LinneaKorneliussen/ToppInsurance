@@ -52,15 +52,15 @@ namespace TopInsuranceDL
         #endregion
 
         #region Search Private Customers Method 
-        public List<PrivateCustomer> SearchPrivateCustomers(string searchTerm)
+        public List<PrivateCustomer> SearchPrivateCustomers(string searchPrivateCustomers)
         {
             List<PrivateCustomer> allPrivateCustomers = unitOfWork.PCRepository.GetAll().ToList();
 
-            bool isNumericSearch = int.TryParse(searchTerm, out int searchNumber);
+            bool isNumericSearch = int.TryParse(searchPrivateCustomers, out int searchNumber);
             var matchingCustomers = allPrivateCustomers.Where(c =>
-                (c.FirstName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                c.LastName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ||
-                (isNumericSearch && c.SSN.ToString().Contains(searchTerm))
+                (c.FirstName.Contains(searchPrivateCustomers, StringComparison.OrdinalIgnoreCase) ||
+                c.LastName.Contains(searchPrivateCustomers, StringComparison.OrdinalIgnoreCase)) ||
+                (isNumericSearch && c.SSN.ToString().Contains(searchPrivateCustomers))
             ).ToList();
 
             return matchingCustomers;

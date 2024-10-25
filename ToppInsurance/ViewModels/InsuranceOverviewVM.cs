@@ -28,7 +28,7 @@ namespace TopInsuranceWPF.ViewModels
 
         #region Properties and observable collections for private customer
         private string _searchPrivateCustomer;
-        public string SearchPrivateCustomer
+        public string SearchPrivateCustomers
         {
             get { return _searchPrivateCustomer; }
             set
@@ -36,7 +36,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_searchPrivateCustomer != value)
                 {
                     _searchPrivateCustomer = value;
-                    OnPropertyChanged(nameof(SearchPrivateCustomer));
+                    OnPropertyChanged(nameof(SearchPrivateCustomers));
                 }
             }
         }
@@ -102,7 +102,7 @@ namespace TopInsuranceWPF.ViewModels
         
         #region Properties and observale collections for Business customer
         private string _searchBusinessCustomer;
-        public string SearchBusinessCustomer
+        public string SearchBusinessCustomers
         {
             get { return _searchBusinessCustomer; }
             set
@@ -110,7 +110,7 @@ namespace TopInsuranceWPF.ViewModels
                 if (_searchBusinessCustomer != value)
                 {
                     _searchBusinessCustomer = value;
-                    OnPropertyChanged(nameof(SearchBusinessCustomer));
+                    OnPropertyChanged(nameof(SearchBusinessCustomers));
                 }
             }
         }
@@ -191,35 +191,15 @@ namespace TopInsuranceWPF.ViewModels
         #endregion
 
         #region Find customer Methods
-        private void FindBCcustomers()
-        {
-            if (string.IsNullOrWhiteSpace(SearchBusinessCustomer))
-            {
-                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            var filteredBusinessCustomers = businessController.SearchBusinessCustomers(SearchBusinessCustomer);
-
-            if (filteredBusinessCustomers == null || !filteredBusinessCustomers.Any())
-            {
-                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                BCcustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
-            }
-        }
-
         private void FindPcustomers()
         {
-            if (string.IsNullOrWhiteSpace(SearchPrivateCustomer))
+            if (string.IsNullOrWhiteSpace(SearchPrivateCustomers))
             {
                 MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            var filteredPrivateCustomers = privateController.SearchPrivateCustomers(SearchPrivateCustomer);
+            var filteredPrivateCustomers = privateController.SearchPrivateCustomers(SearchPrivateCustomers);
 
             if (filteredPrivateCustomers == null || !filteredPrivateCustomers.Any())
             {
@@ -228,6 +208,25 @@ namespace TopInsuranceWPF.ViewModels
             else
             {
                 Pcustomers = new ObservableCollection<PrivateCustomer>(filteredPrivateCustomers);
+            }
+        }
+        private void FindBCcustomers()
+        {
+            if (string.IsNullOrWhiteSpace(SearchBusinessCustomers))
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var filteredBusinessCustomers = businessController.SearchBusinessCustomers(SearchBusinessCustomers);
+
+            if (filteredBusinessCustomers == null || !filteredBusinessCustomers.Any())
+            {
+                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                BCcustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
             }
         }
         #endregion
@@ -249,8 +248,8 @@ namespace TopInsuranceWPF.ViewModels
         {
             if (SelectedBCcustomer != null)
             {
-                var liabilityInsurances = insuOverviewController.GetAllLiabilityInsurances(SelectedBCcustomer);
-                LiabilityInsurances = new ObservableCollection<LiabilityInsurance>(liabilityInsurances);
+                var liabilityInsurance = insuOverviewController.GetAllLiabilityInsurances(SelectedBCcustomer);
+                LiabilityInsurances = new ObservableCollection<LiabilityInsurance>(liabilityInsurance);
 
                 var vehicleInsurances = insuOverviewController.GetAllVehicleInsurances(SelectedBCcustomer);
                 VehicleInsurances = new ObservableCollection<VehicleInsurance>(vehicleInsurances);
@@ -264,8 +263,8 @@ namespace TopInsuranceWPF.ViewModels
         #region Clear view Method
         private void Clear()
         {
-            SearchPrivateCustomer = string.Empty;
-            SearchBusinessCustomer = string.Empty;
+            SearchPrivateCustomers = string.Empty;
+            SearchBusinessCustomers = string.Empty;
 
             SelectedPcustomers = null;
             SelectedBCcustomer = null;
