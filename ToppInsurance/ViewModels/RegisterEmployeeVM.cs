@@ -181,15 +181,6 @@ namespace TopInsuranceWPF.ViewModels
                 MessageBox.Show(error);
                 return;
             }
-            if (!ValidateZipcode(out int parsedZipcode))
-            {
-                return;
-            }
-            if (!IsValidPhoneNumber(NewPhoneNumber))
-            {
-                MessageBox.Show("Felformat på telefonnummer!");
-                return;
-            }
             if (!IsValidPersonalNumber(NewSSN))
             {
                 MessageBox.Show("Felformat på personummret, skriv i formatet (YYYYMMDD-XXXX)!");
@@ -200,7 +191,16 @@ namespace TopInsuranceWPF.ViewModels
                 MessageBox.Show("Personen finns redan registrerad");
                 return;
             }
-            
+            if (!IsValidPhoneNumber(NewPhoneNumber))
+            {
+                MessageBox.Show("Felformat på telefonnummer!");
+                return;
+            }
+            if (!ValidateZipcode(out int parsedZipcode))
+            {
+                return;
+            }
+
 
 
             EmployeeRole defaultRole = EmployeeRole.Säljare;
