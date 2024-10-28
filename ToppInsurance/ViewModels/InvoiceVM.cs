@@ -26,10 +26,8 @@ namespace TopInsuranceWPF.ViewModels
             businessController = new BusinessController();
             privateController = new PrivateController();
             invoiceController = new InvoiceController();
-
             List<BusinessCustomer> customers = businessController.GetAllBusinessCustomers();
             List<PrivateCustomer> privateCustomers = privateController.GetAllPrivateCustomers();
-
             FindPcustomersCommand = new RelayCommand(FindPcustomers);
             FindBCcustomersCommand = new RelayCommand(FindBCcustomers);
             AddPrivateInvoiceCommand = new RelayCommand(AddPrivateInvoice);
@@ -37,12 +35,9 @@ namespace TopInsuranceWPF.ViewModels
             BCcustomers = new ObservableCollection<BusinessCustomer>(customers);
             Pcustomers = new ObservableCollection<PrivateCustomer>(privateCustomers);
 
-            //ClearCommand = new RelayCommand(ClearFields);
-
         }
 
-        #region Properties for search
-
+        #region Properties
         private string _searchBusinessCustomer;
         public string SearchBusinessCustomer
         {
@@ -71,45 +66,38 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        #endregion
-
-        #region Properties for selected customer
-
-        private BusinessCustomer _selectBusinessCustomer;
-        public BusinessCustomer SelectBusinessCustomer
+        private BusinessCustomer _selectedBusinessCustomer;
+        public BusinessCustomer SelectedBusinessCustomer
         {
-            get { return _selectBusinessCustomer; }
+            get { return _selectedBusinessCustomer; }
             set
             {
-                if (_selectBusinessCustomer != value)
+                if (_selectedBusinessCustomer != value)
                 {
-                    _selectBusinessCustomer = value;
-                    OnPropertyChanged(nameof(SelectBusinessCustomer));
+                    _selectedBusinessCustomer = value;
+                    OnPropertyChanged(nameof(SelectedBusinessCustomer));
+                    LoadInvoices();
 
                 }
 
             }
         }
 
-        private PrivateCustomer _selectPrivateCustomer;
-        public PrivateCustomer SelectPrivateCustomer
+        private PrivateCustomer _selectedPrivateCustomer;
+        public PrivateCustomer SelectedPrivateCustomer
         {
-            get { return _selectPrivateCustomer; }
+            get { return _selectedPrivateCustomer; }
             set
             {
-                if (_selectPrivateCustomer != value)
+                if (_selectedPrivateCustomer != value)
                 {
-                    _selectPrivateCustomer = value;
-                    OnPropertyChanged(nameof(SelectPrivateCustomer));
+                    _selectedPrivateCustomer = value;
+                    OnPropertyChanged(nameof(SelectedPrivateCustomer));
                     LoadInvoices();
 
                 }
             }
         }
-
-        #endregion
-
-        #region Properties
 
         private DateTime _invoiceDate;
         public DateTime NewInvoiceDate
@@ -125,94 +113,7 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
-
         #endregion
-
-        #region Add Invoice method 
-        private void AddPrivateInvoice()
-        {
-
-            var resultMessage = invoiceController.CalculateCreatePrivateInvoiceDocuments(SelectPrivateCustomer, NewInvoiceDate);
-
-            // Kontrollera om det returnerades ett felmeddelande eller om fakturan skapades framgångsrikt
-            if (resultMessage.Contains("Inga fakturor"))
-            {
-                MessageBox.Show(resultMessage, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
-                MessageBox.Show(resultMessage, "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-        }
-
-        private void AddBusinessInvoice()
-        {
-
-            var resultMessage = invoiceController.CalculateCreateBusinessInvoiceDocuments(SelectBusinessCustomer, NewInvoiceDate);
-
-            // Kontrollera om det returnerades ett felmeddelande eller om fakturan skapades framgångsrikt
-            if (resultMessage.Contains("Inga fakturor"))
-            {
-                MessageBox.Show(resultMessage, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
-                MessageBox.Show(resultMessage, "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-        }
-
-        #endregion
-
-        public void LoadInvoices()
-        {
-            var invoiceDataList = invoiceController.LoadInvoicesFromJson();
-
-            LoadedInvoices = new ObservableCollection<dynamic>(invoiceDataList);
-        }
-
-
-        #region Find customer Methods
-        private void FindBCcustomers()
-        {
-            if (string.IsNullOrWhiteSpace(SearchBusinessCustomer))
-            {
-                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            var filteredBusinessCustomers = businessController.SearchBusinessCustomers(SearchBusinessCustomer);
-
-            if (filteredBusinessCustomers == null || !filteredBusinessCustomers.Any())
-            {
-                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                BCcustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
-            }
-        }
-
-        private void FindPcustomers()
-        {
-            if (string.IsNullOrWhiteSpace(SearchPrivateCustomer))
-            {
-                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            var filteredPrivateCustomers = privateController.SearchPrivateCustomers(SearchPrivateCustomer);
-
-            if (filteredPrivateCustomers == null || !filteredPrivateCustomers.Any())
-            {
-                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                Pcustomers = new ObservableCollection<PrivateCustomer>(filteredPrivateCustomers);
-            }
-        }
-        #endregion
-
 
         #region Observable Collection
         private ObservableCollection<BusinessCustomer> _BCcustomers;
@@ -260,6 +161,110 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand ClearCommand { get; }
         #endregion
 
+        #region Find customer Methods
+        private void FindBCcustomers()
+        {
+            if (string.IsNullOrWhiteSpace(SearchBusinessCustomer))
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var filteredBusinessCustomers = businessController.SearchBusinessCustomers(SearchBusinessCustomer);
+
+            if (filteredBusinessCustomers == null || !filteredBusinessCustomers.Any())
+            {
+                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                BCcustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
+            }
+        }
+
+        private void FindPcustomers()
+        {
+            if (string.IsNullOrWhiteSpace(SearchPrivateCustomer))
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var filteredPrivateCustomers = privateController.SearchPrivateCustomers(SearchPrivateCustomer);
+
+            if (filteredPrivateCustomers == null || !filteredPrivateCustomers.Any())
+            {
+                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                Pcustomers = new ObservableCollection<PrivateCustomer>(filteredPrivateCustomers);
+            }
+        }
+        #endregion
+
+        #region Add Invoice methods
+        private void AddPrivateInvoice()
+        {
+            if (SelectedPrivateCustomer == null)
+            {
+                MessageBox.Show("Vänligen välj en privatkund för att fortsätta", "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(Error))
+            {
+                MessageBox.Show(Error, "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var resultMessage = invoiceController.CalculateCreatePrivateInvoiceDocuments(SelectedPrivateCustomer, NewInvoiceDate);
+
+            if (resultMessage.Contains("Inga fakturor"))
+            {
+                MessageBox.Show(resultMessage, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                MessageBox.Show(resultMessage, "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void AddBusinessInvoice()
+        {
+            if (SelectedBusinessCustomer == null)
+            {
+                MessageBox.Show("Vänligen välj en företagskund för att fortsätta", "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(Error))
+            {
+                MessageBox.Show(Error, "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var resultMessage = invoiceController.CalculateCreateBusinessInvoiceDocuments(SelectedBusinessCustomer, NewInvoiceDate);
+
+            if (resultMessage.Contains("Inga fakturor"))
+            {
+                MessageBox.Show(resultMessage, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                MessageBox.Show(resultMessage, "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        public void LoadInvoices()
+        {
+            var invoiceDataList = invoiceController.LoadInvoicesFromJson();
+
+            LoadedInvoices = new ObservableCollection<dynamic>(invoiceDataList);
+        }
+
+        #endregion
+
         #region Validation IDataErrorInfo
         public string Error
         {
@@ -271,10 +276,10 @@ namespace TopInsuranceWPF.ViewModels
                     string error = this[property];
                     if (!string.IsNullOrEmpty(error))
                     {
-                        return error;
+                        return error; 
                     }
                 }
-                return null;
+                return null; 
             }
         }
 
@@ -285,22 +290,23 @@ namespace TopInsuranceWPF.ViewModels
                 return ValidateField(columnName);
             }
         }
+
         private string ValidateField(string columnName)
         {
             string errorMessage = null;
-            var currentDate = DateTime.Today;
+            var earlierDate = DateTime.Today.AddMonths(-1);
 
             switch (columnName)
             {
-
                 case nameof(NewInvoiceDate):
-                    if (NewInvoiceDate != currentDate)
+                    if (NewInvoiceDate < earlierDate)
                     {
-                        errorMessage = "Provisionsunderlag kan endast generas till föregående månads sista dag";
+                        errorMessage = "Faktureringsunderlag kan maximalt genereras en månad tillbaka i tiden";
                     }
                     break;
+
                 default:
-                    errorMessage = "Vänligen välj";
+                    errorMessage = "Ogiltig egenskap";
                     break;
             }
 
@@ -309,5 +315,4 @@ namespace TopInsuranceWPF.ViewModels
         #endregion
 
     }
-
 }
