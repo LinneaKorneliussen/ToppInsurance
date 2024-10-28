@@ -46,7 +46,9 @@
                         
                         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top" Background="White" Margin="10 20 0 0">
                             <TextBlock Text="Hämta den säljare som du önskar skapa provisionsunderlag för:" Margin="0 0 0 0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" VerticalAlignment="Center" />
-                            <TextBox Text="{Binding SearchEmployee, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="30 0 0 0" Style="{StaticResource searchTextbox}" />
+                            <TextBox Text="{Binding SearchEmployees, UpdateSourceTrigger=PropertyChanged}" 
+                                     Width="300" Margin="30 0 0 0" Style="{StaticResource searchTextbox}" 
+                                     Tag="Sök: Säljares efternamn, agenturnr..." />
                             <Button Content="Sök" Width="50" Height="30" Margin="10 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindEmployeeCommand}" />
                             <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="-90,0,0,0" Foreground="#223A2A" />
                         </StackPanel>

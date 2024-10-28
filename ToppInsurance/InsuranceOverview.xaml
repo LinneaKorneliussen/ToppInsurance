@@ -40,8 +40,9 @@
                 <StackPanel Background="White">
 
                     <Grid Width="500" HorizontalAlignment="Right" Margin="0 0 20 10">
-                        <TextBox Text="{Binding SearchPrivateCustomer, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="5 0 100 0" Style="{StaticResource searchTextbox}" 
-                                 mah:TextBoxHelper.Watermark="Sökord: efternamn, personnummer"/>
+                        <TextBox Text="{Binding SearchPrivateCustomers, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="5 0 100 0" 
+                                 Style="{StaticResource searchTextbox}" 
+                                 Tag="Sök: förnamn, efternamn, personnr..."/>
                         <Button Content="Sök" Width="50" Margin="290 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindPcustomersCommand}"/>
                         <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 160 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
                     </Grid>
@@ -134,7 +135,9 @@
                 <StackPanel Background="White">
 
                     <Grid Width="500" HorizontalAlignment="Right" Margin="0 0 20 10">
-                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
+                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchBusinessCustomers, UpdateSourceTrigger=PropertyChanged}" 
+                                 Style="{StaticResource searchTextbox}"
+                                 Tag="Sök: företagsnamn, orgnr..."/>
                         <Button Content="Sök" Width="50" Margin="290 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
                         <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 160 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
                     </Grid>

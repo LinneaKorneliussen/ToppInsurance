@@ -31,14 +31,14 @@
             </StackPanel>
 
             <StackPanel Grid.Row="1" Orientation="Vertical" Background="White">
-                <TextBox Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="430 20 40 0" Style="{StaticResource searchTextbox}"/>
+                <TextBox Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="430 20 40 0" 
+                         Style="{StaticResource searchTextbox}"
+                         Tag="Sök: förnamn, efternamn, personnr..."/>
                 <Button Content="Sök" Width="50" Margin="730 -40 -40 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
                 <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 -40 90 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
             </StackPanel>
-
             <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 10 0 10"/>
 
-            <!-- DataGrid för att visa företagskunder -->
             <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="115" FontWeight="Normal" 
                       ItemsSource="{Binding BusinessCustomers}" SelectedItem="{Binding SelectedBCcustomer, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
                 <DataGrid.Columns>
@@ -80,7 +80,6 @@
                     <ColumnDefinition Width="182*"/>
                 </Grid.ColumnDefinitions>
 
-                <!--Försäkringsuppgifter som ska fyllas i-->
                 <TextBlock Text="Startdatum:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <DatePicker x:Name="dpStartdate" Grid.Row="1" Grid.Column="1" Width="150" Margin="15,4,0,0" HorizontalAlignment="Left"
                    SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
@@ -146,7 +145,5 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
-
     </Grid>
-
 </UserControl>

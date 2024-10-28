@@ -36,21 +36,18 @@
                 </Style>
             </TabControl.Resources>
 
-
-
             <TabItem Header="Privatkunder" Style="{StaticResource TabItemStyle}">
                 <StackPanel Background="White">
-
-                    <!-- Filter Textbox -->
-                    <Grid HorizontalAlignment="Right" Margin="0 0 0 10">
-                        <TextBox Text="{Binding SearchPrivateCustomer, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 70 0" Style="{StaticResource searchTextbox}"/>
-                        <Button Content="Sök" Width="50" Margin="290 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindPcustomersCommand}"/>
-                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 90 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
+                    <Grid HorizontalAlignment="Right" Margin="10,10,10,10">
+                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchPrivateCustomer, UpdateSourceTrigger=PropertyChanged}" 
+                                 Style="{StaticResource searchTextbox}"
+                                 Tag="Sök: förnamn, efternamn, personnr..."/>
+                        <Button Content="Sök" Width="50" Margin="290 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
+                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 110 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
                     </Grid>
                     <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
 
 
-                    <!-- DataGrid för att visa företagskunder -->
                     <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="250" FontWeight="Normal" ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectedPcustomers, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
@@ -64,7 +61,6 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <!-- Formulär för att redigera kunduppgifter -->
                     <Grid Margin="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -121,7 +117,6 @@
                             <TextBox Width="300" Text="{Binding NewWorkPhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
-                        <!-- Buttons -->
                         <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 20 60 0">
                             <Button Margin="10 10 0 10" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -145,43 +140,18 @@
             </TabItem>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <TabItem Header="Företagskunder" Style="{StaticResource TabItemStyle}">
-                <StackPanel Background="White" Width="900">
+                <StackPanel Background="White">
 
-                    <!-- Filter Textbox -->
-                    <Grid Width="500" HorizontalAlignment="Right" Margin="0 0 20 10">
-                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
+                    <Grid HorizontalAlignment="Right" Margin="10,10,10,10">
+                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" 
+                                 Style="{StaticResource searchTextbox}"
+                                 Tag="Sök: företagsnamn, orgnr..."/>
                         <Button Content="Sök" Width="50" Margin="290 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
-                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 160 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
+                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 110 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
                     </Grid>
                     <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
 
-
-                    <!-- DataGrid för att visa företagskunder -->
                     <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="250" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectedBCcustomers, Mode=TwoWay}" 
                               RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
@@ -194,8 +164,6 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-
-                    <!-- Formulär för att redigera kunduppgifter -->
                     <Grid Margin="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -252,7 +220,6 @@
                             <TextBox Width="300" Text="{Binding NewCompanyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" BorderBrush="Black" FontWeight="Normal" Background="GhostWhite"/>
                         </StackPanel>
 
-                        <!-- Buttons -->
                         <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 20 60 0">
                             <Button Width="120" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -266,12 +233,9 @@
                                     <TextBlock Text="UPPDATERA SIDAN" Margin="3,0,0,0" VerticalAlignment="Center" FontSize="10"/>
                                 </StackPanel>
                             </Button>
-
                             <Button Content="Spara ändringar" Command="{Binding UpdateBCcustomersCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
                         </StackPanel>
-
                     </Grid>
-
                 </StackPanel>
             </TabItem>
         </TabControl>

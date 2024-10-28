@@ -28,20 +28,18 @@
 
             <StackPanel Grid.Row="1" Orientation="Vertical" Background="White">
                 <TextBlock Text="Välj tillval" Margin=" 55 5 0 0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13"/>
-
-                <!--RadioButton-->
                 <RadioButton Content="Försäkring för inventarier" Style="{StaticResource RadioButtonStyle}" GroupName="Options" 
                              IsChecked="{Binding IsInventorySelected}" Margin=" 55 0 0 0"/>
 
-                <TextBox Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="450 -40 40 0" Style="{StaticResource searchTextbox}"/>
+                <TextBox Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="450 -40 40 0" 
+                         Style="{StaticResource searchTextbox}"
+                         Tag="Sök: företagsnamn, orgnr..."/>
                 <Button Content="Sök" Width="50" Margin="730 -40 -40 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
                 <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 -40 90 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
             </StackPanel>
 
             <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 10 0 10"/>
 
-
-            <!-- DataGrid för att visa företagskunder -->
             <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="115" FontWeight="Normal" ItemsSource="{Binding BusinessCustomers}" 
                       SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
                 <DataGrid.Columns>
@@ -61,7 +59,6 @@
                 <TextBlock Text="Fyll i försäkringsuppgifter nedan: " Grid.Row="3" FontSize="20" FontWeight="Bold" Margin="0,10,0,10"/>
             </StackPanel>
 
-            <!-- Formulär för att redigera kunduppgifter -->
             <Grid Margin="0" Height="450">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -84,7 +81,6 @@
                     <ColumnDefinition Width="200*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Försäkringsuppgifter som ska fyllas i -->
                 <TextBlock Text="Startdatum:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <DatePicker x:Name="dpStartdate" Grid.Row="1" Grid.Column="1" Width="150" Margin="0,2,0,2" HorizontalAlignment="Left"
                             SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
@@ -130,12 +126,9 @@
                          Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"
                          FontWeight="Normal" Margin="0,2,50,2" Width="300" Background="GhostWhite"/>
 
-                <!-- Ifyllningsfält för inventarier -->
                 <TextBlock Text="Välj typ av inventarie: " Grid.Row="9" Grid.Column="1" FontWeight="Normal" VerticalAlignment="Center" Height="16" Margin="0,0,8,0" 
                            Visibility="{Binding IsInventorySelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-
-                <!-- Lista över inventarier -->
                 <ItemsControl Grid.Column="1" Grid.Row="10" ItemsSource="{Binding Inventories}" 
                               Visibility="{Binding IsInventorySelected, Converter={StaticResource BooleanToVisibilityConverter}}" Height="150">
                     <ItemsControl.ItemTemplate>
@@ -158,24 +151,17 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <!-- Lägg till fler knapp -->
                 <Button Content="Lägg till" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Background="#223A2A" Foreground="White" 
                         Command="{Binding AddInventoryCommand}" Visibility="{Binding IsInventorySelected, Converter={StaticResource BooleanToVisibilityConverter}}"
                     Width="130" HorizontalAlignment="Left" Margin="170 5 0 0" />
 
-                <!-- Buttons -->
                 <Button Content="Återställ fält" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Left" Width="100"
                         Height="20" Margin="90 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
 
                 <Button Content="Spara ändringar" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Right"
                         Command="{Binding AddRealEstateInsuranceCommand}" Height="20" Width="120" Margin="60 0 0 0" 
                         Background="#223A2A" Foreground="White"/>
-
             </Grid>
-
         </StackPanel>
-
     </Grid>
-
-
 </UserControl>

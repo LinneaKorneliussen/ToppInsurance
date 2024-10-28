@@ -35,18 +35,17 @@
 
                 <TextBlock Text="Hämta den kund som önskar teckna en livförsäkring" Margin=" 15 40 400 0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13"/>
 
-                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="450 -40 40 0" Style="{StaticResource searchTextbox}"/>
-                <Button Content="Sök" Width="50" Margin="730 -40 -40 0" Background="#223A2A" Foreground="White" Command="{Binding FindCustomerCommand}"/>
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="450 -40 40 0" 
+                         Style="{StaticResource searchTextbox}"
+                         Tag="Sök: förnamn, efternamn, personnr..."/>
+                <Button Content="Sök" Width="50" Margin="730 -40 -40 0" Background="#223A2A" 
+                        Foreground="White" Command="{Binding FindCustomerCommand}"/>
 
                 <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 -40 90 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
 
             </StackPanel>
-
-
+            
             <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 10 0 10"/>
-
-
-            <!-- DataGrid för att visa kund -->
             <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="115" FontWeight="Normal" ItemsSource="{Binding PrivateCustomers}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Personnummer" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
@@ -83,7 +82,6 @@
                     <ColumnDefinition Width="182*"/>
                 </Grid.ColumnDefinitions>
 
-                <!--Försäkringsuppgifter som ska fyllas i-->
                 <TextBlock Text="Startdatum:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
                 <DatePicker x:Name="dpStartdate" Grid.Row="1" Grid.Column="1" Width="150" Margin="15,4,0,6" HorizontalAlignment="Left"
                      SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"

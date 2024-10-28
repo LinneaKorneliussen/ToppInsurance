@@ -85,7 +85,6 @@
                     </DockPanel>
                 </Border>
 
-                <!-- Main Content Area -->
                 <Grid Grid.Column="1">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
                         <TextBlock Text="Välkommen till Toppförsäkringar" FontSize="26" FontWeight="Bold" Foreground="#2F4F4F" Margin="0,0,0,20"/>
