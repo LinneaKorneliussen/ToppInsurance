@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
              xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             Background="White" Height="750" Width="1100">
+             Background="White" Height="800" Width="1100">
     <UserControl.DataContext>
         <vm:InvoiceVM/>
     </UserControl.DataContext>
@@ -63,6 +63,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Fyll i datum:" Grid.Row="0" FontSize="20" FontWeight="Bold" Margin="0 10"/>
@@ -75,20 +76,23 @@
                                         Style="{StaticResource ValidationDatePickerStyle}"/>
                         </StackPanel>
 
-                        <Grid Grid.Row="3" Margin="10,10 10,10">
-                            <DataGrid Margin="10,10 10,10" Name="invoicePDataGrid" AutoGenerateColumns="False" Height="120" FontWeight="Normal" 
+                        <TextBlock Grid.Row="3" Text="Fakturaunderlag för samtliga privatkunder: " FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" VerticalAlignment="Center" Margin="0 40 0 0"/>
+
+
+                        <Grid Grid.Row="4" Margin="0,10 10,10">
+                            <DataGrid Margin="0,10 10,10" Name="invoicePDataGrid" AutoGenerateColumns="False" Height="120" FontWeight="Normal" 
                                       ItemsSource="{Binding LoadedInvoices}" RowStyle="{StaticResource DataGridRowStyle}">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Personnr" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
                                     <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
                                     <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
                                     <DataGridTextColumn Header="Total premie" Binding="{Binding TotalAmount}" IsReadOnly="True" Width="auto"/>
+                                    <DataGridTextColumn Header="Fakturadatum" Binding="{Binding InvoiceDate}" IsReadOnly="True" Width="auto"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
                     </Grid>
 
-                    <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 50 0 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 20 0 0">
                         <Button Width="120" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <material:PackIconMaterial Kind="Restore" Width="14" Height="14" Foreground="White" />
@@ -132,6 +136,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Fyll i datum:" Grid.Row="0" FontSize="20" FontWeight="Bold" Margin="0 10"/>
@@ -144,24 +149,21 @@
                                         Style="{StaticResource ValidationDatePickerStyle}"/>
                         </StackPanel>
 
-                        <Grid Grid.Row="3" Margin="10,10 10,10">
-                            <DataGrid Margin="10,10 10,10" Name="invoiceDataGrid" AutoGenerateColumns="False" Height="120" FontWeight="Normal"
+                        <TextBlock Grid.Row="3" Text="Fakturaunderlag för samtliga företagskunder: " FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" VerticalAlignment="Center" Margin="0 40 0 0" />
+
+                        <Grid Grid.Row="4" Margin="0,10 10,10">
+                            <DataGrid Margin="0,10 10,10" Name="invoiceDataGrid" AutoGenerateColumns="False" Height="120" FontWeight="Normal"
                                       ItemsSource="{Binding LoadedInvoices}" RowStyle="{StaticResource DataGridRowStyle}">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Företagsnamn" Binding="{Binding Companyname}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Orgnr" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Förnamn" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Adress" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Postnr" Binding="{Binding StartDate}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Stad" Binding="{Binding EndDate}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Försäkringar" Binding="{Binding TotalCommission}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Total premie" Binding="{Binding EndDate}" IsReadOnly="True" Width="auto"/>
+                                    <DataGridTextColumn Header="Företagsnamn" Binding="{Binding CompanyName}" IsReadOnly="True" Width="auto"/>
+                                    <DataGridTextColumn Header="Försäkringar" Binding="{Binding TotalAmount}" IsReadOnly="True" Width="auto"/>
+                                    <DataGridTextColumn Header="Fakturadatum" Binding="{Binding InvoiceDate}" IsReadOnly="True" Width="auto"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
                     </Grid>
 
-                    <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 50 0 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 20 0 0">
                         <Button Width="120" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <material:PackIconMaterial Kind="Restore" Width="14" Height="14" Foreground="White" />
