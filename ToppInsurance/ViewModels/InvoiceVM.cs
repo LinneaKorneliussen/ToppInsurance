@@ -19,6 +19,7 @@ namespace TopInsuranceWPF.ViewModels
         private PrivateController privateController;
         private InvoiceController invoiceController;
 
+        public List<string> AvailableMonthsYears { get; }
 
         public InvoiceVM()
         {
@@ -34,6 +35,15 @@ namespace TopInsuranceWPF.ViewModels
             AddBusinessInvoiceCommand = new RelayCommand(AddBusinessInvoice);
             BCcustomers = new ObservableCollection<BusinessCustomer>(customers);
             Pcustomers = new ObservableCollection<PrivateCustomer>(privateCustomers);
+            int currentYear = DateTime.Now.Year;
+            AvailableMonthsYears = Enumerable.Range(0, 9)
+                .Select(offset =>
+                {
+                    int month = (9 + offset) % 12;
+                    int year = currentYear + (9 + offset) / 12;
+                    return $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month == 0 ? 12 : month)} {year}";
+                })
+                .ToList();
 
         }
 
@@ -76,8 +86,6 @@ namespace TopInsuranceWPF.ViewModels
                 {
                     _selectedBusinessCustomer = value;
                     OnPropertyChanged(nameof(SelectedBusinessCustomer));
-                    LoadInvoices();
-
                 }
 
             }
@@ -93,8 +101,6 @@ namespace TopInsuranceWPF.ViewModels
                 {
                     _selectedPrivateCustomer = value;
                     OnPropertyChanged(nameof(SelectedPrivateCustomer));
-                    LoadInvoices();
-
                 }
             }
         }
@@ -110,6 +116,21 @@ namespace TopInsuranceWPF.ViewModels
                     _invoiceDate = value;
                     OnPropertyChanged(nameof(NewInvoiceDate));
 
+                }
+            }
+        }
+
+        private string _selectedMonthYear;
+        public string SelectedMonthYear
+        {
+            get { return _selectedMonthYear; }
+            set
+            {
+                if (_selectedMonthYear != value)
+                {
+                    _selectedMonthYear = value;
+                    OnPropertyChanged(nameof(SelectedMonthYear));
+                    LoadInvoices();
                 }
             }
         }
@@ -255,12 +276,35 @@ namespace TopInsuranceWPF.ViewModels
                 MessageBox.Show(resultMessage, "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+        #endregion
 
+        #region Load Invoices
         public void LoadInvoices()
         {
             var invoiceDataList = invoiceController.LoadInvoicesFromJson();
 
-            LoadedInvoices = new ObservableCollection<dynamic>(invoiceDataList);
+            if (SelectedMonthYear != null)
+            {
+                var parts = SelectedMonthYear.Split(' ');
+                if (parts.Length == 2 && int.TryParse(parts[1], out int year))
+                {
+                    int month = DateTime.ParseExact(parts[0], "MMMM", CultureInfo.CurrentCulture).Month;
+                    DateTime startDate = new DateTime(year, month, 1);
+                    DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+
+                    var filteredInvoices = invoiceDataList
+                        .Where(i => DateTime.TryParse(i.InvoiceDate.ToString(), out DateTime invoiceDate) &&
+                                    invoiceDate >= startDate &&
+                                    invoiceDate <= endDate)
+                        .ToList();
+
+                    LoadedInvoices = new ObservableCollection<dynamic>(filteredInvoices);
+                }
+            }
+            else
+            {
+                LoadedInvoices = new ObservableCollection<dynamic>(invoiceDataList);
+            }
         }
 
         #endregion
