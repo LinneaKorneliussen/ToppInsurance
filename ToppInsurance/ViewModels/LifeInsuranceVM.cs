@@ -194,31 +194,31 @@ namespace TopInsuranceWPF.ViewModels
         
 #endregion
 
-#region Add life Insurance Method
-private void AddLifeInsurance()
-        {
-            if (SelectedCustomer == null)
-            {
-                MessageBox.Show("Vänligen välj en kund från listan.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            string error = this.Error;
-            if (!string.IsNullOrEmpty(error))
-            {
-                MessageBox.Show(error, "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (lifeInsuranceController.CustomerHasInsurance(SelectedCustomer))
-            {
-                MessageBox.Show($"Kunden {SelectedCustomer.FirstName} {SelectedCustomer.LastName} har redan en livförsäkring.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+        #region Add life Insurance Method
+        private void AddLifeInsurance()
+                {
+                    if (SelectedCustomer == null)
+                    {
+                        MessageBox.Show("Vänligen välj en kund från listan.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    string error = this.Error;
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        MessageBox.Show(error, "Valideringsfel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    if (lifeInsuranceController.CustomerHasInsurance(SelectedCustomer))
+                    {
+                        MessageBox.Show($"Kunden {SelectedCustomer.FirstName} {SelectedCustomer.LastName} har redan en livförsäkring.", "Fel", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
 
-            lifeInsuranceController.AddLifeInsurance(SelectedCustomer, NewStartDate, NewEndDate, InsuranceType.Livförsäkring, SelectedPaymentForm, SelectedBaseAmount, Note, user);
-            MessageBox.Show($"Du har registrerat en livförsäkring för {SelectedCustomer.FirstName} {SelectedCustomer.LastName}.", "Toppenbra!", MessageBoxButton.OK, MessageBoxImage.Information);
-            ClearFields();
-        }
-        #endregion
+                    lifeInsuranceController.AddLifeInsurance(SelectedCustomer, NewStartDate, NewEndDate, InsuranceType.Livförsäkring, SelectedPaymentForm, SelectedBaseAmount, Note, user);
+                    MessageBox.Show($"Du har registrerat en livförsäkring för {SelectedCustomer.FirstName} {SelectedCustomer.LastName}.", "Toppenbra!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ClearFields();
+                }
+                #endregion
 
         #region Validation IDataErrorInfo
         public string Error
@@ -261,11 +261,34 @@ private void AddLifeInsurance()
                 case nameof(NewEndDate):
                     if (NewEndDate < DateTime.Today)
                     {
-                        errorMessage = "Går inte att teckna försäkring för redan passerade datum";
+                        errorMessage = "Går inte att teckna försäkring för redan passerade datum.";
                     }
                     else if (NewEndDate < NewStartDate)
                     {
                         errorMessage = "Slutdatum kan inte vara före startdatum.";
+                    }
+                    else
+                    {
+                        int daysBetween = (NewEndDate - NewStartDate).Days;
+                        switch (SelectedPaymentForm)
+                        {
+                            case Paymentform.År:
+                                if (daysBetween < 365)
+                                    errorMessage = "För årsbetalning måste perioden vara minst 365 dagar.";
+                                break;
+                            case Paymentform.Halvår:
+                                if (daysBetween < 182)
+                                    errorMessage = "För halvårsbetalning måste perioden vara minst 182 dagar.";
+                                break;
+                            case Paymentform.Kvartal:
+                                if (daysBetween < 91)
+                                    errorMessage = "För kvartalsbetalning måste perioden vara minst 91 dagar.";
+                                break;
+                            case Paymentform.Månad:
+                                if (daysBetween < 30)
+                                    errorMessage = "För månadsbetalning måste perioden vara minst 30 dagar.";
+                                break;
+                        }
                     }
                     break;
                 case nameof(SelectedPaymentForm):
