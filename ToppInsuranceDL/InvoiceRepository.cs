@@ -92,7 +92,7 @@ namespace TopInsuranceDL
             {
                 PrivateCustomer = customer,
                 InvoiceTotalAmount = totalAmount,
-                InvoiceDate = DateTime.Now,
+                InvoiceDate = invoiceDate,
             };
         }
         #endregion
@@ -235,8 +235,8 @@ namespace TopInsuranceDL
                     invoiceData = new
                     {
                         CustomerType = "Privatförsäkring",
-                        FirstName = privateInvoice.PrivateCustomer.FirstName,
-                        LastName = privateInvoice.PrivateCustomer.LastName,
+                        Name = $"{privateInvoice.PrivateCustomer.FirstName} {privateInvoice.PrivateCustomer.LastName}",
+                        Number = privateInvoice.PrivateCustomer.SSN,
                         TotalAmount = privateInvoice.InvoiceTotalAmount,
                         InvoiceDate = privateInvoice.InvoiceDate
                     };
@@ -246,7 +246,8 @@ namespace TopInsuranceDL
                     invoiceData = new
                     {
                         CustomerType = "Företagsförsäkring",
-                        CompanyName = businessInvoice.BusinessCustomer.CompanyName,
+                        Name = businessInvoice.BusinessCustomer.CompanyName,
+                        Number = businessInvoice.BusinessCustomer.Organizationalnumber,
                         TotalAmount = businessInvoice.InvoiceTotalAmount,
                         InvoiceDate = businessInvoice.InvoiceDate
                     };
