@@ -243,7 +243,6 @@ namespace TopInsuranceWPF.ViewModels
                 SicknessInsurances = new ObservableCollection<SicknessAccidentInsurance>(sicknessAccidentInsurances);
             }
         }
-
         private void DataGridsBusiness()
         {
             if (SelectedBCcustomer != null)

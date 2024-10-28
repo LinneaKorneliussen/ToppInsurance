@@ -15,8 +15,6 @@ namespace TopInsuranceWPF.ViewModels
     public class CustomerProspectVM : ObservableObject
     {
         public ObservableCollection<ProspectInformation> PrivateCustomerProspectList { get; set; }
-
-
         private BusinessController businessController;
         private PrivateController privateController;
         private ProspectController prospectController;
@@ -334,7 +332,13 @@ namespace TopInsuranceWPF.ViewModels
         #region Clear fields method
         private void ClearFields()
         {
+            SearchBusinessCustomer = string.Empty;
+            SearchPrivateCustomer = string.Empty;
             Note = string.Empty;
+            Pcustomers = new ObservableCollection<PrivateCustomer>();
+            BCcustomers = new ObservableCollection<BusinessCustomer>();
+            ProspectInformtionB = new ObservableCollection<ProspectInformation>();
+            ProspectInformtionP = new ObservableCollection<ProspectInformation>();
 
         }
         #endregion

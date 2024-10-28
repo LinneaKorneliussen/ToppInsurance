@@ -323,6 +323,7 @@ namespace TopInsuranceWPF.ViewModels
             SelectedPaymentForm = 0;
             Note = string.Empty;
             SearchText = string.Empty;
+            PrivateCustomers = new ObservableCollection<PrivateCustomer>();
         }
         #endregion
     }

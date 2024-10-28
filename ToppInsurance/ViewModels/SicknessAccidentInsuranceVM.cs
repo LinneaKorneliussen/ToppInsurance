@@ -41,6 +41,20 @@ namespace TopInsuranceWPF.ViewModels
         }
 
         #region Properties
+
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                if (_searchText != value)
+                {
+                    _searchText = value;
+                    OnPropertyChanged(nameof(SearchText));
+                }
+            }
+        }
         private PrivateCustomer _selectedCustomer;
         public PrivateCustomer SelectedCustomer
         {
@@ -135,20 +149,6 @@ namespace TopInsuranceWPF.ViewModels
                 {
                     _note = value;
                     OnPropertyChanged(nameof(Note));
-                }
-            }
-        }
-
-        private string _searchText;
-        public string SearchText
-        {
-            get { return _searchText; }
-            set
-            {
-                if (_searchText != value)
-                {
-                    _searchText = value;
-                    OnPropertyChanged(nameof(SearchText));
                 }
             }
         }
@@ -506,6 +506,7 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand ClearCommand { get; }
         private void ClearFields()
         {
+            SearchText = string.Empty;
             IsAdultOptionSelected = false;
             IsChildInsuranceSelected = false; 
             Note = string.Empty;
@@ -518,6 +519,7 @@ namespace TopInsuranceWPF.ViewModels
             SSNChild = string.Empty;
             FirstNameChild = string.Empty;
             LastNameChild = string.Empty;
+            PrivateCustomers = new ObservableCollection<PrivateCustomer>();
         }
         #endregion
 

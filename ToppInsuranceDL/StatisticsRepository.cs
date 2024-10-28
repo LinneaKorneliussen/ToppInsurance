@@ -80,7 +80,9 @@ namespace TopInsuranceDL
         #region Get Sales Data For All Employees
         public List<EmployeeSalesSummary> GetSalesDataForAllEmployees(int selectedYear)
         {
-            var employees = unitOfWork.EmployeeRepository.GetAll();
+            var employees = unitOfWork.EmployeeRepository.GetAll()
+                     .Where(e => e.EmployeeRole == EmployeeRole.Säljare)
+                     .ToList();
 
             var lifeInsurances = unitOfWork.LifeInsuranceRepository.GetAll()
                 .Where(i => i.Status == Status.Aktiv && i.StartDate.Year == selectedYear)

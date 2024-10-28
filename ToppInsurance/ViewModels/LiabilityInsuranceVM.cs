@@ -406,6 +406,7 @@ namespace TopInsuranceWPF.ViewModels
             NewEndDate = DateTime.Today.AddYears(1);
             ContactPerson = string.Empty;
             ContactPersonPhNo = string.Empty;
+            BusinessCustomers = new ObservableCollection<BusinessCustomer>();
         }
         #endregion
     }
