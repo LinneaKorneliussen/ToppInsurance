@@ -23,24 +23,36 @@ namespace TopInsuranceDL
         {
             double totalAmount = 0;
 
-            var expiringLifeInsurances = unitOfWork.LifeInsuranceRepository.GetAll()
-                .Where(i => i.PrivateCustomer == customer && i.EndDate >= invoiceDate && i.EndDate <= invoiceDate.AddDays(20) && i.Status == Status.Aktiv)
+            var allActiveLifeInsurances = unitOfWork.LifeInsuranceRepository.GetAll()
+                .Where(i => i.PrivateCustomer == customer && i.EndDate >= invoiceDate && i.Status == Status.Aktiv)
                 .ToList();
 
-            var expiringSicknessAccidentInsurances = unitOfWork.SicknessAccidentInsuranceRepository.GetAll()
-                .Where(i => i.PrivateCustomer == customer && i.EndDate >= invoiceDate && i.EndDate <= invoiceDate.AddDays(20) && i.Status == Status.Aktiv)
+            var allActiveSicknessAccidentInsurances = unitOfWork.SicknessAccidentInsuranceRepository.GetAll()
+                .Where(i => i.PrivateCustomer == customer && i.EndDate >= invoiceDate && i.Status == Status.Aktiv)
                 .ToList();
 
-            var allActiveInsurances = expiringLifeInsurances.Cast<Insurance>()
-                .Concat(expiringSicknessAccidentInsurances)
+            var allActiveInsurances = allActiveLifeInsurances.Cast<Insurance>()
+                .Concat(allActiveSicknessAccidentInsurances)
                 .ToList();
 
-            if (!allActiveInsurances.Any())
+            var insurancesToBill = new List<Insurance>();
+
+            foreach (var insurance in allActiveInsurances)
+            {
+                // Kontrollera om betalningsform är Månad eller om faktureringsdatumet är inom 20 dagar efter försäkringens startdatum
+                if (insurance.Paymentform == Paymentform.Månad ||
+                    (insurance.Paymentform != Paymentform.Månad && invoiceDate >= insurance.StartDate && invoiceDate <= insurance.StartDate.AddDays(20)))
+                {
+                    insurancesToBill.Add(insurance);
+                }
+            }
+
+            if (!insurancesToBill.Any())
             {
                 return "Inga fakturor att skapa för denna privatkund.";
             }
 
-            var privateInvoice = CreatePrivateInvoice(customer, allActiveInsurances, invoiceDate);
+            var privateInvoice = CreatePrivateInvoice(customer, insurancesToBill, invoiceDate);
 
             SaveInvoicesToJson(new List<Invoice> { privateInvoice });
             unitOfWork.Save();
@@ -108,26 +120,29 @@ namespace TopInsuranceDL
 
             foreach (var realEstateInsurance in expiringRealEstateInsurances)
             {
-                totalAmount += realEstateInsurance.Premium; // Lägg till försäkringspremien
+                totalAmount += realEstateInsurance.Premium;
 
-                // Hämta inventarier som är kopplade till realestateInsurance
                 var inventories = unitOfWork.InventoryRepository.GetAll()
                     .Where(inv => inv.RealEstateInsuranceId == realEstateInsurance.InsuranceId);
 
-                // Lägg till inventariernas premiekostnad
                 totalAmount += inventories.Sum(inv => inv.InvPremium);
             }
 
-            // Lägg till andra försäkringar till totalbeloppet
             var allActiveInsurances = expiringVehicleInsurances.Cast<Insurance>()
                 .Concat(expiringLiabilityInsurances)
                 .Concat(expiringRealEstateInsurances)
                 .ToList();
 
+            var insurancesToBill = new List<Insurance>();
+
             foreach (var insurance in allActiveInsurances)
             {
-                // Kontrollera betalningsform och summera premien korrekt
-                totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                if ((insurance.Paymentform == Paymentform.Månad && insurance.EndDate >= invoiceDate) ||
+                    (insurance.Paymentform != Paymentform.Månad && invoiceDate >= insurance.StartDate && invoiceDate <= insurance.StartDate.AddDays(20)))
+                {
+                    insurancesToBill.Add(insurance);
+                    totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                }
             }
 
             if (totalAmount <= 0)
@@ -135,7 +150,6 @@ namespace TopInsuranceDL
                 return "Inga fakturor att skapa för denna företagskund.";
             }
 
-            // Skapa fakturan med det totala beloppet
             var businessInvoice = CreateBusinessInvoice(customer, totalAmount, invoiceDate);
 
             SaveInvoicesToJson(new List<Invoice> { businessInvoice });
@@ -143,6 +157,7 @@ namespace TopInsuranceDL
 
             return $"Fakturaunderlag skapat för {invoiceDate.ToShortDateString()} med totalt belopp: {businessInvoice.InvoiceTotalAmount} SEK.";
         }
+
 
         private BusinessInvoice CreateBusinessInvoice(BusinessCustomer customer, double totalAmount, DateTime invoiceDate)
         {
