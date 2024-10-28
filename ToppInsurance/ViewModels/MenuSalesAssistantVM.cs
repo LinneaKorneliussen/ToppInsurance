@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows;
 using TopInsuranceEntities;
 using TopInsuranceWPF.Commands;
@@ -27,7 +22,7 @@ namespace TopInsuranceWPF.ViewModels
             VehicleInsuranceCommand = new RelayCommand(VehicleInsuranceBTN);
             RealEstateInsuranceCommand = new RelayCommand(RealEstateInsuranceBTN);
             EditCustomerCommand = new RelayCommand(EditCustomerBTN);
-            RegisterEmployerCommand = new RelayCommand(RegisterEmployerBTN);
+            RegisterEmployeeCommand = new RelayCommand(RegisterEmployeeBTN);
             CustomerProspectCommand = new RelayCommand(ShowCustomerProspectBTN);
             InsuranceOverviewCommand = new RelayCommand(ShowInsuranceOverviewBTN);
 
@@ -101,7 +96,7 @@ namespace TopInsuranceWPF.ViewModels
         public ICommand EditCustomerCommand { get; }
         public ICommand CustomerProspectCommand { get; }
         public ICommand InsuranceOverviewCommand { get; }
-        public ICommand RegisterEmployerCommand { get; }
+        public ICommand RegisterEmployeeCommand { get; }
         public ICommand LogOffCommand { get; }
         
         #endregion
@@ -151,7 +146,7 @@ namespace TopInsuranceWPF.ViewModels
             CurrentViewModel = new EditCustomer();
         }
 
-        private void RegisterEmployerBTN()
+        private void RegisterEmployeeBTN()
         {
             CurrentViewModel = new RegisterEmployee();
         }

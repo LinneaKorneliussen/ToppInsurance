@@ -14,6 +14,7 @@ namespace TopInsuranceWPF.ViewModels
     {
         private StatisticsController statisticsController;
         private EmployeeController employeeController;
+        private Employee employee;
         public SeriesCollection BarPrivateSeriesCollection { get; set; }
         public SeriesCollection BarBusinessSeriesCollection { get; set; }
         public SeriesCollection LinePrivateSeriesCollection { get; set; }
@@ -22,6 +23,7 @@ namespace TopInsuranceWPF.ViewModels
 
         public StatisticsVM()
         {
+            employee = UserContext.Instance.LoggedInUser;
             statisticsController = new StatisticsController();
             employeeController = new EmployeeController();
             FindEmployeeCommand = new RelayCommand(FindEmployee);
@@ -35,6 +37,13 @@ namespace TopInsuranceWPF.ViewModels
         }
 
         #region Properties
+        public bool CanSaveToExcel
+        {
+            get
+            {
+                return employee.EmployeeRole == EmployeeRole.VD || employee.EmployeeRole == EmployeeRole.Försäljningschef;
+            }
+        }
         private string _searchEmployee;
         public string SearchEmployees
         {

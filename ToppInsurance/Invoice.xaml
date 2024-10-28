@@ -31,22 +31,18 @@
                 </Style>
             </TabControl.Resources>
 
-
-
             <TabItem Header="Privatkunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
                 <StackPanel Background="White">
-
-                    <!-- Filter Textbox -->
                     <Grid Width="500" HorizontalAlignment="Right" Margin="0 0 -30 10">
                         <TextBlock Text="Hämta privatkund som du önskar skapa faktureringsunderlag för" Margin="-374,12,374,0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" VerticalAlignment="Top" />
-                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchPrivateCustomer, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
+                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchPrivateCustomer, UpdateSourceTrigger=PropertyChanged}" 
+                                 Style="{StaticResource searchTextbox}"
+                                 Tag="Sök: förnamn, efternamn, personnr..."/>
                         <Button Content="Sök" Width="50" Margin="290 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindPcustomersCommand}"/>
                         <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 160 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
                     </Grid>
                     <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
 
-
-                    <!-- DataGrid för att visa privatkunder -->
                     <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="200" Margin="10" FontWeight="Normal" ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectPrivateCustomer, Mode=TwoWay}" 
                               RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
@@ -87,14 +83,11 @@
                                     <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
                                     <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
                                     <DataGridTextColumn Header="Total premie" Binding="{Binding TotalAmount}" IsReadOnly="True" Width="auto"/>
-                                    <!--<DataGridTextColumn Header="Total premie" Binding="{Binding C}" IsReadOnly="True" Width="auto"/>
-                                    <DataGridTextColumn Header="Total premie" Binding="{Binding Paymentform}" IsReadOnly="True" Width="auto"/>-->
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
                     </Grid>
 
-                    <!-- Buttons -->
                     <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 50 0 0">
                         <Button Width="120" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -102,38 +95,25 @@
                                 <TextBlock Text="ÅTERSTÄLL FÄLT" Margin="3,0,0,0" VerticalAlignment="Center" FontSize="10"/>
                             </StackPanel>
                         </Button>
-                        
                         <Button Content="Spara" Command="{Binding AddPrivateInvoiceCommand}" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
                     </StackPanel>
                 </StackPanel>
             </TabItem>
 
 
-
-
-
-
-
-
-
-
-
-
-
-            <!--Flik för företagskunder-->
             <TabItem Header="Företagskunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
                 <StackPanel Background="White">
 
-                    <!-- Filter Textbox -->
                     <Grid Width="500" HorizontalAlignment="Right" Margin="0 0 -30 10">
                         <TextBlock Text="Hämta företagskund som du önskar skapa faktureringsunderlag för" Margin="-374,12,374,0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" VerticalAlignment="Top" />
-                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource searchTextbox}"/>
+                        <TextBox Width="300" Margin="5 0 100 0" Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" 
+                                 Style="{StaticResource searchTextbox}"
+                                 Tag="Sök: företagsnamn, orgnr..."/>
                         <Button Content="Sök" Width="50" Margin="290 0 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
                         <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 160 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
                     </Grid>
                     <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
 
-                    <!-- DataGrid för att visa företagskunder -->
                     <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="200" Margin="10" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectBusinessCustomer, Mode=TwoWay}" 
                            RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
@@ -146,7 +126,6 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <!-- Formulär företagskunduppgifter -->
                     <Grid Margin="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -164,7 +143,7 @@
                                         Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" 
                                         Style="{StaticResource ValidationDatePickerStyle}"/>
                         </StackPanel>
-                        
+
                         <Grid Grid.Row="3" Margin="10,10 10,10">
                             <DataGrid Margin="10,10 10,10" Name="invoiceDataGrid" AutoGenerateColumns="False" Height="120" FontWeight="Normal"
                                       ItemsSource="{Binding LoadedInvoices}" RowStyle="{StaticResource DataGridRowStyle}">
@@ -181,8 +160,7 @@
                             </DataGrid>
                         </Grid>
                     </Grid>
-                    
-                    <!-- Buttons -->
+
                     <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 50 0 0">
                         <Button Width="120" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -197,5 +175,4 @@
             </TabItem>
         </TabControl>
     </Grid>
-
 </UserControl>

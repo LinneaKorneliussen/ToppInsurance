@@ -39,7 +39,7 @@
                 </Style.Triggers>
             </Style>
 
-
+            <!-- Menu button Style -->
             <Style x:Key="menuButtonIcon" TargetType="material:PackIconMaterial">
                 <Setter Property="Margin" Value="0 2 10 0" />
                 <Setter Property="VerticalAlignment" Value="Center" />
@@ -47,7 +47,7 @@
                 <Setter Property="Height" Value="15" />
             </Style>
 
-            <!-- Custom Expander Style -->
+            <!-- Custom Menu Expander Style -->
             <Style x:Key="menuExpander" TargetType="Expander">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="White"/>
@@ -61,7 +61,6 @@
                         <ControlTemplate TargetType="Expander">
                             <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" CornerRadius="5">
                                 <StackPanel>
-                                    <!-- ToggleButton for Expander Header -->
                                     <ToggleButton x:Name="HeaderSite" 
                                                   Content="{TemplateBinding Header}"
                                                   IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
@@ -80,8 +79,6 @@
                                             </ControlTemplate>
                                         </ToggleButton.Template>
                                     </ToggleButton>
-
-                                    <!-- Content Presenter for Expanded Content -->
                                     <ContentPresenter x:Name="ExpandSite"
                                                       Visibility="Collapsed"
                                                       ContentSource="Content"
@@ -89,8 +86,6 @@
                                                       Margin="20 0"/>
                                 </StackPanel>
                             </Border>
-
-                            <!-- Triggers for IsExpanded -->
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsExpanded" Value="True">
                                     <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible"/>
@@ -113,22 +108,31 @@
             </Style>
 
 
-            <!--Edit customer: Sökrutan-->
+            <!--Style for Searchbox-->
             <Style x:Key="searchTextbox" TargetType="TextBox">
                 <Setter Property="Background" Value="White" />
                 <Setter Property="Foreground" Value="Black" />
-                <Setter Property="BorderThickness" Value="5" />
+                <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="FontSize" Value="12" />
-                <Setter Property="Padding" Value="15 10" />
+                <Setter Property="Padding" Value="15,10,15,10" />
                 <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="Margin" Value="0 10" />
+                <Setter Property="Margin" Value="0,10,0,10" />
                 <Setter Property="FontWeight" Value="Normal" />
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                            <Border x:Name="border" CornerRadius="20" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" BorderThickness="1" BorderBrush="#223A2A" >
-                                <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
-                            </Border>
+                        <ControlTemplate TargetType="TextBox">
+                            <Grid>
+                                <Border x:Name="border" CornerRadius="20" Background="{TemplateBinding Background}" BorderBrush="#223A2A" BorderThickness="1">
+                                    <ScrollViewer x:Name="PART_ContentHost" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
+                                </Border>
+                                <TextBlock x:Name="WatermarkText" 
+                               Text="{TemplateBinding Tag}" 
+                               Foreground="Gray" 
+                               FontSize="12" 
+                               Margin="20,0,0,0" 
+                               VerticalAlignment="Center"
+                               Visibility="{Binding Text.IsEmpty, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -140,8 +144,6 @@
                 <Setter Property="Padding" Value="15,10"/>
                 <Setter Property="FontSize" Value="14"/>
                 <Setter Property="FontWeight" Value="Bold"/>
-
-                <!-- Template (Layout för TabItem) -->
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TabItem">
@@ -164,6 +166,7 @@
                 </Setter>
             </Style>
 
+            <!-- Validation Error -->
             <ControlTemplate x:Key="ValidationErrorTemplate" TargetType="Control">
                 <DockPanel LastChildFill="True">
                     <material:PackIconMaterial Width="16" Height="16" Kind="AlertCircle" Foreground="DarkSalmon" DockPanel.Dock="Right" Margin="5,0,0,0"
@@ -172,6 +175,8 @@
                 </DockPanel>
             </ControlTemplate>
 
+
+            <!-- Validation Error textbox style -->
             <Style TargetType="TextBox" x:Key="ValidationTextBoxStyle">
                 <Setter Property="BorderBrush" Value="Gray"/>
                 <Setter Property="BorderThickness" Value="1"/>
@@ -186,6 +191,7 @@
                 </Style.Triggers>
             </Style>
 
+            <!-- Validation Error datepicker style -->
             <Style TargetType="DatePicker" x:Key="ValidationDatePickerStyle">
                 <Setter Property="BorderBrush" Value="Gray"/>
                 <Setter Property="BorderThickness" Value="1"/>
@@ -211,6 +217,7 @@
                 </Style.Triggers>
             </Style>
 
+            <!--DataGrid Row style-->
             <Style x:Key="DataGridRowStyle" TargetType="DataGridRow">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Foreground" Value="Black"/>

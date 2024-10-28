@@ -4,7 +4,7 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
              xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             Background="White" Height="750" Width="1200">
+             Background="White" Height="800" Width="1200">
 
     <UserControl.DataContext>
         <vm:StatisticsVM/>
@@ -199,7 +199,7 @@
                         </DataGrid>
 
                         <Button Style="{StaticResource MahApps.Styles.Button}" Background="#223A2A" Foreground="White" Width="150" Height="35" Margin="20,20,40,0"
-                                Command="{Binding SaveToExcelCommand}" HorizontalAlignment="Right">
+                                Command="{Binding SaveToExcelCommand}" HorizontalAlignment="Right" Visibility="{Binding CanSaveToExcel, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <TextBlock Text="Spara till excelfil" VerticalAlignment="Center" FontSize="12"/>
                                 <material:PackIconMaterial Kind="MicrosoftExcel" Width="20" Height="20" Margin="5,0,0,0"/>

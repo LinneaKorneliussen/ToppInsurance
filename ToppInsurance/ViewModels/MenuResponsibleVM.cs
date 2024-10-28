@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows;
 using TopInsuranceEntities;
 using TopInsuranceWPF.Commands;
@@ -19,15 +14,6 @@ namespace TopInsuranceWPF.ViewModels
             userRole = user.EmployeeRole.ToString();
             CurrentViewModel = new MenuResponsibleVM();
             HomePageCommand = new RelayCommand(ShowHomePage);
-            BusinessAddCommand = new RelayCommand(AddBusinessCustomerBTN);
-            PrivateAddCommand = new RelayCommand(AddPrivateCustomerBTN);
-            LifeInsuranceCommand = new RelayCommand(LifeInsuranceBTN);
-            SicknessAccidentCommand = new RelayCommand(SicknessAccidentBTN);
-            LiabilityInsuranceCommand = new RelayCommand(LiabilityInsuranceBTN);
-            VehicleInsuranceCommand = new RelayCommand(VehicleInsuranceBTN);
-            RealEstateInsuranceCommand = new RelayCommand(RealEstateInsuranceBTN);
-            EditCustomerCommand = new RelayCommand(EditCustomerBTN);
-            RegisterEmployerCommand = new RelayCommand(RegisterEmployerBTN);
             ShowStatisticsCommand = new RelayCommand(ShowStatisticsBTN);
             CustomerProspectCommand = new RelayCommand(ShowCustomerProspectBTN);
             InsuranceOverviewCommand = new RelayCommand(ShowInsuranceOverviewBTN);
@@ -91,16 +77,7 @@ namespace TopInsuranceWPF.ViewModels
 
         #region MenuVM Commands
         public ICommand HomePageCommand { get; }
-        public ICommand BusinessAddCommand { get; }
-        public ICommand PrivateAddCommand { get; }
-        public ICommand LifeInsuranceCommand { get; }
-        public ICommand SicknessAccidentCommand { get; }
-        public ICommand LiabilityInsuranceCommand { get; }
-        public ICommand VehicleInsuranceCommand { get; }
-        public ICommand RealEstateInsuranceCommand { get; }
-        public ICommand EditCustomerCommand { get; }
         public ICommand ShowStatisticsCommand { get; }
-        public ICommand RegisterEmployerCommand { get; }
         public ICommand CustomerProspectCommand { get; }
         public ICommand InsuranceOverviewCommand { get; }
         public ICommand LogOffCommand { get; }
@@ -111,50 +88,6 @@ namespace TopInsuranceWPF.ViewModels
         {
             CurrentViewModel = null;
         }
-        private void AddBusinessCustomerBTN()
-        {
-            CurrentViewModel = new RegisterBusinessCustomer();
-        }
-
-        private void AddPrivateCustomerBTN()
-        {
-            CurrentViewModel = new RegisterPrivateCustomer();
-        }
-        private void LifeInsuranceBTN()
-        {
-            CurrentViewModel = new LifeInsuranceView();
-        }
-
-        private void SicknessAccidentBTN()
-        {
-            CurrentViewModel = new SicknessAccidentView();
-        }
-
-        private void LiabilityInsuranceBTN()
-        {
-            CurrentViewModel = new LiabilityInsuranceView();
-        }
-
-        private void VehicleInsuranceBTN()
-        {
-            CurrentViewModel = new VehicleInsuranceView();
-        }
-
-        private void RealEstateInsuranceBTN()
-        {
-            CurrentViewModel = new RealEstateInsuranceView();
-        }
-
-        private void EditCustomerBTN()
-        {
-            CurrentViewModel = new EditCustomer();
-        }
-
-        private void RegisterEmployerBTN()
-        {
-            CurrentViewModel = new RegisterEmployee();
-        }
-
         private void ShowStatisticsBTN()
         {
             CurrentViewModel = new Statistics();
