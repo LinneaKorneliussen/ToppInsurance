@@ -4,13 +4,11 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
              xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             Background="White" Height="800" Width="1200">
+             Background="White" Height="700" Width="1200">
 
     <UserControl.DataContext>
         <vm:StatisticsVM/>
     </UserControl.DataContext>
-
-
 
     <Grid>
         <Grid.RowDefinitions>
@@ -25,7 +23,7 @@
             <TextBlock Text="Statistik" FontWeight="Bold" Foreground="#2F4F4F" FontSize="16" VerticalAlignment="Center" />
         </StackPanel>
 
-        <StackPanel x:Name="SearchEmployee" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top" Background="White" Margin="15,20,0,0">
+        <StackPanel x:Name="SearchEmployee" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Top" Background="White" Margin="20,20,10,5">
             <StackPanel.Style>
                 <Style TargetType="StackPanel">
                     <Setter Property="Visibility" Value="Visible"/>
@@ -40,11 +38,11 @@
             <TextBlock Text="Hämta den säljare som du önskar visa statistik för" 
                FontWeight="Bold" Foreground="#2F4F4F"  FontSize="13" VerticalAlignment="Center"/>
 
-            <TextBox Text="{Binding SearchEmployee, UpdateSourceTrigger=PropertyChanged}"  Width="300" 
-             Margin="100,0,0,0"  Style="{StaticResource searchTextbox}"/>
-
+            <TextBox Text="{Binding SearchEmployees, UpdateSourceTrigger=PropertyChanged}"  Width="400" 
+                     Margin="100,0,0,0"  Style="{StaticResource searchTextbox}"
+                     Tag="Sök: efternamn, agenturnr..."/>
             <Button Content="Sök" Width="50" Margin="15,0,0,0" Background="#223A2A" Foreground="White" 
-            Command="{Binding FindEmployeeCommand}" />
+                    Command="{Binding FindEmployeeCommand}"/>
             <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" 
                                  Margin="-100,0,0,0" Foreground="#223A2A"/>
         </StackPanel>
@@ -81,17 +79,23 @@
             <TabItem Header="Privatkund Stapeldiagram" Style="{StaticResource StatisticsTabItemStyle}">
                 <Grid>
                     <lvc:CartesianChart Series="{Binding BarPrivateSeriesCollection}" 
-                                        LegendLocation="Right" Foreground="DarkOliveGreen">
+                            LegendLocation="Right" Foreground="DarkOliveGreen">
                         <lvc:CartesianChart.AxisX>
                             <lvc:Axis Title="Månader" Labels="{Binding Labels}" />
                         </lvc:CartesianChart.AxisX>
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Antal sålda försäkringar" 
-                                       MinValue="0" />
+                                      MinValue="0" 
+                                      IsMerged="False">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator Step="1" />
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
                 </Grid>
             </TabItem>
+
 
             <TabItem Header="Företagskund Stapeldiagram" Style="{StaticResource StatisticsTabItemStyle}">
                 <Grid>
@@ -102,7 +106,12 @@
                         </lvc:CartesianChart.AxisX>
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Antal sålda försäkringar" 
-                                       MinValue="0" />
+                                      MinValue="0" 
+                                      IsMerged="False">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator Step="1" />
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
                 </Grid>
@@ -117,7 +126,12 @@
                         </lvc:CartesianChart.AxisX>
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Antal sålda försäkringar" 
-                                       MinValue="0" />
+                                      MinValue="0" 
+                                      IsMerged="False">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator Step="1" />
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
                 </Grid>
@@ -131,8 +145,13 @@
                             <lvc:Axis Title="Månader" Labels="{Binding Labels}"/>
                         </lvc:CartesianChart.AxisX>
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="Antal sålda försäkringar"
-                                       MinValue="0" />
+                            <lvc:Axis Title="Antal sålda försäkringar" 
+                                      MinValue="0" 
+                                      IsMerged="False">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator Step="1" />
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
                 </Grid>
@@ -159,7 +178,6 @@
                                       Foreground="Black" Height="22"/>
                         </StackPanel>
 
-
                         <DataGrid Name="commissionDataGrid" AutoGenerateColumns="False" Height="150" FontWeight="Normal"
                                   ItemsSource="{Binding EmployeeSalesData}" 
                                   IsReadOnly="True" Margin="10,10,10,10" SelectedItem="{Binding SelectedEmployeeSummary}"
@@ -170,7 +188,7 @@
                                 <DataGridTextColumn Header="Efternamn" Binding="{Binding Employee.LastName}" />
                                 <DataGridTextColumn Header="år" Binding="{Binding Year}"/>
                                 <DataGridTextColumn Header="Totala Försäljning" Binding="{Binding TotalSales}" />
-                                <DataGridTextColumn Header="Medel per Månad" Binding="{Binding AveragePerMonth}" />
+                                <DataGridTextColumn Header="Medel per Månad" Binding="{Binding AveragePerMonth, StringFormat=N2}" />
                             </DataGrid.Columns>
                         </DataGrid>
 

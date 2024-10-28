@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
              xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
-             Background="White" Height="680" Width="900">
+             Background="White" Height="800" Width="1200">
 
     <UserControl.DataContext>
         <vm:SicknessAccidentInsuranceVM/>
@@ -27,33 +27,31 @@
             <RowDefinition Height="auto"/>
 
         </Grid.RowDefinitions>
-        <StackPanel Background="White" Width="850" Height="650">
-            <StackPanel Grid.Row="0" Orientation="Vertical" Background="#EDEDED" Margin="0,0,0,10">
+        <StackPanel Background="White">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#EDEDED" Margin="0,0,0,10">
                 <TextBlock Text="Registrera ny sjuk- och olycksfallsförsäkring" FontSize="22" FontWeight="Bold" Foreground="#2F4F4F"/>
-                <material:PackIconMaterial Kind="HospitalBuilding" Width="100" Height="30" Foreground="#2F4F4F" Grid.Row="0" HorizontalAlignment="Right" Margin="0 -30 320 0"/>
+                <material:PackIconMaterial Kind="HospitalBuilding" Width="100" Height="30" Foreground="#2F4F4F" Grid.Row="0"/>
             </StackPanel>
 
-            <StackPanel Grid.Row="1" Orientation="Vertical" Background="White">
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Background="White">
+                <StackPanel Orientation="Vertical" Margin="0,0,80,0">
+                    <TextBlock Text="Välj vilken sjuk - och olycksfallsförsäkrings som ska tecknas" Margin=" 55 5 0 0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13"/>
+                    <RadioButton Content="Sjuk- och olycksfallsförsäkring för vuxen" Style="{StaticResource RadioButtonStyle}" GroupName="Options" 
+                                 Command="{Binding AdultsCommand}" IsChecked="{Binding IsAdultOptionSelected}" Margin=" 55 0 0 0"/>
 
-                <TextBlock Text="Välj vilken sjuk - och olycksfallsförsäkrings som ska tecknas" Margin=" 55 5 0 0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13"/>
-                <RadioButton Content="Sjuk- och olycksfallsförsäkring för vuxen" Style="{StaticResource RadioButtonStyle}" GroupName="Options" 
-                             Command="{Binding AdultsCommand}" IsChecked="{Binding IsAdultOptionSelected}" Margin=" 55 0 0 0"/>
-
-                <RadioButton Content="Sjuk- och olycksfallsförsäkring för barn (t.o.m. 17 års ålder)" Style="{StaticResource RadioButtonStyle}" GroupName="Options" 
-                             Command="{Binding ChildsCommand}" IsChecked="{Binding IsChildInsuranceSelected}" Margin=" 55 0 0 0"/>
-
-                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="450 -40 40 0" 
+                    <RadioButton Content="Sjuk- och olycksfallsförsäkring för barn (t.o.m. 17 års ålder)" Style="{StaticResource RadioButtonStyle}" GroupName="Options" 
+                                 Command="{Binding ChildsCommand}" IsChecked="{Binding IsChildInsuranceSelected}" Margin=" 55 0 0 0"/>
+                </StackPanel>
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="550" 
                          Style="{StaticResource searchTextbox}"
                          Tag="Sök: förnamn, efternamn, personnr..."/>
-                <Button Content="Sök" Width="50" Margin="730 -40 -40 0" Background="#223A2A" Foreground="White" Command="{Binding FindCustomerCommand}"/>
-
-                <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 -40 90 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
-
+                <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" Margin="-30,20,40,0" Foreground="#223A2A" HorizontalAlignment="Center"/>
+                <Button Content="Sök" Width="50" Margin="10" Background="#223A2A" Foreground="White" Command="{Binding FindCustomerCommand}"/>
             </StackPanel>
-
-            <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 10 0 10"/>
-
-            <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="115" FontWeight="Normal" ItemsSource="{Binding PrivateCustomers}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
+            
+            <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="115" FontWeight="Normal" 
+                      ItemsSource="{Binding PrivateCustomers}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}"
+                      Margin="0,10,0,0">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Personnummer" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
                     <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
@@ -93,58 +91,58 @@
                     <ColumnDefinition Width="182*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Startdatum:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <DatePicker x:Name="dpStartdate" Grid.Row="1" Grid.Column="1" Width="150" Margin="15,4,0,0" HorizontalAlignment="Left"
+                <TextBlock Text="Startdatum:" Grid.Row="1" Grid.Column="0" Margin="0,0,5,0" Height="16"/>
+                <DatePicker x:Name="dpStartdate" Grid.Row="1" Grid.Column="1" Width="150" Margin="10,5,0,5" HorizontalAlignment="Left"
                  SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                  Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationDatePickerStyle}"/>
 
-                <TextBlock Text="Slutdatum:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <DatePicker x:Name="dpEnddate" Grid.Row="2" Grid.Column="1" Width="150" Margin="15,4,0,6" HorizontalAlignment="Left"
+                <TextBlock Text="Slutdatum:" Grid.Row="2" Grid.Column="0" Margin="0,0,5,0" Height="16"/>
+                <DatePicker x:Name="dpEnddate" Grid.Row="2" Grid.Column="1" Width="150" Margin="10,5,0,5" HorizontalAlignment="Left"
                  SelectedDate="{Binding NewEndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                  Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationDatePickerStyle}"/>
 
-                <TextBlock Text="Betalningssätt:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <ComboBox x:Name="cbPaymentMethod" Grid.Row="3" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
+                <TextBlock Text="Betalningssätt:" Grid.Row="3" Grid.Column="0"  Margin="0,0,5,0" Height="16"/>
+                <ComboBox x:Name="cbPaymentMethod" Grid.Row="3" Width="300" Margin="10,5,0,5" HorizontalAlignment="Left" 
                      Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
                      ItemsSource="{Binding Paymentforms}" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
                      Grid.Column="1" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}" ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
 
-                <TextBlock Text="Basbelopp:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <ComboBox x:Name="cbBasBelopp" Grid.Row="4" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
+                <TextBlock Text="Basbelopp:" Grid.Row="4" Grid.Column="0" Margin="0,0,5,0" Height="16"/>
+                <ComboBox x:Name="cbBasBelopp" Grid.Row="4" Grid.Column="1" Width="300" Margin="10,5,0,5" HorizontalAlignment="Left"
                      Background="White" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
                      ItemsSource="{Binding CurrentBaseAmounts}" SelectedItem="{Binding SelectedBaseAmount, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
                      Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
                      ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
-                <TextBlock Text="Tilläggsval:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <ComboBox x:Name="cbAdditional" Grid.Row="5" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
+                <TextBlock Text="Tilläggsval:" Grid.Row="5" Grid.Column="0" Margin="0,0,5,0" Height="16"/>
+                <ComboBox x:Name="cbAdditional" Grid.Row="5" Grid.Column="1" Width="300" Margin="10,5,0,5" HorizontalAlignment="Left"
                           Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}"
                           ItemsSource="{Binding AdditionalInsurances}" SelectedItem="{Binding SelectedAdditional, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                           Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"
                           ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
                 <TextBlock Text="Noteringar:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <TextBox Grid.Row="6" Grid.Column="1" FontWeight="Normal"  Margin="-0,4,0,6" Width="300" Background="GhostWhite"
-                         Text="{Binding Note}" mah:TextBoxHelper.Watermark="Valfritt"/>
+                <TextBox Grid.Row="6" Grid.Column="1" FontWeight="Normal"  Margin="10,5,0,5" Width="300" Background="GhostWhite"
+                         Text="{Binding Note}" mah:TextBoxHelper.Watermark="Valfritt" HorizontalAlignment="Left"/>
 
                 <TextBlock Text="Försäkrades förnamn: " Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,0,8,0"
                            Visibility="{Binding IsChildInsuranceSelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 <TextBox Name="txtFörNamn" Grid.Row="7" Grid.Column="1" Text="{Binding FirstNameChild, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" FontWeight="Normal"
-                         Margin="0,3,0,5" Width="300" Visibility="{Binding IsChildInsuranceSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                         Margin="10,5,0,5" Width="300" Visibility="{Binding IsChildInsuranceSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
                          Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
 
-                <TextBlock Text="Försäkrades efternamn: " Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,0,8,0" 
+                <TextBlock Text="Försäkrades efternamn: " Grid.Row="8" Grid.Column="0" FontWeight="Normal" Height="16" Margin="0,0,8,0" 
                            Visibility="{Binding IsChildInsuranceSelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 <TextBox Name="txtEfterNamn" Grid.Row="8" Grid.Column="1" Text="{Binding LastNameChild, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" FontWeight="Normal"
-                         Margin="0,3,0,5" Width="300" Visibility="{Binding IsChildInsuranceSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
-                         Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
+                         Margin="10,5,0,5" Width="300" Visibility="{Binding IsChildInsuranceSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
+                         Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}" HorizontalAlignment="Left"/>
 
                 <TextBlock Text="Försäkrades personnummer: " Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" FontWeight="Normal" Height="16" Margin="0,0,8,0"
                            Visibility="{Binding IsChildInsuranceSelected, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 <TextBox Name="txtFörsäkradesSSN" Grid.Row="9" Grid.Column="1" Text="{Binding SSNChild, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" FontWeight="Normal"
-                         Margin="0,3,0,5" Width="300" Visibility="{Binding IsChildInsuranceSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                         Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}"/>
+                         Margin="10,5,0,5" Width="300" Visibility="{Binding IsChildInsuranceSelected, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                         Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationTextBoxStyle}" HorizontalAlignment="Left"/>
 
             </Grid>
 

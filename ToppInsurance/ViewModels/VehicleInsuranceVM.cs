@@ -467,6 +467,7 @@ namespace TopInsuranceWPF.ViewModels
         #region Clear Fields Method
         private void ClearFields()
         {
+            SearchBusinessCustomer = string.Empty;
             SelectedBCcustomer = null;
             RegistrationNumber = string.Empty;
             Brand = string.Empty;
@@ -478,6 +479,7 @@ namespace TopInsuranceWPF.ViewModels
             SelectedCity = null;
             NewStartDate = DateTime.Now;
             NewEndDate = DateTime.Now.AddYears(1);
+            BusinessCustomers = new ObservableCollection<BusinessCustomer>();
         }
         #endregion
     }

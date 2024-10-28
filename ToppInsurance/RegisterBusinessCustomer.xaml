@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
         mc:Ignorable="d"
         xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        Background="White" Height="750" Width="900">
+        Background="White" Height="800" Width="1200">
 
     <UserControl.DataContext>
         <vm:RegisterBusinessCustomerVM/>
@@ -24,7 +24,10 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0" Orientation="Vertical" Background="#EDEDED" Margin="0,0,0,10">
-                    <TextBlock Text="Registrera ny företagskund" FontSize="22" FontWeight="Bold" Foreground="#2F4F4F"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Registrera ny företagskund" FontSize="22" FontWeight="Bold" Foreground="#2F4F4F"/>
+                        <material:PackIconMaterial Kind="Domain" Width="100" Height="30" Foreground="#2F4F4F" Grid.Row="0"/>
+                    </StackPanel>
                     <TextBlock Text="Fyll i informationen nedan för att registrera en ny företagskund." FontSize="14" Foreground="#555555"/>
                 </StackPanel>
 

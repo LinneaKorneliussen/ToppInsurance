@@ -493,6 +493,7 @@ namespace TopInsuranceWPF.ViewModels
             NewEndDate = DateTime.Today.AddYears(1);
             CompanyZipcode = string.Empty;
             CompanyCity = string.Empty;
+            BusinessCustomers = new ObservableCollection<BusinessCustomer>();
         }
         #endregion
 

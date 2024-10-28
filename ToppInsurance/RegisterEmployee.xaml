@@ -6,7 +6,7 @@
         xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
         xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Background="White" Height="650" Width="900">
+        Background="White" Height="800" Width="1200">
     
     <UserControl.DataContext>
         <vm:RegisterEmployeeVM/>
@@ -23,7 +23,10 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0" Orientation="Vertical" Background="#EDEDED" Margin="0,0,0,10">
-                    <TextBlock Text="Registrera ny säljare" FontSize="22" FontWeight="Bold" Foreground="#2F4F4F"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Registrera ny säljare" FontSize="22" FontWeight="Bold" Foreground="#2F4F4F"/>
+                        <material:PackIconMaterial Kind="CardAccountDetailsOutline" Width="100" Height="30" Foreground="#2F4F4F" Grid.Row="0"/>
+                    </StackPanel>
                     <TextBlock Text="Fyll i informationen nedan för att registrera en ny säljare." FontSize="14" Foreground="#555555"/>
                 </StackPanel>
 
@@ -106,7 +109,7 @@
                 <StackPanel Grid.Row="2">
                     <Label Content="Kundregister" FontWeight="Bold" FontSize="14" />
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="100" ItemsSource="{Binding Employees}" >
+                        <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="200" ItemsSource="{Binding Employees}" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Agenturnummer" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="120"/>
                                 <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="120"/>

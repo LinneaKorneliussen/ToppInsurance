@@ -7,13 +7,13 @@
              xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
              xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
-             Background="White" Height="650" Width="900">
+             Background="White" Height="800" Width="1200">
 
     <UserControl.DataContext>
         <vm:LifeInsuranceVM/>
     </UserControl.DataContext>
 
-    <Grid Margin=" 25 20 25 20">
+    <Grid Margin="25 20 25 20">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -25,26 +25,24 @@
             <RowDefinition Height="auto"/>
 
         </Grid.RowDefinitions>
-        <StackPanel Background="White" Width="850" Height="650">
-            <StackPanel Grid.Row="0" Orientation="Vertical" Background="#EDEDED" Margin="0,0,0,10">
+        <StackPanel Background="White">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#EDEDED" Margin="0,0,0,10">
                 <TextBlock Text="Registrera ny livförsäkring" FontSize="22" FontWeight="Bold" Foreground="#2F4F4F"/>
-                <material:PackIconMaterial Kind="HandHeart" Width="100" Height="30" Foreground="#2F4F4F" Grid.Row="0" HorizontalAlignment="Right" Margin="0 -30 500 0"/>
+                <material:PackIconMaterial Kind="HandHeart" Width="100" Height="30" Foreground="#2F4F4F" Grid.Row="0"/>
             </StackPanel>
 
-            <StackPanel Grid.Row="1" Orientation="Vertical" Background="White">
-
-                <TextBlock Text="Hämta den kund som önskar teckna en livförsäkring" Margin=" 15 40 400 0" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13"/>
-
-                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="300" Margin="450 -40 40 0" 
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Background="White">
+                <TextBlock Text="Hämta den kund som önskar teckna en livförsäkring" Margin="20,20,160,10" 
+                           FontWeight="Bold" Foreground="#2F4F4F" FontSize="13"/>
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="550"
                          Style="{StaticResource searchTextbox}"
                          Tag="Sök: förnamn, efternamn, personnr..."/>
-                <Button Content="Sök" Width="50" Margin="730 -40 -40 0" Background="#223A2A" 
+                <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center"
+                                           Foreground="#223A2A" Margin="-30"/>
+                <Button Content="Sök" Width="50" Margin="30,10,10,10" Background="#223A2A" 
                         Foreground="White" Command="{Binding FindCustomerCommand}"/>
-
-                <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 -40 90 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
-
             </StackPanel>
-            
+
             <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 10 0 10"/>
             <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="115" FontWeight="Normal" ItemsSource="{Binding PrivateCustomers}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
                 <DataGrid.Columns>
@@ -82,42 +80,40 @@
                     <ColumnDefinition Width="182*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Startdatum:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <DatePicker x:Name="dpStartdate" Grid.Row="1" Grid.Column="1" Width="150" Margin="15,4,0,6" HorizontalAlignment="Left"
+                <TextBlock Text="Startdatum:" Grid.Row="1" Grid.Column="0" Margin="0,0,5,0" Height="16"/>
+                <DatePicker x:Name="dpStartdate" Grid.Row="1" Grid.Column="1" Width="150" Margin="10,5,0,5" HorizontalAlignment="Left"
                      SelectedDate="{Binding NewStartDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                      Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationDatePickerStyle}" />
 
-                <TextBlock Text="Slutdatum:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <DatePicker x:Name="dpEnddate" Grid.Row="2" Grid.Column="1" Width="150" Margin="15,4,0,6" HorizontalAlignment="Left"
+                <TextBlock Text="Slutdatum:" Grid.Row="2" Grid.Column="0" Margin="0,0,5,0" Height="16"/>
+                <DatePicker x:Name="dpEnddate" Grid.Row="2" Grid.Column="1" Width="150" Margin="10,5,0,5" HorizontalAlignment="Left"
                      SelectedDate="{Binding NewEndDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                      Background="GhostWhite" BorderThickness="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" Style="{StaticResource ValidationDatePickerStyle}"/>
 
-                <TextBlock Text="Betalningssätt:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <ComboBox x:Name="cbPaymentMethod" Grid.Row="3" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
+                <TextBlock Text="Betalningssätt:" Grid.Row="3" Grid.Column="0" Margin="0,0,5,0" Height="16"/>
+                <ComboBox x:Name="cbPaymentMethod" Grid.Row="3" Width="300" Margin="10,5,0,5" HorizontalAlignment="Left"
                      Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
                      ItemsSource="{Binding Paymentforms}" SelectedItem="{Binding SelectedPaymentForm, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
                      Grid.Column="1" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"
                      Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
-                <TextBlock Text="Basbelopp:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <ComboBox x:Name="cbBasBelopp" Grid.Row="4" Grid.Column="1" Width="300" Margin="0,4,0,6" HorizontalAlignment="Center"
+                <TextBlock Text="Basbelopp:" Grid.Row="4" Grid.Column="0" Margin="0,0,5,0" Height="16"/>
+                <ComboBox x:Name="cbBasBelopp" Grid.Row="4" Grid.Column="1" Width="300" Margin="10,5,0,5" HorizontalAlignment="Left"
                      Background="GhostWhite" BorderThickness="1" Style="{DynamicResource MahApps.Styles.Control.WindowCommands}"
                      ItemsSource="{Binding BaseAmount}" SelectedItem="{Binding SelectedBaseAmount, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="20" ItemContainerStyle="{StaticResource CustomComboBoxItemStyle}"
                      Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" ToolTip="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
 
-                <TextBlock Text="Noteringar:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,5,0" Height="16"/>
-                <TextBox Grid.Row="6" Grid.Column="1" FontWeight="Normal"  Margin="-0,4,0,6" Width="300" 
+                <TextBlock Text="Noteringar:" Grid.Row="6" Grid.Column="0" Margin="0,0,5,0" Height="16"/>
+                <TextBox Grid.Row="6" Grid.Column="1" FontWeight="Normal"  Margin="10,5,0,5" Width="300"  HorizontalAlignment="Left"
                          Text="{Binding Note, UpdateSourceTrigger=PropertyChanged}"
                          mah:TextBoxHelper.Watermark="Valfritt" Background="GhostWhite"/>
             </Grid>
 
-            <StackPanel Grid.Row="9" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Width="270" Margin="10 -19 10 10">
+            <StackPanel Grid.Row="9" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                 <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
-                <Button Content="Spara ändringar" Command="{Binding AddLifeInsuranceCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
+                <Button Content="Spara ändringar" Command="{Binding AddLifeInsuranceCommand}" Width="120" Margin="5" Background="#223A2A" Foreground="White"/>
             </StackPanel>
-
         </StackPanel>
-
     </Grid>
 </UserControl>
 

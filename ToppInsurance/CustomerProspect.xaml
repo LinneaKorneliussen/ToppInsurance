@@ -6,7 +6,7 @@
         xmlns:material="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
         mc:Ignorable="d"
-        Background="White" Height="790" Width="950">
+        Background="White" Height="800" Width="1200">
 
     <UserControl.DataContext>
         <vm:CustomerProspectVM/>
@@ -37,19 +37,21 @@
 
 
             <TabItem Header="Privatkunder" Style="{StaticResource TabItemStyle}">
-                <StackPanel Background="White" Width="900" Height="650">
+                <StackPanel Background="White">
 
-                    <Grid Grid.Column="1" Width="500" HorizontalAlignment="Right" Margin="20">
-                        <TextBox Text="{Binding SearchPrivateCustomer, UpdateSourceTrigger=PropertyChanged}" Width="270" Margin="5 -20 0 0" 
+                    <StackPanel Orientation="Horizontal" Grid.Column="1">
+                        <TextBlock Text="Hämta den privatkund som önskas skapa kundprospekt för"  
+                                   FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" Margin="20,20,80,10"/>
+                        <TextBox Text="{Binding SearchPrivateCustomer, UpdateSourceTrigger=PropertyChanged}" Width="550"
                                  Style="{StaticResource searchTextbox}"
                                  Tag="Sök: förnamn, efternamn, personnr..."/>
-                        <Button Content="Sök" Width="50" Height="30" Margin="340 -20 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindPcustomersCommand}"/>
-                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 -20 140 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
-                    </Grid>
+                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="-30" Foreground="#223A2A"/>
+                        <Button Content="Sök" Width="50" Height="30" Margin="30,10,10,10" Background="#223A2A" Foreground="White" Command="{Binding FindPcustomersCommand}"/>
+                    </StackPanel>
                     
                     <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
 
-                    <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="200" Width="900" FontWeight="Normal" ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectPrivateCustomer, Mode=TwoWay}"  
+                    <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="200" FontWeight="Normal" ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectPrivateCustomer, Mode=TwoWay}"  
                               RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="PersonNR" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
@@ -78,7 +80,7 @@
                         </StackPanel>
                     </Grid>
 
-                    <DataGrid Name="NotesPCDataGrid" AutoGenerateColumns="False" Height="200" Width="900" FontWeight="Normal" ItemsSource="{Binding ProspectInformtionP}"  
+                    <DataGrid Name="NotesPCDataGrid" AutoGenerateColumns="False" Height="200" FontWeight="Normal" ItemsSource="{Binding ProspectInformtionP}"  
                               RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Förnamn" Binding="{Binding PrivateCustomer.FirstName}" IsReadOnly="True" Width="auto"/>
@@ -106,19 +108,22 @@
             </TabItem>
 
             <TabItem Header="Företagskunder" Style="{StaticResource TabItemStyle}">
-                <StackPanel Background="White" Width="900" Height="650">
+                <StackPanel Background="White">
 
-                    <Grid Grid.Column="1" Width="500" HorizontalAlignment="Right" Margin="20">
-                        <TextBox Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="5 -20 0 0" 
-                                 Style="{StaticResource searchTextbox}"
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <TextBlock Text="Hämta den företagskund som önskas skapa kundprospekt för"  
+                                   FontWeight="Bold" Foreground="#2F4F4F" FontSize="13" Margin="20,20,80,10"/>
+                        <TextBox Text="{Binding SearchBusinessCustomer, UpdateSourceTrigger=PropertyChanged}" 
+                                 Style="{StaticResource searchTextbox}" Width="550"
                                  Tag="Sök: företagsnamn, orgnr..."/>
-                        <Button Content="Sök" Width="50" Height="30" Margin="340 -20 0 0" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
-                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 -20 140 0" Foreground="#223A2A" HorizontalAlignment="Right"/>
-                    </Grid>
+                        <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="-30" Foreground="#223A2A"/>
+                        <Button Content="Sök" Width="50" Height="30" Margin="30 10 10 10" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
+                        
+                    </StackPanel>
 
                     <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
 
-                    <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="200" Width="900" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectBusinessCustomer, Mode=TwoWay}"  
+                    <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="200" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectBusinessCustomer, Mode=TwoWay}"  
                   RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Org.Nr" Binding="{Binding Organizationalnumber}" IsReadOnly="True" Width="auto"/>
@@ -148,7 +153,7 @@
 
                     </Grid>
 
-                    <DataGrid Name="NotesBCDataGrid" AutoGenerateColumns="False" Height="200" Width="900" FontWeight="Normal" ItemsSource="{Binding ProspectInformtionB}"  
+                    <DataGrid Name="NotesBCDataGrid" AutoGenerateColumns="False" Height="200" FontWeight="Normal" ItemsSource="{Binding ProspectInformtionB}"  
                   RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Företagsnamn" Binding="{Binding BusinessCustomer.CompanyName}" IsReadOnly="True" Width="auto"/>
