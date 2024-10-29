@@ -48,7 +48,7 @@
                         <Button Content="Sök" Width="50" Margin="30 10 10 10" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
                     </StackPanel>
 
-
+                    <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 10 0 10"/>
                     <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="220" FontWeight="Normal" ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectedPcustomers, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
@@ -154,6 +154,7 @@
                         <Button Content="Sök" Width="50" Margin="30 10 10 10" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
                     </StackPanel>
 
+                    <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 10 0 10"/>
                     <DataGrid Name="businessDataGrid" AutoGenerateColumns="False" Height="220" FontWeight="Normal" ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectedBCcustomers, Mode=TwoWay}" 
                               RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
