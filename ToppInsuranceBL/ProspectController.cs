@@ -40,12 +40,25 @@ namespace TopInsuranceBL
         #endregion
 
         #region Get private Customer with notes
-
         public List<ProspectInformation> PrivateCustomerProspect(PrivateCustomer customer)
         {
             return prospectRepository.PrivateCustomerProspect(customer);
         }
 
+        #endregion
+
+        #region Get Private Customer prospect
+        public List<PrivateCustomer> GetPrivateCustomerProspects(string searchPrivateCustomers)
+        {
+            return prospectRepository.GetPrivateCustomerProspects(searchPrivateCustomers);
+        }
+        #endregion
+
+        #region Get Business Customer prospect
+        public List<BusinessCustomer> GetBusinessCustomerProspects(string searchBusinessCustomer)
+        {
+            return prospectRepository.GetBusinessCustomerProspects(searchBusinessCustomer);
+        }
         #endregion
 
     }

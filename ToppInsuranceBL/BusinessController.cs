@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using TopInsuranceDL;
+﻿using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
@@ -47,13 +46,6 @@ namespace TopInsuranceBL
         public void UpdateBusinessCustomers(BusinessCustomer businessCustomersToUpdate)
         {
             businessRepository.UpdateBusinessCustomers(businessCustomersToUpdate);
-        }
-        #endregion
-
-        #region Get Business Customer prospect
-        public List<BusinessCustomer> GetBusinessCustomerProspects()
-        {
-            return businessRepository.GetBusinessCustomerProspects();
         }
         #endregion
 
