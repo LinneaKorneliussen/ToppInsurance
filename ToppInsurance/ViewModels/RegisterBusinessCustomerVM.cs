@@ -370,13 +370,15 @@ namespace TopInsuranceWPF.ViewModels
             parsedZipcode = int.Parse(NewZipcode.Replace(" ", ""));
 
 
-            if (!int.TryParse(NewOrganizationalnumber, out orgNumber))
+            string orgNumberPattern = @"^\d{8}$";
+            if (!Regex.IsMatch(NewOrganizationalnumber, orgNumberPattern))
             {
-                MessageBox.Show("Organisationsnumret är inte i korrekt format, vänligen ange 10 siffror (XXXXXXXXXX).");
+                MessageBox.Show("Organisationsnumret måste vara exakt 8 siffror (XXXXXXXX).");
                 return false;
             }
+            orgNumber = int.Parse(NewOrganizationalnumber);
 
-            
+
             return true;
         }
 
