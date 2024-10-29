@@ -53,6 +53,7 @@
                             <Button Content="Sök" Width="50" Height="30" Margin="20,10,10,10" Background="#223A2A" Foreground="White" Command="{Binding FindEmployeeCommand}" />
                         </StackPanel>
 
+                        <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 10 0 10"/>
                         <DataGrid Margin="10 30 10 10" Name="businessDataGrid" AutoGenerateColumns="False" Height="250" FontWeight="Normal" 
                               ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"  
                               RowStyle="{StaticResource DataGridRowStyle}">

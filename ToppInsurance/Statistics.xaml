@@ -36,18 +36,17 @@
             </StackPanel.Style>
 
             <TextBlock Text="Hämta den säljare som du önskar visa statistik för" 
-               FontWeight="Bold" Foreground="#2F4F4F"  FontSize="13" VerticalAlignment="Center"/>
-
-            <TextBox Text="{Binding SearchEmployees, UpdateSourceTrigger=PropertyChanged}"  Width="400" 
+               FontWeight="Bold" Foreground="#2F4F4F"  FontSize="13" Margin="20"/>
+            <TextBox Text="{Binding SearchEmployees, UpdateSourceTrigger=PropertyChanged}"  Width="600" 
                      Margin="100,0,0,0"  Style="{StaticResource searchTextbox}"
                      Tag="Sök: efternamn, agenturnr..."/>
-            <Button Content="Sök" Width="50" Margin="15,0,0,0" Background="#223A2A" Foreground="White" 
-                    Command="{Binding FindEmployeeCommand}"/>
             <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" 
-                                 Margin="-100,0,0,0" Foreground="#223A2A"/>
+                     Margin="-30" Foreground="#223A2A"/>
+            <Button Content="Sök" Width="50" Margin="60,10,10,10" Background="#223A2A" Foreground="White" 
+                    Command="{Binding FindEmployeeCommand}"/>
         </StackPanel>
 
-
+        <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 -1 0 10"/>
         <ListView Grid.Row="2" ItemsSource="{Binding Employees}" Margin="15,10,15,15" Background="LightGray"
                   SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}" ItemContainerStyle="{StaticResource StatisticsListViewItemStyle}">
             <ListView.Style>
