@@ -53,6 +53,7 @@
                     <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="120" FontWeight="Normal" Margin="10,10,10,10" Background="LightGray"
                               ItemsSource="{Binding Pcustomers}" SelectedItem="{Binding SelectedPcustomers, Mode=TwoWay}"  RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
+                            <DataGridTextColumn Header="Kund ID" Binding="{Binding PersonId}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="TelefonNr" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="auto"/>
@@ -82,7 +83,7 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="ID:" FontWeight="Bold" Foreground="#2F4F4F" Margin="5" />
+                            <TextBlock Text="Försäkrings ID:" FontWeight="Bold" Foreground="#2F4F4F" Margin="5" />
                             <TextBlock Text="{Binding LifeInsurance.InsuranceId}" Grid.Column="1" Margin="5" />
 
                             <TextBlock Text="Förnamn:" FontWeight="Bold" Foreground="#2F4F4F" Margin="5" Grid.Row="1"/>
@@ -110,7 +111,7 @@
                     <DataGrid Name="SicknessInsurance" AutoGenerateColumns="False" Height="120" FontWeight="Normal" Margin="10,10,10,10" BorderBrush="#2F4F4F" BorderThickness="2"
                               ItemsSource="{Binding SicknessInsurances}" RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding InsuranceId}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Försäkrings ID" Binding="{Binding InsuranceId}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Förnamn" Binding="{Binding PrivateCustomer.FirstName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Efternamn" Binding="{Binding PrivateCustomer.LastName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate}" IsReadOnly="True" Width="auto"/>
@@ -150,6 +151,7 @@
                               ItemsSource="{Binding BCcustomers}" SelectedItem="{Binding SelectedBCcustomer, Mode=TwoWay}" 
                            RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
+                            <DataGridTextColumn Header="Kund ID" Binding="{Binding PersonId, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
                             <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
                             <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
                             <DataGridTextColumn Header="TelefonNr" Binding="{Binding Phonenumber, Mode=TwoWay}" IsReadOnly="False" Width="auto"/>
@@ -163,7 +165,7 @@
                     <DataGrid Name="LiabilityInsurnace" AutoGenerateColumns="False" Height="120" FontWeight="Normal" Margin="10,10,10,10" BorderBrush="#2F4F4F" BorderThickness="2"
                               ItemsSource="{Binding LiabilityInsurances}" RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding InsuranceId}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Försäkrings ID" Binding="{Binding InsuranceId}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Förnamn" Binding="{Binding BusinessCustomer.FirstName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Efternamn" Binding="{Binding BusinessCustomer.LastName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate}" IsReadOnly="True" Width="auto"/>
@@ -180,7 +182,7 @@
                     <DataGrid Name="vehicleInsurance" AutoGenerateColumns="False" Height="120" FontWeight="Normal" Margin="10,10,10,10" BorderBrush="#2F4F4F" BorderThickness="2"
                               ItemsSource="{Binding VehicleInsurances}" RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding InsuranceId}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Försäkrings ID" Binding="{Binding InsuranceId}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Förnamn" Binding="{Binding BusinessCustomer.FirstName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Efternamn" Binding="{Binding BusinessCustomer.LastName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate}" IsReadOnly="True" Width="auto"/>
@@ -199,7 +201,7 @@
                     <DataGrid Name="realEstateInsurance" AutoGenerateColumns="False" Height="120" FontWeight="Normal" Margin="10,10,10,10" BorderBrush="#2F4F4F" BorderThickness="2"
                               ItemsSource="{Binding RealEstateInsurances}" RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding InsuranceId}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Försäkrings ID" Binding="{Binding InsuranceId}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Förnamn" Binding="{Binding BusinessCustomer.FirstName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Efternamn" Binding="{Binding BusinessCustomer.LastName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate}" IsReadOnly="True" Width="auto"/>
