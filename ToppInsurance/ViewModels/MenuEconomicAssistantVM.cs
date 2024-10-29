@@ -98,7 +98,7 @@ namespace TopInsuranceWPF.ViewModels
 
         private void ShowCommissionBTN()
         {
-            CurrentViewModel = new Commission();
+            CurrentViewModel = new CommissionView();
         }
         private void ShowInsuranceOverviewBTN()
         {

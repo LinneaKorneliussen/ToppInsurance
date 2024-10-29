@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 
 namespace TopInsuranceDL
 {
@@ -128,30 +129,15 @@ namespace TopInsuranceDL
         }
         #endregion
 
-        #region Load Commission From Json Method
-        public List<dynamic> LoadCommissionsFromJson()
+        #region Get Commission Method 
+        public List<Commission> GetCommissions()
         {
-            string filePath = "commissionReport.json";
-
-            if (!File.Exists(filePath))
-            {
-                File.WriteAllText(filePath, JsonConvert.SerializeObject(new List<dynamic>(), Formatting.Indented));
-            }
-
-            string json = File.ReadAllText(filePath);
-
-            try
-            {
-                var commissionDataList = JsonConvert.DeserializeObject<List<dynamic>>(json);
-                return commissionDataList ?? new List<dynamic>();
-            }
-            catch (JsonException jsonEx)
-            {
-                throw new InvalidOperationException("Fel vid deserialisering av JSON-innehållet.", jsonEx);
-            }
+            return unitOfWork.CommissionRepository.GetAllQueryable()
+                .Include(c => c.Employee)
+                .ToList();
         }
-
         #endregion
+
 
     }
 }

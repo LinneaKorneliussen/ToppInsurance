@@ -45,7 +45,7 @@
                                  Style="{StaticResource searchTextbox}"
                                  Tag="Sök: förnamn, efternamn, personnr..."/>
                         <material:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="-30" Foreground="#223A2A"/>
-                        <Button Content="Sök" Width="50" Margin="30 10 10 10" Background="#223A2A" Foreground="White" Command="{Binding FindBCcustomersCommand}"/>
+                        <Button Content="Sök" Width="50" Margin="30 10 10 10" Background="#223A2A" Foreground="White" Command="{Binding FindPcustomersCommand}"/>
                     </StackPanel>
 
                     <Separator Height="1" Grid.Row="0" Background="#DAE2EA" Margin="0 10 0 10"/>

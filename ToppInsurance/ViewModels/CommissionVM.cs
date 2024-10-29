@@ -123,8 +123,8 @@ namespace TopInsuranceWPF.ViewModels
             }
         }
 
-        private ObservableCollection<dynamic> _loadedCommissions;
-        public ObservableCollection<dynamic> LoadedCommissions
+        private ObservableCollection<Commission> _loadedCommissions;
+        public ObservableCollection<Commission> LoadedCommissions
         {
             get { return _loadedCommissions; }
             set
@@ -188,7 +188,7 @@ namespace TopInsuranceWPF.ViewModels
         #region Load Commission data Method
         public void LoadCommissions()
         {
-            var commissionDataList = commissionController.LoadCommissionsFromJson();
+            var commissionDataList = commissionController.GetCommissions();
             if (SelectedMonthYear != null)
             {
                 var parts = SelectedMonthYear.Split(' ');
@@ -203,12 +203,12 @@ namespace TopInsuranceWPF.ViewModels
                                      commissionStartDate <= endDate)
                         .ToList();
 
-                    LoadedCommissions = new ObservableCollection<dynamic>(filteredCommissions);
+                    LoadedCommissions = new ObservableCollection<Commission>(filteredCommissions);
                 }
             }
             else
             {
-                LoadedCommissions = new ObservableCollection<dynamic>(commissionDataList);
+                LoadedCommissions = new ObservableCollection<Commission>(commissionDataList);
             }
         }
         #endregion
@@ -216,8 +216,8 @@ namespace TopInsuranceWPF.ViewModels
         #region Refresh sales person 
         private void RefreshCommissionData()
         {
-            var commissionDataList = commissionController.LoadCommissionsFromJson();
-            LoadedCommissions = new ObservableCollection<dynamic>(commissionDataList);
+            var commissionDataList = commissionController.GetCommissions();
+            LoadedCommissions = new ObservableCollection<Commission>(commissionDataList);
         }
         #endregion
 

@@ -25,10 +25,10 @@ namespace TopInsuranceBL
         }
         #endregion
 
-        #region Load Commissions from JSON Method
-        public List<dynamic> LoadCommissionsFromJson()
+        #region Get Commission Method 
+        public List<Commission> GetCommissions()
         {
-            return commissionRepository.LoadCommissionsFromJson();
+            return commissionRepository.GetCommissions();
         }
         #endregion
     }

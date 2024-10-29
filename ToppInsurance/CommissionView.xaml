@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TopInsuranceWPF.Commission"
+﻿<UserControl x:Class="TopInsuranceWPF.CommissionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
@@ -42,7 +42,7 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Background="White" Height="630">
+                    <StackPanel Background="White" Height="680">
 
                         <StackPanel Grid.Row="1" Orientation="Horizontal" Background="White">
                             <TextBlock Text="Hämta den säljare som du önskar skapa provisionsunderlag för:" Margin="20 20 80 10" FontWeight="Bold" Foreground="#2F4F4F" FontSize="13"/>
@@ -136,10 +136,10 @@
                         <DataGrid Margin="10 10 0,0" Name="commissionDataGrid" AutoGenerateColumns="False" Height="550" FontWeight="Normal" 
                                   ItemsSource="{Binding LoadedCommissions}" RowStyle="{StaticResource DataGridRowStyle}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Agenturnr" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
-                                <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
-                                <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
-                                <DataGridTextColumn Header="Personnummer" Binding="{Binding SSN}" IsReadOnly="True" Width="auto"/>
+                                <DataGridTextColumn Header="Agenturnr" Binding="{Binding Employee.AgencyNumber }" IsReadOnly="True" Width="auto"/>
+                                <DataGridTextColumn Header="Förnamn" Binding="{Binding Employee.FirstName}" IsReadOnly="True" Width="auto"/>
+                                <DataGridTextColumn Header="Efternamn" Binding="{Binding Employee.LastName}" IsReadOnly="True" Width="auto"/>
+                                <DataGridTextColumn Header="Personnummer" Binding="{Binding Employee.SSN}" IsReadOnly="True" Width="auto"/>
                                 <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate, StringFormat=\{0:yyyy-MM-dd\}}" IsReadOnly="True" Width="auto"/>
                                 <DataGridTextColumn Header="Slutdatum" Binding="{Binding EndDate, StringFormat=\{0:yyyy-MM-dd\}}" IsReadOnly="True" Width="auto"/>
                                 <DataGridTextColumn Header="Provisonsbelopp" Binding="{Binding TotalCommission, StringFormat=\{0:F2\}}" IsReadOnly="True" Width="auto"/>

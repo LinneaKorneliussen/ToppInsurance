@@ -25,13 +25,13 @@ namespace TopInsuranceDL
         {
             var privateSalesData = new Dictionary<string, List<int>>
             {
-                { "Liv", new List<int> { 0, 0, 0, 0, 0 } },
+                { "Livförsäkring", new List<int> { 0, 0, 0, 0, 0 } },
                 { "Sjuk- och olycksfallsförsäkring", new List<int> { 0, 0, 0, 0, 0 } }
             };
 
             var businessSalesData = new Dictionary<string, List<int>> {
-                { "Ansv", new List<int> { 0, 0, 0, 0, 0 } },
-                { "Bil", new List<int> { 0, 0, 0, 0, 0 } },
+                { "Ansvarsförsäkring", new List<int> { 0, 0, 0, 0, 0 } },
+                { "Fordonsförsäkring", new List<int> { 0, 0, 0, 0, 0 } },
                 { "Fastighetsförsäkring", new List<int> { 0, 0, 0, 0, 0 } }
             };
 
@@ -40,10 +40,10 @@ namespace TopInsuranceDL
 
             var insuranceTypes = new List<(string Type, Func<IEnumerable<Insurance>> GetInsurances)>
             {
-                ("Liv", () => unitOfWork.LifeInsuranceRepository.GetAll()),
+                ("Livförsäkring", () => unitOfWork.LifeInsuranceRepository.GetAll()),
                 ("Sjuk- och olycksfallsförsäkring", () => unitOfWork.SicknessAccidentInsuranceRepository.GetAll()),
-                ("Ansv", () => unitOfWork.LiabilityInsuranceRepository.GetAll()),
-                ("Bil", () => unitOfWork.VehicleInsuranceRepository.GetAll()),
+                ("Ansvarsförsäkring", () => unitOfWork.LiabilityInsuranceRepository.GetAll()),
+                ("Fordonsförsäkring", () => unitOfWork.VehicleInsuranceRepository.GetAll()),
                 ("Fastighetsförsäkring", () => unitOfWork.RealEstateInsuranceRepository.GetAll())
             };
 
@@ -60,7 +60,7 @@ namespace TopInsuranceDL
                         int monthIndex = currentMonth - insurance.StartDate.Month;
                         if (monthIndex >= 0 && monthIndex < 5)
                         {
-                            if (insuranceType.Type == "Liv" || insuranceType.Type == "Sjuk- och olycksfallsförsäkring")
+                            if (insuranceType.Type == "Livförsäkring" || insuranceType.Type == "Sjuk- och olycksfallsförsäkring")
                             {
                                 privateSalesData[insuranceType.Type][4 - monthIndex]++;
                             }
