@@ -356,7 +356,7 @@ namespace TopInsuranceWPF.ViewModels
                     user
                 );
 
-                MessageBox.Show("Fastighetsförsäkring har lagts till.", "Framgång", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Fastighets- och inventarieförsäkring tecknad framgångsfullt för: {SelectedCustomer.FirstName} {SelectedCustomer.LastName}", "Framgång", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 ClearFields();
             }

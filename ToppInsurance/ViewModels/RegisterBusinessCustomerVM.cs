@@ -236,7 +236,7 @@ namespace TopInsuranceWPF.ViewModels
         private void ShowMessage(string newFirstName, string newPhoneNumber, string newEmailAddress, string newAddress, int zipcode,
                                  string newCity, string newCompanyName, int orgNumber, int countrycode)
         {
-            MessageBox.Show($"Företagskunden har registrerats korrekt!\n\n" +
+            MessageBox.Show($"Företagskunden har registrerats framgångsrikt!\n\n" +
                             $"Namn: {newFirstName}\n" +
                             $"Telefonnummer: {newPhoneNumber}\n" +
                             $"E-post: {newEmailAddress}\n" +
@@ -245,8 +245,7 @@ namespace TopInsuranceWPF.ViewModels
                             $"Stad: {newCity}\n" +
                             $"Företagsnamn: {newCompanyName}\n" +
                             $"Organisationsnummer: {orgNumber}\n" +
-                            $"Landkod: {countrycode}\n" +
-                            $"Tack för att du registrerade en ny företagskund!");
+                            $"Landkod: {countrycode}\n");
         }
         #endregion
 

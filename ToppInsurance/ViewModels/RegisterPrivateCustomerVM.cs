@@ -228,8 +228,6 @@ namespace TopInsuranceWPF.ViewModels
             });
             ClearFields();
         }
-
-
         #endregion
 
         #region Refresh Private Customers Method 

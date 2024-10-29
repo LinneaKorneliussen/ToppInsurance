@@ -59,97 +59,97 @@ namespace TopInsuranceDL
             // LifeInsurance Configuration
             modelBuilder.Entity<LifeInsurance>()
                 .ToTable("LifeInsurance")
-                .HasOne(li => li.Employee) // En LifeInsurance har en Employee
-                .WithMany(e => e.LifeInsurances) // En Employee kan ha många LifeInsurances
-                .HasForeignKey(li => li.EmployeeId); // EmployeeId är främmande nyckel
+                .HasOne(li => li.Employee) 
+                .WithMany(e => e.LifeInsurances) 
+                .HasForeignKey(li => li.EmployeeId); 
 
             modelBuilder.Entity<PrivateCustomer>()
-                .HasOne(pc => pc.LifeInsurance) // En PrivateCustomer har en LifeInsurance
-                .WithOne(li => li.PrivateCustomer) // En LifeInsurance har en PrivateCustomer
-                .HasForeignKey<LifeInsurance>(li => li.PrivateCustomerId); // PrivateCustomerId är främmande nyckel
+                .HasOne(pc => pc.LifeInsurance) 
+                .WithOne(li => li.PrivateCustomer) 
+                .HasForeignKey<LifeInsurance>(li => li.PrivateCustomerId); 
 
             // SicknessAccidentInsurance Configuration
             modelBuilder.Entity<SicknessAccidentInsurance>()
                 .ToTable("SicknessAccidentInsurance")
-                .HasOne(sai => sai.Employee) // En SicknessAccidentInsurance har en Employee
-                .WithMany(e => e.AccidentInsurances) // En Employee kan ha många SicknessAccidentInsurances
-                .HasForeignKey(sai => sai.EmployeeId); // EmployeeId är främmande nyckel
+                .HasOne(sai => sai.Employee) 
+                .WithMany(e => e.AccidentInsurances) 
+                .HasForeignKey(sai => sai.EmployeeId); 
 
             modelBuilder.Entity<PrivateCustomer>()
-                .HasMany(pc => pc.SicknessAndAccidentInsurances) // En PrivateCustomer kan ha många SicknessAccidentInsurances
-                .WithOne(sai => sai.PrivateCustomer) // En SicknessAccidentInsurance har en PrivateCustomer
-                .HasForeignKey(sai => sai.PrivateCustomerId); // PrivateCustomerId är främmande nyckel
+                .HasMany(pc => pc.SicknessAndAccidentInsurances) 
+                .WithOne(sai => sai.PrivateCustomer) 
+                .HasForeignKey(sai => sai.PrivateCustomerId); 
 
             // LiabilityInsurance Configuration
             modelBuilder.Entity<LiabilityInsurance>()
                 .ToTable("LiabilityInsurance")
-                .HasOne(li => li.Employee) // En LiabilityInsurance har en Employee
-                .WithMany(e => e.LiabilityInsurances) // En Employee kan ha många LiabilityInsurances
-                .HasForeignKey(li => li.EmployeeId); // EmployeeId är främmande nyckel
+                .HasOne(li => li.Employee) 
+                .WithMany(e => e.LiabilityInsurances)
+                .HasForeignKey(li => li.EmployeeId); 
 
             modelBuilder.Entity<BusinessCustomer>()
-                .HasMany(bc => bc.LiabilityInsurances) // En BusinessCustomer kan ha många LiabilityInsurances
-                .WithOne(li => li.BusinessCustomer) // En BusinessInsurance har en BusinessCustomer
-                .HasForeignKey(li => li.BusinessCustomerId); // BusinessCustomerId är främmande nyckel
+                .HasMany(bc => bc.LiabilityInsurances) 
+                .WithOne(li => li.BusinessCustomer) 
+                .HasForeignKey(li => li.BusinessCustomerId); 
 
             // VehicleInsurance Configuration
             modelBuilder.Entity<VehicleInsurance>()
                 .ToTable("VehicleInsurance")
-                .HasOne(vi => vi.Employee) // En VehicleInsurance har en Employee
-                .WithMany(e => e.VehicleInsurances) // En Employee kan ha många VehicleInsurances
-                .HasForeignKey(vi => vi.EmployeeId); // EmployeeId är främmande nyckel
+                .HasOne(vi => vi.Employee) 
+                .WithMany(e => e.VehicleInsurances) 
+                .HasForeignKey(vi => vi.EmployeeId); 
 
             modelBuilder.Entity<BusinessCustomer>()
-                .HasMany(bc => bc.VehicleInsurances) // En BusinessCustomer kan ha många VehicleInsurances
-                .WithOne(vi => vi.BusinessCustomer) // En VehicleInsurance har en BusinessCustomer
-                .HasForeignKey(vi => vi.BusinessCustomerId); // BusinessCustomerId är främmande nyckel
+                .HasMany(bc => bc.VehicleInsurances) 
+                .WithOne(vi => vi.BusinessCustomer) 
+                .HasForeignKey(vi => vi.BusinessCustomerId); 
 
             modelBuilder.Entity<VehicleInsurance>()
-                .HasOne(vi => vi.Car) // En fordonsförsäkring har en bil 
-                .WithOne(v => v.VehicleInsurance) // En bil har en fordondsförsäkring
-                .HasForeignKey<VehicleInsurance>(vi => vi.VehicleId); // VehicleId är främmande nyckel
+                .HasOne(vi => vi.Car) 
+                .WithOne(v => v.VehicleInsurance) 
+                .HasForeignKey<VehicleInsurance>(vi => vi.VehicleId); 
 
             // RealEstateInsurance Configuration
             modelBuilder.Entity<RealEstateInsurance>()
                 .ToTable("RealEstateInsurance")
-                .HasOne(rei => rei.Employee) // En RealEstateInsurance har en Employee
-                .WithMany(e => e.RealEstateInsurances) // En Employee kan ha många RealEstateInsurances
-                .HasForeignKey(rei => rei.EmployeeId); // EmployeeId är främmande nyckel
+                .HasOne(rei => rei.Employee) 
+                .WithMany(e => e.RealEstateInsurances) 
+                .HasForeignKey(rei => rei.EmployeeId); 
 
             modelBuilder.Entity<BusinessCustomer>()
-                .HasMany(bc => bc.RealEstateInsurances) // En BusinessCustomer kan ha många RealEstateInsurances
-                .WithOne(rei => rei.BusinessCustomer) // En RealEstateInsurance har en BusinessCustomer
-                .HasForeignKey(rei => rei.BusinessCustomerId); // BusinessCustomerId är främmande nyckel
+                .HasMany(bc => bc.RealEstateInsurances) 
+                .WithOne(rei => rei.BusinessCustomer) 
+                .HasForeignKey(rei => rei.BusinessCustomerId); 
 
             modelBuilder.Entity<RealEstateInsurance>()
-                .HasMany(rei => rei.Inventories) // En RealEstateInsurance kan ha många Inventories
-                .WithOne(inv => inv.RealEstateInsurance) // En Inventory har en RealEstateInsurance
-                .HasForeignKey(inv => inv.RealEstateInsuranceId); // RealEstateInsuranceId är främmande nyckel
+                .HasMany(rei => rei.Inventories) 
+                .WithOne(inv => inv.RealEstateInsurance) 
+                .HasForeignKey(inv => inv.RealEstateInsuranceId);
 
             // Commission Configuration
             modelBuilder.Entity<Commission>()
-                .HasOne(c => c.Employee) // En Commission har en Employee
-                .WithMany(e => e.Commissions) // En Employee kan ha många Commissions
-                .HasForeignKey(c => c.EmployeeId); // EmployeeId är främmande nyckel
+                .HasOne(c => c.Employee) 
+                .WithMany(e => e.Commissions) 
+                .HasForeignKey(c => c.EmployeeId); 
 
             // Prospectinformation Configuration
             modelBuilder.Entity<ProspectInformation>()
-                .HasOne(p => p.Employee) // En prospectinformation har en Employee
-                .WithMany(e => e.ProspectInformationList) // En Employee kan ha många noteringar
-                .HasForeignKey(p => p.EmployeeId); // EmployeeId är främmande nyckel
+                .HasOne(p => p.Employee) 
+                .WithMany(e => e.ProspectInformationList) 
+                .HasForeignKey(p => p.EmployeeId); 
 
             // Prospectinformation Configuration
             modelBuilder.Entity<ProspectInformation>()
-                .HasOne(p => p.PrivateCustomer) // En prospectinformation har en privatkund
-                .WithMany(pc => pc.ProspectInformationList) // En privatkund kan ha många noteringar
-                .HasForeignKey(p => p.PrivateCustomerId) // En privatkund är en främmande nyckel
+                .HasOne(p => p.PrivateCustomer) 
+                .WithMany(pc => pc.ProspectInformationList)
+                .HasForeignKey(p => p.PrivateCustomerId) 
                 .IsRequired(false);
 
             // Prospectinformation Configuration
             modelBuilder.Entity<ProspectInformation>()
-                .HasOne(p => p.BusinessCustomer) // En prospectinformation har en företagskund
-                .WithMany(bc => bc.ProspectInformationList) // En företagskund kan ha många noteringar
-                .HasForeignKey(p => p.BusinessCustomerId) // En företagskund är en främmande nyckel
+                .HasOne(p => p.BusinessCustomer) 
+                .WithMany(bc => bc.ProspectInformationList) 
+                .HasForeignKey(p => p.BusinessCustomerId) 
                 .IsRequired(false);
         }
 
