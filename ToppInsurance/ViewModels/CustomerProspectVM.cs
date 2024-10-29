@@ -32,7 +32,7 @@ namespace TopInsuranceWPF.ViewModels
             PrivateCustomerProspectList = new ObservableCollection<ProspectInformation>();
 
 
-            FindPcustomersCommand = new RelayCommand(FindPcustomers);
+            FindPcustomersCommand = new RelayCommand();
             FindBCcustomersCommand = new RelayCommand(FindBCcustomers);
             AddPCNoteCommand = new RelayCommand(AddPCNote);
             AddBCNoteCommand = new RelayCommand(AddBCNote);
@@ -262,7 +262,7 @@ namespace TopInsuranceWPF.ViewModels
 
                 prospectController.AddPCNote(Note, employee, SelectPrivateCustomer, null);
                 PrivateCustomerProspect();
-                ClearFields();
+                
                 MessageBox.Show($"Notering lagd framgångsrikt för {SelectPrivateCustomer.FirstName} {SelectPrivateCustomer.LastName}.");
 
                
@@ -297,7 +297,7 @@ namespace TopInsuranceWPF.ViewModels
                 prospectController.AddBCNote(Note, employee, null, SelectBusinessCustomer);
 
                 BusinessCustomerProspect();
-                ClearFields();
+               
 
                 MessageBox.Show($"Notering lagd framgångsrikt för {SelectBusinessCustomer.FirstName} {SelectBusinessCustomer.LastName}." );
 
