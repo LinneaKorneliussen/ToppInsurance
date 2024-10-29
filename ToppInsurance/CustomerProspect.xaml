@@ -127,6 +127,7 @@
                   RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Org.Nr" Binding="{Binding Organizationalnumber}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Företagsnamn" Binding="{Binding CompanyName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="TelNr" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="auto"/>

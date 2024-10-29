@@ -72,49 +72,5 @@ namespace TopInsuranceDL
             return matchingCustomers;
         }
         #endregion
-
-        #region Get Business Customer with only one insurance Method 
-        public List<BusinessCustomer> GetBusinessCustomerProspects()
-        {
-            List<BusinessCustomer> businessProspects = new List<BusinessCustomer>();
-            var businessCustomers = unitOfWork.BCRepository.GetAll().ToList();
-
-            var activeLiabilityInsurance = unitOfWork.LiabilityInsuranceRepository.GetAll()
-                .Where(l => l.Status == Status.Aktiv)
-                .ToList();
-
-            var activeVehicleInsurance = unitOfWork.VehicleInsuranceRepository.GetAll()
-                .Where(s => s.Status == Status.Aktiv)
-                .ToList();
-
-            var activeRealEstateInsurance = unitOfWork.RealEstateInsuranceRepository.GetAll()
-                .Where(s => s.Status == Status.Aktiv)
-                .ToList();
-
-            foreach (var customer in businessCustomers)
-            {
-                int totalInsuranceCount = 0;
-
-                totalInsuranceCount += activeLiabilityInsurance
-                    .Count(l => l.BusinessCustomerId == customer.PersonId);
-
-                totalInsuranceCount += activeVehicleInsurance
-                    .Count(s => s.BusinessCustomerId == customer.PersonId);
-
-                totalInsuranceCount += activeRealEstateInsurance
-                    .Count(s => s.BusinessCustomerId == customer.PersonId);
-
-
-                if (totalInsuranceCount <= 1)
-                {
-                    businessProspects.Add(customer);
-                }
-            }
-
-            return businessProspects;
-        }
-        #endregion
-
-
     }
 }

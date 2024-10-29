@@ -52,12 +52,5 @@ namespace TopInsuranceBL
             privateRepository.UpdatePrivateCustomer(privateCustomersToUpdate);
         }
         #endregion
-
-        #region Get Private Customer prospect
-        public List<PrivateCustomer> GetPrivateCustomerProspects()
-        {
-           return privateRepository.GetPrivateCustomerProspects();
-        }
-        #endregion
     }
 }
