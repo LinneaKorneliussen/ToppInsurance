@@ -31,6 +31,7 @@
                 </Style>
             </TabControl.Resources>
 
+            <!--Private customers-->
             <TabItem Header="Privatkunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
                 <StackPanel Background="White">
 
@@ -90,7 +91,7 @@
                 </StackPanel>
             </TabItem>
 
-
+            <!--Business customers-->
             <TabItem Header="Företagskunder" FontWeight="Bold" Style="{StaticResource TabItemStyle}">
                 <StackPanel Background="White">
 
@@ -148,6 +149,7 @@
                 </StackPanel>
             </TabItem>
 
+            <!--Invoices overview-->
             <TabItem Header="Faktureringshistorik" Style="{StaticResource TabItemStyle}">
 
                 <StackPanel Background="White">
@@ -173,7 +175,7 @@
                                 <DataGridTextColumn Header="Namn" Binding="{Binding Name}" IsReadOnly="True" Width="*"/>
                                 <DataGridTextColumn Header="Id-nummer" Binding="{Binding Number}" IsReadOnly="True" Width="*"/>
                                 <DataGridTextColumn Header="Fakturabelopp" Binding="{Binding TotalAmount}" IsReadOnly="True" Width="*"/>
-                                <DataGridTextColumn Header="Faktureringsdatum" Binding="{Binding InvoiceDate}" IsReadOnly="True" Width="*"/>
+                                <DataGridTextColumn Header="Underlag skapat" Binding="{Binding InvoiceDate}" IsReadOnly="True" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

@@ -44,7 +44,6 @@ namespace TopInsuranceWPF.ViewModels
                     return $"{CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month == 0 ? 12 : month)} {year}";
                 })
                 .ToList();
-
         }
 
         #region Properties
@@ -306,7 +305,6 @@ namespace TopInsuranceWPF.ViewModels
                 LoadedInvoices = new ObservableCollection<dynamic>(invoiceDataList);
             }
         }
-
         #endregion
 
         #region Validation IDataErrorInfo

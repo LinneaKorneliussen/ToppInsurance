@@ -263,7 +263,7 @@ namespace TopInsuranceWPF.ViewModels
                 }
 
                 liabilityController.AddLiabilityInsurance(SelectedCustomer, NewStartDate, NewEndDate, InsuranceType.Ansvarsförsäkring, SelectedPaymentForm, Note, ContactPerson, ContactPersonPhNo, SelectedDeductible, SelectedAmount, user);
-                MessageBox.Show($"Ansvarsförsäkring tecknad framgångsfullt {SelectedCustomer.FirstName} {SelectedCustomer.LastName}");
+                MessageBox.Show($"Ansvarsförsäkring tecknad framgångsfullt för: {SelectedCustomer.FirstName} {SelectedCustomer.LastName}");
                 ClearFields();
             }
             catch (ArgumentException ex) 

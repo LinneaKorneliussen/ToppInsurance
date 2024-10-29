@@ -294,7 +294,7 @@ namespace TopInsuranceWPF.ViewModels
                     selectedRiskZone, NewStartDate, NewEndDate,
                     InsuranceType.Fordonsförsäkring, SelectedPaymentForm, Note, user);
 
-                MessageBox.Show("Fordonsförsäkringen har lagts till framgångsrikt.", "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Fordonsförsäkring tecknad framgångsfullt för: {SelectedBCcustomer.FirstName} {SelectedBCcustomer.LastName}", "Bekräftelse", MessageBoxButton.OK, MessageBoxImage.Information);
                 ClearFields();
             }
             catch (ArgumentException ex)

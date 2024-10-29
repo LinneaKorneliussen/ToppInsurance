@@ -364,7 +364,7 @@ namespace TopInsuranceWPF.ViewModels
             sicknessAccidentController.AddSicknessAccidentInsurance(SelectedCustomer,NewStartDate,NewEndDate,InsuranceType.SjukOchOlycksfallsförsäkringVUXEN,SelectedPaymentForm,SelectedBaseAmount,
                 Note,null,null,null,SelectedAdditional,user
             );
-            ShowMessage("Sjuk- och olycksfallsförsäkring för vuxen har lagts till.", "Försäkring tillagd", MessageBoxImage.Information);
+            ShowMessage($"Vuxen sjuk-och olycksfallsförsäkring tecknad framgångsfullt för: {SelectedCustomer.FirstName} {SelectedCustomer.LastName}", "Försäkring tillagd", MessageBoxImage.Information);
         }
 
         private void AddInsuranceForChild()
@@ -372,7 +372,7 @@ namespace TopInsuranceWPF.ViewModels
             sicknessAccidentController.AddSicknessAccidentInsurance(SelectedCustomer,NewStartDate,NewEndDate,InsuranceType.SjukOchOlycksfallsförsäkringBARN,SelectedPaymentForm,
                 SelectedBaseAmount,Note,FirstNameChild,LastNameChild,SSNChild,SelectedAdditional,user
             );
-            ShowMessage("Sjuk- och olycksfallsförsäkring för barn har lagts till.", "Försäkring tillagd", MessageBoxImage.Information);
+            ShowMessage($"Barn sjuk-och olycksfallsförsäkring tecknad framgångsfullt för: {SelectedCustomer.FirstName} {SelectedCustomer.LastName}", "Försäkring tillagd", MessageBoxImage.Information);
         }
         #endregion
 

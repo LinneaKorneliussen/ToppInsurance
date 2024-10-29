@@ -215,7 +215,7 @@ namespace TopInsuranceWPF.ViewModels
                     }
 
                     lifeInsuranceController.AddLifeInsurance(SelectedCustomer, NewStartDate, NewEndDate, InsuranceType.Livförsäkring, SelectedPaymentForm, SelectedBaseAmount, Note, user);
-                    MessageBox.Show($"Du har registrerat en livförsäkring för {SelectedCustomer.FirstName} {SelectedCustomer.LastName}.", "Toppenbra!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show($"Livförsäkring har skapat för: {SelectedCustomer.FirstName} {SelectedCustomer.LastName}.", "Toppenbra!", MessageBoxButton.OK, MessageBoxImage.Information);
                     ClearFields();
                 }
                 #endregion

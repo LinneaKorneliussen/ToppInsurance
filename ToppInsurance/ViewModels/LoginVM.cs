@@ -53,8 +53,6 @@ namespace TopInsuranceWPF.ViewModels
             {
                 UserContext.Instance.SetUser(user);
 
-                MessageBox.Show($"Inloggad som {user.FirstName} {user.LastName}");
-
                 switch (user.EmployeeRole)
                 {
                     case EmployeeRole.Säljare:
@@ -91,7 +89,7 @@ namespace TopInsuranceWPF.ViewModels
                         break;
 
                     default:
-                        MessageBox.Show("Okänd roll");
+                        MessageBox.Show("Okänt fel, vänligen försök igen");
                         break;
                 }
             }
@@ -110,8 +108,4 @@ namespace TopInsuranceWPF.ViewModels
         }
         #endregion
     }
-
-
-
-
 }
