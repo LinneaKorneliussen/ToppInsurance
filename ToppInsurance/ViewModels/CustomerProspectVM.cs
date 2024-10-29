@@ -14,33 +14,17 @@ namespace TopInsuranceWPF.ViewModels
 {
     public class CustomerProspectVM : ObservableObject
     {
-        public ObservableCollection<ProspectInformation> PrivateCustomerProspectList { get; set; }
-        private BusinessController businessController;
-        private PrivateController privateController;
         private ProspectController prospectController;
         private Employee employee;
-
-        public ObservableCollection<Insurance> ActiveInsurances { get; set; }
-
         public CustomerProspectVM()
         {
-
             employee = UserContext.Instance.LoggedInUser;
-            businessController = new BusinessController();
-            privateController = new PrivateController();
             prospectController = new ProspectController();
-            PrivateCustomerProspectList = new ObservableCollection<ProspectInformation>();
-
-
-            FindPcustomersCommand = new RelayCommand();
-            FindBCcustomersCommand = new RelayCommand(FindBCcustomers);
+            FindPcustomersCommand = new RelayCommand(FindPrivatCustomerProspect);
+            FindBCcustomersCommand = new RelayCommand(FindBusinessCustomerProspect);
             AddPCNoteCommand = new RelayCommand(AddPCNote);
             AddBCNoteCommand = new RelayCommand(AddBCNote);
             ClearCommand = new RelayCommand(ClearFields);
-
-            FindPrivatCustomerProspect();
-            FindBusinessCustomerProspect();
-
         }
 
         #region Search
@@ -71,47 +55,6 @@ namespace TopInsuranceWPF.ViewModels
                 }
             }
         }
-
-        private void FindBCcustomers()
-        {
-            if (string.IsNullOrWhiteSpace(SearchBusinessCustomer))
-            {
-                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            var filteredBusinessCustomers = businessController.SearchBusinessCustomers(SearchBusinessCustomer);
-
-            if (filteredBusinessCustomers == null || !filteredBusinessCustomers.Any())
-            {
-                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                BCcustomers = new ObservableCollection<BusinessCustomer>(filteredBusinessCustomers);
-            }
-        }
-
-        private void FindPcustomers()
-        {
-            if (string.IsNullOrWhiteSpace(SearchPrivateCustomer))
-            {
-                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-
-            var filteredPrivateCustomers = privateController.SearchPrivateCustomers(SearchPrivateCustomer);
-
-            if (filteredPrivateCustomers == null || !filteredPrivateCustomers.Any())
-            {
-                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                Pcustomers = new ObservableCollection<PrivateCustomer>(filteredPrivateCustomers);
-            }
-        }
-
         #endregion
 
         #region Note property
@@ -231,16 +174,42 @@ namespace TopInsuranceWPF.ViewModels
         #region Find customers Methods
         private void FindPrivatCustomerProspect()
         {
-            var privateProspects = privateController.GetPrivateCustomerProspects();
-            Pcustomers = new ObservableCollection<PrivateCustomer>(privateProspects);
+            if (string.IsNullOrWhiteSpace(SearchPrivateCustomer))
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var privateProspects = prospectController.GetPrivateCustomerProspects(SearchPrivateCustomer);
+
+            if (privateProspects == null || !privateProspects.Any())
+            {
+                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                Pcustomers = new ObservableCollection<PrivateCustomer>(privateProspects);
+            }
         }
 
         private void FindBusinessCustomerProspect()
         {
-            var businessProspects = businessController.GetBusinessCustomerProspects();
-            BCcustomers = new ObservableCollection<BusinessCustomer>(businessProspects);
-        }
+            if (string.IsNullOrWhiteSpace(SearchBusinessCustomer))
+            {
+                MessageBox.Show("Sökning misslyckades. Ange söktext.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
 
+            var businessProspects = prospectController.GetBusinessCustomerProspects(SearchBusinessCustomer);
+            if (businessProspects == null || !businessProspects.Any())
+            {
+                MessageBox.Show("Inga resultat hittades för den angivna söktexten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                BCcustomers = new ObservableCollection<BusinessCustomer>(businessProspects);
+            }
+        }
         #endregion
 
         #region Add note Methods
@@ -261,11 +230,12 @@ namespace TopInsuranceWPF.ViewModels
                 }
 
                 prospectController.AddPCNote(Note, employee, SelectPrivateCustomer, null);
-                PrivateCustomerProspect();
-                
                 MessageBox.Show($"Notering lagd framgångsrikt för {SelectPrivateCustomer.FirstName} {SelectPrivateCustomer.LastName}.");
+                PrivateCustomerProspect();
 
-               
+                SearchPrivateCustomer = string.Empty;
+                Note = string.Empty;
+
             }
 
             catch (ArgumentException ex)
@@ -295,13 +265,11 @@ namespace TopInsuranceWPF.ViewModels
                 }
 
                 prospectController.AddBCNote(Note, employee, null, SelectBusinessCustomer);
-
+                MessageBox.Show($"Notering lagd framgångsrikt för {SelectBusinessCustomer.FirstName} {SelectBusinessCustomer.LastName}.");
                 BusinessCustomerProspect();
-               
 
-                MessageBox.Show($"Notering lagd framgångsrikt för {SelectBusinessCustomer.FirstName} {SelectBusinessCustomer.LastName}." );
-
-
+                SearchBusinessCustomer = string.Empty;
+                Note = string.Empty;
             }
             catch (ArgumentException ex)
             {
