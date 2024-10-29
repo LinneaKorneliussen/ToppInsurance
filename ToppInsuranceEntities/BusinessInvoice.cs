@@ -9,8 +9,5 @@ namespace TopInsuranceEntities
     public class BusinessInvoice : Invoice
     {
         public BusinessCustomer BusinessCustomer { get; set; }
-
-        
-
     }
 }
