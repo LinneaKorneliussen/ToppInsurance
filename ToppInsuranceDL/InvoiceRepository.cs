@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using TopInsuranceEntities;
-using Microsoft.EntityFrameworkCore;
 
 namespace TopInsuranceDL
 {
@@ -17,7 +12,7 @@ namespace TopInsuranceDL
             unitOfWork = UnitOfWork.GetInstance();
         }
 
-        #region Calculate and create private Invoice documents
+        #region Calculate and create private Invoice documents Method
         public string CalculateCreatePrivateInvoiceDocuments(PrivateCustomer customer, DateTime invoiceDate)
         {
             if (PInvoiceExists(customer, invoiceDate))
@@ -28,66 +23,45 @@ namespace TopInsuranceDL
             double totalAmount = 0;
 
             var allActiveLifeInsurances = unitOfWork.LifeInsuranceRepository.GetAll()
-                .Where(i => i.PrivateCustomer == customer && i.EndDate >= invoiceDate && i.Status == Status.Aktiv)
+                .Where(i => i.PrivateCustomer == customer && i.StartDate <= invoiceDate && i.Status == Status.Aktiv)
                 .ToList();
 
-            var allActiveSicknessAccidentInsurances = unitOfWork.SicknessAccidentInsuranceRepository.GetAll()
-                .Where(i => i.PrivateCustomer == customer && i.EndDate >= invoiceDate && i.Status == Status.Aktiv)
-                .ToList();
-
-            var allActiveInsurances = allActiveLifeInsurances.Cast<Insurance>()
-                .Concat(allActiveSicknessAccidentInsurances)
-                .ToList();
-
-            var insurancesToBill = new List<Insurance>();
-
-            foreach (var insurance in allActiveInsurances)
+            foreach (var insurance in allActiveLifeInsurances)
             {
-                if (insurance.Paymentform == Paymentform.Månad ||
+                if ((insurance.Paymentform == Paymentform.Månad) ||
                     (insurance.Paymentform != Paymentform.Månad && invoiceDate >= insurance.StartDate && invoiceDate <= insurance.StartDate.AddDays(20)))
                 {
-                    insurancesToBill.Add(insurance);
+                    totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
                 }
             }
 
-            if (!insurancesToBill.Any())
+            var allActiveSicknessAccidentInsurances = unitOfWork.SicknessAccidentInsuranceRepository.GetAll()
+                .Where(i => i.PrivateCustomer == customer && i.StartDate <= invoiceDate && i.Status == Status.Aktiv)
+                .ToList();
+
+            foreach (var insurance in allActiveSicknessAccidentInsurances)
+            {
+                if ((insurance.Paymentform == Paymentform.Månad) ||
+                    (insurance.Paymentform != Paymentform.Månad && invoiceDate >= insurance.StartDate && invoiceDate <= insurance.StartDate.AddDays(20)))
+                {
+                    totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                }
+            }
+
+            if (totalAmount <= 0)
             {
                 return "Inga fakturor att skapa för denna privatkund.";
             }
 
-            var privateInvoice = CreatePrivateInvoice(customer, insurancesToBill, invoiceDate);
-
+            var privateInvoice = CreatePrivateInvoice(customer, totalAmount, invoiceDate);
             SaveInvoicesToJson(new List<Invoice> { privateInvoice });
             unitOfWork.Save();
 
             return $"Fakturaunderlag skapat för {invoiceDate.ToShortDateString()} med totalt belopp: {privateInvoice.InvoiceTotalAmount} SEK.";
         }
 
-        private PrivateInvoice CreatePrivateInvoice(PrivateCustomer customer, List<Insurance> insurances, DateTime invoiceDate)
+        private PrivateInvoice CreatePrivateInvoice(PrivateCustomer customer, double totalAmount, DateTime invoiceDate)
         {
-            double totalAmount = 0;
-
-            foreach (var insurance in insurances)
-            {
-                switch (insurance.Paymentform)
-                {
-                    case Paymentform.Månad:
-                        totalAmount += insurance.Premium;
-                        break;
-                    case Paymentform.Kvartal:
-                        totalAmount += insurance.Premium * 3;
-                        break;
-                    case Paymentform.Halvår:
-                        totalAmount += insurance.Premium * 6;
-                        break;
-                    case Paymentform.År:
-                        totalAmount += insurance.Premium * 12;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(insurance.Paymentform), "Ogiltig betalningsform.");
-                }
-            }
-
             return new PrivateInvoice
             {
                 PrivateCustomer = customer,
@@ -97,52 +71,54 @@ namespace TopInsuranceDL
         }
         #endregion
 
-        #region Calculate and create business Invoice documents
+        #region Calculate and create business Invoice documents Method
         public string CalculateCreateBusinessInvoiceDocuments(BusinessCustomer customer, DateTime invoiceDate)
         {
             if (BInvoiceExists(customer, invoiceDate))
             {
                 return $"Fakturan för företaget {customer.CompanyName} på datumet {invoiceDate.ToShortDateString()} existerar redan.";
             }
+
             double totalAmount = 0;
 
             var allActiveVehicleInsurances = unitOfWork.VehicleInsuranceRepository.GetAll()
-                .Where(i => i.BusinessCustomer == customer && i.EndDate >= invoiceDate && i.Status == Status.Aktiv)
+                .Where(i => i.BusinessCustomer == customer && i.StartDate <= invoiceDate && i.Status == Status.Aktiv)
                 .ToList();
+
+            foreach (var insurance in allActiveVehicleInsurances)
+            {
+                if ((insurance.Paymentform == Paymentform.Månad) ||
+                    (insurance.Paymentform != Paymentform.Månad && invoiceDate >= insurance.StartDate && invoiceDate <= insurance.StartDate.AddDays(20)))
+                {
+                    totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                }
+            }
 
             var allActiveLiabilityInsurances = unitOfWork.LiabilityInsuranceRepository.GetAll()
-                .Where(i => i.BusinessCustomer == customer && i.EndDate >= invoiceDate && i.Status == Status.Aktiv)
+                .Where(i => i.BusinessCustomer == customer && i.StartDate <= invoiceDate && i.Status == Status.Aktiv)
                 .ToList();
 
+            foreach (var insurance in allActiveLiabilityInsurances)
+            {
+                if ((insurance.Paymentform == Paymentform.Månad) ||
+                    (insurance.Paymentform != Paymentform.Månad && invoiceDate >= insurance.StartDate && invoiceDate <= insurance.StartDate.AddDays(20)))
+                {
+                    totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                }
+            }
+
             var allActiveRealEstateInsurances = unitOfWork.RealEstateInsuranceRepository.GetAll()
-                .Where(i => i.BusinessCustomer == customer && i.EndDate >= invoiceDate && i.Status == Status.Aktiv)
+                .Where(i => i.BusinessCustomer == customer && i.StartDate <= invoiceDate && i.Status == Status.Aktiv)
                 .ToList();
 
             foreach (var realEstateInsurance in allActiveRealEstateInsurances)
             {
-                totalAmount += realEstateInsurance.Premium;
+                var totalInventoryPremium = unitOfWork.InventoryRepository.GetAll()
+                    .Where(inv => inv.RealEstateInsuranceId == realEstateInsurance.InsuranceId)
+                    .Sum(inv => inv.InvPremium);
 
-                var inventories = unitOfWork.InventoryRepository.GetAll()
-                    .Where(inv => inv.RealEstateInsuranceId == realEstateInsurance.InsuranceId);
-
-                totalAmount += inventories.Sum(inv => inv.InvPremium);
-            }
-
-            var allActiveInsurances = allActiveVehicleInsurances.Cast<Insurance>()
-                .Concat(allActiveLiabilityInsurances)
-                .Concat(allActiveRealEstateInsurances)
-                .ToList();
-
-            var insurancesToBill = new List<Insurance>();
-
-            foreach (var insurance in allActiveInsurances)
-            {
-                if ((insurance.Paymentform == Paymentform.Månad && insurance.EndDate >= invoiceDate) ||
-                    (insurance.Paymentform != Paymentform.Månad && invoiceDate >= insurance.StartDate && invoiceDate <= insurance.StartDate.AddDays(20)))
-                {
-                    insurancesToBill.Add(insurance);
-                    totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
-                }
+                var combinedPremium = realEstateInsurance.Premium + totalInventoryPremium;
+                totalAmount += CalculateInvoiceAmount(combinedPremium, realEstateInsurance.Paymentform);
             }
 
             if (totalAmount <= 0)
@@ -151,14 +127,11 @@ namespace TopInsuranceDL
             }
 
             var businessInvoice = CreateBusinessInvoice(customer, totalAmount, invoiceDate);
-
             SaveInvoicesToJson(new List<Invoice> { businessInvoice });
             unitOfWork.Save();
 
             return $"Fakturaunderlag skapat för {invoiceDate.ToShortDateString()} med totalt belopp: {businessInvoice.InvoiceTotalAmount} SEK.";
         }
-
-
         private BusinessInvoice CreateBusinessInvoice(BusinessCustomer customer, double totalAmount, DateTime invoiceDate)
         {
             return new BusinessInvoice
@@ -168,7 +141,9 @@ namespace TopInsuranceDL
                 InvoiceDate = invoiceDate 
             };
         }
+        #endregion
 
+        #region Calculate Invoices Method
         private double CalculateInvoiceAmount(double premium, Paymentform paymentForm)
         {
             switch (paymentForm)
@@ -187,14 +162,15 @@ namespace TopInsuranceDL
         }
         #endregion
 
-        #region Check existing invoices
+        #region Check existing invoices Method
         private bool PInvoiceExists(PrivateCustomer customer, DateTime invoiceDate)
         {
             var existingInvoices = LoadInvoicesFromJson();
+
             return existingInvoices.Any(invoice =>
                 invoice.CustomerType == "Privatförsäkring" &&
-                invoice.FirstName == customer.FirstName &&
-                invoice.LastName == customer.LastName &&
+                invoice.Name == $"{customer.FirstName} {customer.LastName}" &&
+                invoice.Number == customer.SSN &&
                 invoice.InvoiceDate.ToString("yyyy-MM-dd") == invoiceDate.ToString("yyyy-MM-dd")
             );
         }
@@ -202,9 +178,13 @@ namespace TopInsuranceDL
         private bool BInvoiceExists(BusinessCustomer customer, DateTime invoiceDate)
         {
             var existingInvoices = LoadInvoicesFromJson();
+
+            string organizationalNumberString = customer.Organizationalnumber.ToString();
+
             return existingInvoices.Any(invoice =>
                 invoice.CustomerType == "Företagsförsäkring" &&
-                invoice.CompanyName == customer.CompanyName &&
+                invoice.Name == customer.CompanyName &&
+                invoice.Number == organizationalNumberString && 
                 invoice.InvoiceDate.ToString("yyyy-MM-dd") == invoiceDate.ToString("yyyy-MM-dd")
             );
         }
@@ -213,7 +193,7 @@ namespace TopInsuranceDL
         #region Save Invoices to JSON
         public void SaveInvoicesToJson(List<Invoice> invoices)
         {
-            string filePath = "invoices.json";
+            string filePath = "InvoicesReport.json";
             List<dynamic> invoicesList = new List<dynamic>();
 
             if (File.Exists(filePath))
@@ -268,7 +248,7 @@ namespace TopInsuranceDL
         #region Load Commission From Json Method
         public List<dynamic> LoadInvoicesFromJson()
         {
-            string filePath = "invoices.json";
+            string filePath = "InvoicesReport.json";
 
             if (!File.Exists(filePath))
             {
@@ -287,7 +267,6 @@ namespace TopInsuranceDL
                 throw new InvalidOperationException("Fel vid deserialisering av JSON-innehållet.", jsonEx);
             }
         }
-
         #endregion
     }
 }

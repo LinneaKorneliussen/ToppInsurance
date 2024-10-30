@@ -240,7 +240,11 @@ namespace TopInsuranceWPF.ViewModels
 
             var resultMessage = invoiceController.CalculateCreatePrivateInvoiceDocuments(SelectedPrivateCustomer, NewInvoiceDate);
 
-            if (resultMessage.Contains("Inga fakturor"))
+            if (resultMessage.Contains("existerar redan"))
+            {
+                MessageBox.Show(resultMessage, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (resultMessage.Contains("Inga fakturor"))
             {
                 MessageBox.Show(resultMessage, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -266,7 +270,11 @@ namespace TopInsuranceWPF.ViewModels
 
             var resultMessage = invoiceController.CalculateCreateBusinessInvoiceDocuments(SelectedBusinessCustomer, NewInvoiceDate);
 
-            if (resultMessage.Contains("Inga fakturor"))
+            if (resultMessage.Contains("existerar redan"))
+            {
+                MessageBox.Show(resultMessage, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (resultMessage.Contains("Inga fakturor"))
             {
                 MessageBox.Show(resultMessage, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
             }
