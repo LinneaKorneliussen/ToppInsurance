@@ -99,7 +99,7 @@
                             <TextBlock Text="{Binding LifeInsurance.EndDate}" Grid.Column="1" Grid.Row="4" Margin="5" />
 
                             <TextBlock Text="Premium:" FontWeight="Bold" Foreground="#2F4F4F" Margin="5" Grid.Row="5"/>
-                            <TextBlock Text="{Binding LifeInsurance.Premium}" Grid.Column="1" Grid.Row="5" Margin="5" />
+                            <TextBlock Text="{Binding LifeInsurance.Premium, StringFormat=F2}" Grid.Column="1" Grid.Row="5" Margin="5" />
 
                             <TextBlock Text="Status:" FontWeight="Bold" Foreground="#2F4F4F" Margin="5" Grid.Row="6"/>
                             <TextBlock Text="{Binding LifeInsurance.Status}" Grid.Column="1" Grid.Row="6" Margin="5" />
@@ -118,8 +118,10 @@
                             <DataGridTextColumn Header="Slutdatum" Binding="{Binding EndDate}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Betalningssätt" Binding="{Binding Paymentform}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Tillval" Binding="{Binding AdditionalInsurance}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Premium" Binding="{Binding Premium}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Premium" Binding="{Binding Premium, StringFormat=F2}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Status" Binding="{Binding Status}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Försäkrades förnamn" Binding="{Binding InsuranceFirstName}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Försäkrades personr" Binding="{Binding InsuranceSSN}" IsReadOnly="True" Width="auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -171,7 +173,7 @@
                             <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Slutdatum" Binding="{Binding EndDate}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Betalningssätt" Binding="{Binding Paymentform}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Premium" Binding="{Binding Premium}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Premium" Binding="{Binding Premium, StringFormat=F2}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Status" Binding="{Binding Status}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Kontaktperson" Binding="{Binding ContactPerson}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Kontaktperson tel" Binding="{Binding ContactPhNo}" IsReadOnly="True" Width="auto"/>
@@ -188,7 +190,7 @@
                             <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Slutdatum" Binding="{Binding EndDate}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Betalningssätt" Binding="{Binding Paymentform}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Premium" Binding="{Binding Premium}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Premium" Binding="{Binding Premium, StringFormat=F2}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Status" Binding="{Binding Status}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Fordons ID" Binding="{Binding Car.VehicleId}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Reg.nr" Binding="{Binding Car.RegistrationNumber}" IsReadOnly="True" Width="auto"/>
@@ -207,7 +209,7 @@
                             <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Slutdatum" Binding="{Binding EndDate}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Betalningssätt" Binding="{Binding Paymentform}" IsReadOnly="True" Width="auto"/>
-                            <DataGridTextColumn Header="Premium" Binding="{Binding Premium}" IsReadOnly="True" Width="auto"/>
+                            <DataGridTextColumn Header="Premium" Binding="{Binding Premium, StringFormat=F2}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Status" Binding="{Binding Status}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Fastighets adress" Binding="{Binding RealEstateAddress}" IsReadOnly="True" Width="auto"/>
                             <DataGridTextColumn Header="Postnr" Binding="{Binding RealEstateZipCode}" IsReadOnly="True" Width="auto"/>
