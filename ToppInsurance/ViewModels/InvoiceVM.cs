@@ -23,7 +23,7 @@ namespace TopInsuranceWPF.ViewModels
 
         public InvoiceVM()
         {
-            NewInvoiceDate = DateTime.Today;
+            NewInvoiceDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));
             businessController = new BusinessController();
             privateController = new PrivateController();
             invoiceController = new InvoiceController();
@@ -344,19 +344,19 @@ namespace TopInsuranceWPF.ViewModels
         private string ValidateField(string columnName)
         {
             string errorMessage = null;
-            var earlierDate = DateTime.Today.AddMonths(-1);
+            var monthLastDay = new DateTime(NewInvoiceDate.Year, NewInvoiceDate.Month, DateTime.DaysInMonth(NewInvoiceDate.Year, NewInvoiceDate.Month));
 
             switch (columnName)
             {
                 case nameof(NewInvoiceDate):
-                    if (NewInvoiceDate < earlierDate)
+                    if (NewInvoiceDate != monthLastDay)
                     {
-                        errorMessage = "Faktureringsunderlag kan maximalt genereras en månad tillbaka i tiden";
+                        errorMessage = "Faktureringsdatumet måste vara den sista dagen i månaden.";
                     }
                     break;
 
                 default:
-                    errorMessage = "Ogiltig egenskap";
+                    errorMessage = "Ogiltig egenskap.";
                     break;
             }
 

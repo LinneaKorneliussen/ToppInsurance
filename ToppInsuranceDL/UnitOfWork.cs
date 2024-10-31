@@ -1,6 +1,7 @@
 ﻿using TopInsuranceEntities;
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace TopInsuranceDL
 {
@@ -42,10 +43,36 @@ namespace TopInsuranceDL
                 instance.InventoryRepository = new Repository<Inventory>(instance.context);
                 instance.CommissionRepository = new Repository<Commission>(instance.context);
                 instance.ProspectRepository = new Repository<ProspectInformation>(instance.context);
-                instance.InvoiceRepository = new Repository<Invoice>(instance.context); 
-
+                instance.InvoiceRepository = new Repository<Invoice>(instance.context);
+                instance.UpdateInsuranceStatuses();
             }
             return instance;
+        }
+
+        private void UpdateInsuranceStatuses()
+        {
+            UpdateStatusForRepository(LiabilityInsuranceRepository);
+            UpdateStatusForRepository(VehicleInsuranceRepository);
+            UpdateStatusForRepository(RealEstateInsuranceRepository);
+            UpdateStatusForRepository(LifeInsuranceRepository);
+            UpdateStatusForRepository(SicknessAccidentInsuranceRepository);
+            context.SaveChanges();
+        }
+
+        private void UpdateStatusForRepository<T>(Repository<T> repository) where T : Insurance
+        {
+            var insurances = repository.GetAll(); 
+
+            foreach (var insurance in insurances)
+            {
+                var originalStatus = insurance.Status;
+                insurance.UpdateStatus();
+
+                if (insurance.Status != originalStatus)
+                {
+                    context.Entry(insurance).State = EntityState.Modified;
+                }
+            }
         }
         private UnitOfWork() {}
         public void Save()

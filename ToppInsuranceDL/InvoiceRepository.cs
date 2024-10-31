@@ -15,6 +15,9 @@ namespace TopInsuranceDL
         #region Calculate and create private Invoice documents Method
         public string CalculateCreatePrivateInvoiceDocuments(PrivateCustomer customer, DateTime invoiceDate)
         {
+            DateTime monthStart = new DateTime(invoiceDate.Year, invoiceDate.Month, 1);
+            DateTime monthEnd = new DateTime(invoiceDate.Year, invoiceDate.Month, DateTime.DaysInMonth(invoiceDate.Year, invoiceDate.Month));
+
             if (PInvoiceExists(customer, invoiceDate))
             {
                 return $"Fakturaunderlag för {customer.FirstName} {customer.LastName} på datumet {invoiceDate.ToShortDateString()} existerar redan.";
@@ -23,28 +26,76 @@ namespace TopInsuranceDL
             double totalAmount = 0;
 
             var allActiveLifeInsurances = unitOfWork.LifeInsuranceRepository.GetAll()
-                .Where(i => i.PrivateCustomer == customer && i.StartDate <= invoiceDate && i.Status == Status.Aktiv)
+                .Where(i => i.PrivateCustomer == customer && i.Status == Status.Aktiv)
                 .ToList();
-
             foreach (var insurance in allActiveLifeInsurances)
             {
-                if ((insurance.Paymentform == Paymentform.Månad) ||
-                    (insurance.Paymentform != Paymentform.Månad && invoiceDate >= insurance.StartDate && invoiceDate <= insurance.StartDate.AddDays(20)))
+                if (insurance.StartDate <= monthEnd && insurance.EndDate >= monthStart)
                 {
-                    totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                    if (insurance.Paymentform == Paymentform.Månad && insurance.StartDate >= monthStart && insurance.StartDate <= monthEnd)
+                    {
+                        totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform) * 2;
+                    }
+                    else if (insurance.Paymentform == Paymentform.Månad && insurance.StartDate < monthStart)
+                    {
+                        totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                    }
+                    else if (insurance.Paymentform == Paymentform.Kvartal && insurance.StartDate < monthStart)
+                    {
+                        if ((monthStart.Month - insurance.StartDate.Month) % 3 == 0)
+                        {
+                            totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                        }
+                    }
+                    else if (insurance.Paymentform == Paymentform.Halvår && insurance.StartDate < monthStart)
+                    {
+                        if ((monthStart.Month - insurance.StartDate.Month) % 6 == 0)
+                        {
+                            totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                        }
+                    }
+                    else if (insurance.Paymentform != Paymentform.Månad && insurance.StartDate >= monthStart && insurance.StartDate <= monthEnd)
+                    {
+                        totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                    }
                 }
-            }
+            
+        }
 
             var allActiveSicknessAccidentInsurances = unitOfWork.SicknessAccidentInsuranceRepository.GetAll()
-                .Where(i => i.PrivateCustomer == customer && i.StartDate <= invoiceDate && i.Status == Status.Aktiv)
+                .Where(i => i.PrivateCustomer == customer && i.Status == Status.Aktiv)
                 .ToList();
 
             foreach (var insurance in allActiveSicknessAccidentInsurances)
             {
-                if ((insurance.Paymentform == Paymentform.Månad) ||
-                    (insurance.Paymentform != Paymentform.Månad && invoiceDate >= insurance.StartDate && invoiceDate <= insurance.StartDate.AddDays(20)))
+                if (insurance.StartDate <= monthEnd && insurance.EndDate >= monthStart)
                 {
-                    totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                    if (insurance.Paymentform == Paymentform.Månad && insurance.StartDate >= monthStart && insurance.StartDate <= monthEnd)
+                    {
+                        totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform) * 2;
+                    }
+                    else if (insurance.Paymentform == Paymentform.Månad && insurance.StartDate < monthStart)
+                    {
+                        totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                    }
+                    else if (insurance.Paymentform == Paymentform.Kvartal && insurance.StartDate < monthStart)
+                    {
+                        if ((monthStart.Month - insurance.StartDate.Month) % 3 == 0)
+                        {
+                            totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                        }
+                    }
+                    else if (insurance.Paymentform == Paymentform.Halvår && insurance.StartDate < monthStart)
+                    {
+                        if ((monthStart.Month - insurance.StartDate.Month) % 6 == 0)
+                        {
+                            totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                        }
+                    }
+                    else if (insurance.Paymentform != Paymentform.Månad && insurance.StartDate >= monthStart && insurance.StartDate <= monthEnd)
+                    {
+                        totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                    }
                 }
             }
 
@@ -81,44 +132,124 @@ namespace TopInsuranceDL
 
             double totalAmount = 0;
 
+            DateTime monthStart = new DateTime(invoiceDate.Year, invoiceDate.Month, 1);
+            DateTime monthEnd = new DateTime(invoiceDate.Year, invoiceDate.Month, DateTime.DaysInMonth(invoiceDate.Year, invoiceDate.Month));
+
             var allActiveVehicleInsurances = unitOfWork.VehicleInsuranceRepository.GetAll()
-                .Where(i => i.BusinessCustomer == customer && i.StartDate <= invoiceDate && i.Status == Status.Aktiv)
+                .Where(i => i.BusinessCustomer == customer && i.Status == Status.Aktiv)
                 .ToList();
 
             foreach (var insurance in allActiveVehicleInsurances)
             {
-                if ((insurance.Paymentform == Paymentform.Månad) ||
-                    (insurance.Paymentform != Paymentform.Månad && invoiceDate >= insurance.StartDate && invoiceDate <= insurance.StartDate.AddDays(20)))
+                if (insurance.StartDate <= monthEnd && insurance.EndDate >= monthStart)
                 {
-                    totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                    if (insurance.Paymentform == Paymentform.Månad && insurance.StartDate >= monthStart && insurance.StartDate <= monthEnd)
+                    {
+                        totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform) * 2;
+                    }
+                    else if (insurance.Paymentform == Paymentform.Månad && insurance.StartDate < monthStart)
+                    {
+                        totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                    }
+                    else if (insurance.Paymentform == Paymentform.Kvartal && insurance.StartDate < monthStart)
+                    {
+                        if ((monthStart.Month - insurance.StartDate.Month) % 3 == 0)
+                        {
+                            totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                        }
+                    }
+                    else if (insurance.Paymentform == Paymentform.Halvår && insurance.StartDate < monthStart)
+                    {
+                        if ((monthStart.Month - insurance.StartDate.Month) % 6 == 0)
+                        {
+                            totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                        }
+                    }
+                    else if (insurance.Paymentform != Paymentform.Månad && insurance.StartDate >= monthStart && insurance.StartDate <= monthEnd)
+                    {
+                        totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                    }
                 }
             }
 
             var allActiveLiabilityInsurances = unitOfWork.LiabilityInsuranceRepository.GetAll()
-                .Where(i => i.BusinessCustomer == customer && i.StartDate <= invoiceDate && i.Status == Status.Aktiv)
+                .Where(i => i.BusinessCustomer == customer && i.Status == Status.Aktiv)
                 .ToList();
 
             foreach (var insurance in allActiveLiabilityInsurances)
             {
-                if ((insurance.Paymentform == Paymentform.Månad) ||
-                    (insurance.Paymentform != Paymentform.Månad && invoiceDate >= insurance.StartDate && invoiceDate <= insurance.StartDate.AddDays(20)))
+                if (insurance.StartDate <= monthEnd && insurance.EndDate >= monthStart)
                 {
-                    totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                    if (insurance.Paymentform == Paymentform.Månad && insurance.StartDate >= monthStart && insurance.StartDate <= monthEnd)
+                    {
+                        totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform) * 2;
+                    }
+                    else if (insurance.Paymentform == Paymentform.Månad && insurance.StartDate < monthStart)
+                    {
+                        totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                    }
+                    else if (insurance.Paymentform == Paymentform.Kvartal && insurance.StartDate < monthStart)
+                    {
+                        if ((monthStart.Month - insurance.StartDate.Month) % 3 == 0)
+                        {
+                            totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                        }
+                    }
+                    else if (insurance.Paymentform == Paymentform.Halvår && insurance.StartDate < monthStart)
+                    {
+                        if ((monthStart.Month - insurance.StartDate.Month) % 6 == 0)
+                        {
+                            totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                        }
+                    }
+                    else if (insurance.Paymentform != Paymentform.Månad && insurance.StartDate >= monthStart && insurance.StartDate <= monthEnd)
+                    {
+                        totalAmount += CalculateInvoiceAmount(insurance.Premium, insurance.Paymentform);
+                    }
                 }
             }
 
             var allActiveRealEstateInsurances = unitOfWork.RealEstateInsuranceRepository.GetAll()
-                .Where(i => i.BusinessCustomer == customer && i.StartDate <= invoiceDate && i.Status == Status.Aktiv)
+                .Where(i => i.BusinessCustomer == customer && i.Status == Status.Aktiv)
                 .ToList();
 
             foreach (var realEstateInsurance in allActiveRealEstateInsurances)
             {
-                var totalInventoryPremium = unitOfWork.InventoryRepository.GetAll()
-                    .Where(inv => inv.RealEstateInsuranceId == realEstateInsurance.InsuranceId)
-                    .Sum(inv => inv.InvPremium);
+                if (realEstateInsurance.StartDate <= monthEnd && realEstateInsurance.EndDate >= monthStart)
+                {
+                    var totalInventoryPremium = unitOfWork.InventoryRepository.GetAll()
+                        .Where(inv => inv.RealEstateInsuranceId == realEstateInsurance.InsuranceId)
+                        .Sum(inv => inv.InvPremium);
 
-                var combinedPremium = realEstateInsurance.Premium + totalInventoryPremium;
-                totalAmount += CalculateInvoiceAmount(combinedPremium, realEstateInsurance.Paymentform);
+                    var combinedPremium = realEstateInsurance.Premium + totalInventoryPremium;
+
+                    if (realEstateInsurance.Paymentform == Paymentform.Månad && realEstateInsurance.StartDate >= monthStart && realEstateInsurance.StartDate <= monthEnd)
+                    {
+                        totalAmount += CalculateInvoiceAmount(combinedPremium, realEstateInsurance.Paymentform) * 2;
+                    }
+                    else if (realEstateInsurance.Paymentform == Paymentform.Månad && realEstateInsurance.StartDate < monthStart)
+                    {
+                        totalAmount += CalculateInvoiceAmount(combinedPremium, realEstateInsurance.Paymentform);
+                    }
+                    else if (realEstateInsurance.Paymentform == Paymentform.Kvartal && realEstateInsurance.StartDate < monthStart)
+                    {
+                        if ((monthStart.Month - realEstateInsurance.StartDate.Month) % 3 == 0)
+                        {
+                            totalAmount += CalculateInvoiceAmount(combinedPremium, realEstateInsurance.Paymentform);
+                        }
+                    }
+                    else if (realEstateInsurance.Paymentform == Paymentform.Halvår && realEstateInsurance.StartDate < monthStart)
+                    {
+                        if ((monthStart.Month - realEstateInsurance.StartDate.Month) % 6 == 0)
+                        {
+                            totalAmount += CalculateInvoiceAmount(combinedPremium, realEstateInsurance.Paymentform);
+                        }
+                    }
+                    else if (realEstateInsurance.Paymentform != Paymentform.Månad && realEstateInsurance.StartDate >= monthStart && realEstateInsurance.StartDate <= monthEnd)
+                    {
+                        totalAmount += CalculateInvoiceAmount(combinedPremium, realEstateInsurance.Paymentform);
+                    }
+                }
             }
 
             if (totalAmount <= 0)
@@ -132,6 +263,7 @@ namespace TopInsuranceDL
 
             return $"Fakturaunderlag skapat för {invoiceDate.ToShortDateString()} med totalt belopp: {businessInvoice.InvoiceTotalAmount} SEK.";
         }
+        
         private BusinessInvoice CreateBusinessInvoice(BusinessCustomer customer, double totalAmount, DateTime invoiceDate)
         {
             return new BusinessInvoice

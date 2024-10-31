@@ -44,7 +44,7 @@ namespace TopInsuranceEntities
             {
                 Status = Status.Aktiv;  
             }
-            else if (today > EndDate)
+            else if (today >= EndDate)
             {
                 Status = Status.Avslutad; 
             }
