@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TopInsuranceEntities.BusinessCustomer">
+    <Position X="15.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAQAAAAAAAAAQAAAAAAAAAACAIAEAAAAAAAAAAgAA=</HashCode>
+      <FileName>BusinessCustomer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TopInsuranceEntities.BusinessInvoice" Collapsed="true">
+    <Position X="16.25" Y="16.25" Width="1.5" />
+    <AssociationLine Name="BusinessCustomer" Type="TopInsuranceEntities.BusinessCustomer" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="17.75" Y="16.596" />
+        <Point X="18.125" Y="16.596" />
+        <Point X="18.125" Y="11.533" />
+        <Point X="16.75" Y="11.533" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessInvoice.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="BusinessCustomer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TopInsuranceEntities.CityRiskZoneManager">
+    <Position X="17.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CityRiskZoneManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TopInsuranceEntities.Commission" Collapsed="true">
+    <Position X="7.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACABgCAAAAAAAAAAAAEACAAA=</HashCode>
+      <FileName>Commission.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Employee" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TopInsuranceEntities.Employee">
+    <Position X="10.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EECAAAAAAAACABQAAAAAAAAQCCgAAEABAAAAEAAggIA=</HashCode>
+      <FileName>Employee.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="EmployeeRole" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TopInsuranceEntities.EmployeeSalesSummary" Collapsed="true">
+    <Position X="7.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAEBAAAAAAAAAAQAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EmployeeSalesSummary.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Employee" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TopInsuranceEntities.Insurance">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAMAAAAAAAAAAAAAAAgCAAAAAEAAwAAAEECEAA=</HashCode>
+      <FileName>Insurance.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Status" />
+      <Property Name="Paymentform" />
+      <Property Name="Type" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TopInsuranceEntities.Inventory" Collapsed="true">
+    <Position X="22" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAEAAQAAAgIAAEAAAAAAEAAAAAQAAA=</HashCode>
+      <FileName>Inventory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="RealEstateInsurance" />
+      <Property Name="InventoryType" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TopInsuranceEntities.Invoice">
+    <Position X="14.75" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAQAAAAAAAA=</HashCode>
+      <FileName>Invoice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TopInsuranceEntities.LiabilityInsurance">
+    <Position X="10.75" Y="4.75" Width="1.5" />
+    <AssociationLine Name="BusinessCustomer" Type="TopInsuranceEntities.BusinessCustomer" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.625" Y="6.966" />
+        <Point X="11.625" Y="7.311" />
+        <Point X="16.375" Y="7.311" />
+        <Point X="16.375" Y="10" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AQAAAABQAAAAAAAABAAAAAAAACAAAAAAABIAAAAAAAA=</HashCode>
+      <FileName>LiabilityInsurance.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Deductible" />
+      <Property Name="BusinessCustomer" />
+      <Property Name="InsuranceAmount" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TopInsuranceEntities.LifeInsurance">
+    <Position X="4.25" Y="5.25" Width="1.5" />
+    <AssociationLine Name="PrivateCustomer" Type="TopInsuranceEntities.PrivateCustomer" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.938" Y="7.278" />
+        <Point X="4.938" Y="8.849" />
+        <Point X="12.875" Y="8.849" />
+        <Point X="12.875" Y="10.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAYAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>LifeInsurance.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PrivateCustomer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TopInsuranceEntities.Person" Collapsed="true">
+    <Position X="13.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAMAAAAQAAAAAAAAAACAAAAAwAAAAg=</HashCode>
+      <FileName>Person.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TopInsuranceEntities.PrivateCustomer">
+    <Position X="12.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAABAAAAAAAAAACAAQAIAAAAAAAAAAAA=</HashCode>
+      <FileName>PrivateCustomer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TopInsuranceEntities.PrivateInvoice" Collapsed="true">
+    <Position X="13" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>PrivateInvoice.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PrivateCustomer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TopInsuranceEntities.ProspectInformation">
+    <Position X="10" Y="15.5" Width="1.5" />
+    <AssociationLine Name="BusinessCustomer" Type="TopInsuranceEntities.BusinessCustomer" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.5" Y="15.875" />
+        <Point X="13.635" Y="15.875" Type="JumpStart" />
+        <Point X="13.802" Y="15.875" Type="JumpEnd" />
+        <Point X="15.812" Y="15.875" />
+        <Point X="15.812" Y="12.78" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="PrivateCustomer" Type="TopInsuranceEntities.PrivateCustomer" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.5" Y="15.688" />
+        <Point X="13.062" Y="15.688" />
+        <Point X="13.062" Y="12.654" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAgAAAAAAAAAAAAAACAAAAAAAIgIQAAECAAA=</HashCode>
+      <FileName>ProspectInformation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="BusinessCustomer" />
+      <Property Name="Employee" />
+      <Property Name="PrivateCustomer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TopInsuranceEntities.SicknessAccidentInsurance">
+    <Position X="6.5" Y="4.75" Width="1.5" />
+    <AssociationLine Name="PrivateCustomer" Type="TopInsuranceEntities.PrivateCustomer" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.25" Y="7.342" />
+        <Point X="7.25" Y="7.911" />
+        <Point X="13.25" Y="7.911" />
+        <Point X="13.25" Y="10.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAACAAAAYAAAAAAAAAAAAEAEAQAAAAAgA=</HashCode>
+      <FileName>SicknessAccidentInsurance.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AdditionalInsurance" />
+      <Property Name="PrivateCustomer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TopInsuranceEntities.Vehicle" Collapsed="true">
+    <Position X="17.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAgEAACAAAAAABAAA=</HashCode>
+      <FileName>Vehicle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TopInsuranceEntities.VehicleInsurance">
+    <Position X="14.75" Y="4.75" Width="1.5" />
+    <AssociationLine Name="BusinessCustomer" Type="TopInsuranceEntities.BusinessCustomer" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="16.25" Y="6.938" />
+        <Point X="16.625" Y="6.938" />
+        <Point X="16.625" Y="10" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.11" Y="0.047" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAQCAABQAAQAAAAACAAAAAAAAEAAgAAAAAIAAAAAAgA=</HashCode>
+      <FileName>VehicleInsurance.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Car" />
+      <Property Name="BusinessCustomer" />
+      <Property Name="CoverageType" />
+      <Property Name="RiskZone" />
+      <Property Name="DeductibleVehicle" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TopInsuranceEntities.RealEstateInsurance">
+    <Position X="19.5" Y="4.5" Width="1.5" />
+    <AssociationLine Name="BusinessCustomer" Type="TopInsuranceEntities.BusinessCustomer" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20.25" Y="7.28" />
+        <Point X="20.25" Y="10.5" />
+        <Point X="16.75" Y="10.5" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAIAAAAQAAAAAAAAAAAAAAIEAgAAAAAAAAIAAAACEAA=</HashCode>
+      <FileName>RealEstateInsurance.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="BusinessCustomer" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="TopInsuranceEntities.AdditionalInsurance" Collapsed="true">
+    <Position X="9" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAAAAAAEAAAAg=</HashCode>
+      <FileName>AdditionalInsurance.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TopInsuranceEntities.CoverageType" Collapsed="true">
+    <Position X="17.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAgAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CoverageType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TopInsuranceEntities.DeductibleLiability" Collapsed="true">
+    <Position X="13" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAgAAAAAIAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>DeductibleLiability.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TopInsuranceEntities.DeductibleVehicle" Collapsed="true">
+    <Position X="17.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>DeductibleVehicle.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TopInsuranceEntities.EmployeeRole" Collapsed="true">
+    <Position X="7.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAgAAAAAAAgQA=</HashCode>
+      <FileName>EmployeeRole.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TopInsuranceEntities.InsuranceAmount" Collapsed="true">
+    <Position X="13" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAQAAAAAAAAIAAA=</HashCode>
+      <FileName>InsuranceAmount.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TopInsuranceEntities.InsuranceType" Collapsed="true">
+    <Position X="14" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAEAAAAAAAAQABAAAAAAAEAAAAAAAACAAAA=</HashCode>
+      <FileName>InsuranceType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TopInsuranceEntities.InventoryType" Collapsed="true">
+    <Position X="22" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>InventoryType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TopInsuranceEntities.Paymentform" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAIAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Paymentform.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TopInsuranceEntities.RiskZone" Collapsed="true">
+    <Position X="17.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAEAAAAAAACAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>RiskZone.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TopInsuranceEntities.Status" Collapsed="true">
+    <Position X="14" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQCAAAAA=</HashCode>
+      <FileName>Status.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="8.77" />
+</ClassDiagram>
