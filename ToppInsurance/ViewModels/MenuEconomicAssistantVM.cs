@@ -107,7 +107,7 @@ namespace TopInsuranceWPF.ViewModels
 
         private void ShowInvoiceBTN()
         {
-            CurrentViewModel = new Invoice();
+            CurrentViewModel = new InvoiceView();
         }
 
         private void LogOffBTN()

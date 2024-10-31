@@ -156,10 +156,10 @@
                     Width="130" HorizontalAlignment="Left" Margin="170 5 0 0" />
 
                 <Button Content="Återställ fält" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Left" Width="100"
-                        Height="20" Margin="210 10 10 10" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
+                        Height="20" Margin="180 10 10 10" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
 
-                <Button Content="Spara ändringar" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Right"
-                        Command="{Binding AddRealEstateInsuranceCommand}" Height="20" Width="120" Margin="10" 
+                <Button Content="Registrera försäkring" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Right"
+                        Command="{Binding AddRealEstateInsuranceCommand}" Height="20" Width="150" Margin="10" 
                         Background="#223A2A" Foreground="White"/>
             </Grid>
         </StackPanel>

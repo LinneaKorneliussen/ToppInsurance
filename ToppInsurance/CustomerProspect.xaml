@@ -101,7 +101,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Content="Spara ändringar" Command="{Binding AddPCNoteCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
+                        <Button Content="Lägg till notering" Command="{Binding AddPCNoteCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
                     </StackPanel>
 
                 </StackPanel>
@@ -174,7 +174,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Content="Spara ändringar" Command="{Binding AddBCNoteCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
+                        <Button Content="Lägg till notering" Command="{Binding AddBCNoteCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
                     </StackPanel>
 
                 </StackPanel>

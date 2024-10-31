@@ -111,7 +111,7 @@
                                 </StackPanel>
                             </Button>
 
-                            <Button Content="Spara ändringar" Command="{Binding AddCommissionCommand}" Margin="5" Background="#223A2A" Foreground="White"/>
+                            <Button Content="Lägg till provision" Command="{Binding AddCommissionCommand}" Margin="5" Background="#223A2A" Foreground="White"/>
                         </StackPanel>
 
 

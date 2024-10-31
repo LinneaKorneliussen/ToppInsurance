@@ -111,7 +111,7 @@
 
             <StackPanel Grid.Row="9" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                 <Button Content="Återställ fält" Width="100" Margin="5" Background="#223A2A" Foreground="White" Command="{Binding ClearCommand}"/>
-                <Button Content="Spara ändringar" Command="{Binding AddLifeInsuranceCommand}" Width="120" Margin="5" Background="#223A2A" Foreground="White"/>
+                <Button Content="Registrera försäkring" Command="{Binding AddLifeInsuranceCommand}" Width="150" Margin="5" Background="#223A2A" Foreground="White"/>
             </StackPanel>
         </StackPanel>
     </Grid>

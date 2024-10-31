@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="TopInsuranceWPF.Invoice"
+﻿<UserControl x:Class="TopInsuranceWPF.InvoiceView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:TopInsuranceWPF.ViewModels"
@@ -86,7 +86,7 @@
                                 <TextBlock Text="ÅTERSTÄLL FÄLT" Margin="3,0,0,0" VerticalAlignment="Center" FontSize="10"/>
                             </StackPanel>
                         </Button>
-                        <Button Content="Spara" Command="{Binding AddPrivateInvoiceCommand}" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                        <Button Content="Lägg till fakturaunderlag" Command="{Binding AddPrivateInvoiceCommand}" Width="170" Margin="5" Background="#223A2A" Foreground="White"/>
                     </StackPanel>
                 </StackPanel>
             </TabItem>
@@ -144,7 +144,7 @@
                                 <TextBlock Text="ÅTERSTÄLL FÄLT" Margin="3,0,0,0" VerticalAlignment="Center" FontSize="10"/>
                             </StackPanel>
                         </Button>
-                        <Button Content="Spara" Command="{Binding AddBusinessInvoiceCommand}" Width="100" Margin="5" Background="#223A2A" Foreground="White"/>
+                        <Button Content="Lägg till fakturaunderlag" Command="{Binding AddBusinessInvoiceCommand}" Width="170" Margin="5" Background="#223A2A" Foreground="White"/>
                     </StackPanel>
                 </StackPanel>
             </TabItem>

@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace TopInsuranceWPF
 {
     /// <summary>
-    /// Interaction logic for Invoice.xaml
+    /// Interaction logic for InvoiceView.xaml
     /// </summary>
-    public partial class Invoice : UserControl
+    public partial class InvoiceView : UserControl
     {
-        public Invoice()
+        public InvoiceView()
         {
             InitializeComponent();
         }

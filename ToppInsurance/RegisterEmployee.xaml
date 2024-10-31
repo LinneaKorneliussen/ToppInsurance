@@ -107,18 +107,18 @@
                 </Grid>
 
                 <StackPanel Grid.Row="2">
-                    <Label Content="Kundregister" FontWeight="Bold" FontSize="14" />
+                    <Label Content="Anställda" FontWeight="Bold" FontSize="14" Margin="20,10,10,0"/>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <DataGrid Name="privateDataGrid" AutoGenerateColumns="False" Height="200" ItemsSource="{Binding Employees}" >
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Agenturnummer" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="120"/>
-                                <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="120"/>
-                                <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="120"/>
-                                <DataGridTextColumn Header="Telefonnummer" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="150"/>
-                                <DataGridTextColumn Header="Emailadress" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="150"/>
-                                <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="*"/>
-                                <DataGridTextColumn Header="Postnummer" Binding="{Binding Zipcode}" IsReadOnly="True" Width="*"/>
-                                <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="*"/>
+                                <DataGridTextColumn Header="Agenturnummer" Binding="{Binding AgencyNumber}" IsReadOnly="True" Width="auto"/>
+                                <DataGridTextColumn Header="Förnamn" Binding="{Binding FirstName}" IsReadOnly="True" Width="auto"/>
+                                <DataGridTextColumn Header="Efternamn" Binding="{Binding LastName}" IsReadOnly="True" Width="auto"/>
+                                <DataGridTextColumn Header="Telefonnummer" Binding="{Binding Phonenumber}" IsReadOnly="True" Width="auto"/>
+                                <DataGridTextColumn Header="Emailadress" Binding="{Binding Emailaddress}" IsReadOnly="True" Width="auto"/>
+                                <DataGridTextColumn Header="Adress" Binding="{Binding Address}" IsReadOnly="True" Width="auto"/>
+                                <DataGridTextColumn Header="Postnummer" Binding="{Binding Zipcode}" IsReadOnly="True" Width="auto"/>
+                                <DataGridTextColumn Header="Stad" Binding="{Binding City}" IsReadOnly="True" Width="auto"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </ScrollViewer>
