@@ -5,6 +5,12 @@ using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// The MenuResponsibleVM class serves as the view model for the VD and the Sales manager in the TopInsurance WPF application, 
+    /// inheriting from ObservableObject to manage property change notifications. It initializes with an Employee object to 
+    /// populate user details such as first name, last name, and role. The class manages the CurrentViewModel property to enable 
+    /// navigation between different views, including statistics, customer prospects, and insurance overviews, based on user commands.
+    /// </summary>
     public class MenuResponsibleVM : ObservableObject
     {
         public MenuResponsibleVM(Employee user)

@@ -5,6 +5,12 @@ using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// The MenuSalesAssistantVM class functions as the view model for the sales assistant in the TopInsurance WPF application,
+    /// inheriting from ObservableObject to facilitate property change notifications. It initializes with an Employee object to populate 
+    /// user details such as first name, last name, and role. The class manages the CurrentViewModel property to switch between various views, 
+    /// including customer registration and insurance types, based on user commands.
+    /// </summary>
     public class MenuSalesAssistantVM : ObservableObject
     {
         public MenuSalesAssistantVM(Employee user)

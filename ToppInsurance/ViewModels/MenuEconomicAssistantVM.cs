@@ -5,6 +5,12 @@ using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// The MenuEconomicAssistantVM class serves as the view model for the economic assistant in the TopInsurance WPF application, 
+    /// inheriting from ObservableObject to handle property change notifications. It initializes with an Employee object to populate user information,
+    /// including first name, last name, and role. The class manages the CurrentViewModel property to facilitate switching between different views based on user commands, 
+    /// such as displaying statistics, commissions, invoices, and insurance overviews.
+    /// </summary>
     public class MenuEconomicAssistantVM : ObservableObject
     {
         public MenuEconomicAssistantVM(Employee user)

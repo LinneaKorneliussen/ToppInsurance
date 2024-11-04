@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace TopInsuranceWPF.Commands
 {
+    /// <summary>
+    /// The RelayCommand class implements the CommandBase abstract class and serves as a command handler in WPF applications, 
+    /// facilitating the execution of actions in response to user interface events. It encapsulates the logic for command execution and determining whether a command can be executed. 
+    /// The class provides constructors that accept an Action delegate for the command's execution logic and an optional Func<bool> delegate to evaluate if the command can be executed.
+    /// Additionally, the RelayCommand<T> class extends RelayCommand to support commands that require a parameter of a specific type.
+    /// It allows the execution of an Action<T> and the evaluation of a corresponding Func<T, bool> to check the command's executability based on the provided parameter. 
+    /// This structure enhances the flexibility and reusability of command logic within the MVVM (Model-View-ViewModel) pattern.
+    /// </summary>
     public class RelayCommand : CommandBase
     {
         private readonly Action? _execute = null;

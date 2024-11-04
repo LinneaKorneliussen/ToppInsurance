@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceBL;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using TopInsuranceEntities;
 using TopInsuranceWPF.Commands;
 using System.Windows;
 
-
-
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// The MenuSalespersonVM class acts as the view model for the salesperson in the TopInsurance WPF application, inheriting from ObservableObject 
+    /// to facilitate property change notifications. It is initialized with an Employee object to set user details, including first name, last name, and role. 
+    /// The class manages the CurrentViewModel property to switch between various views related to customer management and insurance products based on user commands.
+    /// </summary>
     public class MenuSalespersonVM : ObservableObject
     {
         public MenuSalespersonVM(Employee user)

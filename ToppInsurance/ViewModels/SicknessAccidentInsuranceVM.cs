@@ -1,9 +1,4 @@
 ﻿using TopInsuranceWPF.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TopInsuranceEntities;
 using TopInsuranceBL;
 using System.Collections.ObjectModel;
@@ -14,6 +9,13 @@ using System.Text.RegularExpressions;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// The SicknessAccidentInsuranceVM class is a view model for managing sickness and accident insurance in the TopInsurance WPF application.
+    /// It implements IDataErrorInfo for input validation and includes properties for customer search, policy start and end dates, payment methods,
+    /// and insurance options. The class supports commands for finding customers, adding insurance for adults and children, and clearing fields. 
+    /// Validation checks ensure correct date ranges and required fields are filled before processing insurance policies. 
+    /// Overall, it enhances user interaction and data integrity for insurance management.
+    /// </summary>
     public class SicknessAccidentInsuranceVM : ObservableObject, IDataErrorInfo
     {
         private SicknessAccidentController sicknessAccidentController;
