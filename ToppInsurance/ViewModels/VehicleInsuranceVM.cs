@@ -9,6 +9,15 @@ using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// ViewModel for handling vehicle insurance in the Top Insurance WPF application.
+    /// This class connects the user interface to business logic for getting vehicle insurance 
+    /// for business customers. It manages customer details, vehicle information, and insurance options.
+    /// The class provides commands to add insurance, search for customers, and clear form fields. 
+    /// This class checks user input for correctness, ensuring all required fields are filled out 
+    /// and validated. This includes verifying registration numbers and payment dates.
+    /// The ViewModel can be used in a WPF form to help users enter details for vehicle insurance policies.
+    /// </summary>
     public class VehicleInsuranceVM : ObservableObject, IDataErrorInfo
     {
         private VehicleController vehicleController;

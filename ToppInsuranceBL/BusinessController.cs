@@ -3,6 +3,11 @@ using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
+    /// <summary>
+    /// BusinessController class manages business customer-related operations for the TopInsurance system.
+    /// This class connects the presentation layer with the data access layer by providing methods for creating, 
+    /// updating, searching, and retrieving business customers and checking the uniqueness of organizational numbers.
+    /// </summary>
     public class BusinessController
     {
         private BusinessRepository businessRepository;

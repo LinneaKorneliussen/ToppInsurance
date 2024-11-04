@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceDL;
+﻿using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
+    /// <summary>
+    /// InsuOverviewController class provides methods to retrieve insurance details for both private and 
+    /// business customers. It allows access to different types of insurances, such as life, sickness, 
+    /// liability, vehicle and real estate insurances, depending on the customer type. This class acts as an intermediary 
+    /// between the presentation layer and data access layer for managing and viewing insurance data.
+    /// </summary>
     public class InsuOverviewController
     {
         private InsuOverviewRepository insuOverviewRepository;

@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceDL;
+﻿using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
+    /// <summary>
+    /// LifeInsuranceController class provides methods for managing life insurance policies for private customers.
+    /// It includes functionality to retrieve available base amounts, check if a customer already holds a life insurance policy, 
+    /// and add new life insurance policies with relevant details such as policy dates, base amount, and payment options.
+    /// This class acts as an intermediary between the presentation layer and data access layer for handling life insurances.
+    /// </summary>
     public class LifeInsuranceController
     {
         private LifeInsuranceRepository lifeInsuranceRepository;

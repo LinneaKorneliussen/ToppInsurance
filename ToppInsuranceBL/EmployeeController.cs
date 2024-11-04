@@ -1,9 +1,13 @@
-﻿using System.Numerics;
-using TopInsuranceDL;
+﻿using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
+    /// <summary>
+    /// EmployeeController class provides methods for adding new employees, ensuring unique SSNs, retrieving all employees, 
+    /// and searching employees by last name or agency number. This class acts as an intermediary 
+    /// between the presentation layer and data access layer for handling employees.
+    /// </summary>
     public class EmployeeController
     {
         private EmployeeRepository employeeRepository;

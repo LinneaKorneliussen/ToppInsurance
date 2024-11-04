@@ -1,14 +1,13 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceDL;
+﻿using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
+    /// <summary>
+    /// CommissionController class provides methods to calculate and create commissions for employees 
+    /// over a specified date range and to retrieve all existing commission records. 
+    /// This class acts as an intermediary between the presentation layer and data access layer for handling commissions.
+    /// </summary>
     public class CommissionController
     {
         private CommissionRepository commissionRepository;

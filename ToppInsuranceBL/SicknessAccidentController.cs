@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceDL;
+﻿using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
+    /// <summary>
+    /// SicknessAccidentController class provides methods for managing sickness and accident insurance for private customers.
+    /// It allows retrieval of base amounts for both adults and children, as well as the addition of new insurance policies.
+    /// This class acts as an intermediary between the presentation layer and the data access layer for handling sickness and accident insurance.
+    /// </summary>
     public class SicknessAccidentController
     {
         private SicknessAccidentRepository sicknessAccidentRepository;

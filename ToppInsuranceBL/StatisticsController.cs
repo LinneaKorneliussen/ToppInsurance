@@ -1,14 +1,14 @@
-﻿using ClosedXML.Excel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceDL;
+﻿using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
+    /// <summary>
+    /// StatisticsController class provides methods for managing sales data related to employees.
+    /// It allows retrieval of sales data for individual employees and for all employees in a selected year,
+    /// as well as the ability to save this sales data to an Excel file. 
+    /// This class acts as an intermediary between the presentation layer and the data access layer for handling sales statistics.
+    /// </summary>
     public class StatisticsController
     {
         private StatisticsRepository statisticsRepository;

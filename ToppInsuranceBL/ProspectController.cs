@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceDL;
+﻿using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
+    /// <summary>
+    /// ProspectController class provides methods for managing prospects and their associated notes for both 
+    /// private and business customers. It facilitates the addition of notes, retrieval of prospects with notes, 
+    /// and searching for private and business customer prospects. This class acts as an intermediary between
+    /// the presentation layer and data access layer for handling customer prospects.
+    /// </summary>
     public class ProspectController
     {
         private ProspectRepository prospectRepository;

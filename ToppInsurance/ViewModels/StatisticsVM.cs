@@ -10,6 +10,16 @@ using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// ViewModel for managing statistics in the Top Insurance WPF application.
+    /// This class handles the display and processing of sales data for employees, including both private and 
+    /// business insurance statistics. It initializes necessary controllers for data retrieval and binds the data 
+    /// to visual elements like charts. The ViewModel supports commands to find employees, save sales data to 
+    /// Excel, and load sales data based on user selections.
+    /// The class maintains properties for employee selection, sales summaries and the current year, and it 
+    /// validates user input. It also features observable collections for real-time updates in the UI and 
+    /// retrieves data for visualization using LiveCharts.
+    /// </summary>
     public class StatisticsVM : ObservableObject
     {
         private StatisticsController statisticsController;

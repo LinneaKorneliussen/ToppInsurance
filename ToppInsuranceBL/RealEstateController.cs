@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceDL;
+﻿using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
+    /// <summary>
+    /// RealEstateController class provides methods for managing real estate insurance for business customers. 
+    /// It allows for the addition of real estate insurance policies, including details such as coverage type, 
+    /// payment form, and property information. This class acts as an intermediary between the presentation layer 
+    /// and the data access layer for handling real estate insurance.
+    /// </summary>
     public class RealEstateController
     {
         private RealEstateRepository realEstateRepository;

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceDL;
+﻿using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
+    /// <summary>
+    /// VehicleController class provides methods for managing vehicle insurance for business customers.
+    /// It allows the addition of vehicle insurance policies by interfacing with the VehicleRepository.
+    /// This class acts as an intermediary between the presentation layer and the data access layer for handling vehicle insurance.
+    /// </summary>
     public class VehicleController
     {
         private VehicleRepository vehicleRepository;

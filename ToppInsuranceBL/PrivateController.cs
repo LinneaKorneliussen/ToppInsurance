@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceDL;
+﻿using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
+    /// <summary>
+    /// PrivateController class provides methods for managing private customers in the system.
+    /// It allows checking the uniqueness of social security numbers (SSN), searching for private customers, 
+    /// registering new private customers, retrieving all private customers and updating existing customer details.
+    /// This class acts as an intermediary between the presentation layer and data access layer for handling private customer records.
+    /// </summary>
     public class PrivateController
     {
         private PrivateRepository privateRepository;

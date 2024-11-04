@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceDL;
+﻿using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
+    /// <summary>
+    /// InvoiceController class provides methods for calculating and creating invoice documents for private and 
+    /// business customers and loading invoices from JSON. This class acts as an intermediary 
+    /// between the presentation layer and data access layer for handling invoices.
+    /// </summary>
     public class InvoiceController
     {
+       
         private InvoiceRepository invoiceRepository;
 
         public InvoiceController() 

@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceDL;
+﻿using TopInsuranceDL;
 using TopInsuranceEntities;
 
 namespace TopInsuranceBL
 {
+    /// <summary>
+    /// LiabilityController class provides methods for managing liability insurance policies for business customers.
+    /// This class allows adding new liability insurance policies, capturing essential details such as customer information, 
+    /// coverage dates, payment method, and policy specifications. This class acts as an intermediary 
+    /// between the presentation layer and data access layer for handling liability insurance records.
+    /// </summary>
     public class LiabilityController
     {
         private LiabilityRepository liabilityRepository;
