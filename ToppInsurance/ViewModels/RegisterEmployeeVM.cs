@@ -8,9 +8,12 @@ using System.Windows;
 using System.Text.RegularExpressions;
 
 
-
 namespace TopInsuranceWPF.ViewModels
 {
+    // ViewModel for managing the registration of new employees in the TopInsurance application.
+    // This class handles user input for employee details, validation, and the addition of new employees to the system.
+    // It utilizes the EmployeeController for data operations and implements IDataErrorInfo for validation feedback.
+
     public class RegisterEmployeeVM : ObservableObject, IDataErrorInfo
     {
         private EmployeeController employeeController;

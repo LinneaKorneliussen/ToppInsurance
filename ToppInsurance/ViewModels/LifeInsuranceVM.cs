@@ -5,10 +5,22 @@ using TopInsuranceEntities;
 using TopInsuranceBL;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Controls;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// The LifeInsuranceVM class serves as the ViewModel for managing life insurance operations 
+    /// within the TopInsurance WPF application. It implements the IDataErrorInfo interface for validation and 
+    /// the RelayCommand for handling user commands related to searching for private customers, adding 
+    /// life insurance policies, and clearing input fields. The class utilizes the LifeInsuranceController and 
+    /// PrivateController to interact with the data layer, providing functionality to manage life insurance 
+    /// details including customer selection, policy dates, payment forms, and base amounts. It also 
+    /// maintains observable collections for displaying private customer data, ensuring a responsive UI 
+    /// that adheres to the MVVM design pattern for a clean separation of concerns and improved user 
+    /// experience. The class includes comprehensive validation logic for ensuring that all required 
+    /// fields are filled correctly before processing insurance applications.
+    /// </summary>
+    
     public class LifeInsuranceVM : ObservableObject, IDataErrorInfo
 
     {

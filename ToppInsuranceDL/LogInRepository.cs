@@ -3,6 +3,11 @@
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    ///LogInRepository handles user login and authentication based on agency number and password.
+    ///If the login is successful, the logged-in user is stored in the LoggedIn property; otherwise, it is set to null.
+    /// </summary>
+    
     public class LogInRepository
     {
         private UnitOfWork unitOfWork;

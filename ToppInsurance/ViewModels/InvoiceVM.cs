@@ -1,18 +1,29 @@
-﻿using ControlzEx.Standard;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
-using System.Reflection.Emit;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using TopInsuranceBL;
-using TopInsuranceDL;
 using TopInsuranceEntities;
 using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// The InvoiceVM class serves as the ViewModel for managing invoice operations 
+    /// within the TopInsurance WPF application. It implements the RelayCommand 
+    /// for handling user commands related to searching for both private and business 
+    /// customers, adding invoices for selected customers, and clearing input fields. 
+    /// The class interacts with the BusinessController, PrivateController, and 
+    /// InvoiceController to facilitate data operations and invoice management. 
+    /// It maintains observable collections for displaying customer data, invoices, 
+    /// and available months and years, following the MVVM design pattern to ensure 
+    /// a clear separation of concerns and to enhance user experience. 
+    /// The InvoiceVM also implements IDataErrorInfo for input validation, ensuring 
+    /// proper invoice date handling and adherence to business rules regarding 
+    /// invoicing processes.
+    /// </summary>
+
     public class InvoiceVM : ObservableObject, IDataErrorInfo
     {
         private BusinessController businessController;
@@ -239,7 +250,7 @@ namespace TopInsuranceWPF.ViewModels
             }
 
             var resultMessage = invoiceController.CalculateCreatePrivateInvoiceDocuments(SelectedPrivateCustomer, NewInvoiceDate);
-
+    
             if (resultMessage.Contains("existerar redan"))
             {
                 MessageBox.Show(resultMessage, "Fel", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -352,6 +363,10 @@ namespace TopInsuranceWPF.ViewModels
                     if (NewInvoiceDate != monthLastDay)
                     {
                         errorMessage = "Faktureringsdatumet måste vara den sista dagen i månaden.";
+                    }
+                    if (NewInvoiceDate >= DateTime.Today)
+                    {
+                        errorMessage = "Fakturering kan inte göras framåt i tiden";
                     }
                     break;
 

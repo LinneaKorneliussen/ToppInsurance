@@ -9,6 +9,17 @@ using TopInsuranceEntities;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// The RegisterPrivateCustomerVM class serves as the ViewModel for managing the registration 
+    /// of private customers in the TopInsurance WPF application. It implements the IDataErrorInfo 
+    /// interface to facilitate validation for user inputs, ensuring that all required fields are 
+    /// filled out correctly before a new customer can be registered. The class provides functionality 
+    /// to add new private customers, clear input fields, and refresh the list of existing private 
+    /// customers, utilizing the MVVM design pattern for a clean separation of concerns. It also 
+    /// includes data validation to enforce correct formats for phone numbers, personal identification 
+    /// numbers, and zip codes, improving data integrity and user experience in the application.
+    /// </summary>
+
     public class RegisterPrivateCustomerVM : ObservableObject, IDataErrorInfo
     {
         private PrivateController privateController;

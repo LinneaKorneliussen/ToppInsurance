@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using TopInsuranceBL;
@@ -12,6 +7,16 @@ using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// The CustomerProspectVM class serves as the ViewModel for managing customer prospecting operations
+    /// within the TopInsurance WPF application. It implements the RelayCommand for handling user commands
+    /// related to searching for private and business customers, adding notes to customer records, and clearing
+    /// input fields. The class utilizes the ProspectController to interact with the data layer, providing 
+    /// functionality to retrieve customer prospects based on user input and manage related notes. The ViewModel
+    /// also maintains observable collections for displaying customer data and related prospect information,
+    /// adhering to the MVVM design pattern to ensure a clear separation of concerns and enhance user experience.
+    /// </summary>
+    
     public class CustomerProspectVM : ObservableObject
     {
         private ProspectController prospectController;

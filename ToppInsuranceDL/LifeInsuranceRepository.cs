@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceEntities;
+﻿using TopInsuranceEntities;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The LifeInsuranceRepository class manages life insurance policies for private 
+    /// customers within the insurance system. It includes functionality for tracking 
+    /// available base amounts, checking existing insurance coverage, and adding new 
+    /// life insurance policies.
+    /// </summary>
+   
     public class LifeInsuranceRepository
     {
         private UnitOfWork unitOfWork;

@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceEntities;
+﻿using TopInsuranceEntities;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The EmployeeRepository manages employee data within the system.
+    /// It provides functionality to add new employees, 
+    /// check the uniqueness of Social Security Numbers (SSNs), and retrieve lists of employees 
+    /// based on their roles or search criteria. This class interacts with the data layer 
+    /// using the unit of work pattern to ensure efficient database operations and data integrity.
+    /// </summary>
+    
     public class EmployeeRepository
-    {
+    {   
         private UnitOfWork unitOfWork;
         public EmployeeRepository()
         {

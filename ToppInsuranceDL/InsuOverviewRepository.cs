@@ -3,6 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The InsuOverviewRepository provides access to insurance data for both 
+    /// private and business customers within the insurance system. It offers methods 
+    /// to retrieve specific types of insurance policies associated with a given customer.
+    /// This class interacts with various insurance repositories through the unit of 
+    /// work pattern, ensuring efficient data retrieval and management.
+    /// </summary>
+    
     public class InsuOverviewRepository
     {
         private UnitOfWork unitOfWork;

@@ -1,11 +1,18 @@
 ﻿using TopInsuranceEntities;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The CommissionRepository class is responsible for calculating and managing 
+    /// commissions for insurance sales representatives. It interacts with various 
+    /// insurance repositories to compute total premiums based on active policies 
+    /// within a specified date range. The class also checks for existing commissions 
+    /// to avoid duplicates, creates new commission records, and saves commission 
+    /// data in a JSON format for reporting purposes.
+    /// </summary>
+    
     public class CommissionRepository
     {
         private UnitOfWork unitOfWork;

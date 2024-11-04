@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceEntities;
+﻿using TopInsuranceEntities;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The LiabilityRepository class is responsible for managing liability insurance 
+    /// policies for business customers within the insurance system. It provides methods 
+    /// to add new liability insurance entries, ensuring that all relevant details 
+    /// are captured and stored effectively.
+    /// </summary>
+    
     public class LiabilityRepository
     {
         private UnitOfWork unitOfWork;

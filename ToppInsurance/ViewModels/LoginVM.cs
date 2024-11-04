@@ -6,6 +6,11 @@ using TopInsuranceBL;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// ViewModel for the login process. 
+    /// It handles user authentication via the LoginController and 
+    /// navigates to the corresponding menu based on the user's role. 
+    /// </summary>
     public class LoginVM : ObservableObject
     {
         private LoginController loginController;

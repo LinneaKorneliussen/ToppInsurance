@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceEntities;
+﻿using TopInsuranceEntities;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The SicknessAccidentRepository class manages sickness and accident insurance policies within the system.
+    /// It provides functionality to add new policies for private customers, update base amounts for adults and children 
+    /// based on annual increments, and retrieve the current base amounts. This class uses the unit of work pattern to 
+    /// ensure efficient database operations and data consistency.
+    /// </summary>
+    
     public class SicknessAccidentRepository
     {
         private UnitOfWork unitOfWork;

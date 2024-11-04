@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceEntities;
+﻿using TopInsuranceEntities;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The PrivateRepository class manages private customer data within the system.
+    /// It provides functionality to check SSN uniqueness, create new private customers, retrieve all private customers,
+    /// update customer information, and search for private customers by name or SSN.
+    /// This class interacts with the data layer through the unit of work pattern, ensuring efficient 
+    /// database operations and maintaining data integrity.
+    /// </summary>
+    
     public class PrivateRepository
     {
         private UnitOfWork unitOfWork;

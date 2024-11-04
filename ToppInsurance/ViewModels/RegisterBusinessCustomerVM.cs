@@ -8,9 +8,17 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 
 
-
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    // This class, RegisterBusinessCustomerVM, serves as the ViewModel for registering business customers in a WPF application.
+    // It implements IDataErrorInfo for input validation and utilizes ICommand to handle user actions such as adding,
+    // clearing fields, and refreshing the customer list. The class maintains properties for various business customer 
+    // details, including name, contact information, and address. It interacts with the BusinessController to manage 
+    // customer data and provides methods for validating input fields, displaying messages upon successful registration, 
+    // and maintaining a collection of business customers.
+    /// </summary>
+    
     public class RegisterBusinessCustomerVM : ObservableObject, IDataErrorInfo
     {
         private BusinessController businessController;

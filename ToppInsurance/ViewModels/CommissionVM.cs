@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
-using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using TopInsuranceBL;
@@ -11,6 +9,16 @@ using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// The CommissionVM class serves as the ViewModel for managing commission-related operations
+    /// in the TopInsurance WPF application. It implements the IDataErrorInfo interface to facilitate
+    /// validation for user inputs, ensuring that commissions are only generated for valid dates and
+    /// selected employees. The class provides functionality to search for sales employees, add commission
+    /// records, and load existing commission data based on selected criteria, utilizing the MVVM design
+    /// pattern for clean separation of concerns. The available months and years for commission processing
+    /// are dynamically calculated, supporting up to nine months of history.
+    /// </summary>
+    
     public class CommissionVM : ObservableObject, IDataErrorInfo
     {
         private CommissionController commissionController;

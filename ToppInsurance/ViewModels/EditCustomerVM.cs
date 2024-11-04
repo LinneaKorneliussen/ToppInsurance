@@ -1,17 +1,21 @@
-﻿using ControlzEx.Standard;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Reflection.Emit;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using TopInsuranceBL;
-using TopInsuranceDL;
 using TopInsuranceEntities;
 using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    // The EditCustomerVM class is a ViewModel for managing the editing of customers in an insurance system. 
+    // It utilizes ICommand to handle commands for searching and updating both business and private customers. 
+    // The class uses ObservableCollection to store and bind customer data to the UI. 
+    // It implements IDataErrorInfo to support validation of input fields. 
+    // The class includes properties to store search and edit information, as well as methods for retrieving and updating customer data. 
+    // Validation for phone numbers and postal codes is performed before updating customer information.
+
     public class EditCustomerVM : ObservableObject, IDataErrorInfo
     {
         private BusinessController businessController;

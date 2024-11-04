@@ -3,6 +3,13 @@ using System.Windows.Controls;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// A helper class for managing the binding of passwords in a PasswordBox control.
+    /// This class provides attached properties for the PasswordBox to facilitate 
+    /// two-way data binding for the password value. It handles the synchronization 
+    /// of the password property between the PasswordBox and the ViewModel.
+    /// </summary>
+    
     public static class PasswordHelper
     {
         public static readonly DependencyProperty PasswordProperty =

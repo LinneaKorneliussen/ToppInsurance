@@ -1,19 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceEntities;
-using System.Reflection;
-using Microsoft.EntityFrameworkCore;
-
+﻿using TopInsuranceEntities;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The BusinessRepository class manages business customer data within the system.
+    /// It provides functionality to create, retrieve, update, and search for business customers.
+    /// This class interacts with the data layer through the unit of work pattern, ensuring efficient 
+    /// database operations and maintaining data integrity.
+    /// </summary>
+    
     public class BusinessRepository
-    {
+    {   
         private UnitOfWork unitOfWork;
         public BusinessRepository()
         {

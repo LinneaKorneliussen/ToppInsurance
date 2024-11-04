@@ -4,6 +4,13 @@ using ClosedXML.Excel;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The StatisticsRepository class handles the retrieval and processing of sales data related to various insurance policies.
+    /// It provides methods to obtain sales data for specific employees, summarize sales across all employees for a given year,
+    /// and export this data to an Excel file for reporting purposes. The repository utilizes the unit of work pattern to interact
+    /// with the database and includes functionality to create a directory for Excel exports if it does not already exist.
+    /// </summary>
+   
     public class StatisticsRepository
     {
         private UnitOfWork unitOfWork;

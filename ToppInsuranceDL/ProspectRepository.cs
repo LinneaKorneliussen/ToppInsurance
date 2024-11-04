@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TopInsuranceEntities;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The ProspectRepository class manages prospect data for both private and business customers within the system.
+    /// It provides functionality to add notes for customers, retrieve customers with associated notes, and search for prospective customers based on certain criteria.
+    /// This class interacts with the data layer through the unit of work pattern, enabling efficient data access and ensuring data consistency.
+    /// </summary>
+
     public class ProspectRepository
     {
         private UnitOfWork unitOfWork;

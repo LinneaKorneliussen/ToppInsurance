@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceEntities;
+﻿using TopInsuranceEntities;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The VehicleRepository class manages operations related to vehicle insurance policies.
+    /// It provides functionality to add new vehicle insurance records for business customers.
+    /// Utilizing the unit of work pattern, it encapsulates data access logic for vehicle insurance,
+    /// ensuring that changes are tracked and saved within a single transaction.
+    /// </summary>
+
     public class VehicleRepository
     {
         private UnitOfWork unitOfWork;

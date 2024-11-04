@@ -8,6 +8,12 @@ using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    // Summary:
+    // This class, RealEstateInsuranceVM, is a ViewModel for managing real estate insurance in a WPF application.
+    // It implements IDataErrorInfo for validation of user input and uses ICommand to handle user actions.
+    // The class provides properties for managing business customer information, insurance periods, payment methods, 
+    // and inventory, as well as commands for searching customers, adding inventory items, and registering new insurance policies.
+
     public class RealEstateInsuranceVM : ObservableObject, IDataErrorInfo
     {
         private RealEstateController realEstateController;

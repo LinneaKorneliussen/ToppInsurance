@@ -8,6 +8,13 @@ using TopInsuranceWPF.Commands;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    // The InsuranceOverviewVM class serves as a ViewModel for the insurance overview feature in a WPF application. 
+    // It manages the interaction between the view and the underlying data by utilizing controllers for private and business customers. 
+    // The class implements ICommand for searching and clearing customer data, allowing users to find private and business customers through a search functionality. 
+    // It contains properties and observable collections for both customer types, including their respective insurance types, and handles data updates when selections change. 
+    // The Clear method resets the search fields and customer selections to their initial states. 
+    // Validation is performed to ensure that search queries are not empty before executing search commands.
+
     public class InsuranceOverviewVM : ObservableObject
     {
         private InsuOverviewController insuOverviewController;

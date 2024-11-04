@@ -3,8 +3,16 @@ using TopInsuranceEntities;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The InvoiceRepository class is responsible for the creation and management of invoices 
+    /// for both private and business customers in an insurance system. It interacts 
+    /// with various insurance repositories to compute invoice amounts based on active 
+    /// invoices, verifies the existence of invoices to prevent duplicates, and saves 
+    /// invoice data in JSON format for persistent storage.
+    /// </summary>
+    
     public class InvoiceRepository
-    {
+    {   
         private UnitOfWork unitOfWork;
 
         public InvoiceRepository()

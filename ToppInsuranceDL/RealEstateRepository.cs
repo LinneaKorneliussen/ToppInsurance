@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TopInsuranceEntities;
+﻿using TopInsuranceEntities;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The RealEstateRepository class manages real estate insurance data within the system.
+    /// It provides functionality to create new real estate insurance policies for business customers, 
+    /// including adding associated inventories. This class interacts with the data layer through 
+    /// the unit of work pattern, ensuring efficient database operations and data integrity.
+    /// </summary>
     public class RealEstateRepository
     {
         private UnitOfWork unitOfWork;

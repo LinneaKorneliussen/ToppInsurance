@@ -9,6 +9,19 @@ using System.Text.RegularExpressions;
 
 namespace TopInsuranceWPF.ViewModels
 {
+    /// <summary>
+    /// The LiabilityInsuranceVM class serves as the ViewModel for managing liability insurance operations
+    /// within the TopInsurance WPF application. It implements the IDataErrorInfo interface for validation and 
+    /// the RelayCommand for handling user commands related to searching for business customers, adding 
+    /// liability insurance, and clearing input fields. The class utilizes the LiabilityController and 
+    /// BusinessController to interact with the data layer, providing functionality to manage liability 
+    /// insurance details including customer selection, contact information, policy dates, and payment 
+    /// terms. It also maintains observable collections for displaying business customer data, ensuring a 
+    /// responsive UI that adheres to the MVVM design pattern for a clean separation of concerns and 
+    /// improved user experience. The class includes comprehensive validation logic for ensuring that all 
+    /// required fields are filled correctly before processing insurance applications.
+    /// </summary>
+
     public class LiabilityInsuranceVM : ObservableObject, IDataErrorInfo
 
     {
