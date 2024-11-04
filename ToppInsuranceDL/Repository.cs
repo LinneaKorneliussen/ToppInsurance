@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 
 namespace TopInsuranceDL
 {
@@ -72,15 +68,6 @@ namespace TopInsuranceDL
         public IQueryable<T> GetAllQueryable()
         {
             return dbSet; // Returnerar IQueryable<T>
-        }
-
-        /// <summary>
-        /// Returns a queryable collection of entities of type T
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<T> Query()
-        {
-            return dbSet;
         }
 
         /// <summary>

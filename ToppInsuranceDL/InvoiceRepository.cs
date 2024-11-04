@@ -13,20 +13,20 @@ namespace TopInsuranceDL
         }
 
         #region Calculate and create private Invoice documents Method
-        public string CalculateCreatePrivateInvoiceDocuments(PrivateCustomer customer, DateTime invoiceDate)
+        public string CalculateCreatePrivateInvoiceDocuments(PrivateCustomer privateCustomer, DateTime invoiceDate)
         {
             DateTime monthStart = new DateTime(invoiceDate.Year, invoiceDate.Month, 1);
             DateTime monthEnd = new DateTime(invoiceDate.Year, invoiceDate.Month, DateTime.DaysInMonth(invoiceDate.Year, invoiceDate.Month));
 
-            if (PInvoiceExists(customer, invoiceDate))
+            if (PInvoiceExists(privateCustomer, invoiceDate))
             {
-                return $"Fakturaunderlag för {customer.FirstName} {customer.LastName} på datumet {invoiceDate.ToShortDateString()} existerar redan.";
+                return $"Fakturaunderlag för {privateCustomer.FirstName} {privateCustomer.LastName} på datumet {invoiceDate.ToShortDateString()} existerar redan.";
             }
 
             double totalAmount = 0;
 
             var allActiveLifeInsurances = unitOfWork.LifeInsuranceRepository.GetAll()
-                .Where(i => i.PrivateCustomer == customer && i.Status == Status.Aktiv)
+                .Where(i => i.PrivateCustomer == privateCustomer && i.Status == Status.Aktiv)
                 .ToList();
             foreach (var insurance in allActiveLifeInsurances)
             {
@@ -63,7 +63,7 @@ namespace TopInsuranceDL
         }
 
             var allActiveSicknessAccidentInsurances = unitOfWork.SicknessAccidentInsuranceRepository.GetAll()
-                .Where(i => i.PrivateCustomer == customer && i.Status == Status.Aktiv)
+                .Where(i => i.PrivateCustomer == privateCustomer && i.Status == Status.Aktiv)
                 .ToList();
 
             foreach (var insurance in allActiveSicknessAccidentInsurances)
@@ -104,7 +104,7 @@ namespace TopInsuranceDL
                 return "Inga fakturor att skapa för denna privatkund.";
             }
 
-            var privateInvoice = CreatePrivateInvoice(customer, totalAmount, invoiceDate);
+            var privateInvoice = CreatePrivateInvoice(privateCustomer, totalAmount, invoiceDate);
             SaveInvoicesToJson(new List<Invoice> { privateInvoice });
             unitOfWork.Save();
 
@@ -123,11 +123,11 @@ namespace TopInsuranceDL
         #endregion
 
         #region Calculate and create business Invoice documents Method
-        public string CalculateCreateBusinessInvoiceDocuments(BusinessCustomer customer, DateTime invoiceDate)
+        public string CalculateCreateBusinessInvoiceDocuments(BusinessCustomer businessCustomer, DateTime invoiceDate)
         {
-            if (BInvoiceExists(customer, invoiceDate))
+            if (BInvoiceExists(businessCustomer, invoiceDate))
             {
-                return $"Fakturan för företaget {customer.CompanyName} på datumet {invoiceDate.ToShortDateString()} existerar redan.";
+                return $"Fakturan för företaget {businessCustomer.CompanyName} på datumet {invoiceDate.ToShortDateString()} existerar redan.";
             }
 
             double totalAmount = 0;
@@ -136,7 +136,7 @@ namespace TopInsuranceDL
             DateTime monthEnd = new DateTime(invoiceDate.Year, invoiceDate.Month, DateTime.DaysInMonth(invoiceDate.Year, invoiceDate.Month));
 
             var allActiveVehicleInsurances = unitOfWork.VehicleInsuranceRepository.GetAll()
-                .Where(i => i.BusinessCustomer == customer && i.Status == Status.Aktiv)
+                .Where(i => i.BusinessCustomer == businessCustomer && i.Status == Status.Aktiv)
                 .ToList();
 
             foreach (var insurance in allActiveVehicleInsurances)
@@ -173,7 +173,7 @@ namespace TopInsuranceDL
             }
 
             var allActiveLiabilityInsurances = unitOfWork.LiabilityInsuranceRepository.GetAll()
-                .Where(i => i.BusinessCustomer == customer && i.Status == Status.Aktiv)
+                .Where(i => i.BusinessCustomer == businessCustomer && i.Status == Status.Aktiv)
                 .ToList();
 
             foreach (var insurance in allActiveLiabilityInsurances)
@@ -210,7 +210,7 @@ namespace TopInsuranceDL
             }
 
             var allActiveRealEstateInsurances = unitOfWork.RealEstateInsuranceRepository.GetAll()
-                .Where(i => i.BusinessCustomer == customer && i.Status == Status.Aktiv)
+                .Where(i => i.BusinessCustomer == businessCustomer && i.Status == Status.Aktiv)
                 .ToList();
 
             foreach (var realEstateInsurance in allActiveRealEstateInsurances)
@@ -257,7 +257,7 @@ namespace TopInsuranceDL
                 return "Inga fakturor att skapa för denna företagskund.";
             }
 
-            var businessInvoice = CreateBusinessInvoice(customer, totalAmount, invoiceDate);
+            var businessInvoice = CreateBusinessInvoice(businessCustomer, totalAmount, invoiceDate);
             SaveInvoicesToJson(new List<Invoice> { businessInvoice });
             unitOfWork.Save();
 

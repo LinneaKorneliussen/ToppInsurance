@@ -19,9 +19,9 @@ namespace TopInsuranceBL
         }
 
         #region Calculate and create Invoice documents Method
-        public string CalculateCreatePrivateInvoiceDocuments(PrivateCustomer customer, DateTime invoiceDate)
+        public string CalculateCreatePrivateInvoiceDocuments(PrivateCustomer privateCustomer, DateTime invoiceDate)
         {
-            return invoiceRepository.CalculateCreatePrivateInvoiceDocuments(customer, invoiceDate);
+            return invoiceRepository.CalculateCreatePrivateInvoiceDocuments(privateCustomer, invoiceDate);
         }
 
         public string CalculateCreateBusinessInvoiceDocuments(BusinessCustomer businessCustomer, DateTime invoiceDate)
