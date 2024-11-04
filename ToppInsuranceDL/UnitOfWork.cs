@@ -1,10 +1,13 @@
 ﻿using TopInsuranceEntities;
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The UnitOfWork class centralizes database operations and handles status updates for insurance entities.
+    /// It uses the singleton pattern to ensure only one instance is created, simplifying repository management
+    /// and ensuring consistency across the application.
+    /// </summary>
     public class UnitOfWork
     {
         private static UnitOfWork instance;

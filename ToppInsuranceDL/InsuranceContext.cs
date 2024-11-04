@@ -1,11 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using TopInsuranceEntities;
-using System.IO;
-using System.Numerics;
 
 namespace TopInsuranceDL
 {
+    /// <summary>
+    /// The InsuranceContext class is a DbContext in Entity Framework Core specifically designed to manage the database for TopInsurance. 
+    /// It includes DbSet properties that represent tables for various entities, such as employees, customers, and different insurance types. 
+    /// Each DbSet facilitates CRUD (Create, Read, Update, Delete) operations for its respective entity, which allows for efficient database management.
+    /// The class utilizes the Fluent API in OnModelCreating to map and configure relationships, constraints, and unique fields in the database. 
+    /// This ensures accurate data modeling and enforces rules such as unique SSNs for customers and agency numbers for employees. 
+    /// Additionally, the class can be configured to seed the database with test data, supporting initial setup and development.
+    /// </summary>
     public class InsuranceContext : DbContext
     {
         public DbSet<Employee> Employees { get; set; }
