@@ -36,7 +36,7 @@ Lösningen är uppbyggd i flera lager med klart definierade ansvarsområden:
 
 ## Projektstruktur
 
-- **TopoInsurance (Frontend):** WPF-applikationen med Views och ViewModels  
+- **TopInsurance (Frontend):** WPF-applikationen med Views och ViewModels  
 - **TopInsuranceBL (Business Layer):** Affärslogik och controller-klasser  
 - **TopInsuranceEntities:** Domänmodeller som representerar datan  
 - **Data Layer:** Repository- och databaslogik med Entity Framework Core och Unit of Work
